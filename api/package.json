@@ -1,0 +1,23 @@
+{
+  "name": "mern-blog-api",
+  "version": "1.0.0",
+  "description": "MERN blog api",
+  "main": "app.js",
+  "engines": {
+    "node": "17.8.0"
+  },
+  "scripts": {
+    "start": "node dist/app.js",
+    "postinstall": "tsc",
+    "nodemon": "nodemon -e js dist/app",
+    "watch-ts": "tsc -w"
+  },
+  "author": "KissMyUSSR",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}

@@ -6,8 +6,9 @@ import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
 import Single from './pages/Single/Single';
 import Write from './pages/Write/Write';
+import Settings from './pages/Settings/Settings';
 
-function App() {
+export default function App() {
   const currentUser = false;
   return (
     <Router>
@@ -23,10 +24,11 @@ function App() {
         <Route path="/login" element={currentUser ? <Homepage /> : <Login />} />
         <Route path="/post/:id" element={<Single />} />
         <Route path="/write" element={currentUser ? <Write /> : <Login />} />
-        {/* <Route path="/settings" element={currentUser ? <Settings /> : <Login />} /> */}
+        <Route
+          path="/settings"
+          element={currentUser ? <Settings /> : <Login />}
+        />
       </Routes>
     </Router>
   );
 }
-
-export default App;
