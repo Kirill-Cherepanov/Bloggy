@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage/Homepage';
 import Topbar from './components/Topbar/Topbar';
 import Register from './pages/Register/Register';
+import Login from './pages/Login/Login';
 
 function App() {
-  const currentUser = true;
+  const currentUser = false;
   return (
     <Router>
       <Topbar />
@@ -17,10 +18,10 @@ function App() {
           path="/register"
           element={currentUser ? <Homepage /> : <Register />}
         />
-        {/* <Route path="/login" element={currentUser ? <Homepage /> : <Login />} />
-        <Route path="/post/:id" element={<Single />} />
-        <Route path="/write" {currentUser ? <Write /> : <Login />} />
-        <Route path="/settings" element={currentUser ? <Settings /> : <Login />} /> */}
+        <Route path="/login" element={currentUser ? <Homepage /> : <Login />} />
+        {/* <Route path="/post/:id" element={<Single />} /> */}
+        {/* <Route path="/write" {currentUser ? <Write /> : <Login />} /> */}
+        {/* <Route path="/settings" element={currentUser ? <Settings /> : <Login />} /> */}
       </Routes>
     </Router>
   );
