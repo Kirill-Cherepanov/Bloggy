@@ -4,6 +4,7 @@ import Homepage from './pages/Homepage/Homepage';
 import Topbar from './components/Topbar/Topbar';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
+import Single from './pages/Single/Single';
 
 function App() {
   const currentUser = false;
@@ -19,7 +20,7 @@ function App() {
           element={currentUser ? <Homepage /> : <Register />}
         />
         <Route path="/login" element={currentUser ? <Homepage /> : <Login />} />
-        {/* <Route path="/post/:id" element={<Single />} /> */}
+        <Route path="/post/:id" element={<Single />} />
         {/* <Route path="/write" {currentUser ? <Write /> : <Login />} /> */}
         {/* <Route path="/settings" element={currentUser ? <Settings /> : <Login />} /> */}
       </Routes>
