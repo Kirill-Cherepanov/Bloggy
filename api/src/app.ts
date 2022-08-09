@@ -17,9 +17,9 @@ mongoose
   .then(() => console.log('connected to db'))
   .catch((err) => console.error(err));
 
-app.use('api/auth', authRouter);
-app.use('api/users', usersRouter);
-app.use('api/posts', postsRouter);
-app.use('api/categories', categoriesRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/posts', postsRouter);
+app.use('/api/categories', categoriesRouter);
 
 app.listen(5000, () => console.log('listen on 5000'));
