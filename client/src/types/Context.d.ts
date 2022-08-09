@@ -16,8 +16,11 @@ type Post = {
   title: string;
   desc: string;
   photo: string;
+  categories: {
+    _id: string;
+    name: string;
+  }[];
   username: string;
-  categories: string[];
   createdAt: string;
 };
 

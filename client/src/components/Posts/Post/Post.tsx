@@ -2,17 +2,7 @@ import './Post.css';
 import { Link } from 'react-router-dom';
 
 type Props = {
-  post: {
-    _id: string;
-    title: string;
-    desc: string;
-    createdAt: string;
-    photo: string;
-    categories: {
-      _id: string;
-      name: string;
-    }[];
-  };
+  post: Post;
 };
 
 export default function Post({ post }: Props) {
