@@ -5,6 +5,7 @@ import express from 'express';
 const app = express();
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
+import postsRouter from './routes/posts';
 
 // dotenv.config();
 app.use(express.json());
@@ -17,7 +18,7 @@ mongoose
 
 app.use('api/auth', authRouter);
 app.use('api/users', usersRouter);
-// app.use('api/posts')
+app.use('api/posts', postsRouter);
 // app.use('api/categories')
 
 app.listen(5000, () => console.log('listen on 5000'));

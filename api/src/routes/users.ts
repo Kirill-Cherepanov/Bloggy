@@ -14,20 +14,14 @@ usersRouter.put('/:id', async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
       if (user === null) {
-        return res.status(500).json(`User by id ${req.params.id} not found!`);
+        return res
+          .status(500)
+          .json(`User by id ${req.params.id} was not found!`);
       }
       user.overwrite(req.body as TUser);
-      user.save();
+      await user.save();
 
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body
-        },
-        { new: true }
-      );
-
-      res.status(200).json(updatedUser);
+      res.status(200).json(user);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -42,7 +36,9 @@ usersRouter.delete('/:id', async (req, res) => {
     try {
       const user = await User.findById(req.params.id);
       if (user === null) {
-        return res.status(500).json(`User by id ${req.params.id} not found!`);
+        return res
+          .status(500)
+          .json(`User by id ${req.params.id} was not found!`);
       }
 
       try {
@@ -53,7 +49,7 @@ usersRouter.delete('/:id', async (req, res) => {
         res.status(500).json(err);
       }
     } catch (err) {
-      res.status(404).json('User not found!');
+      res.status(404).json('User was not found!');
     }
   } else {
     res.status(401).json('You can delete only your account!');
@@ -65,7 +61,7 @@ usersRouter.get('/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (user === null) {
-      return res.status(500).json(`User by id ${req.params.id} not found!`);
+      return res.status(500).json(`User by id ${req.params.id} was not found!`);
     }
 
     const { password, ...userInfo } = user;
