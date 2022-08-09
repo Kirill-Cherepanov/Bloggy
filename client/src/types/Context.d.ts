@@ -11,6 +11,16 @@ type User = {
   profilePic: string;
 };
 
+type Post = {
+  _id: string;
+  title: string;
+  desc: string;
+  photo: string;
+  username: string;
+  categories: string[];
+  createdAt: string;
+};
+
 type ReducerState = {
   user: User | null;
   isFetching: boolean;
