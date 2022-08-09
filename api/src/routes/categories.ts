@@ -3,9 +3,9 @@ import express from 'express';
 const categoriesRouter = express.Router();
 
 categoriesRouter.post('/', async (req, res) => {
-  const newCat = new Category(req.body);
+  const newCategory = new Category(req.body);
   try {
-    res.status(200).json(await newCat.save());
+    res.status(200).json(await newCategory.save());
   } catch (err) {
     res.status(500).json(err);
   }
