@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const validateEmail = (email: string): boolean =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-const UserSchema = new mongoose.Schema(
+const UserSchema = new mongoose.Schema<TUser>(
   {
     username: {
       type: String,
@@ -33,4 +33,5 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default UserSchema;
+const User = mongoose.model<TUser>('User', UserSchema);
+export default User;

@@ -8,7 +8,6 @@ const app = express();
 // app.use(express.json());
 // app.use('./images', express.static('./images'));
 
-// 0.0.0.0? Wtf?
 mongoose
   .connect('mongodb://0.0.0.0/testdb' as string)
   .then(() => console.log('connected to db'))
