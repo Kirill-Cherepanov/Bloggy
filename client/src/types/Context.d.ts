@@ -1,10 +1,18 @@
 type ReducerAction = {
   type: string;
-  payload: string;
+  payload: User;
+};
+
+type User = {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+  profilePic: string;
 };
 
 type ReducerState = {
-  user: string | null;
+  user: User | null;
   isFetching: boolean;
   error: boolean;
 };
