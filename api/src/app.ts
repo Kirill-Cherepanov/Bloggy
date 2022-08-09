@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 import multer from 'multer';
 import express from 'express';
 const app = express();
+import authRouter from './routes/auth';
+import usersRouter from './routes/users';
 
 // dotenv.config();
-// app.use(express.json());
+app.use(express.json());
 // app.use('./images', express.static('./images'));
 
 mongoose
@@ -13,8 +15,8 @@ mongoose
   .then(() => console.log('connected to db'))
   .catch((err) => console.error(err));
 
-app.use('api/auth');
-// app.use('api/users')
+app.use('api/auth', authRouter);
+app.use('api/users', usersRouter);
 // app.use('api/posts')
 // app.use('api/categories')
 
