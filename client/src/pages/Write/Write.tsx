@@ -23,6 +23,7 @@ export default function Write() {
       title,
       desc
     };
+    console.log(user);
 
     // TODO: fix this shit x2
     // if (file) {

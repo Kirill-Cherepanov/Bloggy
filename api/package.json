@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "postinstall": "tsc",
-    "nodemon": "nodemon -e js dist/app",
+    "nodemon": "nodemon -e js dist/app --ignore client",
     "watch-ts": "tsc -w"
   },
   "author": "KissMyUSSR",

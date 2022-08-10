@@ -28,7 +28,7 @@ authRouter.post('/login', async (req, res) => {
     const validated = await bcrypt.compare(req.body.password, user.password);
     if (!validated) return res.status(400).json('Wrong credentials!');
 
-    const { password, ...userInfo } = user;
+    const { password, ...userInfo } = user._doc;
     res.status(200).json(userInfo);
   } catch (err) {
     res.status(500).json(err);

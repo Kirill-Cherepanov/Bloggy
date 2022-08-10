@@ -18,10 +18,10 @@ usersRouter.put('/:id', async (req, res) => {
           .status(500)
           .json(`User by id ${req.params.id} was not found!`);
       }
-      user.overwrite(req.body as TUser);
+      user.overwrite(req.body as User);
       await user.save();
 
-      res.status(200).json(user);
+      res.status(200).json(user._doc);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -56,7 +56,7 @@ usersRouter.delete('/:id', async (req, res) => {
   }
 });
 
-// get user
+// get
 usersRouter.get('/:id', async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -64,7 +64,8 @@ usersRouter.get('/:id', async (req, res) => {
       return res.status(500).json(`User by id ${req.params.id} was not found!`);
     }
 
-    const { password, ...userInfo } = user;
+    console.log(user);
+    const { password, __v, ...userInfo } = user;
     res.status(200).json(userInfo);
   } catch (err) {
     res.status(500).json(err);

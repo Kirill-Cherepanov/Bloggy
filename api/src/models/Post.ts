@@ -14,11 +14,12 @@ const PostSchema = new mongoose.Schema<Post>(
     },
     photo: String,
     username: {
-      type: mongoose.Types.ObjectId,
+      type: String,
       required: true
     },
     categories: {
       type: [String],
+      default: [],
       validate: {
         validator: (v: string[]) => v.length <= 10,
         message: 'Must be 10 categories at most'

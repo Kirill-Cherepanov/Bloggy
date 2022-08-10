@@ -4,6 +4,7 @@ const postsRouter = express.Router();
 
 // create post
 postsRouter.post('/', async (req, res) => {
+  console.log(req.body);
   const newPost = new Post(req.body);
   try {
     res.status(200).json(await newPost.save()); // Not sure if this'll work
