@@ -11,15 +11,16 @@ module.exports = {
     },
     extend: {
       colors: {
-        main: colors.white,
-        dark: colors.stone['800'],
-        accent: colors.blue
+        main: colors.white, // mybe should change
+        dark: colors.stone['800'], // should change
+        accent: colors.blue // should change
       },
       spacing: {
         100: '25rem'
       },
       fontFamily: {
-        headers: ["'Space Mono'", 'monospace']
+        lexend: ["'Lexend'", 'sans-serif'],
+        'space-mono': ["'Space Mono'", 'monospace']
       },
       translate: {
         screen: '100vw'
