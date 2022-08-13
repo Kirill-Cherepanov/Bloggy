@@ -52,5 +52,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/api/"
+  "proxy": "http://localhost:5000/api/",
+  "devDependencies": {
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
+  }
 }
