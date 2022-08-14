@@ -93,67 +93,39 @@ export default function Home() {
           <h2 className="font-space-mono text-3xl text-center my-8">
             Our posts
           </h2>
-          <ul className="flex w-full h-60 gap-[90px] hover:gap-[60px] pr-[60px] transition-[gap] duration-200 ease-linear">
-            <li className="min-w-0 h-full basis-1/5 hover:basis-[calc(20%+120px)] transition-[flex-basis] duration-200 ease-linear">
-              <div className="cursor-pointer w-[calc(100%+120px)] h-full">
-                <img
-                  src={mockImage}
-                  alt="Post"
-                  className="h-full object-cover object-center w-max clip-parallelogram-right"
-                />
-                <h3 className="">
-                  One of our posts with a slightly long title
-                </h3>
-              </div>
-            </li>
-            <li className="min-w-0 h-full basis-1/5 hover:basis-[calc(20%+120px)] transition-[flex-basis] duration-200 ease-linear">
-              <div className="cursor-pointer w-[calc(100%+120px)] h-full">
-                <img
-                  src={mockImage}
-                  alt="Post"
-                  className="h-full object-cover object-center w-max clip-parallelogram"
-                />
-                <h3 className="">
-                  One of our posts with a slightly long title
-                </h3>
-              </div>
-            </li>
-            <li className="min-w-0h-full basis-1/5 hover:basis-[calc(20%+120px)] transition-[flex-basis] duration-200 ease-linear">
-              <div className="cursor-pointer w-[calc(100%+120px)] h-full">
-                <img
-                  src={mockImage}
-                  alt="Post"
-                  className="h-full object-cover object-center w-max clip-parallelogram"
-                />
-                <h3 className="">
-                  One of our posts with a slightly long title
-                </h3>
-              </div>
-            </li>
-            <li className="min-w-0 h-full basis-1/5 hover:basis-[calc(20%+120px)] transition-[flex-basis] duration-200 ease-linear">
-              <div className="cursor-pointer w-[calc(100%+120px)] h-full">
-                <img
-                  src={mockImage}
-                  alt="Post"
-                  className="h-full object-cover object-center w-max clip-parallelogram"
-                />
-                <h3 className="">
-                  One of our posts with a slightly long title
-                </h3>
-              </div>
-            </li>
-            <li className="min-w-0 h-full basis-1/5 hover:basis-[calc(20%+120px)] transition-[flex-basis] duration-200 ease-linear">
-              <div className="cursor-pointer w-[calc(100%+60px)] h-full">
-                <img
-                  src={mockImage}
-                  alt="Post"
-                  className="h-full object-cover object-center w-max clip-parallelogram-left"
-                />
-                <h3 className="">
-                  One of our posts with a slightly long title
-                </h3>
-              </div>
-            </li>
+          <ul className="flex w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear">
+            {Array(5)
+              .fill(0)
+              .map((v, i) => (
+                <li className="group basis-1/5 hover:basis-[calc(20%+210px)] transition-[flex-basis] duration-200 ease-linear">
+                  <div className="cursor-pointer w-[calc(100%+120px)] h-100">
+                    <img
+                      src={mockImage}
+                      alt="Post"
+                      className={
+                        'object-cover object-center h-80 ' +
+                        (i === 0
+                          ? 'clip-parallelogram-right'
+                          : i === 4
+                          ? 'clip-parallelogram-left'
+                          : 'clip-parallelogram')
+                      }
+                    />
+                    <h3
+                      className={
+                        'text-center transition-[padding] duration-200 ease-linear' +
+                        (i === 0
+                          ? ' pr-[60px] group-hover:pl-[60px] group-hover:pr-[120px]'
+                          : i === 4
+                          ? ' group-hover:pl-[60px] group-hover:pr-[60px]'
+                          : ' pr-[60px] group-hover:pl-[75px] group-hover:pr-[105px]')
+                      }
+                    >
+                      a a a a a a a a a a a a a a a a a a a a a a a a a
+                    </h3>
+                  </div>
+                </li>
+              ))}
           </ul>
         </section>
         {/* Need to remake the db. For now will just fetch random posts */}
