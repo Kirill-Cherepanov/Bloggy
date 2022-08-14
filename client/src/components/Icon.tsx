@@ -130,9 +130,9 @@ export default function Icon({ type, className = '' }: IconProps) {
           <path
             fill="none"
             stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="48"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="48"
             d="M328 112L184 256l144 144"
           />
         </svg>

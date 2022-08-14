@@ -10,6 +10,9 @@ module.exports = {
       ...defaultTheme.screens
     },
     extend: {
+      flexGrow: {
+        2: 2
+      },
       colors: {
         main: colors.white, // mybe should change
         dark: colors.stone['800'], // should change
