@@ -10,12 +10,16 @@ module.exports = {
       ...defaultTheme.screens
     },
     extend: {
+      transitionDuration: {
+        3000: '3000ms'
+      },
       flexGrow: {
         2: 2
       },
       colors: {
         main: colors.white, // mybe should change
         dark: colors.stone['800'], // should change
+        'light-dark': colors.stone['600'],
         accent: colors.blue // should change
       },
       spacing: {
