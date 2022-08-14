@@ -9,12 +9,12 @@ html {
   @apply font-lexend text-dark;
 }
 
-.link {
-  text-decoration: none;
-  color: inherit;
+@layer components {
+  .link {
+    text-decoration: none;
+    color: inherit;
+  }
 }
-
-@layer components {}
 
 @layer utilities {
   .clip-parallelogram-right {

@@ -54,6 +54,7 @@
   },
   "proxy": "http://localhost:5000/api/",
   "devDependencies": {
+    "@tailwindcss/line-clamp": "^0.4.0",
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
