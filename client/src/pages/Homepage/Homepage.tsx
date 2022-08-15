@@ -1,27 +1,27 @@
 import HeroSection from '../../components/HeroSection/HeroSection';
 import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
-import Posts from '../../components/Posts/Posts';
 import SmallPost from '../Posts/SmallPost';
 import LargePost from '../Posts/LargePost';
+import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
 
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router';
-import axios from 'axios';
+// import { useEffect, useState } from 'react';
+// import { useLocation } from 'react-router';
+// import axios from 'axios';
 
 import bgImage from '../../images/Background-image.webp';
 import mockImage from '../../images/mock-up-image.webp';
 
 export default function Home() {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const { search } = useLocation();
+  // const [posts, setPosts] = useState<Post[]>([]);
+  // const { search } = useLocation();
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await axios.get('/posts' + search);
-      setPosts(res.data);
-    };
-    fetchPosts();
-  }, [search]);
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const res = await axios.get('/posts' + search);
+  //     setPosts(res.data);
+  //   };
+  //   fetchPosts();
+  // }, [search]);
 
   return (
     <>
@@ -33,7 +33,6 @@ export default function Home() {
           </h2>
           <ParallelogramCurtains mockImage={mockImage} />
         </section>
-        {/* Need to remake the db. For now will just emulate random posts */}
         <section className="px-10">
           <h2 className="font-space-mono text-3xl text-center my-8">
             Trending posts
@@ -54,11 +53,9 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <h3>Music</h3>
-            <Posts posts={posts} />
-          </div>
-          <div>
-            <h3>Science</h3>
+            <h3 className="font-space-mono text-2xl text-center my-8">
+              Science
+            </h3>
             <ul className="grid grid-rows-2 grid-cols-2 gap-10 before:content-[''] before:w-0 before:pb-[65%] before:row-start-1 before:row-end-1 before:col-start-1 before:col-end-1 [&>*:first-child]:row-start-1 [&>*:first-child]:row-end-1 [&>*:first-child]:col-start-1 [&>*:first-child]:col-end-1 ">
               {Array(4)
                 .fill(0)
@@ -71,20 +68,30 @@ export default function Home() {
                 ))}
             </ul>
           </div>
+          <div>
+            <h3 className="font-space-mono text-2xl text-center my-8">Music</h3>
+            <ul className="grid grid-rows-3 grid-cols-2 gap-10">
+              {Array(3)
+                .fill(0)
+                .map((v, i) => (
+                  <SmallPost key={i} mockImage={mockImage} />
+                ))}
+              <LargePost
+                mockImage={mockImage}
+                className="row-start-1 row-end-4 col-start-2"
+                textBoxClass="top-1/3 h-64 w-5/6"
+              />
+            </ul>
+          </div>
         </section>
-        {/* Need to remake the db. For now will do with lorem and some random image */}
         <section>
-          <h2>Popular blogs</h2>
-          <ul>
-            <li>Cool Popular Blog</li>
-            <li>Cool Popular Blog</li>
-            <li>Cool Popular Blog</li>
-            <li>Cool Popular Blog</li>
-            <li>Cool Popular Blog</li>
-          </ul>
+          <h2 className="font-space-mono text-3xl text-center my-8">
+            Popular blogs
+          </h2>
+          <BlogSwiper />
         </section>
         {/* Need this to be hidden when the client has logged in */}
-        <section>
+        <section className="h-100">
           <button>Login</button>
           <button>Sign up</button>
         </section>
