@@ -41,7 +41,7 @@ export default function LargePost({
       />
       <div
         className={
-          'flex flex-col absolute bg-opacity-40 bg-black text-white px-6 py-4 md:px-8 ' +
+          'flex flex-col absolute bg-opacity-40 bg-black shadow-lg text-white px-6 py-4 md:px-8 ' +
           (textBoxClass || '')
         }
       >

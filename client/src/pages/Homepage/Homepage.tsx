@@ -88,7 +88,7 @@ export default function Home() {
           <h2 className="font-space-mono text-3xl text-center my-8">
             Popular blogs
           </h2>
-          <BlogSwiper />
+          <BlogSwiper mockImage={mockImage} />
         </section>
         {/* Need this to be hidden when the client has logged in */}
         <section className="h-100">
