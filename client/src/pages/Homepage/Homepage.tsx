@@ -46,7 +46,11 @@ export default function Home() {
                 .map((v, i) => (
                   <SmallPost key={i} mockImage={mockImage} />
                 ))}
-              <LargePost mockImage={mockImage} />
+              <LargePost
+                mockImage={mockImage}
+                className="row-start-1 row-end-4"
+                textBoxClass="top-1/3 h-64 w-5/6"
+              />
             </ul>
           </div>
           <div>
@@ -55,7 +59,17 @@ export default function Home() {
           </div>
           <div>
             <h3>Science</h3>
-            <Posts posts={posts} />
+            <ul className="grid grid-rows-2 grid-cols-2 gap-10 before:content-[''] before:w-0 before:pb-[65%] before:row-start-1 before:row-end-1 before:col-start-1 before:col-end-1 [&>*:first-child]:row-start-1 [&>*:first-child]:row-end-1 [&>*:first-child]:col-start-1 [&>*:first-child]:col-end-1 ">
+              {Array(4)
+                .fill(0)
+                .map((v, i) => (
+                  <LargePost
+                    key={i}
+                    mockImage={mockImage}
+                    textBoxClass="bottom-0 w-5/6 h-full max-h-64"
+                  />
+                ))}
+            </ul>
           </div>
         </section>
         {/* Need to remake the db. For now will do with lorem and some random image */}
