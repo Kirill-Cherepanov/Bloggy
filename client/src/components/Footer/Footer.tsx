@@ -1,7 +1,14 @@
 import Icon from '../Icon';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Footer() {
+  const [followBoxParams, setFollowBoxParams] = useState({
+    width: 0,
+    top: 0,
+    left: 0
+  });
+
   return (
     <footer className="bg-secondary-1000 text-main">
       <ul className="px-4 pt-5 hidden sm:flex justify-center gap-3 text-secondary-200 relative">
@@ -10,12 +17,26 @@ export default function Footer() {
           .map((v, i) => (
             <li
               key={i}
-              className="[&:hover + .FOOOTER-FOLLOW-BORDER]:opacity-100 border border-secondary-200 rounded-sm px-1 cursor-pointer"
+              onMouseOver={(e) => {
+                // const { width, top, left } =
+                //   e.currentTarget.getBoundingClientRect();
+
+                const width = e.currentTarget.getBoundingClientRect().width;
+                const left = e.currentTarget.offsetLeft;
+                const top = e.currentTarget.offsetTop;
+                setFollowBoxParams({ width, top, left });
+              }}
+              className="[&:hover~.FOOOTER-FOLLOW-BORDER]:opacity-100 [&:hover~.FOOOTER-FOLLOW-BORDER]:cursor-pointer border border-secondary-200 rounded-sm px-1 cursor-pointer hover:text-accent-400 transition-colors"
             >
               {v}
             </li>
           ))}
-        <li className="FOOOTER-FOLLOW-BORDER absolute rounded-sm border opacity-0 " />
+        <li
+          className="FOOOTER-FOLLOW-BORDER pointer-events-none opacity-0 absolute border border-accent-400 rounded-sm px-1 transition-all"
+          style={followBoxParams}
+        >
+          <span className="opacity-0">a{/* needed to measure height*/}</span>
+        </li>
       </ul>
       <div className="py-5 flex flex-col">
         <ul className="px-4 py-5 border-main border-opacity-20 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light text-secondary-200">
