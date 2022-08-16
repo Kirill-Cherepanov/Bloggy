@@ -7,7 +7,7 @@ type Props = {
 export default function HeroSection({ bgImage }: Props) {
   return (
     <header
-      className="min-h-[720px] px-20 text-main bg-center bg-no-repeat bg-cover flex flex-col items-center"
+      className="HERO_SECTION min-h-[720px] px-20 text-white bg-center bg-no-repeat bg-cover flex flex-col items-center"
       style={{
         backgroundImage: `url(${bgImage})`
       }}

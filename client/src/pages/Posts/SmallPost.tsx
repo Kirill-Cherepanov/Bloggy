@@ -36,13 +36,13 @@ export default function SmallPost({ mockImage }: Props) {
         </h4>
         <div ref={textBoxRef} className="grow min-h-0">
           <p
-            className={`line-clamp-3 text-light-dark`}
+            className={`line-clamp-3 text-text-600`}
             style={{ WebkitLineClamp: amountOfLines }}
           >
             {amountOfLines ? mainText : ''}
           </p>
         </div>
-        <div className="mt-auto text-light-dark flex flex-col md:block">
+        <div className="mt-auto text-text-600 flex flex-col md:block">
           <span className="hidden md:inline">By </span>
           <span className="cursor-pointer text-orange-600 font-bold hover:underline">
             {'KissMyUSSR '}

@@ -27,7 +27,7 @@ export default function BlogSwiper({ mockImage }: Props) {
   }, []);
 
   return (
-    <div className="w-full px-10 flex items-center">
+    <div className="w-full flex items-center">
       <Icon
         type="angle"
         className="BLOG_SWIPER_PREV_ELEMENT text-stone-600 shrink-0 basis-8 xs:basis-10"

@@ -6,7 +6,7 @@
 @tailwind utilities;
 
 html {
-  @apply font-lexend text-dark;
+  @apply font-lexend text-secondary-1000;
 }
 
 @layer components {
