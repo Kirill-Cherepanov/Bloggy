@@ -11,6 +11,28 @@ export default function Footer() {
 
   return (
     <footer className="bg-secondary-1000 text-main">
+      <div className="SIGNUP px-4 py-5 bg-accent-400 text-secondary-1000">
+        <div className="text-center lg:flex justify-center items-center gap-6">
+          <div>
+            <div className="text-2xl font-semibold md:font-bold lg:text-3xl uppercase">
+              Sign up now
+            </div>
+            <div className="tracking-tight text-sm font-medium md:font-semibold md:text-base lg:text-lg uppercase mb-4 lg:mb-0">
+              Become one of our exclusive first members
+            </div>
+          </div>
+          <form className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start">
+            <input
+              type="text"
+              placeholder="Enter your email adress here"
+              className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
+            />
+            <button className="bg-secondary-1000 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600">
+              Sign up
+            </button>
+          </form>
+        </div>
+      </div>
       <ul className="px-4 pt-5 hidden sm:flex justify-center gap-3 text-secondary-200 relative">
         {Array(10)
           .fill('Music')
@@ -40,28 +62,28 @@ export default function Footer() {
       </ul>
       <div className="py-5 flex flex-col">
         <ul className="px-4 py-5 border-main border-opacity-20 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light text-secondary-200">
-          <li className="">
+          <li className="hover:text-accent-400">
             <Link className="link" to="/">
               Home
             </Link>
           </li>
-          <li className="">
+          <li className="hover:text-accent-400">
             <Link className="link" to="/">
               About
             </Link>
           </li>
-          <li className="">
+          <li className="hover:text-accent-400">
             <Link className="link" to="/">
               Contact
             </Link>
           </li>
-          <li className="">
+          <li className="hover:text-accent-400">
             <Link className="link" to="/write">
               Write
             </Link>
           </li>
           <li
-            className="cursor-pointer"
+            className="hover:text-accent-400 cursor-pointer"
             onClick={() => {
               /* handleLogout */
             }}
@@ -77,7 +99,7 @@ export default function Footer() {
           <div className="text-lg xs:text-xl md:text-2xl font-bold font-space-mono basis-2/3 shrink-0 grow sm:basis-48 sm:shrink-1 text-right sm:text-center">
             Kirill Cherepanov
           </div>
-          <ul className="flex justify-center basis-1/2 shrink-0 grow sm:basis-48 sm:shrink-1 mt-2 sm:justify-end sm:mt-0">
+          <ul className="flex justify-center basis-1/2 shrink-0 grow sm:basis-48 sm:shrink-1 mt-5 sm:justify-end sm:mt-0">
             {[
               ['vk', 'https://vk.com/kcherepanov1/'],
               ['github', 'https://github.com/kissMyUSSR/'],
