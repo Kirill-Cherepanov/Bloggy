@@ -90,7 +90,6 @@ export default function Home() {
           </h2>
           <BlogSwiper mockImage={mockImage} />
         </section>
-        {/* Need this to be hidden when the client has logged in */}
         <section className="h-100">
           <button>Login</button>
           <button>Sign up</button>
