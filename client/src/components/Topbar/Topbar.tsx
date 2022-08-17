@@ -21,13 +21,12 @@ export default function TopBar() {
             ['Home', '/'],
             ['Posts', '/'],
             ['About', '/'],
-            ['Contacts', '/'],
-            ['Write', '/write']
+            ['Contacts', '/']
           ]}
         />
         <NavLink
           to="/"
-          className="basis-32 xs:basis-40 text-4xl xs:text-5xl text-main shrink-0 font-sansita select-none flex justify-center text-center"
+          className="basis-32 xs:basis-40 text-4xl xs:text-5xl text-main shrink-0 font-sansita select-none flex justify-center text-center -mt-2"
         >
           Bloggy
         </NavLink>

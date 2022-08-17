@@ -7,7 +7,7 @@
 @tailwind utilities;
 
 html {
-  @apply font-lexend text-secondary-1000;
+  @apply font-lexend text-secondary-1000 overflow-x-hidden;
 }
 
 @layer components {
@@ -25,6 +25,10 @@ html {
 }
 
 @layer utilities {
+  .hover-bottom-border {
+    @apply relative hover:after:w-1/2 after:absolute after:bottom-0 after:left-1/2 after:w-0 after:border-b-2 after:border-b-secondary-200 after:transition-all after:duration-200 hover:before:w-1/2 before:absolute before:bottom-0 before:right-1/2 before:w-0 before:border-b-2 before:border-b-secondary-200 before:transition-all before:duration-200;
+  }
+
   .clip-parallelogram-right {
     clip-path: polygon(0 0, 100% 0, calc(100% - 60px) 100%, 0 100%);
   }
