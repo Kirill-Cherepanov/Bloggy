@@ -84,7 +84,7 @@ export default function Home() {
           </h2>
           <BlogSwiper mockImage={mockImage} />
         </section> */}
-        <Footer />
+        {/* <Footer /> */}
       </main>
     </>
   );

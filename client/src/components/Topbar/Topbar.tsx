@@ -1,7 +1,6 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Context } from '../../context/Context';
-import './Topbar.css';
+// import { Context } from '../../context/Context';
 import Icon from '../Icon';
 
 export default function TopBar() {
@@ -13,11 +12,7 @@ export default function TopBar() {
   // };
 
   return (
-    <header
-      className={
-        'z-10 shadow-xl sticky top-0 bg-primary-400 h-14 text-secondary-900'
-      }
-    >
+    <header className="z-10 shadow-xl sticky top-0 bg-secondary-900 text-secondary-200 h-20">
       <div className="px-2 md:px-8 mx-auto flex justify-center items-center max-w-5xl h-full">
         <Navigation
           links={[
@@ -25,19 +20,29 @@ export default function TopBar() {
             ['Posts', '/'],
             ['About', '/'],
             ['Contacts', '/'],
-            ['Write (for deletion)', '/write']
+            ['Write', '/write']
           ]}
         />
-        <div className="basis-60 text-4xl text-primary-900 shrink-0 font-sansita select-none flex justify-center text-center">
+        <div className="basis-32 xs:basis-40 text-4xl xs:text-5xl text-main shrink-0 font-sansita select-none flex justify-center text-center">
           Bloggy
         </div>
-        <div className="basis-1/2 flex justify-end items-center gap-6">
-          <div>
-            <Icon type="search" />
-            <input type="text" placeholder="search" />
+        <div className="basis-1/2 flex justify-end items-center gap-4 sm:gap-6">
+          <div className="flex relative">
+            <Icon
+              type="search"
+              className="h-8 sm:h-10 text-main lg:h-8 lg:text-secondary-500 lg:absolute top-[calc(50%-1rem)] left-2  "
+            />
+            <input
+              type="text"
+              placeholder="Search articles"
+              className="h-10 pl-12 pr-2 placeholder:text-secondary-500 hidden lg:block"
+            />
           </div>
-          <div>User</div>
-          <img className="topImg" src={'PF + user.profilePic'} alt="" />
+          <button className="flex items-center">
+            <Icon type="person" className="h-8 sm:h-10 fill-main" />
+            {/* <img src={'PF + user.profilePic'} alt="" /> */}
+            <Icon type="angle" className="relative -left-1 h-6 -rotate-90" />
+          </button>
         </div>
       </div>
     </header>
@@ -55,7 +60,7 @@ function Navigation({ links }: NavigationProps) {
   return (
     <>
       <div
-        className={'MOBILE-MENU basis-1/2 flex items-center p-2 h-12 md:hidden'}
+        className={'MOBILE-MENU basis-1/2 flex items-center p-2 h-12 lg:hidden'}
       >
         <button
           className={'hamburger-menu-btn' + (isHamburgerOpen ? ' open' : '')}
@@ -67,14 +72,14 @@ function Navigation({ links }: NavigationProps) {
         </button>
         <ul
           className={
-            (!isHamburgerOpen ? '-translate-x-screen' : '') +
-            ' border-t border-opacity-70 border-t-primary-500 absolute top-14 left-0 transition-transform flex flex-col bg-primary-400 w-full'
+            (!isHamburgerOpen ? '-translate-x-screen ' : '') +
+            'absolute top-20 left-0 transition-transform flex flex-col bg-accent-600 w-full'
           }
         >
           {links.map((link, i) => (
             <li
               key={i}
-              className="group text-xl font-medium transition-colors hover:bg-primary-600 hover:text-secondary-200 "
+              className="group text-xl font-medium transition-colors hover:bg-accent-900 hover:text-secondary-200 "
             >
               <NavLink
                 onClick={toggleHamburger}
@@ -90,7 +95,7 @@ function Navigation({ links }: NavigationProps) {
         </ul>
       </div>
 
-      <div className="DESKTOP-MENU hidden md:block basis-1/2 h-full">
+      <div className="DESKTOP-MENU hidden lg:block basis-1/2 h-full">
         <ul className="w-52 h-full flex justify-between">
           {links.map((link, i) => (
             <li

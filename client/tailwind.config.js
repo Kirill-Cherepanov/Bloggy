@@ -1,29 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
-// const getDarkColors = (color) => {
-//   return Object.entries(color).filter((c) => Number(c[0]) >= 600);
-// };
-
-// const getLightColors = (color) => {
-//   return Object.entries(color).filter((c) => Number(c[0]) <= 300);
-// };
-
-// const secondary = {
-//   50: '#f2faf0',
-//   100: '#eef5ef',
-//   150: '#eaefeb',
-//   200: '#e5eae7',
-//   250: '#ccd9d2',
-//   300: '#b0c7bf',
-//   400: '#91b5af',
-//   500: '#73a3a2',
-//   600: '#558991',
-//   700: '#3b6b80',
-//   800: '#254d6e',
-//   900: '#16315c'
-// };
-
 module.exports = {
   mode: 'jit',
   content: ['./src/**/*.{ts,tsx}', './public/index.html'],
@@ -49,7 +26,8 @@ module.exports = {
       },
       fontFamily: {
         lexend: ["'Lexend'", 'sans-serif'],
-        'space-mono': ["'Space Mono'", 'monospace']
+        'space-mono': ["'Space Mono'", 'monospace'],
+        sansita: 'Sansita Swashed, cursive'
       },
       translate: {
         screen: '100vw'

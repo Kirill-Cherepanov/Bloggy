@@ -11,9 +11,16 @@ html {
 }
 
 @layer components {
-  .link {
-    text-decoration: none;
-    color: inherit;
+  .hamburger-menu-btn {
+    @apply w-6 xs:w-8 h-5 xs:h-[30px] relative transition cursor-pointer;
+  }
+
+  .hamburger-menu-btn > span {
+    @apply bg-main block absolute h-1 xs:h-1.5 w-full rounded-sm xs:rounded-md opacity-100 transition-transform first:top-0 [&:nth-child(2)]:top-2 xs:[&:nth-child(2)]:top-3 [&:nth-child(3)]:top-4 xs:[&:nth-child(3)]:top-6;
+  }
+
+  .open.hamburger-menu-btn > span {
+    @apply first:top-2 xs:first:top-3 first:rotate-[135deg] [&:nth-child(2)]:opacity-0 [&:nth-child(2)]:-left-16 [&:nth-child(3)]:top-2 xs:[&:nth-child(3)]:top-3 [&:nth-child(3)]:-rotate-[135deg];
   }
 }
 
