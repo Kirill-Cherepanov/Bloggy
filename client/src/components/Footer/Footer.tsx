@@ -10,14 +10,14 @@ export default function Footer() {
   });
 
   return (
-    <footer className="bg-secondary-1000 text-main">
-      <div className="SIGNUP px-4 py-5 bg-accent-400 text-secondary-1000">
+    <footer className="bg-secondary-900 text-secondary-200">
+      <div className="SIGNUP max-w-7xl mx-auto px-4 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
         <div className="text-center lg:flex justify-center items-center gap-6">
           <div>
-            <div className="text-2xl font-semibold md:font-bold lg:text-3xl uppercase">
+            <div className="text-2xl xs:text-3xl font-semibold md:font-bold uppercase">
               Sign up now
             </div>
-            <div className="tracking-tight text-sm font-medium md:font-semibold md:text-base lg:text-lg uppercase mb-4 lg:mb-0">
+            <div className="tracking-tight text-sm font-medium md:font-semibold md:text-base xs:text-lg uppercase mb-4 lg:mb-0">
               Become one of our exclusive first members
             </div>
           </div>
@@ -27,14 +27,14 @@ export default function Footer() {
               placeholder="Enter your email adress here"
               className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
             />
-            <button className="bg-secondary-1000 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600">
+            <button className="bg-secondary-900 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600">
               Sign up
             </button>
           </form>
         </div>
       </div>
-      <ul className="px-4 pt-5 hidden sm:flex justify-center gap-3 text-secondary-200 relative">
-        {Array(10)
+      <ul className="max-w-7xl mx-auto px-4 pt-5 lg:pt-8 hidden sm:flex justify-center gap-3 relative flex-wrap">
+        {Array(20)
           .fill('Music')
           .map((v, i) => (
             <li
@@ -60,8 +60,8 @@ export default function Footer() {
           <span className="opacity-0">a{/* needed to measure height*/}</span>
         </li>
       </ul>
-      <div className="py-5 flex flex-col">
-        <ul className="px-4 py-5 border-main border-opacity-20 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light text-secondary-200">
+      <div className="max-w-7xl mx-auto py-5 lg:py-8 flex flex-col">
+        <ul className="px-4 py-5 border-main border-opacity-10 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">
           <li className="hover:text-accent-400">
             <Link className="link" to="/">
               Home
@@ -92,7 +92,7 @@ export default function Footer() {
             {/* Log out */}
           </li>
         </ul>
-        <div className="px-4 mt-5 flex justify-center items-center flex-wrap sm:flex-nowrap">
+        <div className="px-4 mt-5 lg:mt-8 flex justify-center items-center flex-wrap sm:flex-nowrap">
           <div className="text-lg xs:text-xl md:text-2xl font-bold font-space-mono basis-1/3 shrink-0 grow sm:basis-48 sm:shrink-1">
             2022
           </div>
@@ -109,7 +109,7 @@ export default function Footer() {
                 <a href={v[1]} target="_blank" rel="noreferrer">
                   <Icon
                     type={v[0]}
-                    className="h-10 transition-colors fill-main hover:fill-accent-600 mx-2 last:mr-0"
+                    className="h-10 transition-colors fill-secondary-200 hover:fill-accent-600 mx-2 last:mr-0"
                   />
                 </a>
               </li>

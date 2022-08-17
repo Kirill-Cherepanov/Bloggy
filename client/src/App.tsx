@@ -13,7 +13,7 @@ export default function App() {
   const { user } = useContext(Context);
   return (
     <Router>
-      {/* <Topbar /> */}
+      <Topbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/posts" element={<Homepage />} />
