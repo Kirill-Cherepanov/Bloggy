@@ -26,8 +26,8 @@ export default function Home() {
 
   return (
     <>
-      <main className="HOMEPAGE min-h-screen bg-main">
-        {/* <HeroSection bgImage={bgImage} />
+      {/*<main className="min-h-screen bg-main">
+         <HeroSection bgImage={bgImage} />
         <section className="OUR_POSTS px-10">
           <h2 className="font-space-mono text-3xl text-center my-8">
             Our posts
@@ -83,9 +83,9 @@ export default function Home() {
             Popular blogs
           </h2>
           <BlogSwiper mockImage={mockImage} />
-        </section> */}
-        <Footer />
-      </main>
+        </section> 
+      </main>*/}
+      <Footer />
     </>
   );
 }

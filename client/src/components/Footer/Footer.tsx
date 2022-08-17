@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-secondary-900 text-secondary-200">
-      <div className="SIGNUP max-w-7xl mx-auto px-4 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
+      <div className="max-w-7xl mx-auto px-4 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
         <div className="text-center lg:flex justify-center items-center gap-6">
           <div>
             <div className="text-2xl xs:text-3xl font-semibold md:font-bold uppercase">

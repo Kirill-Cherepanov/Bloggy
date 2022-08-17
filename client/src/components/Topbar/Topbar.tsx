@@ -15,7 +15,7 @@ export default function TopBar() {
 
   return (
     <header className="z-10 shadow-xl sticky top-0 bg-secondary-900 text-secondary-200 h-20">
-      <div className="px-2 md:px-8 mx-auto flex justify-center items-center max-w-5xl h-full">
+      <div className="px-2 md:px-8 xl:px-0 mx-auto flex justify-center items-center max-w-7xl h-full">
         <TopbarNavigation
           links={[
             ['Home', '/'],
