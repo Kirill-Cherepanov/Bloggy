@@ -40,13 +40,13 @@ export default function TopbarNavigation({ links }: NavigationProps) {
         <ul
           className={
             (!isOpen ? '-translate-x-screen ' : '') +
-            'absolute top-20 left-0 transition-transform flex flex-col bg-accent-600 w-full'
+            'absolute top-20 left-0 transition-transform flex flex-col bg-secondary-800 w-full'
           }
         >
           {links.map((link, i) => (
             <li
               key={i}
-              className="group text-xl font-medium transition-colors hover:bg-accent-900 hover:text-secondary-200 "
+              className="group text-xl font-medium transition-colors hover:bg-secondary-600 hover:text-secondary-200 "
             >
               <NavLink
                 onClick={toggleHamburger}
@@ -63,7 +63,7 @@ export default function TopbarNavigation({ links }: NavigationProps) {
       </div>
 
       <div className="DESKTOP-MENU hidden lg:block basis-1/2 h-full">
-        <ul className="w-52 h-full flex justify-between gap-3">
+        <ul className="w-52 h-full flex justify-between gap-5 xl:gap-7">
           {links.map((link, i) => (
             <li key={i} className="flex items-center text-xl font-medium]">
               <NavLink

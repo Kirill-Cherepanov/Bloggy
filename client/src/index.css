@@ -7,7 +7,7 @@
 @tailwind utilities;
 
 html {
-  @apply font-lexend text-secondary-1000 overflow-x-hidden;
+  @apply font-lexend text-secondary-1000 overflow-x-hidden selection:bg-opacity-80 selection:bg-accent-900 selection:text-main;
 }
 
 @layer components {
@@ -25,6 +25,23 @@ html {
 }
 
 @layer utilities {
+  .text-blurred {
+    animation: blur 10s ease-in-out 0s infinite both;
+    @apply text-transparent;
+  }
+
+  @keyframes blur {
+    0%, 100% {
+      text-shadow: 0 0 20px #a78bfa;
+      opacity: 0;
+    }
+
+    50% {
+      text-shadow: 0 0 2px #a78bfa;
+      opacity: 1;
+    }
+  }
+
   .hover-bottom-border {
     @apply relative hover:after:w-1/2 after:absolute after:bottom-0 after:left-1/2 after:w-0 after:border-b-2 after:border-b-secondary-200 after:transition-all after:duration-200 hover:before:w-1/2 before:absolute before:bottom-0 before:right-1/2 before:w-0 before:border-b-2 before:border-b-secondary-200 before:transition-all before:duration-200;
   }

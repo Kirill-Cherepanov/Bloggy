@@ -19,7 +19,7 @@ module.exports = {
       colors: {
         main: colors.white,
         secondary: { ...colors.neutral, ...{ 1000: '#000000' } },
-        accent: colors.pink
+        accent: colors.violet
       },
       spacing: {
         100: '25rem'
@@ -33,19 +33,27 @@ module.exports = {
         screen: '100vw'
       },
       animation: {
-        slide: 'slide 1.5s ease-out infinite'
+        slide: 'slide 5s linear infinite',
+        'slow-ping': 'two-way-ping 10s linear infinite'
       },
       keyframes: {
-        slide: {
-          '0%': {
-            transform: 'rotate(-90deg) translate(0, 0)',
-            opacity: 0
+        'two-way-ping': {
+          '0%, 100%': {
+            transform: 'scale(1)',
+            opacity: 1
           },
           '50%': {
+            transform: 'scale(1.5)',
+            opacity: 0
+          }
+        },
+        slide: {
+          '0%': {
+            transform: 'translate(0, 0)',
             opacity: 1
           },
           '100%': {
-            transform: 'rotate(-90deg) translate(-25px, 0px)',
+            transform: 'translate(0, 200px)',
             opacity: 0
           }
         }

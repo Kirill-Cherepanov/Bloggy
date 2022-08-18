@@ -1,8 +1,8 @@
 import HeroSection from '../../components/HeroSection/HeroSection';
-import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
-import SmallPost from '../Posts/SmallPost';
-import LargePost from '../Posts/LargePost';
-import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
+// import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
+// import SmallPost from '../Posts/SmallPost';
+// import LargePost from '../Posts/LargePost';
+// import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
 import Footer from '../../components/Footer/Footer';
 
 // import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ import Footer from '../../components/Footer/Footer';
 // import axios from 'axios';
 
 import bgImage from '../../images/Background-image.webp';
-import mockImage from '../../images/mock-up-image.webp';
+// import mockImage from '../../images/mock-up-image.webp';
 
 export default function Home() {
   // const [posts, setPosts] = useState<Post[]>([]);
@@ -26,9 +26,9 @@ export default function Home() {
 
   return (
     <>
-      {/*<main className="min-h-screen bg-main">
-         <HeroSection bgImage={bgImage} />
-        <section className="OUR_POSTS px-10">
+      <main className="bg-main h-[1200px]">
+        <HeroSection bgImage={bgImage} />
+        {/* <section className="OUR_POSTS px-10">
           <h2 className="font-space-mono text-3xl text-center my-8">
             Our posts
           </h2>
@@ -83,8 +83,8 @@ export default function Home() {
             Popular blogs
           </h2>
           <BlogSwiper mockImage={mockImage} />
-        </section> 
-      </main>*/}
+        </section>  */}
+      </main>
       <Footer />
     </>
   );

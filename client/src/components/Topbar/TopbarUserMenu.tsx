@@ -44,7 +44,7 @@ export default function TopbarUserMenu() {
       >
         <div
           className={
-            'flex flex-col w-60 h-max text-xl font-medium bg-accent-600 ' +
+            'flex flex-col w-60 h-max text-xl font-medium bg-secondary-800 ' +
             (isOpen
               ? ' visible'
               : ' transition-[visibility] duration-[0ms] delay-200 invisible')
@@ -53,7 +53,7 @@ export default function TopbarUserMenu() {
           <NavLink
             onClick={toggleOpen}
             to={'/register'}
-            className="group h-16 flex justify-center items-center transition-colors hover:bg-accent-900 hover:text-secondary-200"
+            className="group h-16 flex justify-center items-center transition-colors hover:bg-secondary-600 hover:text-secondary-200"
           >
             <span className="transition-all inline-block group-hover:scale-110 group-hover:drop-shadow-[-4px_4px_1px_rgba(0,0,0,0.15)]">
               Sign up
@@ -62,7 +62,7 @@ export default function TopbarUserMenu() {
           <NavLink
             onClick={toggleOpen}
             to={'/login'}
-            className="group h-16 flex justify-center items-center transition-colors hover:bg-accent-900 hover:text-secondary-200 border-opacity-10 border-main border-t"
+            className="group h-16 flex justify-center items-center transition-colors hover:bg-secondary-600 hover:text-secondary-200 border-opacity-10 border-main border-t"
           >
             <span className="transition-all inline-block group-hover:scale-110 group-hover:drop-shadow-[-4px_4px_1px_rgba(0,0,0,0.15)]">
               Log in
