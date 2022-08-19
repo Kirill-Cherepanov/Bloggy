@@ -93,10 +93,10 @@ export default function Footer() {
           </li>
         </ul>
         <div className="px-4 md:px-8 mt-5 lg:mt-8 flex justify-center items-center flex-wrap sm:flex-nowrap">
-          <div className="text-lg xs:text-xl md:text-2xl font-bold font-space-mono basis-1/3 shrink-0 grow sm:basis-48 sm:shrink-1">
+          <div className="text-lg xs:text-xl md:text-2xl font-bold font-display basis-1/3 shrink-0 grow sm:basis-48 sm:shrink-1">
             2022
           </div>
-          <div className="text-lg xs:text-xl md:text-2xl font-bold font-space-mono basis-2/3 shrink-0 grow sm:basis-48 sm:shrink-1 text-right sm:text-center">
+          <div className="text-lg xs:text-xl md:text-2xl font-bold font-display basis-2/3 shrink-0 grow sm:basis-48 sm:shrink-1 text-right sm:text-center">
             Kirill Cherepanov
           </div>
           <ul className="flex justify-center basis-1/2 shrink-0 grow sm:basis-48 sm:shrink-1 mt-5 sm:justify-end sm:mt-0">

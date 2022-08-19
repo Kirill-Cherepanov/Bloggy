@@ -16,10 +16,10 @@ export default function HeroSection({ bgImage }: Props) {
           type="heart"
           className="fill-accent-300 w-full pointer-events-none select-none"
         />
-        <div className="hidden sm:block font-bold absolute w-max pointer-events-none select-none uppercase rotate-[35deg] top-16 sm:top-36 sm:left-[3%] md:left-[5%] md:top-44 lg:top-60 xl:left-[13%] sm:text-blurred text-2xl xs:text-4xl sm:text-5xl md:text-7xl border-x-slate-700:text-[90px]">
+        <div className="hidden sm:block font-display font-bold absolute w-max pointer-events-none select-none uppercase rotate-[35deg] top-16 sm:top-36 sm:left-[3%] md:left-[5%] md:top-44 lg:top-60 xl:left-[15%] sm:text-blurred text-2xl xs:text-4xl sm:text-5xl md:text-7xl">
           Open Yourself
           <br />
-          <span className="ml-12 xl:ml-28">to the World</span>
+          <span className="ml-12 xl:ml-20">to the World</span>
         </div>
       </div>
       <Icon
@@ -28,10 +28,10 @@ export default function HeroSection({ bgImage }: Props) {
       />
       <div className="max-w-7xl w-full z-10 px-4 xs:px-8 sm:px-20">
         <div className="w-full my-14 xs:my-16 sm:my-44">
-          <button className="hidden sm:block uppercase text-lg border-secondary-1000 hover:border-b-2 hover:-mb-0.5">
+          <button className="hidden sm:block uppercase text-lg hover-bottom-border-left">
             Learn more
           </button>
-          <h1 className="text-3xl xs:text-5xl text-center sm:text-left md:text-6xl xl:text-7xl font-bold my-3  min-w-max uppercase">
+          <h1 className="font-display text-3xl xs:text-5xl text-center sm:text-left md:text-6xl xl:text-7xl font-bold my-3  min-w-max uppercase">
             Open Yourself
             <br />
             to the World
@@ -40,7 +40,7 @@ export default function HeroSection({ bgImage }: Props) {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
             asperiores aperiam rem ipsum?
           </p>
-          <button className="flex justify-center items-center w-full sm:w-44 py-4 font-medium bg-accent-600 transition-all rounded-sm hover:bg-accent-700 text-main hover:tracking-widest hover:w-52 group">
+          <button className="flex justify-center items-center w-full sm:w-44 py-4 font-bold bg-accent-600 transition-all rounded-sm hover:bg-accent-700 text-main hover:tracking-widest hover:w-52 group">
             Sign up
             <Icon
               type="arrow"

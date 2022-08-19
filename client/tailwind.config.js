@@ -26,7 +26,7 @@ module.exports = {
       },
       fontFamily: {
         lexend: ["'Lexend'", 'sans-serif'],
-        'space-mono': ["'Space Mono'", 'monospace'],
+        display: ["'Montserrat'", 'sans-serif'],
         sansita: 'Sansita Swashed, cursive'
       },
       translate: {

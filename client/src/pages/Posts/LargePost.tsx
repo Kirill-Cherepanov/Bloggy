@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import formatDate from '../../utility/formatDate';
 
 type Props = { mockImage: string; className?: string; textBoxClass?: string };
 
@@ -41,28 +42,28 @@ export default function LargePost({
       />
       <div
         className={
-          'flex flex-col absolute bg-opacity-40 bg-black shadow-lg text-white px-6 py-4 md:px-8 ' +
+          'flex flex-col absolute bg-opacity-40 bg-black shadow-lg text-white px-4 py-4 xs:px-6 md:px-8 ' +
           (textBoxClass || '')
         }
       >
-        <h4 className="basis-[max-content] shrink-0 text-ellipsis line-clamp-5 font-bold cursor-pointer mb-2 hover:underline text-xl md:text-3xl">
-          This box is designed the same
+        <h4 className="basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold cursor-pointer xl:mb-2 hover:underline text-2xl md:text-3xl">
+          This box is designed the same way way way
         </h4>
         <div className="basis-0 shrink grow mb-3 min-h-0" ref={textBoxRef}>
           <p
-            className="font-extralight line-clamp-3 text-sm md:text-base"
+            className="font-extralight line-clamp-3 text-base"
             style={{ WebkitLineClamp: amountOfLines }}
           >
             {amountOfLines ? mainText : ''}
           </p>
         </div>
-        <div className="mt-auto">
+        <div className="mt-auto text-sm sm:text-base">
           {'By '}
           <span className="cursor-pointer text-orange-600 font-bold hover:underline">
             KissMyUSSR
           </span>
-          <span className="font-extralight text-sm md:text-base">
-            {' | ' + new Date(0).toDateString()}
+          <span className=" font-extralight text-sm md:text-base">
+            {' | ' + formatDate(new Date(Date.now()))}
           </span>
         </div>
       </div>

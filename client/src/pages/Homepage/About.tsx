@@ -3,7 +3,7 @@ export default function About() {
     <div>
       {/* <ul className="flex flex-col mt-20 max-w-sm">
     <li className="mb-6">
-      <h3 className="font-space-mono text-xl font-bold">
+      <h3 className="font-display text-xl font-bold">
         Find your audience
       </h3>
       <p className="text-justify">
@@ -11,7 +11,7 @@ export default function About() {
       </p>
     </li>
     <li className="mb-6">
-      <h3 className="font-space-mono text-xl font-bold">
+      <h3 className="font-display text-xl font-bold">
         Share your knowledge
       </h3>
       <p className="text-justify">
@@ -20,7 +20,7 @@ export default function About() {
       </p>
     </li>
     <li className="">
-      <h3 className="font-space-mono text-xl font-bold">
+      <h3 className="font-display text-xl font-bold">
         Turn your thoughts into posts
       </h3>
       <p className="text-justify">

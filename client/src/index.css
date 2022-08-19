@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@200;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@400&display=swap');
 
@@ -42,8 +42,12 @@ html {
     }
   }
 
+  .hover-bottom-border-left {
+    @apply relative hover:after:w-full after:absolute after:bottom-0 after:left-0 after:w-0 after:border-b-2 after:border-b-secondary-1000 after:transition-all;
+  }
+
   .hover-bottom-border {
-    @apply relative hover:after:w-1/2 after:absolute after:bottom-0 after:left-1/2 after:w-0 after:border-b-2 after:border-b-secondary-200 after:transition-all after:duration-200 hover:before:w-1/2 before:absolute before:bottom-0 before:right-1/2 before:w-0 before:border-b-2 before:border-b-secondary-200 before:transition-all before:duration-200;
+    @apply relative hover:after:w-1/2 after:absolute after:bottom-0 after:left-1/2 after:w-0 after:border-b-2 after:border-b-secondary-200 after:transition-all after:duration-200 hover:before:w-1/2 before:absolute before:bottom-0 before:right-1/2 before:w-0 before:border-b-2 before:border-b-secondary-200 before:transition-all;
   }
 
   .clip-parallelogram-right {

@@ -6,10 +6,8 @@ type Props = {
   mockImage: string;
 };
 
-type Position = { x: number; y: number };
-
 export default function ParallelogramCurtains({ mockImage }: Props) {
-  const [zoomedPos, setZoomedPos] = useState<Position | undefined>();
+  const [zoomedXPos, setZoomedXPos] = useState<number | undefined>();
   return (
     <ul className="flex w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear">
       {Array(5)
@@ -34,16 +32,17 @@ export default function ParallelogramCurtains({ mockImage }: Props) {
                   <img
                     src={mockImage}
                     alt="Post"
-                    onMouseMove={(e) => setZoomedPos(getRelativeCursorPos(e))}
+                    onMouseMove={(e) =>
+                      setZoomedXPos(getRelativeCursorPos(e).x)
+                    }
                     className={
                       'object-cover object-center h-full' +
                       (isMobile()
                         ? ''
-                        : ' transition-transform duration-200 ease-out group-hover:scale-125')
+                        : ' transition-transform duration-200 ease-out group-hover:scale-110')
                     }
                     style={{
-                      transformOrigin:
-                        zoomedPos && `${zoomedPos.x}px ${zoomedPos.y}px`
+                      transformOrigin: zoomedXPos && `${zoomedXPos}px center`
                     }}
                   />
                 </div>
