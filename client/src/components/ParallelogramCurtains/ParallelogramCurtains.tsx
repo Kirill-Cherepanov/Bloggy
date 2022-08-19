@@ -17,7 +17,7 @@ export default function ParallelogramCurtains({ mockImage }: Props) {
             key={i}
             className="group min-w-0 basis-1/5 hover:basis-[calc(20%+210px)] transition-[flex-basis] duration-200 ease-linear"
           >
-            <div className="cursor-pointer w-[calc(100%+120px)] h-100">
+            <div className="cursor-pointer w-[calc(100%+120px)]">
               <div
                 className={
                   'overflow-hidden w-full h-80 ' +
@@ -47,18 +47,21 @@ export default function ParallelogramCurtains({ mockImage }: Props) {
                   />
                 </div>
               </div>
-              <h3
+              <h4
                 className={
-                  'w-full text-center transition-[padding] duration-200 ease-linear' +
-                  (i === 0
-                    ? ' pr-[60px] group-hover:pl-[60px] group-hover:pr-[120px]'
-                    : i === 4
-                    ? ' group-hover:pl-[60px] group-hover:pr-[60px]'
-                    : ' pr-[60px] group-hover:pl-[75px] group-hover:pr-[105px]')
+                  'w-full text-center transition-[padding] duration-200 ease-linear pr-[60px] group-hover:pl-[75px] group-hover:pr-[105px] group-first:pr-[60px] group-first:group-hover:pl-[60px] group-first:group-hover:pr-[120px] group-last:pr-0 group-last:group-hover:pl-[60px] group-last:group-hover:pr-[60px]'
                 }
               >
-                Please don't judge this component. It was tough making it
-              </h3>
+                <div className="relative">
+                  <div className="pt-4 text-ellipsis line-clamp-3 font-display font-bold text-lg">
+                    Please don't judge this component. It was tough making it.
+                    LOOOOOOO OOOOOOOO OOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOONG
+                  </div>
+                  <div className="absolute p-1 top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center bg-accent-400 font-display uppercase text-sm font-bold">
+                    Science
+                  </div>
+                </div>
+              </h4>
             </div>
           </li>
         ))}

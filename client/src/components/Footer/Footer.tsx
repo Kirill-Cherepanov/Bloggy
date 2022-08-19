@@ -11,7 +11,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-secondary-900 text-secondary-200 z-10 relative">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
+      <div className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
         <div className="text-center lg:flex justify-center items-center gap-6">
           <div>
             <div className="text-2xl xs:text-3xl font-semibold md:font-bold uppercase">
@@ -33,7 +33,7 @@ export default function Footer() {
           </form>
         </div>
       </div>
-      <ul className="max-w-7xl mx-auto px-4 md:px-8 pt-5 lg:pt-8 hidden sm:flex justify-center gap-3 relative flex-wrap">
+      <ul className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 pt-5 lg:pt-8 hidden sm:flex justify-center gap-3 relative flex-wrap">
         {Array(20)
           .fill('Music')
           .map((v, i) => (
@@ -61,7 +61,7 @@ export default function Footer() {
         </li>
       </ul>
       <div className="max-w-7xl mx-auto py-5 lg:py-8 flex flex-col">
-        <ul className="px-4 md:px-8 py-5 border-main border-opacity-10 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">
+        <ul className="px-4 xs:px-8 sm:px-12 md:px-20 py-5 border-main border-opacity-10 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">
           <li className="hover:text-accent-400">
             <Link className="link" to="/">
               Home
@@ -92,7 +92,7 @@ export default function Footer() {
             {/* Log out */}
           </li>
         </ul>
-        <div className="px-4 md:px-8 mt-5 lg:mt-8 flex justify-center items-center flex-wrap sm:flex-nowrap">
+        <div className="px-4 xs:px-8 sm:px-12 md:px-20 mt-5 lg:mt-8 flex justify-center items-center flex-wrap sm:flex-nowrap">
           <div className="text-lg xs:text-xl md:text-2xl font-bold font-display basis-1/3 shrink-0 grow sm:basis-48 sm:shrink-1">
             2022
           </div>

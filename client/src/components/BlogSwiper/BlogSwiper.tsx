@@ -47,7 +47,7 @@ export default function BlogSwiper({ mockImage }: Props) {
           .fill(0)
           .map((v, i) => (
             <SwiperSlide key={i} className="py-4">
-              <div className="px-4 py-2 bg-accent-50 shadow-lg hover:scale-105 xs:mx-5">
+              <div className="px-4 py-2 bg-accent-50 shadow-lg transition-transform hover:scale-105 xs:mx-5 rounded-md">
                 <img
                   src={mockImage}
                   alt="Blogger"

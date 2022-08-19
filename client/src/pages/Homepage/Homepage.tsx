@@ -42,13 +42,11 @@ export default function Home() {
               ))}
           </ul>
         </section> */}
-        {/* <section className="OUR_POSTS px-4 xs:px-8 sm:px-12 md:px-20">
-          <h2 className="font-display text-3xl text-center my-8">
-            Our posts
-          </h2>
+        <section className="OUR_POSTS px-4 xs:px-8 sm:px-12 md:px-20">
+          <h2 className="font-display text-3xl text-center my-8">Our posts</h2>
           <ParallelogramCurtains mockImage={mockImage} />
-        </section> */}
-        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
+        </section>
+        {/* <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Music</h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
@@ -62,14 +60,14 @@ export default function Home() {
                 <SmallPost key={i} mockImage={mockImage} />
               ))}
           </ul>
-        </section>
+        </section> */}
         {/* <section className="BLOGS px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">
             Popular blogs
           </h2>
           <BlogSwiper mockImage={mockImage} />
         </section> */}
-        <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20">
+        {/* <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Science</h2>
           <ul className="grid lg:grid-rows-2 lg:grid-cols-2 gap-4 lg:gap-10 lg:grid-squared">
             {Array(4)
@@ -97,7 +95,7 @@ export default function Home() {
                 />
               ))}
           </ul>
-        </section>
+        </section> */}
       </main>
     </>
   );
