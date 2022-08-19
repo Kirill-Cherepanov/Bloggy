@@ -25,7 +25,7 @@ export default function SmallPost({ mockImage }: Props) {
   }, []);
 
   return (
-    <li className="flex h-48 transition-transform py-4 border-y lg:py-0 lg:border-y-0 lg:bg-accent-50 lg:shadow-lg hover:scale-105">
+    <li className="flex h-48 lg:h-40 transition-transform py-4 border-y lg:py-0 lg:border-y-0 lg:bg-accent-50 lg:shadow-lg hover:scale-105">
       <img
         src={mockImage}
         alt="Post"
