@@ -44,7 +44,10 @@ export default function Home() {
         </section> */}
         <section className="OUR_POSTS px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Our posts</h2>
-          <ParallelogramCurtains mockImage={mockImage} />
+          <ParallelogramCurtains
+            mockImage={mockImage}
+            className="hidden lg:flex"
+          />
         </section>
         {/* <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Music</h2>

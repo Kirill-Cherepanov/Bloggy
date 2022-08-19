@@ -4,18 +4,24 @@ import isMobile from '../../utility/isMobile';
 
 type Props = {
   mockImage: string;
+  className?: string;
 };
 
-export default function ParallelogramCurtains({ mockImage }: Props) {
+export default function ParallelogramCurtains({ mockImage, className }: Props) {
   const [zoomedXPos, setZoomedXPos] = useState<number | undefined>();
   return (
-    <ul className="flex w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear">
+    <ul
+      className={
+        'flex justify-between w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear pointer-events-none ' +
+        (className || '')
+      }
+    >
       {Array(5)
         .fill(0)
         .map((v, i) => (
           <li
             key={i}
-            className="group min-w-0 basis-1/5 hover:basis-[calc(20%+210px)] transition-[flex-basis] duration-200 ease-linear"
+            className="pointer-events-auto group min-w-0 basis-[calc(20%-72px)] hover:basis-[calc(20%+48px)] transition-[flex-basis] duration-200 ease-linear"
           >
             <div className="cursor-pointer w-[calc(100%+120px)]">
               <div
