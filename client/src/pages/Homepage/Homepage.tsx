@@ -48,7 +48,7 @@ export default function Home() {
           </h2>
           <ParallelogramCurtains mockImage={mockImage} />
         </section> */}
-        {/* <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
+        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Music</h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
@@ -62,7 +62,7 @@ export default function Home() {
                 <SmallPost key={i} mockImage={mockImage} />
               ))}
           </ul>
-        </section> */}
+        </section>
         {/* <section className="BLOGS px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">
             Popular blogs
@@ -71,14 +71,29 @@ export default function Home() {
         </section> */}
         <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Science</h2>
-          <ul className="grid grid-rows-2 grid-cols-2 gap-10 before:content-[''] before:w-0 before:pb-[65%] before:row-start-1 before:row-end-1 before:col-start-1 before:col-end-1 [&>*:first-child]:row-start-1 [&>*:first-child]:row-end-1 [&>*:first-child]:col-start-1 [&>*:first-child]:col-end-1 ">
+          <ul className="grid lg:grid-rows-2 lg:grid-cols-2 gap-4 lg:gap-10 lg:grid-squared">
             {Array(4)
               .fill(0)
               .map((v, i) => (
                 <LargePost
                   key={i}
                   mockImage={mockImage}
+                  className="hidden lg:block"
                   textBoxClass="bottom-0 w-5/6 h-full max-h-64"
+                />
+              ))}
+            <LargePost
+              mockImage={mockImage}
+              className="row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
+              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48"
+            />
+            {Array(3)
+              .fill(0)
+              .map((v, i) => (
+                <SmallPost
+                  key={i}
+                  mockImage={mockImage}
+                  className="block lg:hidden"
                 />
               ))}
           </ul>

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import formatDate from '../../utility/formatDate';
 
-type Props = { mockImage: string };
+type Props = { mockImage: string; className?: string };
 
-export default function SmallPost({ mockImage }: Props) {
+export default function SmallPost({ mockImage, className }: Props) {
   const mainText =
     'A somewhat long description of the post, or rather the main content of the post that I will need to somehow edit based on the amount of free space I have and more and more and more and more and more and more and more and more text';
   const [amountOfLines, setAmountOfLines] = useState(0);
@@ -25,7 +25,12 @@ export default function SmallPost({ mockImage }: Props) {
   }, []);
 
   return (
-    <li className="flex h-48 lg:h-40 transition-transform py-4 border-y lg:py-0 lg:border-y-0 lg:bg-accent-50 lg:shadow-lg hover:scale-105">
+    <li
+      className={
+        'flex h-48 lg:h-40 transition-transform py-4 border-y last:border-b-0 lg:py-0 lg:border-y-0 lg:bg-accent-50 lg:shadow-lg hover:scale-105 ' +
+        (className || '')
+      }
+    >
       <img
         src={mockImage}
         alt="Post"
