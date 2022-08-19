@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import formatDate from '../../utility/formatDate';
 
 type Props = { mockImage: string };
 
@@ -24,15 +25,16 @@ export default function SmallPost({ mockImage }: Props) {
   }, []);
 
   return (
-    <li className="flex h-40 transition-transform bg-orange-50 shadow-lg hover:scale-105">
+    <li className="flex h-48 transition-transform py-4 border-y lg:py-0 lg:border-y-0 lg:bg-accent-50 lg:shadow-lg hover:scale-105">
       <img
         src={mockImage}
         alt="Post"
         className="object-cover cursor-pointer h-40 w-28 md:w-32 lg:w-40"
       />
-      <div className="px-5 py-2 flex flex-col">
-        <h4 className="basis-[max-content] shrink-0 line-clamp-4 font-bold cursor-pointer mb-1 hover:underline text-lg md:text-xl">
-          This box is designed the
+      <div className="px-4 lg:px-5 lg:py-2 flex flex-col">
+        <h4 className="font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-bold cursor-pointer mb-1 hover:underline text-lg md:text-xl">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga
+          pariatur iure at itaque eos, omnis quis aliquam qui minus optio.
         </h4>
         <div ref={textBoxRef} className="grow min-h-0">
           <p
@@ -42,14 +44,14 @@ export default function SmallPost({ mockImage }: Props) {
             {amountOfLines ? mainText : ''}
           </p>
         </div>
-        <div className="mt-auto text-text-600 flex flex-col md:block">
-          <span className="hidden md:inline">By </span>
-          <span className="cursor-pointer text-orange-600 font-bold hover:underline">
+        <div className="mt-auto text-text-600 flex flex-col xs:block">
+          <span className="hidden xs:inline">By </span>
+          <span className="cursor-pointer text-accent-600 font-bold hover:underline">
             {'KissMyUSSR '}
           </span>
           <span className="font-light text-sm md:text-base">
-            <span className="hidden md:inline"> | </span>
-            {new Date(0).toDateString()}
+            <span className="hidden xs:inline"> | </span>
+            {formatDate(new Date(Date.now()))}
           </span>
         </div>
       </div>

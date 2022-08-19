@@ -26,7 +26,7 @@ export default function HeroSection({ bgImage }: Props) {
         type="heart"
         className="sm:hidden fill-accent-500 absolute top-16 right-0 w-1/3 pointer-events-none select-none animate-slow-ping"
       />
-      <div className="max-w-7xl w-full z-10 px-4 xs:px-8 sm:px-20">
+      <div className="max-w-7xl w-full z-10 px-4 xs:px-8 sm:px-12 md:px-20">
         <div className="w-full my-14 xs:my-16 sm:my-44">
           <button className="hidden sm:block uppercase text-lg hover-bottom-border-left">
             Learn more

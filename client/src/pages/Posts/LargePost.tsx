@@ -59,7 +59,7 @@ export default function LargePost({
         </div>
         <div className="mt-auto text-sm sm:text-base">
           {'By '}
-          <span className="cursor-pointer text-orange-600 font-bold hover:underline">
+          <span className="cursor-pointer text-accent-600 font-bold hover:underline">
             KissMyUSSR
           </span>
           <span className=" font-extralight text-sm md:text-base">

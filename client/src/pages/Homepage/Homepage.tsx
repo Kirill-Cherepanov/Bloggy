@@ -27,7 +27,7 @@ export default function Home() {
     <>
       <main className="bg-main">
         <HeroSection bgImage={bgImage} />
-        <section className="SPORT px-4 xs:px-8 sm:px-20">
+        <section className="SPORT px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Sport</h2>
           <ul className="grid grid-rows-3 gap-0 lg:grid-cols-2 lg:gap-10">
             <LargePost
@@ -42,13 +42,13 @@ export default function Home() {
               ))}
           </ul>
         </section>
-        {/* <section className="OUR_POSTS px-4 xs:px-8 sm:px-20">
+        {/* <section className="OUR_POSTS px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">
             Our posts
           </h2>
           <ParallelogramCurtains mockImage={mockImage} />
         </section>
-        <section className="MUSIC px-4 xs:px-8 sm:px-20">
+        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Music</h2>
           <ul className="grid grid-rows-3 grid-cols-2 gap-10">
             {Array(3)
@@ -63,14 +63,14 @@ export default function Home() {
             />
           </ul>
         </section>
-        <section className="BLOGS px-4 xs:px-8 sm:px-20">
+        <section className="BLOGS px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">
             Popular blogs
           </h2>
           <BlogSwiper mockImage={mockImage} />
         </section>
 
-        <section className="SCIENCE px-4 xs:px-8 sm:px-20">
+        <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Science</h2>
           <ul className="grid grid-rows-2 grid-cols-2 gap-10 before:content-[''] before:w-0 before:pb-[65%] before:row-start-1 before:row-end-1 before:col-start-1 before:col-end-1 [&>*:first-child]:row-start-1 [&>*:first-child]:row-end-1 [&>*:first-child]:col-start-1 [&>*:first-child]:col-end-1 ">
             {Array(4)
