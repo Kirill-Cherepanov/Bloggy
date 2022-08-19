@@ -22,6 +22,7 @@ export default function LargePost({
     };
     window.addEventListener('resize', setLines);
     setLines();
+    setTimeout(setLines, 500);
 
     return () => {
       window.removeEventListener('resize', setLines);
@@ -29,12 +30,7 @@ export default function LargePost({
   }, []);
 
   return (
-    <li
-      className={
-        'relative shadow-lg transition-transform hover:scale-105 ' +
-        (className || '')
-      }
-    >
+    <li className={'relative shadow-lg ' + (className || '')}>
       <img
         src={mockImage}
         alt="Post"

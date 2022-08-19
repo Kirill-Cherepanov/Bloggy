@@ -30,7 +30,7 @@ export default function BlogSwiper({ mockImage }: Props) {
     <div className="w-full flex items-center">
       <Icon
         type="angle"
-        className="BLOG_SWIPER_PREV_ELEMENT text-stone-600 shrink-0 basis-8 xs:basis-10"
+        className="BLOG_SWIPER_PREV_ELEMENT text-secondary-800 shrink-0 basis-8 xs:basis-10"
       />
       <Swiper
         slidesPerView={slidesAmount}
@@ -81,7 +81,7 @@ export default function BlogSwiper({ mockImage }: Props) {
       </Swiper>
       <Icon
         type="angle"
-        className="BLOG_SWIPER_NEXT_ELEMENT text-stone-600 rotate-180 shrink-0 basis-8 xs:basis-10"
+        className="BLOG_SWIPER_NEXT_ELEMENT text-secondary-800 rotate-180 shrink-0 basis-8 xs:basis-10"
       />
     </div>
   );

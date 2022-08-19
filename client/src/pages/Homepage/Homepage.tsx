@@ -3,6 +3,7 @@ import ParallelogramCurtains from '../../components/ParallelogramCurtains/Parall
 import SmallPost from '../Posts/SmallPost';
 import LargePost from '../Posts/LargePost';
 import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
+import PostSwiper from '../../components/PostSwiper/PostSwiper';
 
 // import { useEffect, useState } from 'react';
 // import { useLocation } from 'react-router';
@@ -27,12 +28,12 @@ export default function Home() {
     <>
       <main className="bg-main">
         <HeroSection bgImage={bgImage} />
-        {/* <section className="SPORT px-4 xs:px-8 sm:px-12 md:px-20">
+        <section className="SPORT px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Sport</h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
               mockImage={mockImage}
-              className="row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
+              className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
             />
             {Array(3)
@@ -41,20 +42,24 @@ export default function Home() {
                 <SmallPost key={i} mockImage={mockImage} />
               ))}
           </ul>
-        </section> */}
-        <section className="OUR_POSTS px-4 xs:px-8 sm:px-12 md:px-20">
-          <h2 className="font-display text-3xl text-center my-8">Our posts</h2>
-          <ParallelogramCurtains
-            mockImage={mockImage}
-            className="hidden lg:flex"
-          />
         </section>
-        {/* <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
+        <section className="OUR_POSTS lg:px-20">
+          <h2 className="font-display text-3xl text-center my-8">Our posts</h2>
+          {window.innerWidth < 1024 ? (
+            <PostSwiper mockImage={mockImage} className="lg:hidden" />
+          ) : (
+            <ParallelogramCurtains
+              mockImage={mockImage}
+              className="hidden lg:flex"
+            />
+          )}
+        </section>
+        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Music</h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
               mockImage={mockImage}
-              className="row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
+              className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
             />
             {Array(3)
@@ -63,14 +68,14 @@ export default function Home() {
                 <SmallPost key={i} mockImage={mockImage} />
               ))}
           </ul>
-        </section> */}
-        {/* <section className="BLOGS px-4 xs:px-8 sm:px-12 md:px-20">
+        </section>
+        <section className="BLOGS px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">
             Popular blogs
           </h2>
           <BlogSwiper mockImage={mockImage} />
-        </section> */}
-        {/* <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20">
+        </section>
+        <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20">
           <h2 className="font-display text-3xl text-center my-8">Science</h2>
           <ul className="grid lg:grid-rows-2 lg:grid-cols-2 gap-4 lg:gap-10 lg:grid-squared">
             {Array(4)
@@ -79,13 +84,13 @@ export default function Home() {
                 <LargePost
                   key={i}
                   mockImage={mockImage}
-                  className="hidden lg:block"
+                  className="transition-transform hover:scale-105 hidden lg:block"
                   textBoxClass="bottom-0 w-5/6 h-full max-h-64"
                 />
               ))}
             <LargePost
               mockImage={mockImage}
-              className="row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
+              className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48"
             />
             {Array(3)
@@ -98,7 +103,7 @@ export default function Home() {
                 />
               ))}
           </ul>
-        </section> */}
+        </section>
       </main>
     </>
   );

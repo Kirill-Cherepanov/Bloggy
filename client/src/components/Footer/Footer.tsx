@@ -40,9 +40,6 @@ export default function Footer() {
             <li
               key={i}
               onMouseOver={(e) => {
-                // const { width, top, left } =
-                //   e.currentTarget.getBoundingClientRect();
-
                 const width = e.currentTarget.getBoundingClientRect().width;
                 const left = e.currentTarget.offsetLeft;
                 const top = e.currentTarget.offsetTop;
