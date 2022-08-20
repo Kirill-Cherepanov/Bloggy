@@ -63,7 +63,7 @@ export default function ParallelogramCurtains({ mockImage, className }: Props) {
                     Please don't judge this component. It was tough making it.
                     LOOOOOOO OOOOOOOO OOOOOOOOOOOOOOOOOOOOOO OOOOOOOOOOONG
                   </div>
-                  <div className="absolute p-1 top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center bg-accent-400 font-display uppercase text-sm font-bold">
+                  <div className="absolute p-1 top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center bg-secondary-800 text-main font-display uppercase text-sm font-bold">
                     Science
                   </div>
                 </div>

@@ -30,7 +30,7 @@ html {
   }
 
   .text-blurred {
-    animation: blur 10s ease-in-out 0s infinite both;
+    animation: blur 8s ease-in-out 0s infinite both;
     @apply text-transparent;
   }
 

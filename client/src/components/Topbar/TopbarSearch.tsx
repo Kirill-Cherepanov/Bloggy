@@ -1,4 +1,4 @@
-import Icon from '../Icon';
+import Icon from '../Icon/Icon';
 import { useEffect, useRef, useState } from 'react';
 
 export default function TopbarSearch() {

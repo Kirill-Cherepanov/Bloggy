@@ -1,4 +1,4 @@
-import Icon from '../Icon';
+import Icon from '../Icon/Icon';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import Icon from '../Icon';
+import Icon from '../Icon/Icon';
 
 export default function TopbarUserMenu() {
   const [isOpen, setIsOpen] = useState(false);
