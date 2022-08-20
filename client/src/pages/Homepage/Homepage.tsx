@@ -4,8 +4,7 @@ import SmallPost from '../Posts/SmallPost';
 import LargePost from '../Posts/LargePost';
 import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
 import PostSwiper from '../../components/PostSwiper/PostSwiper';
-import Wave from '../../components/Wave/Wave';
-import Icon from '../../components/Icon/Icon';
+import BgTransition from '../../components/BgTransition/BgTransition';
 
 import mockImage from '../../images/mock-up-image.webp';
 import { useEffect, useState } from 'react';
@@ -59,16 +58,7 @@ export default function Home() {
               ))}
           </ul>
         </section>
-        <div className="h-44 w-full flex items-end relative pointer-events-none">
-          <Icon
-            type="basketball"
-            className="absolute top-0 left-1/2 -translate-x-1/2 fill-accent-500 h-12"
-          />
-          <Wave
-            type="double"
-            className="w-full h-[calc(100%-48px)] bg-accent-500 fill-main"
-          />
-        </div>
+        <BgTransition type="sport" />
         <section className="OUR_POSTS pb-5 bg-accent-500">
           <div className="lg:px-20 max-w-7xl mx-auto">
             <h2 className="font-display font-bold text-3xl text-center mb-8">
@@ -84,8 +74,7 @@ export default function Home() {
             )}
           </div>
         </section>
-        <Wave type="layered" className="w-full h-52 pointer-events-none" />
-
+        <BgTransition type="our-posts" />
         <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
           <h2 className="font-display font-bold text-3xl text-center my-8">
             Science
@@ -117,16 +106,7 @@ export default function Home() {
               ))}
           </ul>
         </section>
-        <div className="h-44 w-full flex items-end relative pointer-events-none">
-          <Icon
-            type="flask"
-            className="absolute top-0 left-1/2 -translate-x-1/2 fill-accent-500 text-secondary-900 h-14"
-          />
-          <Wave
-            type="double"
-            className="w-full h-[calc(100%-56px)] bg-accent-500 fill-main"
-          />
-        </div>
+        <BgTransition type="science" />
         <section className="BLOGS bg-accent-500">
           <div className="px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
             <h2 className="font-display font-bold text-3xl text-center pt-8 pb-4">
@@ -135,11 +115,8 @@ export default function Home() {
             <BlogSwiper mockImage={mockImage} />
           </div>
         </section>
-        <Wave
-          type="two-layered"
-          className="w-full h-20 pointer-events-none rotate-180"
-        />
-        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
+        <BgTransition type="popular-blogs" />
+        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto py-16">
           <h2 className="font-display font-bold text-3xl text-center my-8">
             Music
           </h2>
@@ -156,45 +133,7 @@ export default function Home() {
               ))}
           </ul>
         </section>
-        <div className="w-full pointer-events-none mt-20 relative">
-          <div className="w-full max-w-7xl mx-auto px-20">
-            <Icon
-              type="musical-key"
-              className="absolute z-20 top-0 h-24 fill-secondary-800"
-            />
-          </div>
-          {(() => {
-            const notesPositions = [
-              ['7%', '74%'],
-              ['56%', '18%'],
-              ['32%', '95%'],
-              ['78%', '62%'],
-              ['22%', '41%'],
-              ['88%', '11%']
-            ];
-            return Array(6)
-              .fill(0)
-              .map((v, i) => (
-                <div
-                  key={i}
-                  className="relative w-full h-5 border-b-2 last:border-b-0 group border-accent-500"
-                >
-                  <div className="relative w-[calc(100%-160px)] flex items-end h-full max-w-[1120px] mx-auto">
-                    <Icon
-                      type="note-1"
-                      className="h-10 relative fill-secondary-800"
-                      style={{ left: notesPositions[i][0] }}
-                    ></Icon>
-                    <Icon
-                      type="note-2"
-                      className="h-10 relative fill-secondary-800"
-                      style={{ left: notesPositions[i][1] }}
-                    ></Icon>
-                  </div>
-                </div>
-              ));
-          })()}
-        </div>
+        <BgTransition type="music" />
       </main>
     </>
   );
