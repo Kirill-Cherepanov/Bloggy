@@ -16,13 +16,18 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth < 1024);
   useEffect(() => {
-    const updateIsLargeScreen = () =>
-      setIsLargeScreen(window.innerWidth < 1024);
+    const updateIsLargeScreen = (e: MediaQueryListEvent) => {
+      setIsLargeScreen(e.matches);
+    };
 
-    window.addEventListener('resize', updateIsLargeScreen);
+    window
+      .matchMedia('(max-width: 1024px)')
+      .addEventListener('change', updateIsLargeScreen);
 
     return () => {
-      window.removeEventListener('resize', updateIsLargeScreen);
+      window
+        .matchMedia('(max-width: 1024px)')
+        .removeEventListener('change', updateIsLargeScreen);
     };
   }, []);
 
@@ -41,25 +46,31 @@ export default function Home() {
     <>
       <main className="bg-main">
         <HeroSection />
-        <section className="SPORT pt-6 pb-12 px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
+        <section className="SPORT px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto mt-6 mb-8">
           <h2 className="font-display font-bold text-3xl text-center mb-10">
             Sport
           </h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
               mockImage={mockImage}
+              color="#f97316"
               className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
             />
             {Array(3)
               .fill(0)
               .map((v, i) => (
-                <SmallPost key={i} mockImage={mockImage} />
+                <SmallPost
+                  key={i}
+                  color="#f97316"
+                  bgColor="#fef0e6"
+                  mockImage={mockImage}
+                />
               ))}
           </ul>
         </section>
         <BgTransition type="sport" />
-        <section className="OUR_POSTS pb-5 bg-accent-500">
+        <section className="OUR_POSTS xs:pb-4 sm:pb-8 bg-accent-500">
           <div className="lg:px-20 max-w-7xl mx-auto">
             <h2 className="font-display font-bold text-3xl text-center mb-8">
               Our posts
@@ -75,7 +86,7 @@ export default function Home() {
           </div>
         </section>
         <BgTransition type="our-posts" />
-        <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
+        <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20 my-8 max-w-7xl mx-auto">
           <h2 className="font-display font-bold text-3xl text-center my-8">
             Science
           </h2>
@@ -86,12 +97,14 @@ export default function Home() {
                 <LargePost
                   key={i}
                   mockImage={mockImage}
+                  color="#10b981"
                   className="transition-transform hover:scale-105 hidden lg:block"
                   textBoxClass="bottom-0 w-5/6 h-full max-h-64"
                 />
               ))}
             <LargePost
               mockImage={mockImage}
+              color="#10b981"
               className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48"
             />
@@ -100,6 +113,8 @@ export default function Home() {
               .map((v, i) => (
                 <SmallPost
                   key={i}
+                  color="#047857"
+                  bgColor="#e5fff5"
                   mockImage={mockImage}
                   className="block lg:hidden"
                 />
@@ -107,29 +122,35 @@ export default function Home() {
           </ul>
         </section>
         <BgTransition type="science" />
-        <section className="BLOGS bg-accent-500">
+        <section className="BLOGS bg-accent-500 pb-6">
           <div className="px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
-            <h2 className="font-display font-bold text-3xl text-center pt-8 pb-4">
+            <h2 className="font-display font-bold text-3xl text-center mb-4">
               Popular blogs
             </h2>
             <BlogSwiper mockImage={mockImage} />
           </div>
         </section>
         <BgTransition type="popular-blogs" />
-        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto py-16">
+        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto my-6 lg:my-12">
           <h2 className="font-display font-bold text-3xl text-center my-8">
             Music
           </h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
               mockImage={mockImage}
+              color="#F50B94"
               className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
             />
             {Array(3)
               .fill(0)
               .map((v, i) => (
-                <SmallPost key={i} mockImage={mockImage} />
+                <SmallPost
+                  key={i}
+                  bgColor="#fee7f4"
+                  color="#F50B94"
+                  mockImage={mockImage}
+                />
               ))}
           </ul>
         </section>

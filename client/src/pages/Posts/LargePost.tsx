@@ -1,12 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import formatDate from '../../utility/formatDate';
 
-type Props = { mockImage: string; className?: string; textBoxClass?: string };
+type Props = {
+  mockImage: string;
+  color?: string;
+  className?: string;
+  textBoxClass?: string;
+};
 
 export default function LargePost({
   mockImage,
   className,
-  textBoxClass
+  textBoxClass,
+  color
 }: Props) {
   const mainText =
     'A somewhat long description of the post, d adadad adadad adaadada adadadada d adad or rather the main content of the post that I will need to somehow edit based on the amount d more and more and more and more and more and more text';
@@ -55,7 +61,13 @@ export default function LargePost({
         </div>
         <div className="mt-auto text-sm sm:text-base">
           {'By '}
-          <span className="cursor-pointer text-accent-600 font-bold hover:underline">
+          <span
+            className={
+              'cursor-pointer font-bold hover:underline ' +
+              (color ? '' : 'text-accent-600')
+            }
+            style={{ color }}
+          >
             KissMyUSSR
           </span>
           <span className=" font-extralight text-sm md:text-base">

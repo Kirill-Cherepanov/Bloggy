@@ -23,7 +23,7 @@ export default function Wave({ type, className = '' }: IconProps) {
           preserveAspectRatio="none"
         >
           <title>Double wave</title>
-          <path d="M0 0 V25 C250 100, 420 100, 500 0 C580 100, 750 100, 1000 25 V0 Z" />
+          <path d="M0 0 V40 C250 100, 420 100, 500 0 C580 100, 750 100, 1000 40 V0 Z" />
         </svg>
       );
     case 'two-layered':

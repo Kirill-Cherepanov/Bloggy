@@ -1,9 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import formatDate from '../../utility/formatDate';
 
-type Props = { mockImage: string; className?: string };
+type Props = {
+  mockImage: string;
+  color?: string;
+  bgColor?: string;
+  className?: string;
+};
 
-export default function SmallPost({ mockImage, className }: Props) {
+export default function SmallPost({
+  mockImage,
+  color,
+  bgColor,
+  className
+}: Props) {
   const mainText =
     'A somewhat long description of the post, or rather the main content of the post that I will need to somehow edit based on the amount of free space I have and more and more and more and more and more and more and more and more text';
   const [amountOfLines, setAmountOfLines] = useState(0);
@@ -27,9 +37,11 @@ export default function SmallPost({ mockImage, className }: Props) {
   return (
     <li
       className={
-        'flex h-48 lg:h-40 transition-transform py-4 border-y last:border-b-0 lg:py-0 lg:border-y-0 lg:bg-accent-50 lg:shadow-lg hover:scale-105 ' +
-        (className || '')
+        'flex h-48 lg:h-40 transition-transform py-4 border-y lg:py-0 lg:border-y-0 lg:shadow-lg hover:scale-105 ' +
+        (className || '') +
+        (color ? '' : ' lg:bg-accent-50')
       }
+      style={{ backgroundColor: bgColor }}
     >
       <img
         src={mockImage}
@@ -51,7 +63,13 @@ export default function SmallPost({ mockImage, className }: Props) {
         </div>
         <div className="mt-auto text-text-600 flex flex-col xs:block">
           <span className="hidden xs:inline">By </span>
-          <span className="cursor-pointer text-accent-600 font-bold hover:underline">
+          <span
+            className={
+              'cursor-pointer font-bold hover:underline ' +
+              (color ? '' : 'text-accent-600')
+            }
+            style={{ color }}
+          >
             {'KissMyUSSR '}
           </span>
           <span className="font-light text-sm md:text-base">

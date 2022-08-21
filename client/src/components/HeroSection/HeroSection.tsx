@@ -1,5 +1,5 @@
+import BgTransition from '../BgTransition/BgTransition';
 import Icon from '../Icon/Icon';
-import Wave from '../Wave/Wave';
 
 export default function HeroSection() {
   return (
@@ -37,7 +37,7 @@ export default function HeroSection() {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
             asperiores aperiam rem ipsum?
           </p>
-          <button className="flex justify-center items-center w-full sm:w-44 py-4 font-bold bg-accent-600 transition-all rounded-sm hover:bg-accent-700 text-main hover:tracking-widest hover:w-52 group">
+          <button className="flex justify-center items-center w-full sm:w-44 py-4 font-bold bg-accent-600 transition-all rounded-sm hover:bg-accent-700 text-main hover:tracking-widest sm:hover:w-52 group">
             Sign up
             <Icon
               type="arrow"
@@ -53,12 +53,7 @@ export default function HeroSection() {
             </button> */}
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full h-[calc(100%-420px)] sm:h-[calc(100%-550px)] overflow-x-hidden [line-height]:[0px]">
-        <Wave
-          type="single"
-          className="relative block w-[calc(100%+1.3px)] h-full fill-main"
-        />
-      </div>
+      <BgTransition type="hero" />
     </section>
   );
 }
