@@ -43,6 +43,23 @@ Homepage {
 	* Maybe sidebar if I come up with what to put in there
 }
 
+Post {
+	1. Return button (will need to store previous location or some other way get it)
+	2. Author stuff (idk, maybe it'll be a small inscription) + creation date
+	3. Main image
+	4. Title
+	5. Text (I think it should be written in some sort of compiled text format i.e. .md)
+	6. (MAYBE) Color theme of the blogger
+	7. More on this blog
+	8. Similar posts
+}
+
+Userpage {
+	0. Chosen blogger's color scheme (color scheme of the website by default)
+	1. User card/info (will probably contain username, profile picture, total amount of likes, categories, banner, and a description of the blog) (may take inspiration from osu! profiles and vk profiles)
+	2. Posts: blogger can choose how a post will be displayed on his website (Large, Small or Normal (Normal just like that on vk))
+}
+
 About us:
 Some text, some photos maybe, some videos maybe, some reviews maybe
 
