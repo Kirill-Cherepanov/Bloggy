@@ -3,6 +3,7 @@ I wrote it before starting the project. Decided to add to repo a bit later thoug
 Components: Navigation Bar, Footer
 
 Overall design {
+	SUPER DEPRICATED
 	Dark & Light themes (should probably start with dark and it'll be default)
 	Color themes (need colors that will match with dark and light main colors) {
 		Dark: 
@@ -12,6 +13,7 @@ Overall design {
 }
 
 Navigation bar {
+	SUPER DEPRICATED
 	Design: https://dribbble.com/shots/18444207-Mushroom-Social-Network-for-Gamers (this design seems good but it won't do for the website as a whole because it's based on a totally different concept)
 	1. Logo
 	2. Search (with different options i.e.: search bloggers/posts, by popularity/new, and others if need be) (search will lead to Posts page)
@@ -20,11 +22,13 @@ Navigation bar {
 }
 
 Footer (not sure if I need it at all. idk what to put there) {
+	SUPER DEPRICATED
 	1. Navigation: Home, Posts, About us, Contacts
 	2. ...
 }
 
 Homepage {
+	SUPER DEPRICATED
 	1. A hero section {
 		Design: https://dribbble.com/shots/17263029-Influencer-Website-Header (something similar)
 		Header: Open yourself to the world
@@ -58,14 +62,19 @@ Userpage {
 	0. Chosen blogger's color scheme (color scheme of the website by default)
 	1. User card/info (will probably contain username, profile picture, total amount of likes, categories, banner, and a description of the blog) (may take inspiration from osu! profiles and vk profiles)
 	2. Posts: blogger can choose how a post will be displayed on his website (Large, Small or Normal (Normal just like that on vk))
+	3 VERY UNLIKELY TO BE ADDED ANY TIME SOON. Twitter posts, facebook posts, and posts other popular social media platforms
+}
+
+Posts {
+	1. Search with filters: blogs/posts, by creation date/popularity over *time*, by categories.
+	2. Posts are dynamically loaded
+	2.1 No category chosen: PROBABLY Similar to homepage
+	2.2 Category(ies) chosen: A semi-chaotic collection of posts. It'll be stated somewhere which category (among chosen ones) this post belongs to (maybe in a header - similar to homepage - or on a post itself)
 }
 
 About us:
 Some text, some photos maybe, some videos maybe, some reviews maybe
 
-Posts:
-Twitter posts, Facebook posts, other popular social media posts
-
-Other pages: Login, Registration, Post, Profile, Create Post maybe
+Other pages: Login, Registration, MAYBE Create Post
 
 Backend: Login system - encryption (bcrypt) and database (MongoDB), Website posts - database (MongDB), social media posts - web scraping, authorization - jwt, subscription to bloggers - need to change the db a bit (maybe sql was actually better)
