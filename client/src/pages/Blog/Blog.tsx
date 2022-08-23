@@ -15,7 +15,7 @@ const renderPost = (postData: Post) => {
         <LargePost
           key={postData._id}
           {...postData}
-          className="transition-transform hover:scale-105 hidden lg:block"
+          // className="hidden lg:block"
           textBoxClass="bottom-0 w-5/6 h-full max-h-64"
         />
       );
@@ -23,7 +23,6 @@ const renderPost = (postData: Post) => {
 };
 
 export default function Blog() {
-  const colorScheme = {};
   const postsData = getPostsData(10);
 
   return (

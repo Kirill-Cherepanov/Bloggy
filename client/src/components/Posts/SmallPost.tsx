@@ -52,7 +52,7 @@ export default function SmallPost({
         className="object-cover cursor-pointer h-40 w-28 md:w-32 lg:w-40"
       />
       <div className="px-4 lg:px-5 lg:py-2 flex flex-col">
-        <h3 className="font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-semibold cursor-pointer mb-1 hover:underline text-lg md:text-xl">
+        <h3 className="font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-bold cursor-pointer mb-1 hover:underline text-lg md:text-xl">
           {title}
         </h3>
         <div ref={textBoxRef} className="grow min-h-0">

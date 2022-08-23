@@ -28,11 +28,11 @@ export default function HeroSection() {
           <button className="hidden sm:block uppercase text-lg hover-bottom-border-left">
             Learn more
           </button>
-          <h1 className="font-display text-3xl xs:text-5xl text-center sm:text-left md:text-6xl xl:text-7xl font-bold my-3  min-w-max uppercase">
+          <h2 className="font-display text-3xl xs:text-5xl text-center sm:text-left md:text-6xl xl:text-7xl font-bold my-3  min-w-max uppercase">
             Open Yourself
             <br />
             to the World
-          </h1>
+          </h2>
           <p className="text-center sm:text-left mb-9 text-lg max-w-[600px]">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
             asperiores aperiam rem ipsum?
