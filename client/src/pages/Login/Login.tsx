@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useContext, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Context } from '../../context/Context';
-import './Login.css';
 
 export default function Login() {
   const userRef = useRef<HTMLInputElement>(null);
