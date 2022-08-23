@@ -16,7 +16,7 @@ export default function Aside({ children, shouldRenderPopular = true }: Props) {
     const maxHeight = maxHeightElement.current!.getBoundingClientRect().height;
     const minHeight = minHeightElement.current!.getBoundingClientRect().height;
 
-    let newAmountOfPosts = Math.floor(maxHeight - minHeight - 32 - 44 / 144);
+    let newAmountOfPosts = Math.floor((maxHeight - minHeight - 32 - 44) / 144);
     if (newAmountOfPosts < 0) return;
     if (newAmountOfPosts > 5) newAmountOfPosts = 5;
 
@@ -26,7 +26,7 @@ export default function Aside({ children, shouldRenderPopular = true }: Props) {
   return (
     <aside
       ref={minHeightElement}
-      className="w-80 h-min shrink-0 bg-secondary-800"
+      className="w-80 h-min shrink-0 bg-secondary-800 flex flex-col rounded-md"
     >
       <div className="absolute top-0 bottom-0" ref={maxHeightElement}></div>
       {children}

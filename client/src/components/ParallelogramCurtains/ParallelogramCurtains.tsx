@@ -19,7 +19,11 @@ export default function ParallelogramCurtains({ postsData, className }: Props) {
       {postsData.map((postData, i) => (
         <li
           key={postData._id}
-          className="pointer-events-auto group min-w-0 basis-[calc(20%-72px)] hover:basis-[calc(20%+48px)] transition-[flex-basis] duration-200 ease-linear"
+          className={`pointer-events-auto group min-w-0 basis-[calc(${
+            100 / postsData.length
+          }%-72px)] hover:basis-[calc(${
+            100 / postsData.length
+          }%+48px)] transition-[flex-basis] duration-200 ease-linear`}
         >
           <div className="cursor-pointer w-[calc(100%+120px)]">
             <div
@@ -27,7 +31,7 @@ export default function ParallelogramCurtains({ postsData, className }: Props) {
                 'overflow-hidden w-full h-80 ' +
                 (i === 0
                   ? 'clip-parallelogram-right'
-                  : i === 4
+                  : i === postsData.length - 1
                   ? 'clip-parallelogram-left'
                   : 'clip-parallelogram')
               }

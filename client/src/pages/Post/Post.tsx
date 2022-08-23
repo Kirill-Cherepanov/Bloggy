@@ -1,8 +1,9 @@
 import Icon from '../../components/Icon/Icon';
-import { getPostsData } from '../../utility/mockData';
+import { getPostsData, blogInfo } from '../../utility/mockData';
 import { Link } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Aside from '../../components/Aside/Aside';
+import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
 
 export default function Post() {
   const postData = getPostsData(1)[0];
@@ -28,10 +29,27 @@ export default function Post() {
       <img
         src={postData.image}
         alt="post"
-        className="mx-auto max-w-full my-5"
+        className="mx-auto max-w-full mb-10"
       />
-      <div className="flex relative">
-        <p className="xl:text-lg h-[1000px]">{postData.text}</p>
+      <div className="flex relative gap-20">
+        <div className="h-min">
+          <p className="text-lg">{postData.text}</p>
+          <div className="mt-10 w-full flex gap-8 bg-secondary-800 py-8 px-5 rounded-lg">
+            <img
+              src={blogInfo.profilePic}
+              alt="blog"
+              className="my-auto h-36 w-36 object-cover rounded-full"
+            />
+            <div>
+              <div className="text-xl font-bold uppercase mb-3 text-accent-400 cursor-pointer hover:underline w-min">
+                {blogInfo.username}
+              </div>
+              <p className="text-main line-clamp-5 font-light">
+                {blogInfo.description}
+              </p>
+            </div>
+          </div>
+        </div>
         <Aside>
           <div className="px-2 my-5">
             <h3 className="mx-auto mb-3 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
@@ -50,11 +68,11 @@ export default function Post() {
           </div>
         </Aside>
       </div>
-      <div>
-        <div>More on this blog</div>
-      </div>
-      <div>
-        <div>Similar Posts</div>
+      <div className="mt-24 bg-accent-50 py-6">
+        <h3 className="text-2xl font-display font-bold text-center mb-4">
+          More on this blog
+        </h3>
+        <ParallelogramCurtains postsData={getPostsData(4)} />
       </div>
     </main>
   );
