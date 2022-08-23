@@ -1,5 +1,6 @@
 import TinyPost from '../Posts/TinyPost';
 import { getPostsData } from '../../utility/mockData';
+import { useEffect, useRef, useState } from 'react';
 
 type Props = {
   shouldRenderPopular?: boolean;
@@ -7,17 +8,40 @@ type Props = {
 };
 
 export default function Aside({ children, shouldRenderPopular = true }: Props) {
+  const maxHeightElement = useRef<HTMLDivElement | null>(null);
+  const minHeightElement = useRef<HTMLElement | null>(null);
+  const [amountOfPosts, setAmountOfPosts] = useState(0);
+
+  useEffect(() => {
+    const maxHeight = maxHeightElement.current!.getBoundingClientRect().height;
+    const minHeight = minHeightElement.current!.getBoundingClientRect().height;
+
+    let newAmountOfPosts = Math.floor(maxHeight - minHeight - 32 - 44 / 144);
+    if (newAmountOfPosts < 0) return;
+    if (newAmountOfPosts > 5) newAmountOfPosts = 5;
+
+    setAmountOfPosts(newAmountOfPosts);
+  }, []);
+
   return (
-    <aside className="w-80 shrink-0 bg-secondary-800">
-      <div>{children}</div>
-      {!shouldRenderPopular ? null : (
-        <div>
-          <h3>Popular posts</h3>
-          {getPostsData(5).map((postData) => (
-            <TinyPost {...postData} />
-          ))}
+    <aside
+      ref={minHeightElement}
+      className="w-80 h-min shrink-0 bg-secondary-800"
+    >
+      <div className="absolute top-0 bottom-0" ref={maxHeightElement}></div>
+      {children}
+      {shouldRenderPopular && amountOfPosts ? (
+        <div className="mt-5">
+          <h3 className="mx-auto mb-1 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
+            Popular posts
+          </h3>
+          <div>
+            {getPostsData(amountOfPosts).map((postData) => (
+              <TinyPost key={postData._id} {...postData} />
+            ))}
+          </div>
         </div>
-      )}
+      ) : null}
     </aside>
   );
 }

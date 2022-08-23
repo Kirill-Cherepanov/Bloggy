@@ -115,11 +115,10 @@ export default function Icon({ type, className = '', style }: IconProps) {
           <title>Long arrow Back</title>
           <path
             stroke="currentColor"
-            stroke-width="48"
+            strokeWidth="48"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="48"
             d="m177,306l-144,-144l144,-144m-124,144l450,0"
           />
         </svg>

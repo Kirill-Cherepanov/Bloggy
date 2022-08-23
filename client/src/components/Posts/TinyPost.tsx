@@ -20,7 +20,7 @@ export default function SmallPost({
       <img
         src={image}
         alt="Post"
-        className="z-20 absolute top-1/2 left-1/3 w-0 h-0 object-cover opacity-0 cursor-pointer transition-all duration-300 group-hover:opacity-100 group-hover:top-0 group-hover:left-0 group-hover:w-full group-hover:h-full"
+        className="z-20 absolute top-1/2 left-20 w-0 h-0 object-cover opacity-20 cursor-pointer transition-all duration-300 group-hover:opacity-100 group-hover:top-0 group-hover:left-0 group-hover:w-full group-hover:h-full"
       />
       <img
         src={image}
@@ -31,7 +31,7 @@ export default function SmallPost({
         <div className="text-accent-400 uppercase text-sm font-semi mb-0.5">
           {categories[0]}
         </div>
-        <h3 className="font-display basis-[max-content] shrink-0 line-clamp-5 font-bold cursor-pointer hover:underline text-lg">
+        <h3 className="font-display basis-[max-content] shrink-0 line-clamp-5 font-bold cursor-pointer text-lg">
           {title}
         </h3>
       </div>

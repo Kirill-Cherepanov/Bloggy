@@ -30,13 +30,23 @@ export default function Post() {
         alt="post"
         className="mx-auto max-w-full my-5"
       />
-      <div className="flex">
-        <p className="xl:text-lg">{postData.text}</p>
+      <div className="flex relative">
+        <p className="xl:text-lg h-[1000px]">{postData.text}</p>
         <Aside>
-          <div>
-            {postData.categories.map((category) => (
-              <span>{category}</span>
-            ))}
+          <div className="px-2 my-5">
+            <h3 className="mx-auto mb-3 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
+              Categories
+            </h3>
+            <div className="flex flex-wrap justify-evenly gap-y-2 gap-x-2">
+              {postData.categories.map((category) => (
+                <span
+                  key={category}
+                  className="text-lg border text-main border-secondary-400 rounded-sm px-1 cursor-pointer hover:bg-main hover:text-accent-900 hover:border-accent-400 transition-colors"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
           </div>
         </Aside>
       </div>

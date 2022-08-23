@@ -22,7 +22,13 @@ export const getPostsData = (postsAmount: number): Post[] => {
       title: 'Just a natural post title',
       text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil ex repellendus tempore reiciendis est voluptates eos inventore dolore molestiae error, doloremque reprehenderit neque illum voluptate pariatur quisquam voluptatum! Porro quod veritatis atque nisi cumque sint, accusamus quidem totam, harum cupiditate nam dolorum cum exercitationem libero dolor similique voluptate debitis eius rerum, praesentium id ea obcaecati autem. Neque nisi quisquam incidunt culpa, porro amet expedita, assumenda quo molestias ipsam ea soluta magni, tenetur corporis officia explicabo officiis ipsum veniam temporibus facilis voluptatem voluptatibus maxime libero. Accusantium quos veritatis corrupti natus quam reiciendis amet ratione quod, ad qui est et laboriosam alias.',
       image: mockImage,
-      categories: ['Science', 'Artificial Intelligence'],
+      categories: [
+        'Science',
+        'Artificial Intelligence',
+        'Electronics',
+        'Future',
+        'Computer science'
+      ],
       likes: 100,
       authorName: 'KissMyUSSR',
       createdAt: new Date(0),
