@@ -7,9 +7,9 @@ import 'swiper/css/a11y';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-flip';
 
-type Props = { mockImage: string; className?: string };
+type Props = { postsData: Post[]; className?: string };
 
-export default function PostSwiper({ mockImage, className }: Props) {
+export default function PostSwiper({ postsData, className }: Props) {
   return (
     <div className={'w-full flex items-center ' + (className || '')}>
       <Swiper
@@ -31,17 +31,15 @@ export default function PostSwiper({ mockImage, className }: Props) {
           type="angle"
           className="BLOG_SWIPER_PREV_ELEMENT bg-opacity-70 bg-secondary-800 text-main w-10 z-20 absolute left-0 top-1/2 -translate-y-1/2"
         />
-        {Array(10)
-          .fill(0)
-          .map((v, i) => (
-            <SwiperSlide key={i} className="">
-              <LargePost
-                image={mockImage}
-                className="h-80 sm:h-100 md:h-[440px]"
-                textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
-              />
-            </SwiperSlide>
-          ))}
+        {postsData.map((postData) => (
+          <SwiperSlide key={postData._id} className="">
+            <LargePost
+              {...postData}
+              className="h-80 sm:h-100 md:h-[440px]"
+              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
+            />
+          </SwiperSlide>
+        ))}
         <Icon
           type="angle"
           className="BLOG_SWIPER_NEXT_ELEMENT bg-opacity-70 bg-secondary-800 text-main rotate-180 w-10 z-20 absolute right-0 top-1/2 -translate-y-1/2"

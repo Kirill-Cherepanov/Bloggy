@@ -24,6 +24,7 @@ type Post = {
   title: string;
   text: string;
   image: string;
+  likes: number;
   categories: string[]; // It is stored as a separate mongoDb model, with _id and name. Doesn't make much sense to me. Maybe will need to rethink this later
   authorName: string;
   displayType: number;

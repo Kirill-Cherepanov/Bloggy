@@ -7,6 +7,7 @@ import PostSwiper from '../../components/PostSwiper/PostSwiper';
 import BgTransition from '../../components/BgTransition/BgTransition';
 
 import mockImage from '../../images/mock-up-image.webp';
+import { getPostsData } from '../../utility/mockData';
 import { useEffect, useState } from 'react';
 
 // import { useEffect, useState } from 'react';
@@ -52,21 +53,20 @@ export default function Home() {
           </h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
-              image={mockImage}
+              {...getPostsData(1)[0]}
               color="#f97316"
-              className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
-              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
+              className="shadow-lg transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
+              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:h-64"
             />
-            {Array(3)
-              .fill(0)
-              .map((v, i) => (
-                <SmallPost
-                  key={i}
-                  color="#f97316"
-                  bgColor="#fef0e6"
-                  image={mockImage}
-                />
-              ))}
+            {getPostsData(3).map((postData) => (
+              <SmallPost
+                key={postData._id}
+                {...postData}
+                color="#f97316"
+                bgColor="#fef0e6"
+                className="lg:shadow-lg hover:scale-105"
+              />
+            ))}
           </ul>
         </section>
         <BgTransition type="sport" />
@@ -76,10 +76,10 @@ export default function Home() {
               Our posts
             </h2>
             {isLargeScreen ? (
-              <PostSwiper mockImage={mockImage} className="lg:hidden" />
+              <PostSwiper postsData={getPostsData(5)} className="lg:hidden" />
             ) : (
               <ParallelogramCurtains
-                mockImage={mockImage}
+                postsData={getPostsData(5)}
                 className="hidden lg:flex"
               />
             )}
@@ -91,34 +91,30 @@ export default function Home() {
             Science
           </h2>
           <ul className="grid lg:grid-rows-2 lg:grid-cols-2 gap-4 lg:gap-10 lg:grid-squared">
-            {Array(4)
-              .fill(0)
-              .map((v, i) => (
-                <LargePost
-                  key={i}
-                  image={mockImage}
-                  color="#10b981"
-                  className="transition-transform hover:scale-105 hidden lg:block"
-                  textBoxClass="bottom-0 w-5/6 h-full max-h-64"
-                />
-              ))}
+            {getPostsData(4).map((postData) => (
+              <LargePost
+                key={postData._id}
+                {...postData}
+                color="#10b981"
+                className="shadow-lg transition-transform hover:scale-105 hidden lg:block"
+                textBoxClass="bottom-0 w-5/6 h-full h-64"
+              />
+            ))}
             <LargePost
-              image={mockImage}
+              {...getPostsData(1)[0]}
               color="#10b981"
-              className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
+              className="shadow-lg transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48"
             />
-            {Array(3)
-              .fill(0)
-              .map((v, i) => (
-                <SmallPost
-                  key={i}
-                  color="#047857"
-                  bgColor="#e5fff5"
-                  image={mockImage}
-                  className="block lg:hidden"
-                />
-              ))}
+            {getPostsData(3).map((postData) => (
+              <SmallPost
+                key={postData._id}
+                {...postData}
+                color="#047857"
+                bgColor="#e5fff5"
+                className="block lg:hidden lg:shadow-lg hover:scale-105"
+              />
+            ))}
           </ul>
         </section>
         <BgTransition type="science" />
@@ -137,21 +133,20 @@ export default function Home() {
           </h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
-              image={mockImage}
+              {...getPostsData(1)[0]}
               color="#F50B94"
-              className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
-              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
+              className="shadow-lg transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
+              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:h-64"
             />
-            {Array(3)
-              .fill(0)
-              .map((v, i) => (
-                <SmallPost
-                  key={i}
-                  bgColor="#fee7f4"
-                  color="#F50B94"
-                  image={mockImage}
-                />
-              ))}
+            {getPostsData(3).map((postData) => (
+              <SmallPost
+                key={postData._id}
+                {...postData}
+                bgColor="#fee7f4"
+                color="#F50B94"
+                className="lg:shadow-lg hover:scale-105"
+              />
+            ))}
           </ul>
         </section>
         <BgTransition type="music" />

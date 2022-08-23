@@ -12,19 +12,19 @@ export default function BlogCard({
       <img
         src={profilePic}
         alt="profile"
-        className="aspect-square object-cover mb-3"
+        className="aspect-square object-cover mb-3 rounded-full select-none"
       />
-      <h2 className="font-display font-bold text-center text-2xl mb-4">
+      <h2 className="font-display font-bold text-center text-3xl mb-4">
         {username}
       </h2>
-      <div className="font-medium text-lg flex items-center mb-4">
+      <div className="font-medium text-xl flex items-center mb-4">
         Likes: {likes}
         <Icon
           type="heart"
           className="fill-red-500 h-3.5 ml-1 relative bottom-[1px]"
         />
       </div>
-      <div className="flex flex-wrap gap-y-2 gap-x-3 mb-4">
+      <div className="flex flex-wrap gap-y-2 gap-x-2 text-lg mb-4">
         {categories.map((category) => (
           <span
             key={category}
@@ -34,7 +34,7 @@ export default function BlogCard({
           </span>
         ))}
       </div>
-      <div className="font-extralight">
+      <div className="font-extralight text-lg">
         Registered on {createdAt.toDateString()}
       </div>
     </div>

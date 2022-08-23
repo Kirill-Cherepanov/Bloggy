@@ -18,7 +18,7 @@ export default function App() {
       <Topbar />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/blog/:id" element={<Blog />} />
+        <Route path="/blog/:name" element={<Blog />} />
         <Route path="/posts" element={<Homepage />} />
         <Route path="/register" element={user ? <Homepage /> : <Register />} />
         <Route path="/login" element={user ? <Homepage /> : <Login />} />
