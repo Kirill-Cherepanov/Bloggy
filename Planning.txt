@@ -46,17 +46,18 @@ Homepage {
 Post {
 	1. Return button (will need to store previous location or some other way get it)
 	2. Author stuff (idk, maybe it'll be a small inscription) + creation date
-	3. Main image
-	4. Title
-	5. Text (I think it should be written in some sort of compiled text format i.e. .md)
-	6. (MAYBE) Color theme of the blogger
-	7. More on this blog
-	8. Similar posts
+	3. Categories
+	4. Main image
+	5. Title
+	6. Text (I think it should be written in some sort of compiled text format i.e. .md)
+	7. (MAYBE) Color theme of the blogger
+	8. More on this blog
+	9. Similar posts
 }
 
 Userpage {
 	0. Chosen blogger's color scheme (color scheme of the website by default)
-	1. User card/info (will probably contain username, profile picture, total amount of likes, categories, banner, and a description of the blog) (may take inspiration from osu! profiles and vk profiles)
+	1. User card/info (will probably contain username, profile picture, total amount of likes, categories, MAYBE banner, and a description of the blog) (may take inspiration from osu! profiles and vk profiles)
 	2. Posts: for each post a blogger can choose how a post will be displayed on his website (Large, Small or Normal (Normal just like that on vk))
 	3 VERY UNLIKELY TO BE ADDED ANY TIME SOON. Twitter posts, facebook posts, and posts other popular social media platforms
 }
@@ -68,7 +69,7 @@ Posts {
 	2.2 Category(ies) chosen: A semi-chaotic collection of posts. It'll be stated somewhere which category (among chosen ones) this post belongs to (maybe in a header - similar to homepage - or on a post itself)
 }
 
-About us {
+About {
 	Just some text. Maybe a little formatting.
 	Similar to this: https://www.webdesignerdepot.com/about/ with maybe a little more formatting.
 	It'll just be similar or the same as the README for the repository, explaining the meaning and purpose of the project, my history with it and plans for the future of this project and maybe my own plans. Idk, maybe just make it a post of its own.

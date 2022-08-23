@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import formatDate from '../../utility/formatDate';
 
 type Props = {
-  mockImage: string;
+  image: string;
   color?: string;
   className?: string;
   textBoxClass?: string;
 };
 
 export default function LargePost({
-  mockImage,
+  image,
   className,
   textBoxClass,
   color
@@ -38,7 +38,7 @@ export default function LargePost({
   return (
     <li className={'relative shadow-lg ' + (className || '')}>
       <img
-        src={mockImage}
+        src={image}
         alt="Post"
         className="w-full h-full object-cover cursor-pointer"
       />

@@ -1,7 +1,7 @@
 import HeroSection from '../../components/HeroSection/HeroSection';
 import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
-import SmallPost from '../Posts/SmallPost';
-import LargePost from '../Posts/LargePost';
+import SmallPost from '../../components/Posts/SmallPost';
+import LargePost from '../../components/Posts/LargePost';
 import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
 import PostSwiper from '../../components/PostSwiper/PostSwiper';
 import BgTransition from '../../components/BgTransition/BgTransition';
@@ -52,7 +52,7 @@ export default function Home() {
           </h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
-              mockImage={mockImage}
+              image={mockImage}
               color="#f97316"
               className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
@@ -64,7 +64,7 @@ export default function Home() {
                   key={i}
                   color="#f97316"
                   bgColor="#fef0e6"
-                  mockImage={mockImage}
+                  image={mockImage}
                 />
               ))}
           </ul>
@@ -96,14 +96,14 @@ export default function Home() {
               .map((v, i) => (
                 <LargePost
                   key={i}
-                  mockImage={mockImage}
+                  image={mockImage}
                   color="#10b981"
                   className="transition-transform hover:scale-105 hidden lg:block"
                   textBoxClass="bottom-0 w-5/6 h-full max-h-64"
                 />
               ))}
             <LargePost
-              mockImage={mockImage}
+              image={mockImage}
               color="#10b981"
               className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:hidden"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48"
@@ -115,7 +115,7 @@ export default function Home() {
                   key={i}
                   color="#047857"
                   bgColor="#e5fff5"
-                  mockImage={mockImage}
+                  image={mockImage}
                   className="block lg:hidden"
                 />
               ))}
@@ -137,7 +137,7 @@ export default function Home() {
           </h2>
           <ul className="grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-10">
             <LargePost
-              mockImage={mockImage}
+              image={mockImage}
               color="#F50B94"
               className="transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
@@ -149,7 +149,7 @@ export default function Home() {
                   key={i}
                   bgColor="#fee7f4"
                   color="#F50B94"
-                  mockImage={mockImage}
+                  image={mockImage}
                 />
               ))}
           </ul>

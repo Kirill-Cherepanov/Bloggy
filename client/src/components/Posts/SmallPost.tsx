@@ -2,18 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import formatDate from '../../utility/formatDate';
 
 type Props = {
-  mockImage: string;
+  image: string;
   color?: string;
   bgColor?: string;
   className?: string;
 };
 
-export default function SmallPost({
-  mockImage,
-  color,
-  bgColor,
-  className
-}: Props) {
+export default function SmallPost({ image, color, bgColor, className }: Props) {
   const mainText =
     'A somewhat long description of the post, or rather the main content of the post that I will need to somehow edit based on the amount of free space I have and more and more and more and more and more and more and more and more text';
   const [amountOfLines, setAmountOfLines] = useState(0);
@@ -44,7 +39,7 @@ export default function SmallPost({
       style={{ backgroundColor: bgColor }}
     >
       <img
-        src={mockImage}
+        src={image}
         alt="Post"
         className="object-cover cursor-pointer h-40 w-28 md:w-32 lg:w-40"
       />

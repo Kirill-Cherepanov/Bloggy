@@ -1,5 +1,5 @@
 import Icon from '../Icon/Icon';
-import LargePost from '../../pages/Posts/LargePost';
+import LargePost from '../Posts/LargePost';
 import { EffectFlip, Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -36,7 +36,7 @@ export default function PostSwiper({ mockImage, className }: Props) {
           .map((v, i) => (
             <SwiperSlide key={i} className="">
               <LargePost
-                mockImage={mockImage}
+                image={mockImage}
                 className="h-80 sm:h-100 md:h-[440px]"
                 textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
               />
