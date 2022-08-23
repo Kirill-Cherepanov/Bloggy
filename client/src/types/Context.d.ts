@@ -9,12 +9,14 @@ type User = {
   email: string;
   password: string;
   profilePic: string;
+  registrationDate: Date;
 };
 
 interface Blog extends User {
   likes: number;
   categories: string[];
   description: string;
+  createdAt: Date;
 }
 
 type Post = {

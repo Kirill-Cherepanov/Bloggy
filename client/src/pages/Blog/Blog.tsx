@@ -6,11 +6,11 @@ import mockImage from '../../images/mock-up-image.webp';
 const renderPost = (postData: Post) => {
   switch (postData.displayType) {
     case 0:
-      return <SmallPost {...postData} />; // It should be normal/default post
+      return <SmallPost key={postData._id} {...postData} />; // It should be normal/default post
     case 1:
-      return <SmallPost {...postData} />;
+      return <SmallPost key={postData._id} {...postData} />;
     case 2:
-      return <LargePost {...postData} />;
+      return <LargePost key={postData._id} {...postData} />;
   }
 };
 
@@ -45,13 +45,23 @@ export default function Blog() {
       'Computer science'
     ],
     description:
-      "This blog is a test blog for development. It doesn't have a theme and all of its posts are just templates. Don't mind it"
+      "This blog is a test blog for development. It doesn't have a theme and all of its posts are just templates. Don't mind it. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil ex repellendus tempore reiciendis est voluptates eos inventore dolore molestiae error, doloremque reprehenderit neque illum voluptate pariatur quisquam voluptatum! Porro quod veritatis atque nisi cumque sint, accusamus quidem totam, harum cupiditate nam dolorum cum exercitationem libero dolor similique voluptate debitis eius rerum, praesentium id ea obcaecati autem.",
+    registrationDate: new Date(0),
+    createdAt: new Date(0)
   };
 
   return (
-    <main>
-      <BlogCard {...blogInfo} />
-      <div>{postsData.map((postData) => renderPost(postData))}</div>
+    <main className="py-6 px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
+      <div className="flex flex-row-reverse gap-4 xs:gap-8">
+        <BlogCard {...blogInfo} />
+        <div className="[&>*]:mb-4 [&>*]:last:mb-0">
+          <div className="">
+            <h3 className="">Description</h3>
+            <p>{blogInfo.description}</p>
+          </div>
+          {postsData.map((postData) => renderPost(postData))}
+        </div>
+      </div>
     </main>
   );
 }

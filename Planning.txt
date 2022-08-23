@@ -51,14 +51,15 @@ Post {
 	5. Title
 	6. Text (I think it should be written in some sort of compiled text format i.e. .md)
 	7. (MAYBE) Color theme of the blogger
-	8. More on this blog
-	9. Similar posts
+	8. Like the post
+	9. More on this blog
+	10. Similar posts
 }
 
 Userpage {
 	0. Chosen blogger's color scheme (color scheme of the website by default)
 	1. User card/info (will probably contain username, profile picture, total amount of likes, categories, MAYBE banner, and a description of the blog) (may take inspiration from osu! profiles and vk profiles)
-	2. Posts: for each post a blogger can choose how a post will be displayed on his website (Large, Small or Normal (Normal just like that on vk))
+	2. Posts: for each post a blogger can choose how a post will be displayed on his website (Large, Small or Normal (Normal just like that on vk)). Each post should also have a like button
 	3 VERY UNLIKELY TO BE ADDED ANY TIME SOON. Twitter posts, facebook posts, and posts other popular social media platforms
 }
 

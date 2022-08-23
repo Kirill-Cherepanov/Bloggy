@@ -48,9 +48,9 @@ export default function LargePost({
           (textBoxClass || '')
         }
       >
-        <h4 className="basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold cursor-pointer xl:mb-2 hover:underline text-2xl md:text-3xl">
+        <h3 className="basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold cursor-pointer xl:mb-2 hover:underline text-2xl md:text-3xl">
           This box is designed the same way way way
-        </h4>
+        </h3>
         <div className="basis-0 shrink grow mb-3 min-h-0" ref={textBoxRef}>
           <p
             className="font-extralight line-clamp-3 text-base"
