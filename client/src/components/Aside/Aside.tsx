@@ -35,11 +35,11 @@ export default function Aside({ children, shouldRenderPopular = true }: Props) {
           <h3 className="mx-auto mb-1 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
             Popular posts
           </h3>
-          <div>
+          <ul>
             {getPostsData(amountOfPosts).map((postData) => (
               <TinyPost key={postData._id} {...postData} />
             ))}
-          </div>
+          </ul>
         </div>
       ) : null}
     </aside>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Icon from '../Icon/Icon';
 
@@ -9,6 +10,7 @@ interface Props extends Post {
 }
 
 export default function LargePost({
+  _id,
   title,
   text,
   image,
@@ -43,11 +45,13 @@ export default function LargePost({
 
   return (
     <li className={'relative ' + (className || '')}>
-      <img
-        src={image}
-        alt="Post"
-        className="w-full h-full object-cover cursor-pointer"
-      />
+      <Link to={'/post/' + _id}>
+        <img
+          src={image}
+          alt="Post"
+          className="w-full h-full object-cover cursor-pointer"
+        />
+      </Link>
       <div
         className={
           'flex flex-col absolute bg-opacity-40 bg-black shadow-lg text-white px-4 py-4 xs:px-6 md:px-8 ' +
@@ -61,7 +65,9 @@ export default function LargePost({
           {categories[0]}
         </div>
         <h3 className="mt-2 basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold xl:mb-2 text-2xl md:text-3xl">
-          <span className="hover:underline cursor-pointer">{title}</span>
+          <Link to={'/post/' + _id} className="hover:underline cursor-pointer">
+            {title}
+          </Link>
         </h3>
         <div className="basis-0 shrink grow mb-3 min-h-0" ref={textBoxRef}>
           <p
@@ -73,20 +79,27 @@ export default function LargePost({
         </div>
         <div className="flex justify-between items-center">
           <div className="font-semibold flex items-center cursor-pointer group">
-            <Icon
-              type="heart"
-              className="inline h-5 fill-white mr-2 group-hover:fill-red-400"
-            />
+            <span className="relative w-5 h-5 mr-2">
+              <Icon
+                type="heart-outline"
+                className="absolute top-0 left-0 w-full text-main group-hover:text-transparent"
+              />
+              <Icon
+                type="heart"
+                className="absolute top-0 left-0 w-full fill-transparent group-hover:fill-red-400"
+              />
+            </span>
             {likes}
           </div>
           <div className="text-sm sm:text-base">
             By{' '}
-            <span
+            <Link
+              to={'/blog/' + authorName}
               className="cursor-pointer font-bold hover:underline text-accent-600"
               style={{ color }}
             >
               {authorName}
-            </span>
+            </Link>
             <span className="mx-2">|</span>
             <span className=" font-extralight text-sm md:text-base">
               {formatDate(createdAt)}

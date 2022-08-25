@@ -6,8 +6,7 @@ import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
 import PostSwiper from '../../components/PostSwiper/PostSwiper';
 import BgTransition from '../../components/BgTransition/BgTransition';
 
-import mockImage from '../../images/mock-up-image.webp';
-import { getPostsData } from '../../utility/mockData';
+import { getPostsData, blogInfo } from '../../utility/mockData';
 import { useEffect, useState } from 'react';
 
 // import { useEffect, useState } from 'react';
@@ -123,7 +122,7 @@ export default function Home() {
             <h2 className="font-display font-bold text-3xl text-center mb-4">
               Popular blogs
             </h2>
-            <BlogSwiper mockImage={mockImage} />
+            <BlogSwiper blogsInfo={Array(10).fill(blogInfo)} />
           </div>
         </section>
         <BgTransition type="popular-blogs" />

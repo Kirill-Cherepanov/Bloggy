@@ -27,9 +27,12 @@ export default function Footer() {
               placeholder="Enter your email adress here"
               className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
             />
-            <button className="bg-secondary-900 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600">
+            <Link
+              to="/sign-up"
+              className="flex items-center justify-center bg-secondary-900 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600"
+            >
               Sign up
-            </button>
+            </Link>
           </form>
         </div>
       </div>
@@ -65,27 +68,17 @@ export default function Footer() {
             </Link>
           </li>
           <li className="hover:text-accent-400">
-            <Link className="link" to="/">
+            <Link className="link" to="/about">
               About
             </Link>
           </li>
           <li className="hover:text-accent-400">
-            <Link className="link" to="/">
-              Contact
+            <Link className="link" to="/contact">
+              Contacts
             </Link>
           </li>
-          <li className="hover:text-accent-400">
-            <Link className="link" to="/write">
-              Write
-            </Link>
-          </li>
-          <li
-            className="hover:text-accent-400 cursor-pointer"
-            onClick={() => {
-              /* handleLogout */
-            }}
-          >
-            Sign in
+          <li className="hover:text-accent-400 cursor-pointer">
+            <Link to="/login">Sign in</Link>
             {/* Log out */}
           </li>
         </ul>

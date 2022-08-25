@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import getRelativeCursorPos from '../../utility/getRelativeCursorPos';
 import isMobile from '../../utility/isMobile';
 
@@ -19,13 +20,12 @@ export default function ParallelogramCurtains({ postsData, className }: Props) {
       {postsData.map((postData, i) => (
         <li
           key={postData._id}
-          className={`pointer-events-auto group min-w-0 basis-[calc(${
-            100 / postsData.length
-          }%-72px)] hover:basis-[calc(${
-            100 / postsData.length
-          }%+48px)] transition-[flex-basis] duration-200 ease-linear`}
+          className={`pointer-events-auto group min-w-0 transition-[flex-basis] duration-200 ease-linear parallelogram-${postsData.length}`}
         >
-          <div className="cursor-pointer w-[calc(100%+120px)]">
+          <Link
+            to={'/post/' + postsData[i]._id}
+            className="block w-[calc(100%+120px)]"
+          >
             <div
               className={
                 'overflow-hidden w-full h-80 ' +
@@ -59,17 +59,20 @@ export default function ParallelogramCurtains({ postsData, className }: Props) {
               }
             >
               <div className="relative">
-                <div className="pt-4 text-ellipsis line-clamp-3 font-display font-bold text-lg">
+                <div className="pt-4 text-ellipsis line-clamp-3 font-display font-bold text-lg hover:underline">
                   {postData.title}
                 </div>
                 <div className="absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center text-main font-display uppercase text-sm font-bold bg-gradient-to-t from-secondary-800 to-secondary-700">
-                  <span className="block p-1 h-full w-full bg-secondary-800 hover:bg-transparent transition-colors">
+                  <Link
+                    to="/"
+                    className="block p-1 h-full w-full bg-secondary-800 hover:bg-transparent transition-colors"
+                  >
                     {postData.categories[0]}
-                  </span>
+                  </Link>
                 </div>
               </div>
             </h3>
-          </div>
+          </Link>
         </li>
       ))}
     </ul>

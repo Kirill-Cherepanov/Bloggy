@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Icon from '../Icon/Icon';
 
@@ -9,6 +10,7 @@ interface Props extends Post {
 }
 
 export default function SmallPost({
+  _id,
   title,
   text,
   image,
@@ -47,11 +49,12 @@ export default function SmallPost({
       }
       style={{ backgroundColor: bgColor }}
     >
-      <img
-        src={image}
-        alt="Post"
-        className="object-cover cursor-pointer h-40 w-28 md:w-32 lg:w-40"
-      />
+      <Link
+        to={'/post/' + _id}
+        className="cursor-pointer h-40 w-28 md:w-32 lg:w-40 shrink-0"
+      >
+        <img src={image} alt="Post" className="object-cover h-full w-full" />
+      </Link>
       <div className="px-4 lg:px-5 lg:py-2 flex flex-col relative">
         <div
           className="max-w-min text-accent-600 font-display uppercase text-sm font-semibold cursor-pointer hover:underline"
@@ -60,9 +63,9 @@ export default function SmallPost({
           {categories[0]}
         </div>
         <h3 className="font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-bold mb-1 text-lg md:text-xl">
-          <span className="hover:underline cursor-pointer">
-            {title} long lkafjl jalf jl jfla jflkj flaj laj fld fls fjf l
-          </span>
+          <Link to={'/post/' + _id} className="hover:underline cursor-pointer">
+            {title}
+          </Link>
         </h3>
         <div ref={textBoxRef} className="grow min-h-0">
           <p
@@ -88,7 +91,8 @@ export default function SmallPost({
           </div>
           <div className="mt-auto text-text-600 flex flex-col xs:block">
             <span className="hidden xs:inline">By </span>
-            <span
+            <Link
+              to={'/blog/' + authorName}
               className={
                 'cursor-pointer font-bold hover:underline ' +
                 (color ? '' : 'text-accent-600')
@@ -96,7 +100,7 @@ export default function SmallPost({
               style={{ color }}
             >
               {authorName}
-            </span>
+            </Link>
             <span className="font-light text-sm md:text-base">
               <span className="hidden xs:inline mx-1"> | </span>
               {formatDate(createdAt)}

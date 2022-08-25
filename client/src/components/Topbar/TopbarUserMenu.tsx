@@ -52,7 +52,7 @@ export default function TopbarUserMenu() {
         >
           <NavLink
             onClick={toggleOpen}
-            to={'/register'}
+            to={'/sign-up'}
             className="group h-16 flex justify-center items-center transition-colors hover:bg-secondary-600 hover:text-secondary-200"
           >
             <span className="transition-all inline-block group-hover:scale-110 group-hover:drop-shadow-[-4px_4px_1px_rgba(0,0,0,0.15)]">

@@ -19,9 +19,9 @@ export default function TopBar() {
         <TopbarNavigation
           links={[
             ['Home', '/'],
-            ['Posts', '/'],
-            ['About', '/'],
-            ['Contacts', '/']
+            ['Posts', '/catalog'],
+            ['About', '/about'],
+            ['Contacts', '/contacts']
           ]}
         />
         <h1>

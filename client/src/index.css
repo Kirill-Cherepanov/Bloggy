@@ -6,8 +6,19 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply font-lexend text-secondary-1000 overflow-x-hidden selection:bg-opacity-80 selection:bg-accent-900 selection:text-main;
+/* I want these styles to persist even if I don't use them */
+.parallelogram-4 {
+  @apply basis-[calc(25%-72px)] hover:basis-[calc(25%+48px)];
+}
+
+.parallelogram-5 {
+  @apply basis-[calc(20%-72px)] hover:basis-[calc(20%+48px)]
+}
+
+@layer base {
+  html {
+    @apply font-lexend text-secondary-1000 overflow-x-hidden selection:bg-opacity-80 selection:bg-accent-900 selection:text-main;
+  }
 }
 
 @layer components {

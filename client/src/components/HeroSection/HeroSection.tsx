@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import BgTransition from '../BgTransition/BgTransition';
 import Icon from '../Icon/Icon';
 
@@ -25,9 +26,12 @@ export default function HeroSection() {
       />
       <div className="max-w-7xl w-full z-10 px-4 xs:px-8 sm:px-12 md:px-20">
         <div className="w-full my-14 xs:my-16 sm:my-44">
-          <button className="hidden sm:block uppercase text-lg hover-bottom-border-left">
+          <Link
+            to="/About"
+            className="max-w-max hidden sm:block uppercase text-lg hover-bottom-border-left"
+          >
             Learn more
-          </button>
+          </Link>
           <h2 className="font-display text-3xl xs:text-5xl text-center sm:text-left md:text-6xl xl:text-7xl font-bold my-3  min-w-max uppercase">
             Open Yourself
             <br />
@@ -37,13 +41,16 @@ export default function HeroSection() {
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
             asperiores aperiam rem ipsum?
           </p>
-          <button className="flex justify-center items-center w-full sm:w-44 py-4 font-bold bg-accent-600 transition-all rounded-sm hover:bg-accent-700 text-main hover:tracking-widest sm:hover:w-52 group">
+          <Link
+            to="/sign-up"
+            className="flex justify-center items-center w-full sm:w-44 py-4 font-bold bg-accent-600 transition-all rounded-sm hover:bg-accent-700 text-main hover:tracking-widest sm:hover:w-52 group"
+          >
             Sign up
             <Icon
               type="arrow"
-              className="hidden sm:block h-5 text-main rotate-180 ml-1 transition-all group-hover:ml-2"
+              className="hidden sm:block h-3 text-main rotate-180 ml-2 mt-0.5 transition-all group-hover:ml-2"
             />
-          </button>
+          </Link>
           {/* <button className="group flex font-semibold items-center justify-center transition-all ease-out duration-300 hover:tracking-wide">
               Check out our Community
               <Icon

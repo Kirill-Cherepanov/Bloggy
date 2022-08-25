@@ -35,15 +35,23 @@ export default function Post() {
         <div className="h-min">
           <p className="text-lg">{postData.text}</p>
           <div className="mt-10 w-full flex gap-8 bg-secondary-800 py-8 px-5 rounded-lg">
-            <img
-              src={blogInfo.profilePic}
-              alt="blog"
-              className="my-auto h-36 w-36 object-cover rounded-full"
-            />
+            <Link
+              to={'/blog/' + blogInfo.username}
+              className="h-36 w-36 shrink-0 my-auto"
+            >
+              <img
+                src={blogInfo.profilePic}
+                alt="blog"
+                className="h-full w-full object-cover rounded-full"
+              />
+            </Link>
             <div>
-              <div className="text-xl font-bold uppercase mb-3 text-accent-400 cursor-pointer hover:underline w-min">
+              <Link
+                to={'/blog/' + blogInfo.username}
+                className="block w-min text-xl font-bold uppercase mb-3 text-accent-400 cursor-pointer hover:underline"
+              >
                 {blogInfo.username}
-              </div>
+              </Link>
               <p className="text-main line-clamp-5 font-light">
                 {blogInfo.description}
               </p>

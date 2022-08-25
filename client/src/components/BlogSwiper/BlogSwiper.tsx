@@ -5,8 +5,9 @@ import 'swiper/css';
 import 'swiper/css/a11y';
 import 'swiper/css/navigation';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
-type Props = { mockImage: string };
+type Props = { blogsInfo: Blog[] };
 
 const getSlidesAmount = () => {
   if (window.innerWidth >= 1200) return 4;
@@ -15,7 +16,7 @@ const getSlidesAmount = () => {
   return 1;
 };
 
-export default function BlogSwiper({ mockImage }: Props) {
+export default function BlogSwiper({ blogsInfo }: Props) {
   const [slidesAmount, setSlidesAmount] = useState(getSlidesAmount());
   useEffect(() => {
     const setSlides = () => setSlidesAmount(getSlidesAmount());
@@ -30,7 +31,7 @@ export default function BlogSwiper({ mockImage }: Props) {
     <div className="w-full flex items-center">
       <Icon
         type="angle"
-        className="BLOG_SWIPER_PREV_ELEMENT text-secondary-800 shrink-0 basis-8 xs:basis-10"
+        className="BLOG_SWIPER_PREV_ELEMENT text-secondary-900 shrink-0 basis-8 xs:basis-10"
       />
       <Swiper
         slidesPerView={slidesAmount}
@@ -40,48 +41,47 @@ export default function BlogSwiper({ mockImage }: Props) {
           prevEl: '.BLOG_SWIPER_PREV_ELEMENT',
           disabledClass: 'invisible'
         }}
-        className="[--swiper-theme-color: #78716c]"
+        className="[--swiper-theme-color: #000000]"
       >
         {/* <div className="BLOG_SWIPER_NEXT_ELEMENT" /> */}
-        {Array(10)
-          .fill(0)
-          .map((v, i) => (
-            <SwiperSlide key={i} className="py-4">
-              <div className="px-4 py-2 bg-accent-50 shadow-lg transition-transform hover:scale-105 xs:mx-5 rounded-md">
+        {blogsInfo.map((blogInfo, i) => (
+          <SwiperSlide key={blogInfo._id + i} className="py-4">
+            <div className="px-4 py-2 bg-main shadow-lg transition-transform hover:scale-105 xs:mx-5 rounded-md">
+              <Link to={'/blog/' + blogInfo.username} className="block">
                 <img
-                  src={mockImage}
+                  src={blogInfo.profilePic}
                   alt="Blogger"
                   className="mb-4 rounded-full aspect-square object-cover select-none cursor-pointer"
                 />
-                <h4 className="font-bold text-lg text-center text-ellipsis cursor-pointer overflow-hidden hover:underline mb-1">
-                  Bloggercoolnameandstuffffafafafafafaff
-                </h4>
-                <div className="flex gap-4 mb-2 overflow-hidden flex-wrap h-7">
-                  {Array(5)
-                    .fill(0)
-                    .map((v, i) => (
-                      <span
-                        key={i}
-                        className="border border-dark inline-block h-full px-1 hover:border-accent-600 hover:text-accent-600 hover:shadow-md hover:shadow-accent-400 cursor-pointer"
-                      >
-                        Music
-                      </span>
-                    ))}
-                </div>
-                <div className="line-clamp-6 text-ellipsis">
-                  A small blog description of up to 100 syllables I guess la la
-                  alal ala l la la la adla jaljal jal ajldkajd lajlaj laj al
-                  jaljl jl ja jl jal jalj al ajl l ja jal jl ja al jlj al jal
-                  jal ja dlk ajl kjalkjal jalj al jl jljaljl jal jl lj l laj aj
-                  ll j
-                </div>
+              </Link>
+              <h4 className="font-bold text-lg text-center text-ellipsis overflow-hidden mb-1">
+                <Link
+                  to={'/blog/' + blogInfo.username}
+                  className="hover:underline"
+                >
+                  {blogInfo.username}
+                </Link>
+              </h4>
+              <div className="flex gap-4 mb-2 overflow-hidden flex-wrap h-7">
+                {blogInfo.categories.map((category) => (
+                  <span
+                    key={category}
+                    className="border border-dark inline-block h-full px-1 hover:border-accent-600 hover:text-accent-600 hover:shadow-md hover:shadow-accent-400 cursor-pointer"
+                  >
+                    {category}
+                  </span>
+                ))}
               </div>
-            </SwiperSlide>
-          ))}
+              <div className="line-clamp-6 text-ellipsis">
+                {blogInfo.description}
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
       <Icon
         type="angle"
-        className="BLOG_SWIPER_NEXT_ELEMENT text-secondary-800 rotate-180 shrink-0 basis-8 xs:basis-10"
+        className="BLOG_SWIPER_NEXT_ELEMENT text-secondary-900 rotate-180 shrink-0 basis-8 xs:basis-10"
       />
     </div>
   );

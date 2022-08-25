@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Icon from '../Icon/Icon';
 
 export default function NormalPost({
+  _id,
   title,
   text,
   image,
@@ -16,10 +18,14 @@ export default function NormalPost({
         {categories[0]}
       </div>
       <h3 className="my-1 font-display font-bold text-xl">
-        <span className="hover:underline cursor-pointer">{title}</span>
+        <Link to={'/post/' + _id} className="hover:underline cursor-pointer">
+          {title}
+        </Link>
       </h3>
       <p className="mb-3 line-clamp-4">{text}</p>
-      <img src={image} alt="post" className="mb-3" />
+      <Link to={'/post/' + _id}>
+        <img src={image} alt="post" className="mb-3" />
+      </Link>
       <div className="flex justify-between items-center">
         <div className="font-semibold flex items-center cursor-pointer group">
           <span className="relative w-5 h-5 mr-2">
@@ -36,13 +42,14 @@ export default function NormalPost({
         </div>
         <div className="mt-auto text-text-600 flex flex-col xs:block">
           <span className="hidden xs:inline">By </span>
-          <span
+          <Link
+            to={'/blog/' + authorName}
             className={
               'cursor-pointer font-bold hover:underline text-accent-600'
             }
           >
             {authorName}
-          </span>
+          </Link>
           <span className="font-light text-sm md:text-base">
             <span className="hidden xs:inline mx-1"> | </span>
             {formatDate(createdAt)}
