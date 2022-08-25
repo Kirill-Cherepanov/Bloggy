@@ -49,11 +49,10 @@ Post {
 	3. Categories
 	4. Main image
 	5. Title
-	6. Text (I think it should be written in some sort of compiled text format i.e. .md)
+	6. Text (I think it should be written and stored in some sort of compiled text format i.e. .md)
 	7. (MAYBE) Color theme of the blogger
 	8. Like the post
 	9. More on this blog
-	10. Similar posts
 }
 
 Userpage {
@@ -65,9 +64,9 @@ Userpage {
 
 Posts {
 	1. Search with filters: blogs/posts, by creation date/popularity over *time*, by categories.
-	2. Posts are dynamically loaded
-	2.1 No category chosen: PROBABLY Similar to homepage
-	2.2 Category(ies) chosen: A semi-chaotic collection of posts. It'll be stated somewhere which category (among chosen ones) this post belongs to (maybe in a header - similar to homepage - or on a post itself)
+	2. Posts are dynamically loaded. At the top of the page there is a more extensive (than in the topbar) search bar with filters and sorting options.
+	2.1 No category chosen: catalog of all categories. At  After category name it's written in parenthesis how many posts there are in this category. User can sort them either by amount of posts or by alphabet.
+	2.2 Category(ies) chosen: posts that belong to the categories with default sorting and filter options if unspecified. It should be stated which category (among chosen ones) this post belongs to (maybe in a header - similar to homepage - or on a post itself)
 }
 
 About {
@@ -78,12 +77,30 @@ About {
 }
 
 Login {
-	Just copy basic design from any website that requires authentification (and looks good).
+	It'll be a pop up (as in pinterest, for example).
+	1. Email
+	2. Password
+	Design: https://thumbs.dreamstime.com/z/dark-web-ui-login-signup-form-copy-log-sign-up-forms-detailed-description-vector-design-pop-buttons-inputs-153443358.jpg or https://pinterest.com/
 }
 
 Registration {
-	Similarly to Login page, just copy it from any good website.
-	Also may add an option to choose whether the user wants to start a blog or just wants to be a reader.
+	0. Registration starts with a Pop up asking to enter email and create username and "Continue" button. After submitting, redirect to registration page filling in email and username and sending a confirmation to email adress.
+	1. Sign Up form (first stage) {
+		1. Email input
+		2. Password input
+		3. Confirm password input
+ 		4. Username input
+		5. "Do you want to start a blog (it's free), or be a reader?" custom checkbox
+		6. "You will be able to change anything, or start a blog, later in the settings" disclaimer
+		7. Displayed only if confirmation email was sent. Confirmation email message input
+		8. "Sign Up" button
+	}
+	2. Starting blog form (second stage) (shows only if (1.5) was checked) {
+		1. Blog description
+		2. "Add categories that your blog specializes in (?)". 10 is maximum. (?) is hover tip. (?)="You will be able to make posts from any category. This is needed mostly for search"
+	}
+	3. Redirect to the blog page.
+	Design: https://thumbs.dreamstime.com/z/dark-web-ui-login-signup-form-copy-log-sign-up-forms-detailed-description-vector-design-pop-buttons-inputs-153443358.jpg
 }
 
 Create post {
