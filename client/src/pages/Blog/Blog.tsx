@@ -30,7 +30,7 @@ export default function Blog() {
       <div className="flex flex-row-reverse gap-4 xs:gap-8">
         <BlogCard {...blogInfo} />
         <div className="">
-          <div className="p-4 bg-accent-50 mb-6 rounded-md">
+          <div className="p-4 bg-accent-200 mb-6 rounded-md">
             <h3 className="font-display font-semibold text-2xl mb-2">
               Description
             </h3>

@@ -17,7 +17,8 @@ export default function LargePost({
   createdAt,
   color,
   className,
-  textBoxClass
+  textBoxClass,
+  categories
 }: Props) {
   const [amountOfLines, setAmountOfLines] = useState(0);
   const textBoxRef = useRef<HTMLDivElement | null>(null);
@@ -53,8 +54,14 @@ export default function LargePost({
           (textBoxClass || '')
         }
       >
-        <h3 className="basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold cursor-pointer xl:mb-2 hover:underline text-2xl md:text-3xl">
-          {title}
+        <div
+          className="absolute p-1 top-0 left-8 -translate-y-1/2 flex justify-center items-center bg-accent-400 text-black font-display uppercase text-sm font-bold cursor-pointer hover:underline"
+          style={{ backgroundColor: color }}
+        >
+          {categories[0]}
+        </div>
+        <h3 className="mt-2 basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold xl:mb-2 text-2xl md:text-3xl">
+          <span className="hover:underline cursor-pointer">{title}</span>
         </h3>
         <div className="basis-0 shrink grow mb-3 min-h-0" ref={textBoxRef}>
           <p
@@ -75,10 +82,7 @@ export default function LargePost({
           <div className="text-sm sm:text-base">
             By{' '}
             <span
-              className={
-                'cursor-pointer font-bold hover:underline ' +
-                (color ? '' : 'text-accent-600')
-              }
+              className="cursor-pointer font-bold hover:underline text-accent-600"
               style={{ color }}
             >
               {authorName}

@@ -8,7 +8,7 @@ export default function BlogCard({
   createdAt
 }: Blog) {
   return (
-    <div className="flex flex-col p-6 w-80 shrink-0 bg-accent-50 h-min rounded-md">
+    <div className="flex flex-col p-6 w-80 shrink-0 bg-accent-200 h-min rounded-md">
       <img
         src={profilePic}
         alt="profile"

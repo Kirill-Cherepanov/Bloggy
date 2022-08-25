@@ -62,8 +62,10 @@ export default function ParallelogramCurtains({ postsData, className }: Props) {
                 <div className="pt-4 text-ellipsis line-clamp-3 font-display font-bold text-lg">
                   {postData.title}
                 </div>
-                <div className="absolute p-1 top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center bg-secondary-800 text-main font-display uppercase text-sm font-bold">
-                  {postData.categories[0]}
+                <div className="absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center text-main font-display uppercase text-sm font-bold bg-gradient-to-t from-secondary-800 to-secondary-700">
+                  <span className="block p-1 h-full w-full bg-secondary-800 hover:bg-transparent transition-colors">
+                    {postData.categories[0]}
+                  </span>
                 </div>
               </div>
             </h3>

@@ -7,12 +7,18 @@ export default function NormalPost({
   image,
   likes,
   authorName,
-  createdAt
+  createdAt,
+  categories
 }: Post) {
   return (
     <li className="lg:bg-accent-50 py-5 px-8">
-      <h3 className="font-display font-bold text-xl">{title}</h3>
-      <p className="my-3 line-clamp-4">{text}</p>
+      <div className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline">
+        {categories[0]}
+      </div>
+      <h3 className="my-1 font-display font-bold text-xl">
+        <span className="hover:underline cursor-pointer">{title}</span>
+      </h3>
+      <p className="mb-3 line-clamp-4">{text}</p>
       <img src={image} alt="post" className="mb-3" />
       <div className="flex justify-between items-center">
         <div className="font-semibold flex items-center cursor-pointer group">

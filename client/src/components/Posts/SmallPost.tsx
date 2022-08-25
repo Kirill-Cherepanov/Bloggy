@@ -15,6 +15,7 @@ export default function SmallPost({
   likes,
   authorName,
   createdAt,
+  categories,
   color,
   bgColor,
   className
@@ -51,9 +52,17 @@ export default function SmallPost({
         alt="Post"
         className="object-cover cursor-pointer h-40 w-28 md:w-32 lg:w-40"
       />
-      <div className="px-4 lg:px-5 lg:py-2 flex flex-col">
-        <h3 className="font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-bold cursor-pointer mb-1 hover:underline text-lg md:text-xl">
-          {title}
+      <div className="px-4 lg:px-5 lg:py-2 flex flex-col relative">
+        <div
+          className="max-w-min text-accent-600 font-display uppercase text-sm font-semibold cursor-pointer hover:underline"
+          style={{ color }}
+        >
+          {categories[0]}
+        </div>
+        <h3 className="font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-bold mb-1 text-lg md:text-xl">
+          <span className="hover:underline cursor-pointer">
+            {title} long lkafjl jalf jl jfla jflkj flaj laj fld fls fjf l
+          </span>
         </h3>
         <div ref={textBoxRef} className="grow min-h-0">
           <p
@@ -90,7 +99,7 @@ export default function SmallPost({
             </span>
             <span className="font-light text-sm md:text-base">
               <span className="hidden xs:inline mx-1"> | </span>
-              {formatDate(new Date(Date.now()))}
+              {formatDate(createdAt)}
             </span>
           </div>
         </div>
