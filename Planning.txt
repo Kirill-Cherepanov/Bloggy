@@ -83,7 +83,7 @@ Login {
 	Design: https://thumbs.dreamstime.com/z/dark-web-ui-login-signup-form-copy-log-sign-up-forms-detailed-description-vector-design-pop-buttons-inputs-153443358.jpg or https://pinterest.com/
 }
 
-Registration {
+Sign up {
 	0. Registration starts with a Pop up asking to enter email and create username and "Continue" button. After submitting, redirect to registration page filling in email and username and sending a confirmation to email adress.
 	1. Sign Up form (first stage) {
 		1. Email input

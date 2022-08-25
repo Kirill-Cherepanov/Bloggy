@@ -19,7 +19,7 @@ export default function Icon({ type, className = '', style }: IconProps) {
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="32"
+            strokeWidth="50"
             d="M368 368L144 144M368 144L144 368"
           />
         </svg>

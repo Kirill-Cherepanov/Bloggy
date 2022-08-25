@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import Icon from '../Icon/Icon';
+import Authentification from '../Authentification/Authentification';
 
 export default function TopbarUserMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleOpen = () => setIsOpen((isOpen) => !isOpen);
+  const [authOpen, setAuthOpen] = useState<false | 'login' | 'signup'>(false);
   const menu = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -25,7 +25,10 @@ export default function TopbarUserMenu() {
       ref={menu}
       className="h-full flex items-center justify-center xl:relative"
     >
-      <button className="flex items-center" onClick={toggleOpen}>
+      <button
+        className="flex items-center"
+        onClick={() => setIsOpen((isOpen) => !isOpen)}
+      >
         <Icon type="person" className="h-8 sm:h-10 fill-main" />
         {/* <img src={'PF + user.profilePic'} alt="" /> */}
         <Icon
@@ -50,26 +53,41 @@ export default function TopbarUserMenu() {
               : ' transition-[visibility] duration-[0ms] delay-200 invisible')
           }
         >
-          <NavLink
-            onClick={toggleOpen}
-            to={'/sign-up'}
-            className="group h-16 flex justify-center items-center transition-colors hover:bg-secondary-600 hover:text-secondary-200"
+          <button
+            onClick={() => {
+              setAuthOpen('signup');
+              setIsOpen(false);
+            }}
+            className="group h-16 flex justify-center items-center hover:bg-secondary-200 hover:text-secondary-800"
           >
-            <span className="transition-all inline-block group-hover:scale-110 group-hover:drop-shadow-[-4px_4px_1px_rgba(0,0,0,0.15)]">
+            <span className="transition-all inline-block group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:drop-shadow-[4px_4px_2px_rgba(0,0,0,0.15)]">
               Sign up
             </span>
-          </NavLink>
-          <NavLink
-            onClick={toggleOpen}
-            to={'/login'}
-            className="group h-16 flex justify-center items-center transition-colors hover:bg-secondary-600 hover:text-secondary-200 border-opacity-10 border-main border-t"
+          </button>
+          <button
+            onClick={() => {
+              setAuthOpen('login');
+              setIsOpen(false);
+            }}
+            className="group h-16 flex justify-center items-center hover:bg-secondary-200 hover:text-secondary-800 border-opacity-10 border-main border-t"
           >
-            <span className="transition-all inline-block group-hover:scale-110 group-hover:drop-shadow-[-4px_4px_1px_rgba(0,0,0,0.15)]">
+            <span className="transition-all inline-block group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 group-hover:drop-shadow-[4px_4px_2px_rgba(0,0,0,0.15)]">
               Log in
             </span>
-          </NavLink>
+          </button>
         </div>
       </div>
+      {!authOpen ? null : (
+        <Authentification
+          closeMenu={() => setAuthOpen(false)}
+          authType={authOpen}
+          toggleType={() =>
+            setAuthOpen((authOpen) =>
+              authOpen === 'login' ? 'signup' : 'login'
+            )
+          }
+        />
+      )}
     </div>
   );
 }
