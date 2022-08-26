@@ -26,7 +26,7 @@ export default function Blog() {
   const postsData = getPostsData(10);
 
   return (
-    <main className="py-8 p-page">
+    <main className="py-8 px-page">
       <div className="flex flex-row-reverse gap-4 xs:gap-8">
         <BlogCard {...blogInfo} />
         <div className="">

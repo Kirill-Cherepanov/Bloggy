@@ -1,17 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router';
 import Icon from '../../../components/Icon/Icon';
 
 export default function Stage2() {
   const [categories, setCategories] = useState<string[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const newCategoryRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isAdding) newCategoryRef.current!.focus();
   }, [isAdding]);
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="mx-auto w-full mt-10">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        navigate('/blog/KissMe');
+      }}
+      className="mx-auto w-full mt-16"
+    >
       <h2 className="text-3xl text-center font-bold font-display uppercase mb-4">
         Create your blog
       </h2>
@@ -28,15 +36,15 @@ export default function Stage2() {
 
       <label
         htmlFor="blog-categories"
-        className="flex items-center font-light ml-2 text-sm mb-1"
+        className="flex items-center font-light text-sm mb-2"
       >
         Add categories that your blog specializes in
         <span className="ml-1.5 cursor-pointer relative group rounded-full bg-secondary-300 inline-flex items-center justify-center w-4 h-4">
           ?
           <div className="w-64 px-2 py-1 absolute top-4 bg-secondary-300 mt-2 opacity-0 rounded-md transition-opacity duration-200 invisible group-hover:visible group-hover:opacity-100 after:block after:absolute after:bottom-full after:left-1/2 after:-ml-2 after:border-[8px] after:border-transparent after:border-b-secondary-300">
             Please choose categories in order of their importance to you. Also,
-            you will be able to make posts from any category. This is needed
-            mostly for search.
+            you will be able to make posts from any category. They are needed
+            mostly only for search.
           </div>
         </span>
       </label>
@@ -75,9 +83,9 @@ export default function Stage2() {
                 setIsAdding(false);
                 if (
                   e.target.value !== '' &&
+                  e.target.value.length <= 20 &&
                   !categories.includes(e.target.value)
                 ) {
-                  console.log(categories);
                   setCategories((categories) => [
                     ...categories,
                     e.target.value
@@ -90,16 +98,15 @@ export default function Stage2() {
                 }
                 if (e.code === 'Enter') {
                   if (
-                    e.target.value === '' ||
-                    categories.includes(e.target.value)
+                    e.target.value !== '' &&
+                    e.target.value.length <= 20 &&
+                    !categories.includes(e.target.value)
                   ) {
-                    setIsAdding(false);
-                    return;
+                    setCategories((categories) => [
+                      ...categories,
+                      e.target.value
+                    ]);
                   }
-                  setCategories((categories) => [
-                    ...categories,
-                    e.target.value
-                  ]);
                   setIsAdding(false);
                 }
               }}
@@ -107,7 +114,7 @@ export default function Stage2() {
           </div>
         )}
 
-        <button className="mt-8 w-full py-2 bg-accent-800 text-main font-bold rounded-3xl transition-color hover:bg-accent-900">
+        <button className="mt-6 w-full py-2 bg-accent-800 text-main font-bold rounded-3xl transition-color hover:bg-accent-900">
           Create a blog
         </button>
       </div>

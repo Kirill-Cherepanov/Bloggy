@@ -108,6 +108,10 @@ Create post {
 	Will probably make it similar to blogger.com or reddit.com or other
 }
 
+404 page {
+	Almost forgot about it
+}
+
 Settings {
 	Each user should be able to choose whether he is a blogger or just a user.
 	Entering that you want to be a blogger will add/unlock a settings tab.

@@ -1,5 +1,5 @@
 // import axios from 'axios';
-// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Icon from '../../components/Icon/Icon';
 import Stage1 from './Stages/Stage1';
@@ -26,19 +26,13 @@ export default function Register() {
   //   }
   // };
   const [stage, setStage] = useState(0);
+  const navigate = useNavigate();
 
   return (
     <main className="px-page max-w-2xl py-8 min-h-screen flex items-center">
-      <div className="relative">
+      <div className="relative w-full">
         <div className="w-full absolute left-0 top-0 flex items-center h-10 border-b px-2">
-          <button
-            className="absolute"
-            onClick={() => {
-              if (stage === 2) {
-                setStage(1);
-              }
-            }}
-          >
+          <button className="absolute" onClick={() => navigate(-1)}>
             <Icon
               type="long-arrow"
               className="h-4 text-secondary-600 pointer-events-none"

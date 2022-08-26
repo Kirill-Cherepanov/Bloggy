@@ -1,4 +1,5 @@
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router';
 import Icon from '../Icon/Icon';
 
 type Props = {
@@ -30,6 +31,7 @@ export default function Authentification({
   //     dispatch({ type: 'LOGIN_FAILURE' });
   //   }
   // };
+  const navigate = useNavigate();
 
   return createPortal(
     <div
@@ -96,7 +98,11 @@ export default function Authentification({
             <button
               className="w-full py-2 bg-accent-800 text-main font-bold rounded-3xl transition-color hover:bg-accent-900"
               style={{ order: authType === 'signup' ? 1 : 3 }}
-              onClick={authType === 'login' ? toggleType : () => {}}
+              onClick={
+                authType === 'login'
+                  ? toggleType
+                  : () => navigate('/registration')
+              }
             >
               Sign up
             </button>

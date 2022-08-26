@@ -1,17 +1,18 @@
 import Icon from '../../components/Icon/Icon';
 import { getPostsData, blogInfo } from '../../utility/mockData';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Aside from '../../components/Aside/Aside';
 import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
 
 export default function Post() {
   const postData = getPostsData(1)[0];
+  const navigate = useNavigate();
 
   return (
     <main className="py-8 px-page">
       <div className="border-b pb-1 border-secondary-300 flex justify-between">
-        <button>
+        <button onClick={() => navigate(-1)}>
           <Icon type="long-arrow" className="h-4 text-secondary-700" />
         </button>
         <div className=" font-extralight">
