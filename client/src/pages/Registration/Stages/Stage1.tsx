@@ -7,7 +7,10 @@ type Props = {
 
 export default function Stage1({ isConfirmationSent, changeStage }: Props) {
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="mx-auto w-full">
+    <form onSubmit={(e) => e.preventDefault()} className="mx-auto w-full mt-6">
+      <h2 className="text-3xl text-center font-bold font-display uppercase mb-2">
+        Sign up
+      </h2>
       <label
         htmlFor="registration__email"
         className="block font-light ml-2 text-sm mb-1"
@@ -18,7 +21,7 @@ export default function Stage1({ isConfirmationSent, changeStage }: Props) {
         type="text"
         id="registration__email"
         placeholder="Email"
-        className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
       />
 
       <label
@@ -31,7 +34,7 @@ export default function Stage1({ isConfirmationSent, changeStage }: Props) {
         type="text"
         id="registration__username"
         placeholder="Username"
-        className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
       />
 
       <label
@@ -44,7 +47,7 @@ export default function Stage1({ isConfirmationSent, changeStage }: Props) {
         type="text"
         id="registration__password"
         placeholder="Password"
-        className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
       />
 
       <label
@@ -57,7 +60,7 @@ export default function Stage1({ isConfirmationSent, changeStage }: Props) {
         type="text"
         id="registration__confirm-password"
         placeholder="Confirm password"
-        className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
       />
 
       <label htmlFor="registration__start-blog" className="flex gap-2 my-2">
@@ -87,7 +90,7 @@ export default function Stage1({ isConfirmationSent, changeStage }: Props) {
             type="text"
             id="registration__confirm-email"
             placeholder="Confirmation message"
-            className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-1"
+            className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-1"
           />
           <button className="ml-2 block text-secondary-600 mb-4 text-sm hover:underline">
             Send again

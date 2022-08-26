@@ -51,9 +51,6 @@ export default function Register() {
               ))}
         </div>
       </div>
-      <h2 className="text-3xl text-center font-bold font-display uppercase mt-6 mb-2">
-        Sign up
-      </h2>
       {stage === 2 ? (
         <Stage2 />
       ) : (

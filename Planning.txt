@@ -87,9 +87,9 @@ Sign up {
 	0. Registration starts with a Pop up asking to enter email and create username and "Continue" button. After submitting, redirect to registration page filling in email and username and sending a confirmation to email adress.
 	1. Sign Up form (first stage) {
 		1. Email input
-		2. Password input
-		3. Confirm password input
- 		4. Username input
+ 		2. Username input
+		3. Password input
+		4. Confirm password input
 		5. "Do you want to start a blog (it's free), or be a reader?" custom checkbox
 		6. "You will be able to change anything, or start a blog, later in the settings" disclaimer
 		7. Displayed only if confirmation email was sent. Confirmation email message input
