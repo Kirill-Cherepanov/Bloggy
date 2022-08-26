@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Icon from '../../../components/Icon/Icon';
 
 export default function Stage2() {
-  const [categories, setCategories] = useState(['ff']);
+  const [categories, setCategories] = useState<string[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const newCategoryRef = useRef<HTMLInputElement | null>(null);
 
@@ -16,18 +16,18 @@ export default function Stage2() {
         Create your blog
       </h2>
       <label
-        htmlFor="registration__blog-description"
+        htmlFor="blog-description"
         className="block font-light ml-2 text-sm mb-1"
       >
         Blog description
       </label>
       <textarea
-        id="registration__blog-description"
+        id="blog-description"
         className="bg-secondary-100 outline-1 w-full border-2 border-secondary-300 rounded-md px-2 py-1 mb-6 focus:outline-2 focus:outline-accent-400"
       />
 
       <label
-        htmlFor="registration__blog-categories"
+        htmlFor="blog-categories"
         className="flex items-center font-light ml-2 text-sm mb-1"
       >
         Add categories that your blog specializes in
@@ -77,6 +77,7 @@ export default function Stage2() {
                   e.target.value !== '' &&
                   !categories.includes(e.target.value)
                 ) {
+                  console.log(categories);
                   setCategories((categories) => [
                     ...categories,
                     e.target.value
@@ -88,7 +89,10 @@ export default function Stage2() {
                   setIsAdding(false);
                 }
                 if (e.code === 'Enter') {
-                  if (e.target.value === '') {
+                  if (
+                    e.target.value === '' ||
+                    categories.includes(e.target.value)
+                  ) {
                     setIsAdding(false);
                     return;
                   }

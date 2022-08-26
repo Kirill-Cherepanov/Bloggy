@@ -25,13 +25,19 @@ export default function Register() {
   //     setError(true);
   //   }
   // };
-  const [stage, setStage] = useState(2);
-  const [isConfirmationSent, setIsConfirmationSent] = useState(true);
+  const [stage, setStage] = useState(0);
 
   return (
     <main className="px-page max-w-2xl py-8 relative">
       <div className="w-full px-page absolute left-0 top-8 flex items-center h-2">
-        <button className="absolute">
+        <button
+          className="absolute"
+          onClick={() => {
+            if (stage === 2) {
+              setStage(1);
+            }
+          }}
+        >
           <Icon
             type="long-arrow"
             className="h-4 text-secondary-600 pointer-events-none"
@@ -51,14 +57,7 @@ export default function Register() {
               ))}
         </div>
       </div>
-      {stage === 2 ? (
-        <Stage2 />
-      ) : (
-        <Stage1
-          isConfirmationSent={isConfirmationSent}
-          changeStage={(e) => setStage(Number(e.target.checked))}
-        />
-      )}
+      {stage === 2 ? <Stage2 /> : <Stage1 setStage={setStage} />}
     </main>
   );
 }
