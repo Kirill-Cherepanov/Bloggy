@@ -55,7 +55,7 @@ Post {
 	9. More on this blog
 }
 
-Userpage {
+Blog {
 	0. Chosen blogger's color scheme (color scheme of the website by default)
 	1. User card/info (will probably contain username, profile picture, total amount of likes, categories, MAYBE banner, and a description of the blog) (may take inspiration from osu! profiles and vk profiles)
 	2. Posts: for each post a blogger can choose how a post will be displayed on his website (Large, Small or Normal (Normal just like that on vk)). Each post should also have a like button
@@ -74,6 +74,10 @@ About {
 	Similar to this: https://www.webdesignerdepot.com/about/ with maybe a little more formatting.
 	It'll just be similar or the same as the README for the repository, explaining the meaning and purpose of the project, my history with it and plans for the future of this project and maybe my own plans. Idk, maybe just make it a post of its own.
 	Or maybe add Subheaders that were originally meant to be on Homepage and make it a continuation of homepage. 
+}
+
+Contacts {
+	The same as About. Probably just a redirect to a post
 }
 
 Login {
