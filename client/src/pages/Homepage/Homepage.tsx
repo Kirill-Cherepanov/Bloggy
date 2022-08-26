@@ -46,7 +46,7 @@ export default function Home() {
     <>
       <main className="bg-main">
         <HeroSection />
-        <section className="SPORT px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto mt-6 mb-8">
+        <section className="SPORT px-page mt-6 mb-8">
           <h2 className="font-display font-bold text-3xl text-center mb-10">
             Sport
           </h2>
@@ -85,7 +85,7 @@ export default function Home() {
           </div>
         </section>
         <BgTransition type="our-posts" />
-        <section className="SCIENCE px-4 xs:px-8 sm:px-12 md:px-20 my-8 max-w-7xl mx-auto">
+        <section className="SCIENCE px-page my-8">
           <h2 className="font-display font-bold text-3xl text-center my-8">
             Science
           </h2>
@@ -118,7 +118,7 @@ export default function Home() {
         </section>
         <BgTransition type="science" />
         <section className="BLOGS bg-accent-500 pb-6">
-          <div className="px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
+          <div className="px-page">
             <h2 className="font-display font-bold text-3xl text-center mb-4">
               Popular blogs
             </h2>
@@ -126,7 +126,7 @@ export default function Home() {
           </div>
         </section>
         <BgTransition type="popular-blogs" />
-        <section className="MUSIC px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto my-6 lg:my-12">
+        <section className="MUSIC px-page my-6 lg:my-12">
           <h2 className="font-display font-bold text-3xl text-center my-8">
             Music
           </h2>

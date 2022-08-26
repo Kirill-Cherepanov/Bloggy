@@ -22,6 +22,10 @@
 }
 
 @layer components {
+  .px-page {
+    @apply px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto;
+  }
+
   .hamburger-menu-btn {
     @apply w-6 xs:w-8 h-5 xs:h-[30px] relative transition cursor-pointer;
   }
@@ -36,6 +40,29 @@
 }
 
 @layer utilities {
+  .cool-checkbox {
+    @apply appearance-none outline-none relative h-6 w-12 border-2 border-main rounded-xl cursor-pointer;
+    box-shadow: 2px 2px 2px rgba(189,189,189,0.6), -2px -2px 2px rgba(255,255,255,0.5), inset 2px 2px 4px -2px #c3c3c3, inset -2px -2px 4px -2px #fff;
+  }
+  .cool-checkbox:checked {
+    @apply bg-accent-600;
+    box-shadow: 3px 3px 5px rgba(189,189,189,0.6), -3px -3px 5px rgba(255,255,255,0.5), inset 3px 3px 5px -3px rgba(0,0,0,0.3), inset -3px -3px 5px -3px rgba(0,0,0,0.3);
+  }
+  .cool-checkbox::before {
+    @apply content-[""] h-3 w-3 bg-main absolute m-auto top-0 left-1 bottom-0 rounded-full transition-all duration-200;
+    box-shadow: 1px 1px 5px #c3c3c3, 2px 2px 5px rgba(189,189,189,0.6);
+  }
+  .cool-checkbox:checked::before {
+    @apply left-7 shadow-none;
+  }
+  .cool-checkbox::after {
+    @apply content-["✕"] absolute text-sm top-[1px] right-[5px] text-secondary-700;
+  }
+  .cool-checkbox:checked::after {
+    @apply content-["✓"] top-0 left-[5px] text-main;
+  }
+
+
   .grid-squared {
     @apply before:w-0 before:pb-[65%] before:row-start-1 before:row-end-1 before:col-start-1 before:col-end-1 [&>*:first-child]:row-start-1 [&>*:first-child]:row-end-1 [&>*:first-child]:col-start-1 [&>*:first-child]:col-end-1;
   }

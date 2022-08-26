@@ -9,7 +9,7 @@ export default function Post() {
   const postData = getPostsData(1)[0];
 
   return (
-    <main className="py-8 px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto">
+    <main className="py-8 px-page">
       <div className="border-b pb-1 border-secondary-300 flex justify-between">
         <button>
           <Icon type="long-arrow" className="h-4 text-secondary-700" />
