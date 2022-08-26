@@ -11,7 +11,7 @@ export default function Stage2() {
   }, [isAdding]);
 
   return (
-    <form onSubmit={(e) => e.preventDefault()} className="mx-auto w-full mt-6">
+    <form onSubmit={(e) => e.preventDefault()} className="mx-auto w-full mt-10">
       <h2 className="text-3xl text-center font-bold font-display uppercase mb-4">
         Create your blog
       </h2>

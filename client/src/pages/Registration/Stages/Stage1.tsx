@@ -16,6 +16,7 @@ export default function Stage1({ setStage }: Props) {
 
   return (
     <form
+      className="mx-auto w-full mt-16"
       onSubmit={(e) => {
         e.preventDefault();
 
@@ -40,7 +41,6 @@ export default function Stage1({ setStage }: Props) {
           else navigate('/', { replace: true });
         }
       }}
-      className="mx-auto w-full mt-6"
     >
       <h2 className="text-3xl text-center font-bold font-display uppercase mb-2">
         Sign up
