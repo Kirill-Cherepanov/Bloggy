@@ -2,7 +2,7 @@ type Props = User;
 
 export default function General({ email, username, profilePic }: Props) {
   return (
-    <div className="pl-2">
+    <div>
       <h3 className="text-3xl font-medium font-display mb-5">General</h3>
 
       <label htmlFor="email" className="block ml-2">

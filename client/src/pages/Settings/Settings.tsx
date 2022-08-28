@@ -1,6 +1,6 @@
 import Icon from '../../components/Icon/Icon';
-import GeneralSettings from './Tabs/GeneralSettings';
-import BlogSettings from './Tabs/BlogSettings';
+import GeneralSettings from '../../components/GeneralSettings/GeneralSettings';
+import BlogSettings from '../../components/BlogSettings/BlogSettings';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -24,7 +24,7 @@ export default function Settings() {
           {blogInfo.username}
         </Link>
       </div>
-      <div className="flex gap-10">
+      <div className="flex gap-12">
         <div className="flex flex-col gap-2 shrink-0 w-48">
           <button
             onClick={() => setTabOpen('general')}
@@ -52,7 +52,13 @@ export default function Settings() {
         {tabOpen === 'general' ? (
           <GeneralSettings {...blogInfo} />
         ) : (
-          <BlogSettings />
+          <div className="w-full">
+            <h3 className="text-3xl font-medium font-display mb-5">Blog</h3>
+            <BlogSettings {...blogInfo} labelClass="block mb-2" />
+            <button className="mt-8 py-1 px-3 rounded-md border-2 bg-red-50 font-semibold text-red-600 border-red-300 hover:bg-red-300 hover:text-red-900">
+              Delete blog
+            </button>
+          </div>
         )}
       </div>
     </main>
