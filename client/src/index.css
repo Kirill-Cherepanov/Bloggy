@@ -26,6 +26,10 @@
     @apply px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto;
   }
 
+  .styled-input {
+    @apply focus:outline-accent-400 border-2 border-secondary-300 bg-accent-50 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light
+  }
+
   .hamburger-menu-btn {
     @apply w-6 xs:w-8 h-5 xs:h-[30px] relative transition cursor-pointer;
   }

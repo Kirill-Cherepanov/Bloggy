@@ -47,7 +47,7 @@ export default function Authentification({
             type="text"
             id="authentification__input-1"
             placeholder="Email"
-            className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+            className="styled-input w-full mb-2"
           />
           <label
             htmlFor="authentification__input-2"
@@ -59,7 +59,7 @@ export default function Authentification({
             type="text"
             id="authentification__input-2"
             placeholder={authType === 'login' ? 'Password' : 'Username'}
-            className="w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+            className="styled-input w-full mb-2"
           />
           {authType === 'signup' ? null : (
             <button className="block text-sm text-secodary-600 hover:underline">

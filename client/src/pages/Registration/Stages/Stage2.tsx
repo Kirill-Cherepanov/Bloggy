@@ -44,7 +44,7 @@ export default function Stage2() {
           <div className="w-64 px-2 py-1 absolute top-4 bg-secondary-300 mt-2 opacity-0 rounded-md transition-opacity duration-200 invisible group-hover:visible group-hover:opacity-100 after:block after:absolute after:bottom-full after:left-1/2 after:-ml-2 after:border-[8px] after:border-transparent after:border-b-secondary-300">
             Please choose categories in order of their importance to you. Also,
             you will be able to make posts from any category. They are needed
-            mostly only for search.
+            mostly for search optimization.
           </div>
         </span>
       </label>

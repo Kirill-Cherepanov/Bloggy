@@ -53,7 +53,7 @@ export default function Stage1({ setStage }: Props) {
         id="email"
         placeholder="Email"
         required={true}
-        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="styled-input w-full mb-2"
       />
 
       <label htmlFor="username" className="block font-light ml-2 text-sm mb-1">
@@ -67,7 +67,7 @@ export default function Stage1({ setStage }: Props) {
         maxLength={20}
         required={true}
         pattern={'^[a-z0-9A-Z_-]+$'}
-        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="styled-input w-full mb-2"
       />
 
       <label htmlFor="password" className="block font-light ml-2 text-sm mb-1">
@@ -80,7 +80,7 @@ export default function Stage1({ setStage }: Props) {
         minLength={5}
         maxLength={30}
         required={true}
-        className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-2"
+        className="styled-input w-full mb-2"
       />
 
       {confirmationMessage && (
@@ -96,7 +96,7 @@ export default function Stage1({ setStage }: Props) {
             id="confirm-email"
             placeholder="Confirmation message"
             required={true}
-            className="focus:outline-accent-400 w-full border-2 border-secondary-300 rounded-2xl px-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light mb-1"
+            className="styled-input w-full mb-1"
             style={{
               borderColor: incorrectElements['confirm-email'] && '#f00'
             }}

@@ -25,11 +25,11 @@ export default function Settings() {
         </Link>
       </div>
       <div className="flex gap-10">
-        <div className="flex flex-col gap-2 w-48">
+        <div className="flex flex-col gap-2 shrink-0 w-48">
           <button
             onClick={() => setTabOpen('general')}
             className={
-              'rounded-md px-3 py-0.5 flex items-center text-lg ml-2 relative hover:bg-secondary-300 ' +
+              'rounded-md px-2 py-0.5 flex items-center text-lg ml-2 relative hover:bg-secondary-300 ' +
               (tabOpen === 'general'
                 ? 'bg-secondary-200 before:h-6 before:inline-block before:absolute before:-left-2 before:w-1 before:rounded-md before:bg-accent-600'
                 : '')
@@ -40,7 +40,7 @@ export default function Settings() {
           <button
             onClick={() => setTabOpen('blog')}
             className={
-              'rounded-md px-3 py-0.5 flex items-center text-lg ml-2 relative hover:bg-secondary-300 ' +
+              'rounded-md px-2 py-0.5 flex items-center text-lg ml-2 relative hover:bg-secondary-300 ' +
               (tabOpen === 'blog'
                 ? 'bg-secondary-200 before:h-6 before:inline-block before:absolute before:-left-2 before:w-1 before:rounded-md before:bg-accent-600'
                 : '')
@@ -49,7 +49,11 @@ export default function Settings() {
             Blog
           </button>
         </div>
-        {tabOpen === 'general' ? <GeneralSettings /> : <BlogSettings />}
+        {tabOpen === 'general' ? (
+          <GeneralSettings {...blogInfo} />
+        ) : (
+          <BlogSettings />
+        )}
       </div>
     </main>
   );
