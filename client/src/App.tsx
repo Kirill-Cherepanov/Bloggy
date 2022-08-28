@@ -4,7 +4,7 @@ import Homepage from './pages/Homepage/Homepage';
 import Registration from './pages/Registration/Registration';
 import Post from './pages/Post/Post';
 import Create from './pages/Create/Create';
-// import Settings from './pages/Settings/Settings';
+import Settings from './pages/Settings/Settings';
 import Blog from './pages/Blog/Blog';
 import Catalog from './pages/Catalog/Catalog';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
@@ -24,7 +24,7 @@ export default function App() {
         <Route path="/registration" element={<Registration />} />
         <Route path="/post/:id" element={<Post />} />
         <Route path="/write" element={<Create />} />
-        {/* <Route path="/settings" element={user ? <Settings /> : <Login />} /> */}
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
       {pathname !== '/registration' && <Footer />}
