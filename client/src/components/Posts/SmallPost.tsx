@@ -51,7 +51,7 @@ export default function SmallPost({
     >
       <Link
         to={'/post/' + _id}
-        className="cursor-pointer h-40 w-28 md:w-32 lg:w-40 shrink-0"
+        className="cursor-pointer h-40 w-28 md:w-32 lg:w-40 shrink-0 overflow-hidden"
       >
         <img src={image} alt="Post" className="object-cover h-full w-full" />
       </Link>

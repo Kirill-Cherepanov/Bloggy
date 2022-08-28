@@ -10,6 +10,9 @@ module.exports = {
       ...defaultTheme.screens
     },
     extend: {
+      scale: {
+        103: '1.03'
+      },
       transitionDuration: {
         3000: '3000ms'
       },

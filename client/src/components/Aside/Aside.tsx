@@ -31,7 +31,7 @@ export default function Aside({ children, shouldRenderPopular = true }: Props) {
       <div className="absolute top-0 bottom-0" ref={maxHeightElement}></div>
       {children}
       {shouldRenderPopular && amountOfPosts ? (
-        <div className="mt-5">
+        <div className="mt-3">
           <h3 className="mx-auto mb-1 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
             Popular posts
           </h3>
