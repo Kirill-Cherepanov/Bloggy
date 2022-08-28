@@ -9,10 +9,6 @@ import BgTransition from '../../components/BgTransition/BgTransition';
 import { getPostsData, blogInfo } from '../../utility/mockData';
 import { useEffect, useState } from 'react';
 
-// import { useEffect, useState } from 'react';
-// import { useLocation } from 'react-router';
-// import axios from 'axios';
-
 export default function Home() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth < 1024);
   useEffect(() => {
@@ -30,17 +26,6 @@ export default function Home() {
         .removeEventListener('change', updateIsLargeScreen);
     };
   }, []);
-
-  // const [posts, setPosts] = useState<Post[]>([]);
-  // const { search } = useLocation();
-
-  // useEffect(() => {
-  //   const fetchPosts = async () => {
-  //     const res = await axios.get('/posts' + search);
-  //     setPosts(res.data);
-  //   };
-  //   fetchPosts();
-  // }, [search]);
 
   return (
     <>

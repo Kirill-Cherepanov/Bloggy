@@ -6,25 +6,6 @@ import Stage1 from './Stages/Stage1';
 import Stage2 from './Stages/Stage2';
 
 export default function Register() {
-  // const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [error, setError] = useState(false);
-
-  // const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setError(false);
-  //   try {
-  //     const res = await axios.post('/auth/register', {
-  //       username,
-  //       email,
-  //       password
-  //     });
-  //     res.data && window.location.replace('/login');
-  //   } catch (err) {
-  //     setError(true);
-  //   }
-  // };
   const [stage, setStage] = useState(0);
   const navigate = useNavigate();
 

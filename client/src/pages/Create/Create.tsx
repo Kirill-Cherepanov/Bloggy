@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Context } from '../../context/Context';
 import React, { useContext, useState } from 'react';
 
-export default function Write() {
+export default function Create() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [file, setFile] = useState<File | null>(null);

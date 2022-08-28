@@ -13,24 +13,6 @@ export default function Authentification({
   authType,
   toggleType
 }: Props) {
-  // const userRef = useRef<HTMLInputElement>(null);
-  // const passwordRef = useRef<HTMLInputElement>(null);
-  // const { dispatch, isFetching } = useContext(Context);
-
-  // const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   dispatch({ type: 'LOGIN_START' });
-  //   try {
-  //     const res = await axios.post('/auth/login', {
-  //       username: userRef.current!.value,
-  //       password: passwordRef.current!.value
-  //     });
-  //     dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });
-  //   } catch (err) {
-  //     console.error(err);
-  //     dispatch({ type: 'LOGIN_FAILURE' });
-  //   }
-  // };
   const navigate = useNavigate();
 
   return createPortal(

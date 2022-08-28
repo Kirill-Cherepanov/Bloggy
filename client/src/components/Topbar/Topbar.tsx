@@ -1,18 +1,9 @@
-// import { useState } from 'react';
-// import { Context } from '../../context/Context';
 import TopbarUserMenu from './TopbarUserMenu';
 import TopbarNavigation from './TopbarNavigation';
 import { NavLink } from 'react-router-dom';
 import TopbarSearch from './TopbarSearch';
 
 export default function TopBar() {
-  // const { user, dispatch } = useContext(Context);
-  // const PF = 'http://localhost:5000/images/';
-
-  // const handleLogout = () => {
-  //   dispatch({ type: 'LOGOUT' });
-  // };
-
   return (
     <header className="z-20 shadow-xl sticky top-0 bg-secondary-900 text-secondary-200 h-20">
       <div className="px-2 md:px-8 mx-auto flex justify-center items-center max-w-7xl h-full">

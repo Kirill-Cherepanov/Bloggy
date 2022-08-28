@@ -15,7 +15,6 @@ const renderPost = (postData: Post) => {
         <LargePost
           key={postData._id}
           {...postData}
-          // className="hidden lg:block"
           textBoxClass="bottom-0 w-5/6 h-full max-h-64"
         />
       );

@@ -3,19 +3,16 @@ import Footer from './components/Footer/Footer';
 import Homepage from './pages/Homepage/Homepage';
 import Registration from './pages/Registration/Registration';
 import Post from './pages/Post/Post';
-import Write from './pages/Write/Write';
+import Create from './pages/Create/Create';
 // import Settings from './pages/Settings/Settings';
 import Blog from './pages/Blog/Blog';
 import Catalog from './pages/Catalog/Catalog';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
-// import { useContext } from 'react';
-// import { Context } from './context/Context';
 
 export default function App() {
   const { pathname } = useLocation();
-  // const { user } = useContext(Context);
 
   return (
     <>
@@ -26,7 +23,7 @@ export default function App() {
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/post/:id" element={<Post />} />
-        <Route path="/write" element={<Write />} />
+        <Route path="/write" element={<Create />} />
         {/* <Route path="/settings" element={user ? <Settings /> : <Login />} /> */}
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
