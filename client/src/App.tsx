@@ -16,18 +16,18 @@ export default function App() {
 
   return (
     <>
-      {pathname !== '/registration' && <Topbar />}
+      {pathname !== '/registration' && pathname !== '/create' && <Topbar />}
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/blog/:name" element={<Blog />} />
         <Route path="/catalog" element={<Catalog />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/post/:id" element={<Post />} />
-        <Route path="/write" element={<Create />} />
+        <Route path="/create" element={<Create />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
-      {pathname !== '/registration' && <Footer />}
+      {pathname !== '/registration' && pathname !== '/create' && <Footer />}
     </>
   );
 }

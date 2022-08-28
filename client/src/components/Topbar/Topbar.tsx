@@ -12,7 +12,7 @@ export default function TopBar() {
             ['Home', '/'],
             ['Posts', '/catalog'],
             ['About', '/about'],
-            ['Contacts', '/contacts']
+            ['Contacts', '/contacts'],
           ]}
         />
         <h1>

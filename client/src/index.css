@@ -15,6 +15,10 @@
   @apply basis-[calc(20%-72px)] hover:basis-[calc(20%+48px)]
 }
 
+.editor-preview {
+  @apply bg-main;
+}
+
 @layer base {
   html {
     @apply font-lexend text-secondary-1000 overflow-x-hidden selection:bg-opacity-80 selection:bg-accent-900 selection:text-main;
@@ -40,6 +44,46 @@
 
   .open.hamburger-menu-btn > span {
     @apply first:top-2 xs:first:top-3 first:rotate-[135deg] [&:nth-child(2)]:opacity-0 [&:nth-child(2)]:-left-16 [&:nth-child(3)]:top-2 xs:[&:nth-child(3)]:top-3 [&:nth-child(3)]:-rotate-[135deg];
+  }
+
+  .custom-markdown-preview {
+    @apply bg-main;
+  }
+  .custom-markdown-preview h1 {
+    @apply text-3xl font-bold;
+  }
+  .custom-markdown-preview h2 {
+    @apply text-2xl font-bold;
+  }
+  .custom-markdown-preview h3 {
+    @apply text-xl font-bold;
+  }
+  .custom-markdown-preview h4 {
+    @apply text-lg font-bold;
+  }
+  .custom-markdown-preview h5,
+  .custom-markdown-preview h6 {
+    @apply font-bold;
+  }
+  .custom-markdown-preview blockquote {
+    @apply bg-secondary-100 border-l-8 border-secondary-400 my-4 mx-2 py-1 px-2;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+  .custom-markdown-preview blockquote:before {
+    @apply text-secondary-400 content-[open-quote] text-5xl leading-[0.1rem] mr-1;
+    vertical-align: -0.4em;
+  }
+  .custom-markdown-preview blockquote p {
+    @apply inline;
+  }
+  .custom-markdown-preview ul {
+    @apply list-disc pl-7;
+  }
+  .custom-markdown-preview ol {
+    @apply list-decimal pl-7;
+  }
+  .custom-markdown-preview a {
+    @apply text-accent-800 underline;
   }
 }
 

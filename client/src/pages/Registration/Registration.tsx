@@ -33,9 +33,9 @@ export default function Register() {
                   />
                 ))}
           </div>
-          <div className="my-2 mb-4 text-3xl font-sansita select-none absolute right-2">
+          <h1 className="my-2 mb-4 text-3xl font-sansita select-none absolute right-2">
             Bloggy
-          </div>
+          </h1>
         </div>
         {stage === 2 ? (
           <BlogRegistration />

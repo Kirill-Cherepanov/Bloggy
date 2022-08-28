@@ -41,7 +41,7 @@ export default function TopbarUserMenu() {
       </button>
       <div
         className={
-          'absolute right-0 top-full transition-[height] overflow-hidden ' +
+          'z-20 absolute right-0 top-full transition-[height] overflow-hidden ' +
           (isOpen ? 'flex h-32' : 'h-0')
         }
       >
