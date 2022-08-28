@@ -7,6 +7,7 @@ import Write from './pages/Write/Write';
 // import Settings from './pages/Settings/Settings';
 import Blog from './pages/Blog/Blog';
 import Catalog from './pages/Catalog/Catalog';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 // import { useContext } from 'react';
@@ -27,6 +28,7 @@ export default function App() {
         <Route path="/post/:id" element={<Post />} />
         <Route path="/write" element={<Write />} />
         {/* <Route path="/settings" element={user ? <Settings /> : <Login />} /> */}
+        <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
       {pathname !== '/registration' && <Footer />}
     </>
