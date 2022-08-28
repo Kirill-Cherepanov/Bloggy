@@ -1,4 +1,4 @@
-import Icon from '../Icon/Icon';
+import Icon from 'components/Icon/Icon';
 
 export default function ExtensiveSearchBar() {
   return (

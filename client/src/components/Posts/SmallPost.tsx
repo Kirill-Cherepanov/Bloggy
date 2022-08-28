@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
-import Icon from '../Icon/Icon';
+import formatDate from 'utility/formatDate';
+import Icon from 'components/Icon/Icon';
 
 interface Props extends Post {
   color?: string;
@@ -20,7 +20,7 @@ export default function SmallPost({
   categories,
   color,
   bgColor,
-  className
+  className,
 }: Props) {
   const [amountOfLines, setAmountOfLines] = useState(0);
   const textBoxRef = useRef<HTMLDivElement | null>(null);

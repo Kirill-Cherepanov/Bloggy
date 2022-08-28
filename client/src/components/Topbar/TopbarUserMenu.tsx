@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import Icon from '../Icon/Icon';
-import Authentification from '../Authentification/Authentification';
+import Icon from 'components/Icon/Icon';
+import Authentification from 'components/Authentification/Authentification';
 
 export default function TopbarUserMenu() {
   const [isOpen, setIsOpen] = useState(false);

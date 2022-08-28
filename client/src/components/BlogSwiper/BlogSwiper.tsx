@@ -1,4 +1,4 @@
-import Icon from '../Icon/Icon';
+import Icon from 'components/Icon/Icon';
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -39,7 +39,7 @@ export default function BlogSwiper({ blogsInfo }: Props) {
         navigation={{
           nextEl: '.BLOG_SWIPER_NEXT_ELEMENT',
           prevEl: '.BLOG_SWIPER_PREV_ELEMENT',
-          disabledClass: 'invisible'
+          disabledClass: 'invisible',
         }}
         className="[--swiper-theme-color: #000000]"
       >

@@ -1,9 +1,9 @@
-import Icon from '../../components/Icon/Icon';
-import { getPostsData, blogInfo } from '../../utility/mockData';
+import Icon from 'components/Icon/Icon';
+import { getPostsData, blogInfo } from 'utility/mockData';
 import { Link, useNavigate } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
-import Aside from '../../components/Aside/Aside';
-import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
+import formatDate from 'utility/formatDate';
+import Aside from 'components/Aside/Aside';
+import ParallelogramCurtains from 'components/ParallelogramCurtains/ParallelogramCurtains';
 
 export default function Post() {
   const postData = getPostsData(1)[0];

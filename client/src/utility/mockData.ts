@@ -1,4 +1,4 @@
-import mockImage from '../images/mock-up-image.webp';
+import mockImage from 'images/mock-up-image.webp';
 
 export const blogInfo: Blog = {
   _id: '0',
@@ -11,7 +11,7 @@ export const blogInfo: Blog = {
   description:
     "This blog is a test blog for development. It doesn't have a theme and all of its posts are just templates. Don't mind it. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil ex repellendus tempore reiciendis est voluptates eos inventore dolore molestiae error, doloremque reprehenderit neque illum voluptate pariatur quisquam voluptatum! Porro quod veritatis atque nisi cumque sint, accusamus quidem totam, harum cupiditate nam dolorum cum exercitationem libero dolor similique voluptate debitis eius rerum, praesentium id ea obcaecati autem.",
   registrationDate: new Date(0),
-  createdAt: new Date(0)
+  createdAt: new Date(0),
 };
 
 export const getPostsData = (postsAmount: number): Post[] => {
@@ -27,11 +27,11 @@ export const getPostsData = (postsAmount: number): Post[] => {
         'Artificial Intelligence',
         'Electronics',
         'Future',
-        'Computer science'
+        'Computer science',
       ],
       likes: 100,
       authorName: 'KissMyUSSR',
       createdAt: new Date(0),
-      displayType: i % 3
+      displayType: i % 3,
     }));
 };

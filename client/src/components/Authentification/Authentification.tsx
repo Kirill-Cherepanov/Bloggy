@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router';
-import Icon from '../Icon/Icon';
+import Icon from 'components/Icon/Icon';
 
 type Props = {
   closeMenu: () => unknown;
@@ -11,7 +11,7 @@ type Props = {
 export default function Authentification({
   closeMenu,
   authType,
-  toggleType
+  toggleType,
 }: Props) {
   const navigate = useNavigate();
 

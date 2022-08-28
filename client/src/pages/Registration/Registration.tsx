@@ -1,9 +1,8 @@
-// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import Icon from '../../components/Icon/Icon';
-import Stage1 from './Stages/Stage1';
-import Stage2 from './Stages/Stage2';
+import Icon from 'components/Icon/Icon';
+import AccountRegistration from 'components/AccountRegistration/AccountRegistration';
+import BlogRegistration from 'components/BlogRegistration/BlogRegistration';
 
 export default function Register() {
   const [stage, setStage] = useState(0);
@@ -38,7 +37,11 @@ export default function Register() {
             Bloggy
           </div>
         </div>
-        {stage === 2 ? <Stage2 /> : <Stage1 setStage={setStage} />}
+        {stage === 2 ? (
+          <BlogRegistration />
+        ) : (
+          <AccountRegistration setStage={setStage} />
+        )}
       </div>
     </main>
   );

@@ -1,9 +1,9 @@
-import ExtensiveSearchBar from '../../components/ExtensiveSearchBar/ExtensiveSearchBar';
-import Aside from '../../components/Aside/Aside';
-import LargePost from '../../components/Posts/LargePost';
-import SmallPost from '../../components/Posts/SmallPost';
-import { getPostsData } from '../../utility/mockData';
-import Icon from '../../components/Icon/Icon';
+import ExtensiveSearchBar from 'components/ExtensiveSearchBar/ExtensiveSearchBar';
+import Aside from 'components/Aside/Aside';
+import LargePost from 'components/Posts/LargePost';
+import SmallPost from 'components/Posts/SmallPost';
+import { getPostsData } from 'utility/mockData';
+import Icon from 'components/Icon/Icon';
 
 export default function Catalog() {
   const posts = getPostsData(10);

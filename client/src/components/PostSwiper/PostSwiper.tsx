@@ -1,5 +1,5 @@
-import Icon from '../Icon/Icon';
-import LargePost from '../Posts/LargePost';
+import Icon from 'components/Icon/Icon';
+import LargePost from 'components/Posts/LargePost';
 import { EffectFlip, Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -15,14 +15,14 @@ export default function PostSwiper({ postsData, className }: Props) {
       <Swiper
         effect={'flip'}
         flipEffect={{
-          slideShadows: false
+          slideShadows: false,
         }}
         slidesPerView={1}
         modules={[Navigation, A11y, EffectFlip]}
         navigation={{
           nextEl: '.BLOG_SWIPER_NEXT_ELEMENT',
           prevEl: '.BLOG_SWIPER_PREV_ELEMENT',
-          disabledClass: 'invisible'
+          disabledClass: 'invisible',
         }}
         spaceBetween={50}
         className="w-full"

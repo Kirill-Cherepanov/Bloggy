@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import getRelativeCursorPos from '../../utility/getRelativeCursorPos';
-import isMobile from '../../utility/isMobile';
+import getRelativeCursorPos from 'utility/getRelativeCursorPos';
+import isMobile from 'utility/isMobile';
 
 type Props = {
   postsData: Post[];
@@ -48,7 +48,7 @@ export default function ParallelogramCurtains({ postsData, className }: Props) {
                       : ' transition-transform duration-200 ease-out group-hover:scale-110')
                   }
                   style={{
-                    transformOrigin: zoomedXPos && `${zoomedXPos}px center`
+                    transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
                   }}
                 />
               </div>

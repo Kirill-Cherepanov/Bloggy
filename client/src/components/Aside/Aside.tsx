@@ -1,5 +1,5 @@
-import TinyPost from '../Posts/TinyPost';
-import { getPostsData } from '../../utility/mockData';
+import TinyPost from 'components/Posts/TinyPost';
+import { getPostsData } from 'utility/mockData';
 import { useEffect, useRef, useState } from 'react';
 
 type Props = {

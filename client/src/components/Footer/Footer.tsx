@@ -1,4 +1,4 @@
-import Icon from '../Icon/Icon';
+import Icon from 'components/Icon/Icon';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -6,7 +6,7 @@ export default function Footer() {
   const [followBoxParams, setFollowBoxParams] = useState({
     width: 0,
     top: 0,
-    left: 0
+    left: 0,
   });
 
   return (
@@ -93,7 +93,7 @@ export default function Footer() {
             {[
               ['vk', 'https://vk.com/kcherepanov1/'],
               ['github', 'https://github.com/kissMyUSSR/'],
-              ['discord', 'https://discordapp.com/users/292300959265062922']
+              ['discord', 'https://discordapp.com/users/292300959265062922'],
             ].map((v, i) => (
               <li key={i}>
                 <a href={v[1]} target="_blank" rel="noreferrer">

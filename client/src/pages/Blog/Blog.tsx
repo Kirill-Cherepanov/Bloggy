@@ -1,8 +1,8 @@
-import BlogCard from '../../components/BlogCard/BlogCard';
-import SmallPost from '../../components/Posts/SmallPost';
-import NormalPost from '../../components/Posts/NormalPost';
-import LargePost from '../../components/Posts/LargePost';
-import { getPostsData, blogInfo } from '../../utility/mockData';
+import BlogCard from 'components/BlogCard/BlogCard';
+import SmallPost from 'components/Posts/SmallPost';
+import NormalPost from 'components/Posts/NormalPost';
+import LargePost from 'components/Posts/LargePost';
+import { getPostsData, blogInfo } from 'utility/mockData';
 
 const renderPost = (postData: Post) => {
   switch (postData.displayType) {

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
-import Icon from '../Icon/Icon';
+import formatDate from 'utility/formatDate';
+import Icon from 'components/Icon/Icon';
 
 export default function NormalPost({
   _id,
@@ -10,7 +10,7 @@ export default function NormalPost({
   likes,
   authorName,
   createdAt,
-  categories
+  categories,
 }: Post) {
   return (
     <li className="lg:bg-accent-50 py-5 px-8">

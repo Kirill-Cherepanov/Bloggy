@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Context } from '../../context/Context';
+import { Context } from 'context/Context';
 import React, { useContext, useState } from 'react';
 
 export default function Create() {
@@ -20,7 +20,7 @@ export default function Create() {
     const newPost = {
       username: user.username,
       title,
-      desc
+      desc,
     };
     console.log(user);
 

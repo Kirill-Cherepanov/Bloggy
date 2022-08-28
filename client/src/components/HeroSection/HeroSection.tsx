@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import BgTransition from '../BgTransition/BgTransition';
-import Icon from '../Icon/Icon';
+import BgTransition from 'components/BgTransition/BgTransition';
+import Icon from 'components/Icon/Icon';
 
 export default function HeroSection() {
   return (

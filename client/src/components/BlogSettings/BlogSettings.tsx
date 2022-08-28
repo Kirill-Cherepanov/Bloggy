@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import Icon from '../Icon/Icon';
+import Icon from 'components/Icon/Icon';
 
 interface Props {
   labelClass?: string;
@@ -10,7 +10,7 @@ interface Props {
 export default function BlogSettings({
   labelClass,
   description = '',
-  categories: categories_ = []
+  categories: categories_ = [],
 }: Props) {
   const [categories, setCategories] = useState<string[]>(categories_);
   const [isAdding, setIsAdding] = useState(false);
@@ -83,7 +83,7 @@ export default function BlogSettings({
                 ) {
                   setCategories((categories) => [
                     ...categories,
-                    e.target.value
+                    e.target.value,
                   ]);
                 }
               }}
@@ -99,7 +99,7 @@ export default function BlogSettings({
                   ) {
                     setCategories((categories) => [
                       ...categories,
-                      e.target.value
+                      e.target.value,
                     ]);
                   }
                   setIsAdding(false);

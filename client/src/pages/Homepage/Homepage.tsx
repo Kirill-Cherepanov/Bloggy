@@ -1,12 +1,12 @@
-import HeroSection from '../../components/HeroSection/HeroSection';
-import ParallelogramCurtains from '../../components/ParallelogramCurtains/ParallelogramCurtains';
-import SmallPost from '../../components/Posts/SmallPost';
-import LargePost from '../../components/Posts/LargePost';
-import BlogSwiper from '../../components/BlogSwiper/BlogSwiper';
-import PostSwiper from '../../components/PostSwiper/PostSwiper';
-import BgTransition from '../../components/BgTransition/BgTransition';
+import HeroSection from 'components/HeroSection/HeroSection';
+import ParallelogramCurtains from 'components/ParallelogramCurtains/ParallelogramCurtains';
+import SmallPost from 'components/Posts/SmallPost';
+import LargePost from 'components/Posts/LargePost';
+import BlogSwiper from 'components/BlogSwiper/BlogSwiper';
+import PostSwiper from 'components/PostSwiper/PostSwiper';
+import BgTransition from 'components/BgTransition/BgTransition';
 
-import { getPostsData, blogInfo } from '../../utility/mockData';
+import { getPostsData, blogInfo } from 'utility/mockData';
 import { useEffect, useState } from 'react';
 
 export default function Home() {

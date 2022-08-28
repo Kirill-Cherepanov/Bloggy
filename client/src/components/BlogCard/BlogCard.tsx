@@ -1,11 +1,11 @@
-import Icon from '../Icon/Icon';
+import Icon from 'components/Icon/Icon';
 
 export default function BlogCard({
   username,
   profilePic,
   likes,
   categories,
-  createdAt
+  createdAt,
 }: Blog) {
   return (
     <div className="flex flex-col p-6 w-80 shrink-0 bg-accent-200 h-min rounded-md">

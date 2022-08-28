@@ -1,11 +1,11 @@
-import Icon from '../Icon/Icon';
-import Wave from '../Wave/Wave';
+import Icon from 'components/Icon/Icon';
+import Wave from 'components/Wave/Wave';
 
 type BgTransitionProps = { type: string; className?: string };
 
 export default function BgTransition({
   type,
-  className = ''
+  className = '',
 }: BgTransitionProps) {
   switch (type) {
     case 'hero':
@@ -24,7 +24,7 @@ export default function BgTransition({
         ['32%', '90%'],
         ['22%', '41%'],
         ['88%', '9%'],
-        ['78%', '62%']
+        ['78%', '62%'],
       ];
       return (
         <div
