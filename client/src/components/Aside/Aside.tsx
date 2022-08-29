@@ -21,6 +21,8 @@ export default function Aside({ children, shouldRenderPopular = true }: Props) {
     if (newAmountOfPosts > 5) newAmountOfPosts = 5;
 
     setAmountOfPosts(newAmountOfPosts);
+    setTimeout(() => setAmountOfPosts(newAmountOfPosts), 500);
+    setTimeout(() => setAmountOfPosts(newAmountOfPosts), 1000);
   }, []);
 
   return (

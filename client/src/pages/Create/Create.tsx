@@ -29,7 +29,7 @@ export default function Create() {
       </div>
 
       <SimpleMDE
-        className="custom-markdown-preview z-50 relative"
+        className="custom-markdown-preview"
         options={{ autofocus: true, spellChecker: false }}
       />
     </main>

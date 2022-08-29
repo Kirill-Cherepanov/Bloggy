@@ -3,14 +3,20 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 const authRouter = express.Router();
 
-authRouter.post('/register', async (req, res) => {
+authRouter.post('/registration', async (req, res) => {
   try {
+    const validationResult = validateRegistration(req.body as TUser);
+    if (!validationResult.res) {
+      return res
+        .status(400)
+        .json('Invalid authentification data: ' + validationResult.message);
+    }
+
     const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(req.body.password, salt);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
     const newUser = new User({
-      username: req.body.username as String,
-      email: req.body.email as String,
-      password: hashedPass as String
+      ...(req.body as TUser),
+      ...{ password: hashedPassword },
     });
 
     const user = await newUser.save();
@@ -36,3 +42,14 @@ authRouter.post('/login', async (req, res) => {
 });
 
 export default authRouter;
+
+function validateRegistration(data: TUser): { res: boolean; message: string } {
+  // const registrationData: TUser = {
+  //   username: req.body.username,
+  //   password: req.body.password,
+  //   email: req.body.email,
+  //   blog: req.body.blog,
+  //   profilePic: req.body.profilePic,
+  // };
+  return { res: false, message: 'Not implemented' };
+}

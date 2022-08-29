@@ -7,9 +7,9 @@ import { getPostsData, blogInfo } from 'utility/mockData';
 const renderPost = (postData: Post) => {
   switch (postData.displayType) {
     case 0:
-      return <SmallPost key={postData._id} {...postData} />;
-    case 1:
       return <NormalPost key={postData._id} {...postData} />;
+    case 1:
+      return <SmallPost key={postData._id} {...postData} />;
     case 2:
       return (
         <LargePost

@@ -4,10 +4,14 @@ const postsRouter = express.Router();
 
 // create post
 postsRouter.post('/', async (req, res) => {
-  console.log(req.body);
-  const newPost = new Post(req.body);
+  const validationResult = validatePost(req.body as TPost);
+  if (!validationResult.res) {
+    return res.status(401).json('Invalid post: ' + validationResult.message);
+  }
+
+  const newPost = new Post(req.body as TPost);
   try {
-    res.status(200).json(await newPost.save()); // Not sure if this'll work
+    res.status(200).json(await newPost.save());
   } catch (err) {
     res.status(500).json(err);
   }
@@ -21,8 +25,14 @@ postsRouter.put('/:id', async (req, res) => {
     if (post === null) {
       return res.status(500).json(`Post by id ${req.params.id} was not found`);
     }
-    if (post.username !== req.body.username) {
+
+    if (post.authorName !== req.body.authorName) {
       return res.status(401).json('You can update only your post!');
+    }
+
+    const validationResult = validatePost(req.body as TPost);
+    if (!validationResult.res) {
+      return res.status(401).json('Invalid post: ' + validationResult.message);
     }
 
     try {
@@ -44,7 +54,8 @@ postsRouter.delete('/:id', async (req, res) => {
     if (post === null) {
       return res.status(500).json(`Post by id ${req.params.id} was not found`);
     }
-    if (post.username !== req.body.username) {
+
+    if (post.authorName !== req.body.authorName) {
       return res.status(401).json('You can delete only your post!');
     }
 
@@ -62,14 +73,26 @@ postsRouter.delete('/:id', async (req, res) => {
 // get post
 postsRouter.get('/:id', async (req, res) => {
   try {
-    // Not sure if this'll work
     res.status(200).json(await Post.findById(req.params.id));
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// get all posts
+// Post search
+const newSearchParams = {
+  type: ['posts', 'blogs'],
+  search: ['categories', 'posts', 'both'],
+  sort: ['popularity', 'new'],
+  time: ['week', 'month', 'year', 'all'],
+};
+
+const newQueryUrl =
+  'http://localhost:5000/api/posts?q=post&type=posts&search=categories&sort=new&time=all';
+const oldQueryUrl =
+  'http://localhost:5000/api/posts?category=Science&username=KissMe';
+
+// get all posts / get posts by category / get posts by username
 postsRouter.get('/', async (req, res) => {
   const username = req.query.user;
   const category = req.query.category;
@@ -79,8 +102,8 @@ postsRouter.get('/', async (req, res) => {
     if (category) {
       const posts = await Post.find({
         categories: {
-          $in: [category]
-        }
+          $in: [category],
+        },
       });
       return res.status(200).json(posts);
     }
@@ -92,3 +115,16 @@ postsRouter.get('/', async (req, res) => {
 });
 
 export default postsRouter;
+
+function validatePost(postData: TPost): { res: boolean; message: string } {
+  // const postData: TPost = {
+  //   title: req.body.title,
+  //   text: req.body.text,
+  //   image: req.body.image,
+  //   authorName: req.body.authorName,
+  //   likes: req.body.likes,
+  //   categories: req.body.categories,
+  //   displayType: req.body.displayType,
+  // };
+  return { res: false, message: 'Not implemented' };
+}

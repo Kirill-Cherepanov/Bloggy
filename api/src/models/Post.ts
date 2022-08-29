@@ -6,25 +6,33 @@ const PostSchema = new mongoose.Schema<Post>(
       type: String,
       required: true,
       min: [1, 'Title must be 1 character at least'],
-      max: [100, 'Title must be 100 characters at most']
+      max: [100, 'Title must be 100 characters at most'],
     },
-    desc: {
+    text: {
       type: String,
-      max: [10000, 'Description must be 10000 characters at most']
+      max: [10000, 'Description must be 10000 characters at most'],
     },
-    photo: String,
-    username: {
+    image: String,
+    authorName: {
       type: String,
-      required: true
+      required: true,
+    },
+    likes: {
+      type: Number,
+      default: 0,
     },
     categories: {
       type: [String],
       default: [],
       validate: {
         validator: (v: string[]) => v.length <= 10,
-        message: 'Must be 10 categories at most'
-      }
-    }
+        message: 'Must be 10 categories at most',
+      },
+    },
+    displayType: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

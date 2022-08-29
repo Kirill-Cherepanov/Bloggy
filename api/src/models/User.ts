@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema<User>(
     username: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     email: {
       type: String,
@@ -16,19 +16,38 @@ const UserSchema = new mongoose.Schema<User>(
       unique: true,
       validate: {
         validator: validateEmail,
-        message: 'Invalid email adress!'
-      }
+        message: 'Invalid email adress!',
+      },
     },
     password: {
       type: String,
       required: true,
       min: [6, 'Password must be at least 6 characters'],
-      max: [30, 'Password must be at most 30 characters']
+      max: [30, 'Password must be at most 30 characters'],
     },
     profilePic: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
+    blog: {
+      type: {
+        likes: {
+          type: Number,
+          required: true,
+        },
+        categories: {
+          type: [String],
+          default: [],
+        },
+        description: {
+          type: String,
+        },
+        createdAt: {
+          type: Date,
+        },
+      },
+      default: {},
+    },
   },
   { timestamps: true }
 );

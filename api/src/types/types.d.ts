@@ -3,12 +3,15 @@ type TUser = {
   email: string;
   password: string;
   profilePic: string;
+
+  blog: {
+    likes: number;
+    categories: string[];
+    description: string;
+    createdAt: Date;
+  };
 };
 
-// THIS IS STUPID
-// I HAVE SPENT 3 HOURS TRYING TO SOLVE THE ISSUE WITH MONGOOSE TYPES
-// AND MANUALLY CREATING TYPES FOR MONGOOSE WAS THE BEST I COULD COMEUP WITH
-// WHY EVEN MAKE IT SO COMPLICATED?!
 interface User extends import('mongoose').Document, TUser {
   _id: import('mongoose').ObjectId;
   __v: number;
@@ -19,10 +22,12 @@ interface User extends import('mongoose').Document, TUser {
 
 type TPost = {
   title: string;
-  desc: string;
-  photo: string;
-  username: string;
+  text: string;
+  image: string;
+  authorName: string;
+  likes: number;
   categories: string[];
+  displayType: number;
 };
 
 interface Post extends import('mongoose').Document, TPost {
