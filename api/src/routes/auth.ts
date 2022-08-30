@@ -3,13 +3,13 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 const authRouter = express.Router();
 
+const fakeUserJSON = `{"username":"test","email":"test@test.com","password":"12345","blog":{"likes":0,"categories":["science","programming","math"],"description":"A small description", "createdAt": "1970-01-01T00:00:00.000Z"}}`;
+
 authRouter.post('/registration', async (req, res) => {
   try {
-    const validationResult = validateRegistration(req.body as TUser);
+    const validationResult = await validateRegistration(req.body);
     if (!validationResult.res) {
-      return res
-        .status(400)
-        .json('Invalid authentification data: ' + validationResult.message);
+      return res.status(500).json({ errors: validationResult.errors });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -22,7 +22,7 @@ authRouter.post('/registration', async (req, res) => {
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -43,13 +43,86 @@ authRouter.post('/login', async (req, res) => {
 
 export default authRouter;
 
-function validateRegistration(data: TUser): { res: boolean; message: string } {
-  // const registrationData: TUser = {
-  //   username: req.body.username,
-  //   password: req.body.password,
-  //   email: req.body.email,
-  //   blog: req.body.blog,
-  //   profilePic: req.body.profilePic,
-  // };
-  return { res: false, message: 'Not implemented' };
+async function validateRegistration(data: Partial<TUser>) {
+  const errors = await validateUniqueness({
+    username: data.username,
+    email: data.email,
+  });
+
+  if (data.password) {
+    const passwordError = validatePassword(data.password);
+    if (passwordError) errors.push(['password', passwordError]);
+  }
+
+  if (errors.length === 0) return { res: true, errors: null };
+  return { res: false, errors: Object.fromEntries(errors) };
 }
+
+function validatePassword(password: string) {
+  if (password.length < 5) {
+    return getMongoDbValidationErrorObj({
+      path: 'password',
+      value: password,
+      name: 'ValidatorError',
+      message: `Password must be at least 5 characters long`,
+    });
+  } else if (password.length > 20) {
+    return getMongoDbValidationErrorObj({
+      path: 'password',
+      value: password,
+      name: 'ValidatorError',
+      message: `Password must be at most 20 characters long`,
+    });
+  }
+  return null;
+}
+
+async function validateUniqueness(data: Partial<TUser>) {
+  const errors = await Promise.all(
+    Object.entries(data).map(async (datum) => {
+      const user = await User.findOne({ [datum[0]]: datum[1] });
+
+      if (!user) return null;
+
+      return [
+        datum[0],
+        getMongoDbValidationErrorObj({
+          path: datum[0],
+          value: datum[1],
+        }),
+      ];
+    })
+  );
+  const filteredErrors = errors.filter(truthyFilter);
+
+  return filteredErrors;
+}
+
+type GetMongoDbValidationErrorObj = {
+  path: string;
+  value: unknown;
+  name?: string;
+  message?: string;
+};
+
+const getMongoDbValidationErrorObj = ({
+  path,
+  value,
+  message = 'UniquenessError',
+  name = `This ${path} is already taken`,
+}: GetMongoDbValidationErrorObj) => ({
+  name,
+  message,
+  properties: {
+    message,
+    type: 'user defined',
+    path,
+    value,
+  },
+  kind: 'user defined',
+  path,
+  value,
+});
+
+const truthyFilter = <T>(x: T | false | undefined | null | '' | 0): x is T =>
+  !!x;

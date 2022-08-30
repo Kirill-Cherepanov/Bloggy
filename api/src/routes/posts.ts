@@ -94,6 +94,8 @@ const oldQueryUrl =
 
 // get all posts / get posts by category / get posts by username
 postsRouter.get('/', async (req, res) => {
+  const { type, search, sort, time, page } = req.query as SearchParams;
+
   const username = req.query.user;
   const category = req.query.category;
   try {

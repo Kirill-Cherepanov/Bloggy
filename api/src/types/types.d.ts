@@ -37,3 +37,11 @@ interface Post extends import('mongoose').Document, TPost {
   updatedAt: Date;
   _doc: Omit<this, '_doc'>;
 }
+
+type SearchParams = {
+  type: string;
+  search: string;
+  sort: string;
+  time: string;
+  page: string;
+};
