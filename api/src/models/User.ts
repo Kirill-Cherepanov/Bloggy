@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
-
-const validateEmail = (email: string): boolean =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+import { validateEmail } from '../utility/validations';
 
 const UserSchema = new mongoose.Schema<User>(
   {

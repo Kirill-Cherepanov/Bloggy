@@ -4,68 +4,68 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 const usersRouter = express.Router();
 
-// update
-usersRouter.put('/:id', async (req, res) => {
-  if (req.body.userId === req.params.id) {
-    if (req.body.password) {
-      const salt = await bcrypt.genSalt(10);
-      req.body.password = await bcrypt.hash(req.body.password, salt);
-    }
-    try {
-      const user = await User.findById(req.params.id);
-      if (user === null) {
-        return res
-          .status(500)
-          .json(`User by id ${req.params.id} was not found!`);
-      }
-      user.overwrite(req.body as User);
-      await user.save();
+// Add restore password
 
-      res.status(200).json(user._doc);
-    } catch (err) {
-      res.status(500).json(err);
+// update
+usersRouter.put('/:username', async (req, res) => {
+  // ADD AUTHORIZATION !!!
+  const user = await User.findOne({ username: req.params.username });
+  if (user === null) {
+    return res.status(500).json(`User ${req.query.username} was not found!`);
+  }
+
+  const {
+    username,
+    password,
+    email,
+    oldPassword,
+  }: Partial<User> & { oldPassword: string } = req.body;
+
+  if (password || email) {
+    if (!oldPassword) {
+      return res.status(500).json('Old password was not sent');
     }
-  } else {
-    res.status(401).json('You can update only your account!');
+    const validated = await bcrypt.compare(oldPassword, user.password);
+    if (!validated) return res.status(400).json('Incorrect previous password!');
+  }
+
+  try {
+    user.overwrite({ username, password, email } as User);
+    await user.save();
+
+    res.status(200).json(user._doc);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
 // delete
-usersRouter.delete('/:id', async (req, res) => {
-  if (req.body.userId === req.params.id) {
-    try {
-      const user = await User.findById(req.params.id);
-      if (user === null) {
-        return res
-          .status(500)
-          .json(`User by id ${req.params.id} was not found!`);
-      }
+usersRouter.delete('/:username', async (req, res) => {
+  // ADD AUTHORIZATION !!!
+  // Add confirmation via email
+  const user = await User.findOne({ username: req.params.username });
+  if (user === null) {
+    return res.status(500).json(`User ${req.params.username} was not found!`);
+  }
 
-      try {
-        await Post.deleteMany({ username: user.username });
-        await User.findByIdAndDelete(req.params.id);
-        res.status(200).json('User has been deleted...');
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } catch (err) {
-      res.status(404).json('User was not found!');
-    }
-  } else {
-    res.status(401).json('You can delete only your account!');
+  try {
+    await Post.deleteMany({ username: user.username });
+    await User.findOneAndDelete({ username: user.username });
+    res.status(200).json('User has been deleted');
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
 // get
-usersRouter.get('/:id', async (req, res) => {
+usersRouter.get('/:username', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findOne({ username: req.params.username });
     if (user === null) {
-      return res.status(500).json(`User by id ${req.params.id} was not found!`);
+      return res.status(500).json(`User ${req.params.username} was not found!`);
     }
 
-    console.log(user);
-    const { password, __v, ...userInfo } = user;
+    const { password, __v, ...userInfo } = user._doc;
     res.status(200).json(userInfo);
   } catch (err) {
     res.status(500).json(err);
