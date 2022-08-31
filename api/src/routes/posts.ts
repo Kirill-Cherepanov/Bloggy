@@ -2,7 +2,7 @@ import Post from '../models/Post';
 import express from 'express';
 const postsRouter = express.Router();
 import { validatePost } from '../utility/validations';
-import searchPosts, { SearchParams } from '../utility/postSearch';
+// import searchPosts, { SearchParams } from '../utility/Search';
 
 // create post
 postsRouter.post('/', async (req, res) => {
@@ -67,27 +67,6 @@ postsRouter.get('/:id', async (req, res) => {
 });
 
 // get all posts / get posts by category / get posts by username
-postsRouter.get('/', async (req, res) => {
-  const posts = searchPosts(req.query as SearchParams);
-
-  const username = req.query.user;
-  const category = req.query.category;
-  try {
-    if (username) return res.status(200).json(await Post.find({ username }));
-
-    if (category) {
-      const posts = await Post.find({
-        categories: {
-          $in: [category],
-        },
-      });
-      return res.status(200).json(posts);
-    }
-
-    res.status(200).json(await Post.find());
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+postsRouter.get('/', async (req, res) => {});
 
 export default postsRouter;
