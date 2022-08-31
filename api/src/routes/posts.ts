@@ -2,6 +2,7 @@ import Post from '../models/Post';
 import express from 'express';
 const postsRouter = express.Router();
 import { validatePost } from '../utility/validations';
+import searchPosts, { SearchParams } from '../utility/postSearch';
 
 // create post
 postsRouter.post('/', async (req, res) => {
@@ -65,22 +66,9 @@ postsRouter.get('/:id', async (req, res) => {
   }
 });
 
-// Post search
-const newSearchParams = {
-  type: ['posts', 'blogs'],
-  search: ['categories', 'posts', 'both'],
-  sort: ['popularity', 'new'],
-  time: ['week', 'month', 'year', 'all'],
-};
-
-const newQueryUrl =
-  'http://localhost:5000/api/posts?q=post&type=posts&search=categories&sort=new&time=all';
-const oldQueryUrl =
-  'http://localhost:5000/api/posts?category=Science&username=KissMe';
-
 // get all posts / get posts by category / get posts by username
 postsRouter.get('/', async (req, res) => {
-  const { type, search, sort, time, page } = req.query as SearchParams;
+  const posts = searchPosts(req.query as SearchParams);
 
   const username = req.query.user;
   const category = req.query.category;

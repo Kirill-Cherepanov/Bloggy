@@ -35,7 +35,7 @@ export default function ExtensiveSearchBar() {
           <option value="" disabled={true}>
             Search by
           </option>
-          <option value="categories_title" selected>
+          <option value="both" selected>
             Categories & Title
           </option>
           <option value="categories">Categories</option>

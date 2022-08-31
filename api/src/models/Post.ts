@@ -8,6 +8,7 @@ const PostSchema = new mongoose.Schema<Post>(
       required: true,
       minLength: [1, 'Title must be 1 character at least'],
       maxLength: [100, 'Title must be 100 characters at most'],
+      index: true,
     },
     text: {
       type: String,
