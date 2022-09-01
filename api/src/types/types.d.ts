@@ -1,15 +1,24 @@
+type TBlog = {
+  likes?: number;
+  categories?: string[];
+  description?: string;
+  // createdAt: Date;
+};
+
+interface Blog extends import('mongoose').Document, TBlog {
+  _id: import('mongoose').ObjectId;
+  __v: number;
+  createdAt: Date;
+  updatedAt: Date;
+  _doc: Omit<this, '_doc'>;
+}
+
 type TUser = {
   username: string;
   email: string;
   password: string;
-  profilePic: string;
-
-  blog: {
-    likes: number;
-    categories: string[];
-    description: string;
-    createdAt: Date;
-  };
+  profilePic?: string;
+  blog?: TBlog;
 };
 
 interface User extends import('mongoose').Document, TUser {

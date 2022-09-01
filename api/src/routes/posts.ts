@@ -2,7 +2,7 @@ import Post from '../models/Post';
 import express from 'express';
 const postsRouter = express.Router();
 import { validatePost } from '../utility/validations';
-// import searchPosts, { SearchParams } from '../utility/Search';
+import { SearchPosts, SearchParams } from '../utility/SearchDb';
 
 // create post
 postsRouter.post('/', async (req, res) => {
@@ -66,7 +66,15 @@ postsRouter.get('/:id', async (req, res) => {
   }
 });
 
-// get all posts / get posts by category / get posts by username
-postsRouter.get('/', async (req, res) => {});
+// search posts
+postsRouter.get('/', async (req, res) => {
+  try {
+    const searchPosts = new SearchPosts(req.query);
+    const posts = await searchPosts.getPosts();
+    res.status(200).json(posts);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 export default postsRouter;

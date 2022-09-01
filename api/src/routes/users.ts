@@ -16,23 +16,43 @@ usersRouter.put('/:username', async (req, res) => {
       return res.status(500).json(`User ${req.query.username} was not found!`);
     }
 
-    const {
+    let {
       username,
       password,
       email,
       oldPassword,
-    }: Partial<User> & { oldPassword: string } = req.body;
+      blog,
+    }: Partial<TUser> & { oldPassword?: string; changeBlog?: string } =
+      req.body;
 
     if (password || email) {
       if (!oldPassword) {
         return res.status(500).json('Old password was not sent');
       }
+
       const validated = await bcrypt.compare(oldPassword, user.password);
-      if (!validated)
-        return res.status(400).json('Incorrect previous password!');
+      if (!validated) {
+        return res.status(500).json('Incorrect previous password!');
+      }
     }
 
-    user.overwrite({ username, password, email } as User);
+    if (username) user.username = username;
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(req.body.password, salt);
+    }
+    if (email) user.email = email;
+    if (blog?.categories) {
+      user.blog = {
+        categories: blog.categories,
+      };
+    }
+    if (blog?.description) {
+      user.blog = {
+        description: blog.description,
+      };
+    }
+
     await user.save();
 
     res.status(200).json(user._doc);
@@ -41,7 +61,7 @@ usersRouter.put('/:username', async (req, res) => {
   }
 });
 
-// delete
+// delete TESTED
 usersRouter.delete('/:username', async (req, res) => {
   // ADD AUTHORIZATION !!!
   // Add confirmation via email
@@ -49,6 +69,15 @@ usersRouter.delete('/:username', async (req, res) => {
     const user = await User.findOne({ username: req.params.username });
     if (user === null) {
       return res.status(500).json(`User ${req.params.username} was not found!`);
+    }
+
+    if (!req.body.oldPassword) {
+      return res.status(500).json('Old password was not sent');
+    }
+
+    const validated = await bcrypt.compare(req.body.oldPassword, user.password);
+    if (!validated) {
+      return res.status(500).json('Incorrect previous password!');
     }
 
     await Post.deleteMany({ username: user.username });
@@ -59,7 +88,7 @@ usersRouter.delete('/:username', async (req, res) => {
   }
 });
 
-// get
+// get TESTED
 usersRouter.get('/:username', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });

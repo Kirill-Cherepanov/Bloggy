@@ -1,6 +1,24 @@
 import mongoose from 'mongoose';
 import { validateEmail } from '../utility/validations';
 
+const BlogSchema = new mongoose.Schema<Blog>(
+  {
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    categories: {
+      type: [String],
+      default: [],
+    },
+    description: {
+      type: String,
+      default: '',
+    },
+  },
+  { timestamps: true }
+);
+
 const UserSchema = new mongoose.Schema<User>(
   {
     username: {
@@ -29,22 +47,7 @@ const UserSchema = new mongoose.Schema<User>(
       default: '',
     },
     blog: {
-      type: {
-        likes: {
-          type: Number,
-          required: true,
-        },
-        categories: {
-          type: [String],
-          default: [],
-        },
-        description: {
-          type: String,
-        },
-        createdAt: {
-          type: Date,
-        },
-      },
+      type: BlogSchema,
     },
   },
   { timestamps: true }

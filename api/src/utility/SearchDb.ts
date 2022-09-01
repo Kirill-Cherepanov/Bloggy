@@ -9,11 +9,6 @@ import User from '../models/User';
 //   page: Number,
 // };
 
-// const oldQueryUrl =
-//   'http://localhost:5000/api/posts?category=Science&username=KissMe';
-// const newQueryUrl =
-//   'http://localhost:5000/api/posts?q=post&type=posts&search=categories&sort=new&time=all&authorName=test';
-
 export type SearchParams = {
   q: string;
   type: string; // 2 classes
