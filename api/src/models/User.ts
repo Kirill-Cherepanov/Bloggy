@@ -10,13 +10,14 @@ const BlogSchema = new mongoose.Schema<Blog>(
     categories: {
       type: [String],
       default: [],
+      index: 1,
     },
     description: {
       type: String,
       default: '',
     },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false, autoIndex: true }
 );
 
 const UserSchema = new mongoose.Schema<User>(
@@ -27,7 +28,7 @@ const UserSchema = new mongoose.Schema<User>(
       unique: true,
       minLength: [3, 'Username must be at least 3 characters long'],
       maxLength: [20, 'Username must be at most 20 characters long'],
-      index: true,
+      index: 'text',
     },
     email: {
       type: String,

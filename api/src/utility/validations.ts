@@ -88,19 +88,3 @@ const getMongoDbValidationErrorObj = ({
 
 const truthyFilter = <T>(x: T | false | undefined | null | '' | 0): x is T =>
   !!x;
-
-export function validatePost(postData: Partial<TPost>) {
-  // Check if req.body.authorName is the same person as the authorized one
-
-  postData.categories = [...new Set(postData.categories)];
-  if (validateDisplayType(postData.displayType)) {
-    postData.displayType = 0;
-  }
-}
-
-function validateDisplayType(displayType: number | undefined): boolean {
-  return (
-    !!displayType &&
-    (displayType <= 0 || displayType > 2 || displayType % 1 !== 0)
-  );
-}

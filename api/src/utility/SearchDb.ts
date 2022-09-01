@@ -1,23 +1,15 @@
 import Post from '../models/Post';
 import User from '../models/User';
 
-// const searchParams_ = {
-//   type: ['posts', 'blogs'],
-//   search: ['categories', 'title', 'both'],
-//   sort: ['popular', 'new'],
-//   time: ['week', 'month', 'year', 'all'],
-//   page: Number,
-// };
-
 export type SearchParams = {
   q: string;
-  type: string; // 2 classes
-  search: string; // $text
-  sort: string; // .sort, score
-  time: string; // $gt, $lt, $gte, $lte
-  page: number; // .limit and .skip
+  type: 'blogs' | 'posts';
+  search: 'categories' | 'title' | 'both';
+  sort: 'popular' | 'new';
+  time: 'week' | 'month' | 'year' | 'all';
+  page: number;
 };
-type SearchQuery = any;
+type SearchQuery = any; // I'm to lazy to write a huge type for this thing. Maybe later...
 
 class SearchDb {
   protected DEFAULT_PARAMS: SearchParams = {
@@ -33,13 +25,12 @@ class SearchDb {
   protected params: SearchParams;
 
   constructor(requestParams: Partial<SearchParams>) {
-    this.params = Object.assign(this.DEFAULT_PARAMS, requestParams);
+    this.params = { ...this.DEFAULT_PARAMS, ...requestParams };
   }
 
   public getQuery(): SearchQuery {
     return {
       ...this.getSearchQuery(this.params.search, this.params.q),
-      ...this.getSortQuery(this.params.sort),
       ...this.getTimeQuery(this.params.time),
     };
   }
@@ -103,9 +94,14 @@ class SearchDb {
   }
 
   protected getCategoriesQuery(query: string): SearchQuery {
+    // keyword search with quotes to preserve phrases
+    const categories = (query.match(/\w+|"[^"]+"/g) || []).map((category) =>
+      RegExp(`^${category.replaceAll('"', '')}$`, 'i')
+    );
+
     return {
       categories: {
-        $in: query.toLowerCase().split(' '),
+        $in: categories,
       },
     };
   }
@@ -117,11 +113,12 @@ export class SearchPosts extends SearchDb {
   }
 
   public getPosts() {
-    const query: SearchQuery = this.getQuery();
-
     if (this.params.page <= 0) throw Error('Incorrect page');
 
+    const query: SearchQuery = this.getQuery();
+
     return Post.find(query)
+      .sort(this.getSortQuery(this.params.sort))
       .skip((this.params.page - 1) * this.POSTS_PER_PAGE)
       .limit(this.params.page * this.POSTS_PER_PAGE);
   }
@@ -138,6 +135,7 @@ export class SearchBlogs extends SearchDb {
     if (this.params.page <= 0) throw Error('Incorrect page');
 
     return User.find(query)
+      .sort(this.getSortQuery(this.params.sort))
       .skip((this.params.page - 1) * this.POSTS_PER_PAGE)
       .limit(this.params.page * this.POSTS_PER_PAGE);
   }

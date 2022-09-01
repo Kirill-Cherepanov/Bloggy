@@ -1,7 +1,7 @@
 // import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 // import multer from 'multer';
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
 const app = express();
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
@@ -11,8 +11,13 @@ import postsRouter from './routes/posts';
 app.use(express.json());
 // app.use('./images', express.static('./images'));
 
+const handleMiddlewareErrors: ErrorRequestHandler = (err, req, res, next) => {
+  res.status(500).json('Oops... Something went wrong');
+};
+app.use(handleMiddlewareErrors);
+
 mongoose
-  .connect('mongodb://0.0.0.0/testdb' as string)
+  .connect('mongodb://0.0.0.0/bloggydb' as string)
   .then(() => console.log('connected to db'))
   .catch((err) => console.error(err));
 

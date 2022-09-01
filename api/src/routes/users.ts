@@ -3,6 +3,7 @@ import Post from '../models/Post';
 import bcrypt from 'bcrypt';
 import express from 'express';
 const usersRouter = express.Router();
+import { SearchBlogs } from '../utility/SearchDb';
 
 // Add restore password
 
@@ -98,6 +99,16 @@ usersRouter.get('/:username', async (req, res) => {
 
     const { password, __v, ...userInfo } = user._doc;
     res.status(200).json(userInfo);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+usersRouter.get('/', async (req, res) => {
+  try {
+    const searchBlogs = new SearchBlogs(req.query);
+    const blogs = await searchBlogs.getBlogs();
+    res.status(200).json(blogs);
   } catch (err) {
     res.status(500).json(err);
   }

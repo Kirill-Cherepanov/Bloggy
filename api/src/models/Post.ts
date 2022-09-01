@@ -8,7 +8,7 @@ const PostSchema = new mongoose.Schema<Post>(
       required: true,
       minLength: [1, 'Title must be 1 character at least'],
       maxLength: [100, 'Title must be 100 characters at most'],
-      index: true,
+      index: 'text',
     },
     text: {
       type: String,
@@ -30,14 +30,18 @@ const PostSchema = new mongoose.Schema<Post>(
         validator: validateCategories,
         message: 'Must be 10 categories at most',
       },
+      index: 1,
     },
     displayType: {
       type: Number,
+      min: 0,
+      max: 2,
       default: 0,
     },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false, autoIndex: true }
 );
 
 const Post = mongoose.model<Post>('Post', PostSchema);
+
 export default Post;
