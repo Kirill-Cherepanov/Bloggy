@@ -155,4 +155,13 @@ export class SearchBlogs extends SearchDb {
   }
 }
 
-export async function searchBlogPosts() {}
+export async function searchBlogPosts(username: string, page: number) {
+  const POSTS_PER_PAGE = 10;
+
+  console.log(username);
+
+  return Post.find({ authorName: username })
+    .sort({ createdAt: 1 })
+    .skip((page - 1) * POSTS_PER_PAGE)
+    .limit(page * POSTS_PER_PAGE);
+}

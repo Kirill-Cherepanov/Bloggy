@@ -61,7 +61,7 @@ postsRouter.get('/:id', async (req, res) => {
   }
 });
 
-// search posts
+// search posts TESTED
 postsRouter.get('/', async (req, res) => {
   try {
     const searchPosts = new SearchPosts(req.query);

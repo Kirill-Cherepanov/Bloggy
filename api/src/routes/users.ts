@@ -3,7 +3,7 @@ import Post from '../models/Post';
 import bcrypt from 'bcrypt';
 import express from 'express';
 const usersRouter = express.Router();
-import { SearchBlogs } from '../utility/SearchDb';
+import { SearchBlogs, searchBlogPosts } from '../utility/SearchDb';
 
 // Add restore password
 
@@ -89,7 +89,7 @@ usersRouter.delete('/:username', async (req, res) => {
   }
 });
 
-// get TESTED
+// get user TESTED
 usersRouter.get('/:username', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
@@ -98,13 +98,18 @@ usersRouter.get('/:username', async (req, res) => {
     }
 
     const { password, __v, ...userInfo } = user._doc;
-    res.status(200).json(userInfo);
+    const posts = await searchBlogPosts(
+      req.params.username,
+      Number(req.query.page) || 1
+    );
+
+    res.status(200).json({ ...userInfo, posts });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-// search blogs
+// search blogs TESTED
 usersRouter.get('/', async (req, res) => {
   try {
     const searchBlogs = new SearchBlogs(req.query);
