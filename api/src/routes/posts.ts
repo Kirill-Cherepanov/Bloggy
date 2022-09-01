@@ -1,7 +1,7 @@
 import Post from '../models/Post';
 import express from 'express';
 const postsRouter = express.Router();
-import { SearchPosts, SearchParams } from '../utility/SearchDb';
+import { SearchPosts } from '../utility/SearchDb';
 
 const authorName = 'test';
 
@@ -41,7 +41,6 @@ postsRouter.put('/:id', async (req, res) => {
 postsRouter.delete('/:id', async (req, res) => {
   // ADD AUTHORIZATION
   // Check if post.authorName is the same person as the authorized one
-
   try {
     const post = await Post.findById(req.params.id);
     if (post === null) return res.status(500).json(`Post was not found`);
@@ -79,8 +78,8 @@ function getPostData(postData: Partial<TPost>) {
   // Check if req.body.authorName is the same person as the authorized one
   const { likes, authorName, ...newPostData } = postData;
 
-  if (newPostData.categories) {
-    newPostData.categories = [...new Set(newPostData.categories)];
+  if (postData.categories) {
+    newPostData.categories = [...new Set(postData.categories)].filter((c) => c);
   }
 
   return newPostData;

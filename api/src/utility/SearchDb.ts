@@ -3,7 +3,6 @@ import User from '../models/User';
 
 export type SearchParams = {
   q: string;
-  type: 'blogs' | 'posts';
   search: 'categories' | 'title' | 'both';
   sort: 'popular' | 'new';
   time: 'week' | 'month' | 'year' | 'all';
@@ -14,7 +13,6 @@ type SearchQuery = any; // I'm to lazy to write a huge type for this thing. Mayb
 class SearchDb {
   protected DEFAULT_PARAMS: SearchParams = {
     q: '',
-    type: 'posts',
     search: 'both',
     sort: 'new',
     time: 'all',
@@ -130,9 +128,10 @@ export class SearchBlogs extends SearchDb {
   }
 
   public getBlogs() {
-    const query: SearchQuery = this.getQuery();
-
     if (this.params.page <= 0) throw Error('Incorrect page');
+
+    const query: SearchQuery = this.getQuery();
+    console.log(query);
 
     return User.find(query)
       .sort(this.getSortQuery(this.params.sort))
@@ -141,15 +140,18 @@ export class SearchBlogs extends SearchDb {
   }
 
   protected getSortQuery(sort: string) {
-    return { blog: super.getSortQuery(sort) };
+    return { 'blog.categories': super.getSortQuery(sort).categories };
   }
 
   protected getTimeQuery(time: string) {
-    return { blog: super.getTimeQuery(time) };
+    const timeQuery = super.getTimeQuery(time);
+    return Object.keys(timeQuery).length
+      ? { 'blog.createdAt': timeQuery.createdAt }
+      : {};
   }
 
   protected getCategoriesQuery(query: string) {
-    return { blog: super.getCategoriesQuery(query) };
+    return { 'blog.categories': super.getCategoriesQuery(query).categories };
   }
 }
 

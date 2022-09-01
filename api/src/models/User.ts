@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema<User>(
       type: BlogSchema,
     },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false, autoIndex: true }
 );
 
 const User = mongoose.model<User>('User', UserSchema);

@@ -104,13 +104,14 @@ usersRouter.get('/:username', async (req, res) => {
   }
 });
 
+// search blogs
 usersRouter.get('/', async (req, res) => {
   try {
     const searchBlogs = new SearchBlogs(req.query);
     const blogs = await searchBlogs.getBlogs();
     res.status(200).json(blogs);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    res.status(500).json(err.toString());
   }
 });
 
