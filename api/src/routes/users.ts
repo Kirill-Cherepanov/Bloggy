@@ -60,6 +60,12 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
     }
 
     if ('profile-picture' in req.files!) {
+      if (user.profilePic) {
+        fs.unlink(user.profilePic, (err) => {
+          if (err) console.error(err);
+        });
+      }
+
       const file = req.files!['profile-picture' as keyof typeof req.files][0];
 
       const filename =
@@ -102,6 +108,12 @@ usersRouter.delete('/:username', async (req, res) => {
     const validated = await bcrypt.compare(req.body.oldPassword, user.password);
     if (!validated) {
       return res.status(500).json('Incorrect previous password!');
+    }
+
+    if (user.profilePic) {
+      fs.unlink(user.profilePic, (err) => {
+        if (err) console.error(err);
+      });
     }
 
     await Post.deleteMany({ username: user.username });

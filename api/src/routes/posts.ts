@@ -72,6 +72,12 @@ postsRouter.put('/:id', uploadFields, async (req, res) => {
     const updatedPostData = getPostData(params);
 
     if ('post-image' in req.files!) {
+      if (post.image) {
+        fs.unlink(post.image, (err) => {
+          if (err) console.error(err);
+        });
+      }
+
       const file = req.files!['post-image' as keyof typeof req.files][0];
 
       const filename =
@@ -103,6 +109,12 @@ postsRouter.delete('/:id', async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
     if (post === null) return res.status(500).json(`Post was not found`);
+
+    if (post.image) {
+      fs.unlink(post.image, (err) => {
+        if (err) console.error(err);
+      });
+    }
 
     await post.delete();
     res.status(200).json('Post has been deleted');
