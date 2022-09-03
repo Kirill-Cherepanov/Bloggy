@@ -1,59 +1,82 @@
-import User from '../models/User';
-import Post from '../models/Post';
 import bcrypt from 'bcrypt';
 import express from 'express';
-const usersRouter = express.Router();
+import path from 'path';
+import fs from 'fs';
+
+import User from '../models/User';
+import Post from '../models/Post';
 import { SearchBlogs, searchBlogPosts } from '../utility/SearchDb';
+import { upload } from '../utility/middleware';
+import { getCategories, validateJsonBlob } from '../utility/validations';
+
+const usersRouter = express.Router();
+
+const updloadFields = upload.fields([
+  {
+    name: 'profile-picture',
+    maxCount: 1,
+  },
+  {
+    name: 'request-json',
+    maxCount: 1,
+  },
+]);
 
 // Add restore password
 
-// update
-usersRouter.put('/:username', async (req, res) => {
+// update TESTED
+usersRouter.put('/:username', updloadFields, async (req, res) => {
   // ADD AUTHORIZATION !!!
 
   try {
-    const user = await User.findOne({ username: req.params.username });
+    const jsonBlob = await validateJsonBlob(req.files);
+    if (!jsonBlob) throw Error('Incorrect request');
+    const params: Partial<TUser> = JSON.parse(await jsonBlob.text());
+
+    const user = await User.findOne({ username: params.username });
     if (user === null) {
-      return res.status(500).json(`User ${req.query.username} was not found!`);
+      return res.status(500).json(`User ${params.username} was not found!`);
     }
 
-    let {
-      username,
-      password,
-      email,
-      oldPassword,
-      blog,
-    }: Partial<TUser> & { oldPassword?: string; changeBlog?: string } =
-      req.body;
+    const updatedUserData: Partial<TUser> & {
+      oldPassword?: string;
+      blog?: { shouldDelete?: boolean };
+    } = getUserData(req.body);
 
-    if (password || email) {
-      if (!oldPassword) {
+    if (updatedUserData.password || updatedUserData.email) {
+      if (!updatedUserData.oldPassword) {
         return res.status(500).json('Old password was not sent');
       }
 
-      const validated = await bcrypt.compare(oldPassword, user.password);
+      const validated = await bcrypt.compare(
+        updatedUserData.oldPassword,
+        user.password
+      );
       if (!validated) {
         return res.status(500).json('Incorrect previous password!');
       }
+
+      delete updatedUserData.oldPassword;
     }
 
-    if (username) user.username = username;
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(req.body.password, salt);
-    }
-    if (email) user.email = email;
-    if (blog?.categories) {
-      user.blog = {
-        categories: blog.categories,
-      };
-    }
-    if (blog?.description) {
-      user.blog = {
-        description: blog.description,
-      };
+    if ('profile-picture' in req.files!) {
+      const file = req.files!['profile-picture' as keyof typeof req.files][0];
+
+      const filename =
+        path.parse(file.originalname).name +
+        `.${Date.now()}` +
+        path.extname(file.originalname);
+
+      updatedUserData.profilePic = filename;
+
+      const filePath = './images/profilePics/' + filename;
+
+      fs.writeFile(filePath, file.buffer, (err) => {
+        if (err) throw err;
+      });
     }
 
+    Object.assign(user, updatedUserData);
     await user.save();
 
     res.status(200).json(user._doc);
@@ -121,3 +144,19 @@ usersRouter.get('/', async (req, res) => {
 });
 
 export default usersRouter;
+
+function getUserData(userData: any) {
+  const newUserData: any = JSON.parse(JSON.stringify(userData));
+
+  delete newUserData.profilePic;
+  delete newUserData.blog?.likes;
+
+  if (newUserData.blog?.categories) {
+    newUserData.blog.categories = getCategories(newUserData.blog.categories);
+  }
+  if (newUserData.blog?.shouldDelete) {
+    newUserData.blog = undefined;
+  }
+
+  return newUserData;
+}

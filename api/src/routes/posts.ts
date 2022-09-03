@@ -1,17 +1,55 @@
-import Post from '../models/Post';
 import express from 'express';
-const postsRouter = express.Router();
+import path from 'path';
+import fs from 'fs';
+
+import Post from '../models/Post';
 import { SearchPosts } from '../utility/SearchDb';
+import { upload } from '../utility/middleware';
+import { getCategories, validateJsonBlob } from '../utility/validations';
+
+const postsRouter = express.Router();
 
 const authorName = 'test';
 
+const uploadFields = upload.fields([
+  {
+    name: 'post-image',
+    maxCount: 1,
+  },
+  {
+    name: 'request-json',
+    maxCount: 1,
+  },
+]);
+
 // create post
-postsRouter.post('/', async (req, res) => {
+postsRouter.post('/', uploadFields, async (req, res) => {
   // ADD AUTHORIZATION
-  // Check if req.body.authorName is the same person as the authorized one
-  const newPostData = getPostData(req.body);
 
   try {
+    const jsonBlob = await validateJsonBlob(req.files);
+    if (!jsonBlob) throw Error('Incorrect request');
+    const params: Partial<TPost> = JSON.parse(await jsonBlob.text());
+
+    const newPostData = getPostData(params);
+
+    if ('post-image' in req.files!) {
+      const file = req.files!['post-image' as keyof typeof req.files][0];
+
+      const filename =
+        path.parse(file.originalname).name +
+        `.${Date.now()}` +
+        path.extname(file.originalname);
+
+      newPostData.image = filename;
+
+      const filePath = './images/postImgs/' + filename;
+
+      fs.writeFile(filePath, file.buffer, (err) => {
+        if (err) throw err;
+      });
+    }
+
     const newPost = new Post({ ...newPostData, ...{ authorName } });
     res.status(200).json(await newPost.save());
   } catch (err) {
@@ -20,14 +58,35 @@ postsRouter.post('/', async (req, res) => {
 });
 
 // update post
-postsRouter.put('/:id', async (req, res) => {
+postsRouter.put('/:id', uploadFields, async (req, res) => {
   // ADD AUTHORIZATION
-  // Check if post.authorName is the same person as the authorized one
-  const updatedPostData = getPostData(req.body);
 
   try {
+    const jsonBlob = await validateJsonBlob(req.files);
+    if (!jsonBlob) throw Error('Incorrect request');
+
     const post = await Post.findById(req.params.id);
     if (post === null) return res.status(500).json(`Post was not found`);
+
+    const params: Partial<TPost> = JSON.parse(await jsonBlob.text());
+    const updatedPostData = getPostData(params);
+
+    if ('post-image' in req.files!) {
+      const file = req.files!['post-image' as keyof typeof req.files][0];
+
+      const filename =
+        path.parse(file.originalname).name +
+        `.${Date.now()}` +
+        path.extname(file.originalname);
+
+      updatedPostData.image = filename;
+
+      const filePath = './images/postImgs/' + filename;
+
+      fs.writeFile(filePath, file.buffer, (err) => {
+        if (err) throw err;
+      });
+    }
 
     Object.assign(post, updatedPostData);
 
@@ -79,7 +138,7 @@ function getPostData(postData: Partial<TPost>) {
   const { likes, authorName, ...newPostData } = postData;
 
   if (postData.categories) {
-    newPostData.categories = [...new Set(postData.categories)].filter((c) => c);
+    newPostData.categories = getCategories(postData.categories);
   }
 
   return newPostData;

@@ -1,4 +1,5 @@
 import User from '../models/User';
+import { Blob } from 'node:buffer';
 
 export const validateCategories = (v: string[]) => v.length <= 10;
 
@@ -88,3 +89,23 @@ const getMongoDbValidationErrorObj = ({
 
 const truthyFilter = <T>(x: T | false | undefined | null | '' | 0): x is T =>
   !!x;
+
+export const getCategories = (categories: string[]) =>
+  [...new Set(categories)].filter((category) => category);
+
+export const validateJsonBlob = async (
+  files:
+    | {
+        [fieldname: string]: Express.Multer.File[];
+      }
+    | Express.Multer.File[]
+    | undefined
+): Promise<(Express.Multer.File & Blob) | false> => {
+  if (!files || !('request-json' in files)) return false;
+
+  const file = files['request-json' as keyof typeof files][0];
+
+  if (!(file instanceof Blob) || file.type !== 'application/json') return false;
+
+  return file;
+};
