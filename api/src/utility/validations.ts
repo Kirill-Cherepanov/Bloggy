@@ -100,12 +100,12 @@ export const validateJsonBlob = async (
       }
     | Express.Multer.File[]
     | undefined
-): Promise<(Express.Multer.File & Blob) | false> => {
+): Promise<Express.Multer.File | false> => {
   if (!files || !('request-json' in files)) return false;
 
   const file = files['request-json' as keyof typeof files][0];
 
-  if (!(file instanceof Blob) || file.type !== 'application/json') return false;
+  if (file.mimetype !== 'application/json') return false;
 
   return file;
 };

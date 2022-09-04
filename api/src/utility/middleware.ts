@@ -8,7 +8,6 @@ export const upload = multer({
     if (
       ext !== '.png' &&
       ext !== '.jpg' &&
-      ext !== '.gif' &&
       ext !== '.jpeg' &&
       ext !== '.json'
     ) {
@@ -17,8 +16,8 @@ export const upload = multer({
     callback(null, true);
   },
   limits: {
-    files: 1,
-    fileSize: 1024 * 1024 * 4,
+    files: 2,
+    fileSize: 1024 * 1024 * 6,
   },
 });
 
@@ -28,5 +27,7 @@ export const handleMiddlewareErrors: ErrorRequestHandler = (
   res,
   next
 ) => {
+  console.log(req.files);
+  console.error(err);
   res.status(500).json('Oops... Something went wrong');
 };

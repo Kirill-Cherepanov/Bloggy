@@ -29,24 +29,26 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
   // ADD AUTHORIZATION !!!
 
   try {
-    const jsonBlob = await validateJsonBlob(req.files);
-    if (!jsonBlob) throw Error('Incorrect request');
-    const params: Partial<TUser> = JSON.parse(await jsonBlob.text());
+    const jsonBuffer = await validateJsonBlob(req.files);
+    if (!jsonBuffer) throw Error('Incorrect request');
+    const sentData: Partial<TUser> = JSON.parse(jsonBuffer.buffer.toString());
 
-    const user = await User.findOne({ username: params.username });
+    const user = await User.findOne({ username: req.params.username });
     if (user === null) {
-      return res.status(500).json(`User ${params.username} was not found!`);
+      return res.status(500).json(`User ${req.params.username} was not found!`);
     }
 
     const updatedUserData: Partial<TUser> & {
       oldPassword?: string;
       blog?: { shouldDelete?: boolean };
-    } = getUserData(req.body);
+    } = getUserData(sentData);
 
     if (updatedUserData.password || updatedUserData.email) {
       if (!updatedUserData.oldPassword) {
         return res.status(500).json('Old password was not sent');
       }
+
+      console.log(updatedUserData.oldPassword);
 
       const validated = await bcrypt.compare(
         updatedUserData.oldPassword,
@@ -86,8 +88,11 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
     await user.save();
 
     res.status(200).json(user._doc);
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 
@@ -119,8 +124,11 @@ usersRouter.delete('/:username', async (req, res) => {
     await Post.deleteMany({ username: user.username });
     await User.findOneAndDelete({ username: user.username });
     res.status(200).json('User has been deleted');
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 
@@ -139,8 +147,11 @@ usersRouter.get('/:username', async (req, res) => {
     );
 
     res.status(200).json({ ...userInfo, posts });
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 
@@ -151,7 +162,10 @@ usersRouter.get('/', async (req, res) => {
     const blogs = await searchBlogs.getBlogs();
     res.status(200).json(blogs);
   } catch (err: any) {
-    res.status(500).json(err.toString());
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 

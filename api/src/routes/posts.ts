@@ -27,11 +27,11 @@ postsRouter.post('/', uploadFields, async (req, res) => {
   // ADD AUTHORIZATION
 
   try {
-    const jsonBlob = await validateJsonBlob(req.files);
-    if (!jsonBlob) throw Error('Incorrect request');
-    const params: Partial<TPost> = JSON.parse(await jsonBlob.text());
+    const jsonBuffer = await validateJsonBlob(req.files);
+    if (!jsonBuffer) throw Error('Incorrect request');
+    const sentData: Partial<TPost> = JSON.parse(jsonBuffer.buffer.toString());
 
-    const newPostData = getPostData(params);
+    const newPostData = getPostData(sentData);
 
     if ('post-image' in req.files!) {
       const file = req.files!['post-image' as keyof typeof req.files][0];
@@ -62,14 +62,14 @@ postsRouter.put('/:id', uploadFields, async (req, res) => {
   // ADD AUTHORIZATION
 
   try {
-    const jsonBlob = await validateJsonBlob(req.files);
-    if (!jsonBlob) throw Error('Incorrect request');
+    const jsonBuffer = await validateJsonBlob(req.files);
+    if (!jsonBuffer) throw Error('Incorrect request');
+    const sentData: Partial<TPost> = JSON.parse(jsonBuffer.buffer.toString());
 
     const post = await Post.findById(req.params.id);
     if (post === null) return res.status(500).json(`Post was not found`);
 
-    const params: Partial<TPost> = JSON.parse(await jsonBlob.text());
-    const updatedPostData = getPostData(params);
+    const updatedPostData = getPostData(sentData);
 
     if ('post-image' in req.files!) {
       if (post.image) {
