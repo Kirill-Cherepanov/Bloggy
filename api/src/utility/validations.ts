@@ -1,5 +1,4 @@
 import User from '../models/User';
-import { Blob } from 'node:buffer';
 
 export const validateCategories = (v: string[]) => v.length <= 10;
 

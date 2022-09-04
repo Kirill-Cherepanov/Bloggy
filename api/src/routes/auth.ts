@@ -3,6 +3,17 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 const authRouter = express.Router();
 import { validateRegistration } from '../utility/validations';
+import { handleEmailVerification } from '../utility/emailVerification';
+
+authRouter.post('/registration', async (req, res) => {
+  try {
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
+  }
+});
 
 // TESTED
 authRouter.post('/registration', async (req, res) => {
@@ -17,7 +28,15 @@ authRouter.post('/registration', async (req, res) => {
       email,
       username,
       blog,
-    }: TUser & { shouldCreateBlog: boolean } = req.body;
+      confirmationMessage,
+    }: TUser & { confirmationMessage: string } = req.body;
+
+    const emailVerified = await handleEmailVerification(
+      req.ip,
+      email,
+      confirmationMessage
+    );
+    if (!emailVerified.res) res.status(200).json(emailVerified.message);
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -36,8 +55,11 @@ authRouter.post('/registration', async (req, res) => {
 
     const user = await newUser.save();
     res.status(200).json(user);
-  } catch (err) {
-    return res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 
@@ -53,8 +75,11 @@ authRouter.post('/login', async (req, res) => {
     const { password, ...userInfo } = user._doc;
     res.status(200).json(userInfo);
     // Should send jwt token or something
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 

@@ -5,6 +5,7 @@ import { handleMiddlewareErrors } from './utility/middleware';
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
 import postsRouter from './routes/posts';
+import 'dotenv/config';
 
 const app = express();
 

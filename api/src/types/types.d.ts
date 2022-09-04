@@ -42,3 +42,16 @@ interface Post extends import('mongoose').Document, TPost {
   updatedAt: Date;
   _doc: Omit<this, '_doc'>;
 }
+
+type TConfirmation = {
+  ip: string;
+  email: string;
+  message: string;
+};
+
+interface Confirmation extends import('mongoose').Document, TConfirmation {
+  _id: import('mongoose').ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+  _doc: Omit<this, '_doc'>;
+}
