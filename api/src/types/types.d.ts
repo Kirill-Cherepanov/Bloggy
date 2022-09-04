@@ -44,7 +44,6 @@ interface Post extends import('mongoose').Document, TPost {
 }
 
 type TConfirmation = {
-  ip: string;
   email: string;
   message: string;
 };

@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 
 const ConfirmationSchema = new mongoose.Schema<Confirmation>(
   {
-    ip: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
@@ -17,6 +13,8 @@ const ConfirmationSchema = new mongoose.Schema<Confirmation>(
   },
   { timestamps: true, versionKey: false }
 );
+
+ConfirmationSchema.index({ updatedAt: 1 }, { expireAfterSeconds: 1200 });
 
 const Confirmation = mongoose.model<Confirmation>(
   'Confirmation',

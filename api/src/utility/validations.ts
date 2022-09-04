@@ -20,7 +20,7 @@ export async function validateRegistration(data: Partial<TUser>) {
   return { res: false, errors: Object.fromEntries(errors) };
 }
 
-function validatePassword(password: string) {
+export function validatePassword(password: string) {
   if (password.length < 5) {
     return getMongoDbValidationErrorObj({
       path: 'password',

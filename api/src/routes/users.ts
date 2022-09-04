@@ -7,7 +7,12 @@ import User from '../models/User';
 import Post from '../models/Post';
 import { SearchBlogs, searchBlogPosts } from '../utility/SearchDb';
 import { upload } from '../utility/middleware';
-import { getCategories, validateJsonBlob } from '../utility/validations';
+import {
+  getCategories,
+  validateJsonBlob,
+  validatePassword,
+} from '../utility/validations';
+import { handleEmailVerification } from '../utility/emailVerification';
 
 const usersRouter = express.Router();
 
@@ -21,8 +26,6 @@ const updloadFields = upload.fields([
     maxCount: 1,
   },
 ]);
-
-// Add restore password
 
 // update TESTED
 usersRouter.put('/:username', updloadFields, async (req, res) => {
@@ -161,6 +164,38 @@ usersRouter.get('/', async (req, res) => {
     const searchBlogs = new SearchBlogs(req.query);
     const blogs = await searchBlogs.getBlogs();
     res.status(200).json(blogs);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
+  }
+});
+
+usersRouter.post('/restore-password', async (req, res) => {
+  try {
+    const { newPassword, email, confirmationMessage } = req.body;
+
+    const passwordError = validatePassword(newPassword);
+    if (passwordError) throw passwordError;
+
+    const user = await User.findOne({ email });
+    if (user === null) {
+      return res.status(500).json(`User with email ${email} was not found`);
+    }
+
+    const emailVerified = await handleEmailVerification(
+      email,
+      confirmationMessage
+    );
+    if (!emailVerified.res) return res.status(200).json(emailVerified.message);
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    user.save();
+
+    res.status(200).json(user._doc);
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

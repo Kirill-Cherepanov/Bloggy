@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import Confirmation from '../models/Confirmation';
+import { validateEmail } from './validations';
 
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -9,46 +10,53 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const getNewMessage = () => 'You are cool!';
+const getMailMessage = (email: string, message: string) => ({
+  to: email,
+  subject: 'Confirm Email',
+  html: `<h1>Your confirmation message</h1><p>Message: ${message}</p><p><small>This message will expire in 20 minutes</small></p>`,
+});
+
+const sendNewConfirmation = (email: string) => {
+  const message = getNewMessage();
+
+  new Confirmation({
+    email,
+    message,
+  }).save();
+
+  transporter.sendMail(getMailMessage(email, message));
+};
+
 export const handleEmailVerification = async (
-  ip: string,
   email: string,
   message: string
 ): Promise<{ res: boolean; message: string }> => {
-  const confirmation = await Confirmation.findOne({ ip: ip });
+  if (!validateEmail(email)) return { res: false, message: 'Incorrect email' };
 
-  const newMessage = 'You are cool!';
-  const newMailMessage = {
-    to: email,
-    subject: 'Confirm Email',
-    html: `<h1>Your confirmation message</h1><p>${newMessage}</p>`,
-  };
-  const sendNewConfirmation = () => {
-    new Confirmation({
-      ip: ip,
-      email,
-      newMessage,
-    }).save();
-    transporter.sendMail(newMailMessage);
-  };
+  const confirmation = await Confirmation.findOne({ email });
 
   if (confirmation === null) {
-    sendNewConfirmation();
-    return { res: false, message: 'Email verification message was sent' };
+    sendNewConfirmation(email);
+    return {
+      res: false,
+      message: `Email verification message was sent to ${email}`,
+    };
   }
 
-  if (confirmation.email !== email) {
-    await Confirmation.findOneAndDelete({ ip: ip });
+  if (message === null || message === undefined) {
+    await Confirmation.findOneAndDelete({ email });
 
-    sendNewConfirmation();
+    sendNewConfirmation(email);
 
     return {
       res: false,
-      message: 'Email verification message was sent to a new address',
+      message: `Email verification message was sent to ${email}`,
     };
   }
 
   if (confirmation.message !== message) {
-    return { res: false, message: 'Incorrect verifiction message' };
+    return { res: false, message: 'Incorrect verification message' };
   }
 
   return { res: true, message: 'Verification passed' };

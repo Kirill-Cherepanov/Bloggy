@@ -7,17 +7,6 @@ import { handleEmailVerification } from '../utility/emailVerification';
 
 authRouter.post('/registration', async (req, res) => {
   try {
-  } catch (err: any) {
-    console.error(err);
-    if (err && typeof err === 'object' && 'message' in err) {
-      res.status(500).json(err.message);
-    }
-  }
-});
-
-// TESTED
-authRouter.post('/registration', async (req, res) => {
-  try {
     const validationResult = await validateRegistration(req.body);
     if (!validationResult.res) {
       return res.status(500).json({ errors: validationResult.errors });
@@ -32,7 +21,6 @@ authRouter.post('/registration', async (req, res) => {
     }: TUser & { confirmationMessage: string } = req.body;
 
     const emailVerified = await handleEmailVerification(
-      req.ip,
       email,
       confirmationMessage
     );
