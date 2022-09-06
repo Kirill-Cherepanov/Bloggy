@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
+import jwt from 'jsonwebtoken';
 
 import User from '../models/User';
 import Post from '../models/Post';
@@ -13,6 +14,7 @@ import {
   validatePassword,
 } from '../utility/validations';
 import { handleEmailVerification } from '../utility/emailVerification';
+import { verifyAccessToken } from '../utility/jsonTokens';
 
 const usersRouter = express.Router();
 
@@ -27,9 +29,16 @@ const updloadFields = upload.fields([
   },
 ]);
 
-// update TESTED
+// update
 usersRouter.put('/:username', updloadFields, async (req, res) => {
-  // ADD AUTHORIZATION !!!
+  const verificationRes = await verifyAccessToken(req.body.accessToken);
+  if (verificationRes.err === true) {
+    return res.status(verificationRes.status).json(verificationRes.message);
+  }
+
+  if (verificationRes.username !== req.params.username) {
+    return res.status(403).json('No access');
+  }
 
   try {
     const jsonBuffer = await validateJsonBlob(req.files);
@@ -99,10 +108,17 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
   }
 });
 
-// delete TESTED
+// delete
 usersRouter.delete('/:username', async (req, res) => {
-  // ADD AUTHORIZATION !!!
-  // Add confirmation via email
+  const verificationRes = await verifyAccessToken(req.body.accessToken);
+  if (verificationRes.err === true) {
+    return res.status(verificationRes.status).json(verificationRes.message);
+  }
+
+  if (verificationRes.username !== req.params.username) {
+    return res.status(403).json('No access');
+  }
+
   try {
     const user = await User.findOne({ username: req.params.username });
     if (user === null) {

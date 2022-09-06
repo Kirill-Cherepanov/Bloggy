@@ -22,6 +22,10 @@ const BlogSchema = new mongoose.Schema<Blog>(
 
 const UserSchema = new mongoose.Schema<User>(
   {
+    refreshToken: {
+      type: String,
+      required: true,
+    },
     username: {
       type: String,
       required: true,

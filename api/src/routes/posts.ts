@@ -6,6 +6,7 @@ import Post from '../models/Post';
 import { SearchPosts } from '../utility/SearchDb';
 import { upload } from '../utility/middleware';
 import { getCategories, validateJsonBlob } from '../utility/validations';
+import { verifyAccessToken } from '../utility/jsonTokens';
 
 const postsRouter = express.Router();
 
@@ -24,7 +25,14 @@ const uploadFields = upload.fields([
 
 // create post
 postsRouter.post('/', uploadFields, async (req, res) => {
-  // ADD AUTHORIZATION
+  const verificationRes = await verifyAccessToken(req.body.accessToken);
+  if (verificationRes.err === true) {
+    return res.status(verificationRes.status).json(verificationRes.message);
+  }
+
+  if (verificationRes.username !== req.params.username) {
+    return res.status(403).json('No access');
+  }
 
   try {
     const jsonBuffer = await validateJsonBlob(req.files);
@@ -59,7 +67,14 @@ postsRouter.post('/', uploadFields, async (req, res) => {
 
 // update post
 postsRouter.put('/:id', uploadFields, async (req, res) => {
-  // ADD AUTHORIZATION
+  const verificationRes = await verifyAccessToken(req.body.accessToken);
+  if (verificationRes.err === true) {
+    return res.status(verificationRes.status).json(verificationRes.message);
+  }
+
+  if (verificationRes.username !== req.params.username) {
+    return res.status(403).json('No access');
+  }
 
   try {
     const jsonBuffer = await validateJsonBlob(req.files);
@@ -104,11 +119,18 @@ postsRouter.put('/:id', uploadFields, async (req, res) => {
 
 // delete post
 postsRouter.delete('/:id', async (req, res) => {
-  // ADD AUTHORIZATION
-  // Check if post.authorName is the same person as the authorized one
+  const verificationRes = await verifyAccessToken(req.body.accessToken);
+  if (verificationRes.err === true) {
+    return res.status(verificationRes.status).json(verificationRes.message);
+  }
+
   try {
     const post = await Post.findById(req.params.id);
     if (post === null) return res.status(500).json(`Post was not found`);
+
+    if (verificationRes.username !== post.authorName) {
+      return res.status(403).json('No access');
+    }
 
     if (post.image) {
       fs.unlink(post.image, (err) => {
