@@ -25,16 +25,15 @@ const uploadFields = upload.fields([
 
 // create post
 postsRouter.post('/', uploadFields, async (req, res) => {
-  const verificationRes = await verifyAccessToken(req.body.accessToken);
-  if (verificationRes.err === true) {
-    return res.status(verificationRes.status).json(verificationRes.message);
-  }
-
-  if (verificationRes.username !== req.params.username) {
-    return res.status(403).json('No access');
-  }
-
   try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+    if (verificationRes.username !== req.params.username) {
+      return res.status(403).json('No access');
+    }
+
     const jsonBuffer = await validateJsonBlob(req.files);
     if (!jsonBuffer) throw Error('Incorrect request');
     const sentData: Partial<TPost> = JSON.parse(jsonBuffer.buffer.toString());
@@ -67,16 +66,15 @@ postsRouter.post('/', uploadFields, async (req, res) => {
 
 // update post
 postsRouter.put('/:id', uploadFields, async (req, res) => {
-  const verificationRes = await verifyAccessToken(req.body.accessToken);
-  if (verificationRes.err === true) {
-    return res.status(verificationRes.status).json(verificationRes.message);
-  }
-
-  if (verificationRes.username !== req.params.username) {
-    return res.status(403).json('No access');
-  }
-
   try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+    if (verificationRes.username !== req.params.username) {
+      return res.status(403).json('No access');
+    }
+
     const jsonBuffer = await validateJsonBlob(req.files);
     if (!jsonBuffer) throw Error('Incorrect request');
     const sentData: Partial<TPost> = JSON.parse(jsonBuffer.buffer.toString());
@@ -119,12 +117,12 @@ postsRouter.put('/:id', uploadFields, async (req, res) => {
 
 // delete post
 postsRouter.delete('/:id', async (req, res) => {
-  const verificationRes = await verifyAccessToken(req.body.accessToken);
-  if (verificationRes.err === true) {
-    return res.status(verificationRes.status).json(verificationRes.message);
-  }
-
   try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+
     const post = await Post.findById(req.params.id);
     if (post === null) return res.status(500).json(`Post was not found`);
 

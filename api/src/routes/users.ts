@@ -31,16 +31,15 @@ const updloadFields = upload.fields([
 
 // update
 usersRouter.put('/:username', updloadFields, async (req, res) => {
-  const verificationRes = await verifyAccessToken(req.body.accessToken);
-  if (verificationRes.err === true) {
-    return res.status(verificationRes.status).json(verificationRes.message);
-  }
-
-  if (verificationRes.username !== req.params.username) {
-    return res.status(403).json('No access');
-  }
-
   try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+    if (verificationRes.username !== req.params.username) {
+      return res.status(403).json('No access');
+    }
+
     const jsonBuffer = await validateJsonBlob(req.files);
     if (!jsonBuffer) throw Error('Incorrect request');
     const sentData: Partial<TUser> = JSON.parse(jsonBuffer.buffer.toString());
@@ -60,12 +59,11 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
         return res.status(500).json('Old password was not sent');
       }
 
-      console.log(updatedUserData.oldPassword);
-
       const validated = await bcrypt.compare(
         updatedUserData.oldPassword,
         user.password
       );
+
       if (!validated) {
         return res.status(500).json('Incorrect previous password!');
       }
@@ -110,16 +108,15 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
 
 // delete
 usersRouter.delete('/:username', async (req, res) => {
-  const verificationRes = await verifyAccessToken(req.body.accessToken);
-  if (verificationRes.err === true) {
-    return res.status(verificationRes.status).json(verificationRes.message);
-  }
-
-  if (verificationRes.username !== req.params.username) {
-    return res.status(403).json('No access');
-  }
-
   try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+    if (verificationRes.username !== req.params.username) {
+      return res.status(403).json('No access');
+    }
+
     const user = await User.findOne({ username: req.params.username });
     if (user === null) {
       return res.status(500).json(`User ${req.params.username} was not found!`);
@@ -188,20 +185,29 @@ usersRouter.get('/', async (req, res) => {
   }
 });
 
-usersRouter.post('/restore-password', async (req, res) => {
+// restore password
+usersRouter.post('/:username/restore-password', async (req, res) => {
   try {
-    const { newPassword, email, confirmationMessage } = req.body;
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+    if (verificationRes.username !== req.params.username) {
+      return res.status(403).json('No access');
+    }
+
+    const { newPassword, confirmationMessage } = req.body;
 
     const passwordError = validatePassword(newPassword);
     if (passwordError) throw passwordError;
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne(verificationRes);
     if (user === null) {
-      return res.status(500).json(`User with email ${email} was not found`);
+      return res.status(500).json(`User was not found`);
     }
 
     const emailVerified = await handleEmailVerification(
-      email,
+      user.email,
       confirmationMessage
     );
     if (!emailVerified.res) return res.status(200).json(emailVerified.message);

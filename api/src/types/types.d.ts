@@ -12,7 +12,6 @@ interface Blog extends import('mongoose').Document, TBlog {
 }
 
 type TUser = {
-  refreshToken: string;
   username: string;
   email: string;
   password: string;

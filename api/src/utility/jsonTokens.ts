@@ -20,16 +20,18 @@ export const generateAccessToken = (username: string, email: string) =>
   });
 
 export const verifyAccessToken = async (accessToken: string) => {
-  if (!accessToken)
-    return { err: true, status: 403, message: 'No access token' };
+  if (!accessToken) {
+    return { err: true, status: 401, message: 'No access token' };
+  }
 
   const { err, decoded: user } = await verifyToken(
     accessToken,
     process.env.ACCESS_TOKEN_SECRET!
   );
 
-  if (err)
-    return { err: true, status: 403, message: 'Incorrect refresh token' };
+  if (err) {
+    return { err: true, status: 401, message: 'Incorrect refresh token' };
+  }
 
   if (typeof user === 'string' || user === undefined) {
     console.error('The user is incorrect! User: ' + user);
