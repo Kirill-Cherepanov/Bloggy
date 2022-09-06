@@ -14,7 +14,7 @@ import {
   validatePassword,
 } from '../utility/validations';
 import { handleEmailVerification } from '../utility/emailVerification';
-import { verifyAccessToken } from '../utility/jsonTokens';
+import { verifyAccessToken, generateAccessToken } from '../utility/jsonTokens';
 
 const usersRouter = express.Router();
 
@@ -97,7 +97,19 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
     Object.assign(user, updatedUserData);
     await user.save();
 
-    res.status(200).json(user._doc);
+    const { password, ...publicData } = user._doc;
+
+    const accessToken = generateAccessToken(user.username, user.email);
+    const refreshToken = jwt.sign(
+      {
+        email: publicData.email,
+        username: publicData.username,
+      },
+      process.env.REFRESH_TOKEN_SECRET!
+    );
+
+    res.cookie('refresh-token', refreshToken, { httpOnly: true });
+    res.status(200).json({ publicData, accessToken });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -202,9 +214,7 @@ usersRouter.post('/:username/restore-password', async (req, res) => {
     if (passwordError) throw passwordError;
 
     const user = await User.findOne(verificationRes);
-    if (user === null) {
-      return res.status(500).json(`User was not found`);
-    }
+    if (user === null) return res.status(500).json(`User was not found`);
 
     const emailVerified = await handleEmailVerification(
       user.email,

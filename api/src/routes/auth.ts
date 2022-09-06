@@ -53,7 +53,8 @@ authRouter.post('/registration', async (req, res) => {
     );
     const accessToken = generateAccessToken(user.username, user.email);
 
-    res.status(200).json({ ...publicData, refreshToken, accessToken });
+    res.cookie('refresh-token', refreshToken, { httpOnly: true });
+    res.status(200).json({ ...publicData, accessToken });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -73,7 +74,7 @@ authRouter.post('/login', async (req, res) => {
 
     const { password, ...publicData } = user._doc;
 
-    const accessToken = generateAccessToken(user.username, user.password);
+    const accessToken = generateAccessToken(user.username, user.email);
     const refreshToken = jwt.sign(
       {
         email: publicData.email,
@@ -82,7 +83,8 @@ authRouter.post('/login', async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET!
     );
 
-    res.status(200).json({ ...publicData, refreshToken, accessToken });
+    res.cookie('refresh-token', refreshToken, { httpOnly: true });
+    res.status(200).json({ ...publicData, accessToken });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -91,9 +93,10 @@ authRouter.post('/login', async (req, res) => {
   }
 });
 
-authRouter.post('/token', async (req, res) => {
+// get access token
+authRouter.get('/token', async (req, res) => {
   try {
-    const refreshToken: string | null | undefined = req.body.token;
+    const refreshToken: string | undefined = req.cookies['refresh-token'];
     if (!refreshToken) return res.status(401).json('No refresh token');
 
     const { err, decoded: userData } = await verifyToken(
@@ -111,7 +114,8 @@ authRouter.post('/token', async (req, res) => {
     const user = await User.findOne({ userData });
     if (!user) return res.status(401).json('Incorrect refresh token');
 
-    const accessToken = generateAccessToken(user.username, user.password);
+    const accessToken = generateAccessToken(user.username, user.email);
+
     res.json({ accessToken });
   } catch (err: any) {
     console.error(err);
@@ -119,6 +123,10 @@ authRouter.post('/token', async (req, res) => {
       res.status(500).json(err.message);
     }
   }
+});
+
+authRouter.delete('/logout', (req, res) => {
+  res.clearCookie('refresh-token');
 });
 
 export default authRouter;

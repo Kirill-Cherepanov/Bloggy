@@ -1,11 +1,13 @@
 import path from 'path';
 import mongoose from 'mongoose';
 import express from 'express';
+import cookieParser from 'cookie-parser';
+import 'dotenv/config';
+
 import { handleMiddlewareErrors } from './utility/middleware';
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
 import postsRouter from './routes/posts';
-import 'dotenv/config';
 
 const app = express();
 
@@ -14,6 +16,7 @@ mongoose
   .then(() => console.log('Connected to db'))
   .catch((err) => console.error(err));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use('/api/auth', authRouter);
