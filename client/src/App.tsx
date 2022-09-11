@@ -1,7 +1,7 @@
 import Topbar from './components/Layout/Topbar/Topbar';
 import Footer from './components/Layout/Footer/Footer';
 import Homepage from './features/misc/routes/Landing';
-import Registration from './features/auth/routes/Registration';
+import { Registration } from 'features/auth';
 import Post from './features/blogs&posts/routes/Post';
 import Create from './features/blogs&posts/routes/Create';
 import Settings from './features/settings/routes/Settings';

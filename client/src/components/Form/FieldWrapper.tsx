@@ -20,7 +20,7 @@ export const FieldWrapper = (props: FieldWrapperProps) => {
     <div>
       <label className={clsx('block ml-2', className)}>
         {label}
-        <div className="mt-1">{children}</div>
+        {children}
       </label>
       {error?.message && (
         <div

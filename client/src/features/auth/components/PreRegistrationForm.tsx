@@ -12,20 +12,23 @@ const schema = z.object({
     .max(20, 'Username must be at most 20 characters long'),
 });
 
-type PreRegisterValues = {
+type PreRegistrationValues = {
   email: string;
   username: string;
 };
 
-type PreRegisterFormProps = {
+type PreRegistrationFormProps = {
   onSuccess: () => void;
   swapForm: () => void;
 };
 
-export function PreRegisterForm({ onSuccess, swapForm }: PreRegisterFormProps) {
+export function PreRegistrationForm({
+  onSuccess,
+  swapForm,
+}: PreRegistrationFormProps) {
   return (
-    <Form<PreRegisterValues, typeof schema>
-      className="w-72 mx-auto"
+    <Form<PreRegistrationValues, typeof schema>
+      className="w-72 mx-auto space-y-2"
       onSubmit={async (values) => {
         // await login(values);
         onSuccess();

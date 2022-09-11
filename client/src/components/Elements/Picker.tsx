@@ -1,18 +1,33 @@
 import { useState, useEffect, useRef } from 'react';
-import Icon from 'components/Elements/Icon';
+import { Icon } from './';
 
-interface Props {
+interface PickerProps {
   data: string[];
   setData: React.Dispatch<React.SetStateAction<string[]>>;
+  maxLength?: number;
+  filter?: (datum: string) => boolean;
 }
 
-export default function Picker({ data, setData }: Props) {
+export function Picker({
+  data,
+  setData,
+  maxLength = 100,
+  filter: filter_ = (...args) => true,
+}: PickerProps) {
   const [isAdding, setIsAdding] = useState(false);
   const newCategoryRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (isAdding) newCategoryRef.current!.focus();
   }, [isAdding]);
+
+  const filter = (value: string) => {
+    return filter_(value) && !data.includes(value) && data.length < maxLength;
+  };
+  const addValue = (value: string) => setData((data) => [...data, value]);
+  const removeValue = (value: string) => {
+    setData((data) => data.filter((d) => d !== value));
+  };
 
   return (
     <div className="flex gap-2 flex-wrap min-h-8">
@@ -22,22 +37,13 @@ export default function Picker({ data, setData }: Props) {
           className="inline-flex justify-center items-center rounded-3xl text-main bg-accent-700 pl-3 pr-2 py-1 gap-1"
         >
           {datum}
-          <button
-            onClick={() => {
-              setData((data) => data.filter((d) => d !== datum));
-            }}
-          >
+          <button onClick={() => removeValue(datum)}>
             <Icon type="close" className="h-5" />
           </button>
         </span>
       ))}
-      {!isAdding ? (
-        <button onClick={() => setIsAdding(true)}>
-          <span className="inline-flex justify-center items-center rounded-3xl border-2 border-accent-700 px-2 py-0.5 gap-1 hover:bg-accent-100 group">
-            Add <Icon type="plus" className="h-5 text-accent-900" />
-          </span>
-        </button>
-      ) : (
+
+      {isAdding ? (
         <div className="relative min-w-[120px]">
           <input
             ref={newCategoryRef}
@@ -46,31 +52,25 @@ export default function Picker({ data, setData }: Props) {
             className="w-full border-2 border-accent-700 px-2 py-0.5 rounded-3xl focus:outline-none"
             onBlur={(e) => {
               setIsAdding(false);
-              if (
-                e.target.value !== '' &&
-                e.target.value.length <= 20 &&
-                !data.includes(e.target.value)
-              ) {
-                setData((data) => [...data, e.target.value]);
-              }
+              if (filter(e.target.value)) addValue(e.target.value);
             }}
             onKeyDown={(e) => {
-              if (e.code === 'Escape') {
-                setIsAdding(false);
-              }
-              if (e.code === 'Enter') {
-                if (
-                  e.target.value !== '' &&
-                  e.target.value.length <= 20 &&
-                  !data.includes(e.target.value)
-                ) {
-                  setData((data) => [...data, e.target.value]);
-                }
-                setIsAdding(false);
+              switch (e.code) {
+                case 'Escape':
+                  return setIsAdding(false);
+                case 'Enter':
+                  if (filter(e.target.value)) addValue(e.target.value);
+                  return setIsAdding(false);
               }
             }}
           />
         </div>
+      ) : (
+        <button onClick={() => setIsAdding(true)}>
+          <span className="inline-flex justify-center items-center rounded-3xl border-2 border-accent-700 px-2 py-0.5 gap-1 hover:bg-accent-100 group">
+            Add <Icon type="plus" className="h-5 text-accent-900" />
+          </span>
+        </button>
       )}
     </div>
   );

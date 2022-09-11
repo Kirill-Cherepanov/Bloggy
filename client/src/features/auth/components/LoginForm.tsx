@@ -25,7 +25,7 @@ type LoginFormProps = {
 export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
   return (
     <Form<LoginValues, typeof schema>
-      className="w-72 mx-auto"
+      className="w-72 mx-auto space-y-2"
       onSubmit={async (values) => {
         // await login(values);
         onSuccess();
@@ -36,7 +36,7 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
         <>
           <InputField
             type="email"
-            label="Email Address"
+            label="Email address"
             error={formState.errors['email']}
             registration={register('email')}
           />

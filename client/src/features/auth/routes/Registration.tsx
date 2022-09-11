@@ -1,11 +1,16 @@
+import clsx from 'clsx';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { Icon } from 'components/Elements';
-import AccountRegistration from 'features/auth/components/AccountRegistration';
-import BlogRegistration from 'features/auth/components/BlogRegistration';
 
-export default function Register() {
+import { Icon, Logo } from 'components/Elements';
+import {
+  AccountRegistration,
+  BlogRegistration,
+} from 'features/auth/components';
+
+export function Registration() {
   const [stage, setStage] = useState(0);
+  const [shouldCreateBlog, setShouldCreateBlog] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -15,7 +20,7 @@ export default function Register() {
           <button
             className="absolute"
             onClick={() => {
-              if (stage === 2) return setStage(1);
+              if (stage === 1) return setStage(0);
               navigate(-1);
             }}
           >
@@ -25,28 +30,40 @@ export default function Register() {
             />
           </button>
           <div className="mx-auto flex">
-            {!stage
-              ? null
-              : [0, 0].map((v, i) => (
+            {stage
+              ? [0, 0].map((v, i) => (
                   <span
                     key={i}
-                    className={
-                      'first:mr-2 inline-block w-2 h-2 rounded-full ' +
-                      (stage === i + 1
-                        ? 'bg-secondary-600'
-                        : 'bg-secondary-400')
-                    }
+                    className={clsx(
+                      'first:mr-2 inline-block w-2 h-2 rounded-full ',
+                      stage === i ? 'bg-secondary-600' : 'bg-secondary-400'
+                    )}
                   />
-                ))}
+                ))
+              : null}
           </div>
-          <h1 className="my-2 mb-4 text-3xl font-sansita select-none absolute right-2">
-            Bloggy
+          <h1>
+            <Logo
+              size="sm"
+              variant="dark"
+              className="my-2 mb-4 absolute right-2"
+            />
           </h1>
         </div>
-        {stage === 2 ? (
-          <BlogRegistration />
+        {stage ? (
+          <BlogRegistration
+            onSuccess={() => {
+              navigate('/blog/KissMe');
+            }}
+          />
         ) : (
-          <AccountRegistration setStage={setStage} />
+          <AccountRegistration
+            onSuccess={() => {
+              if (shouldCreateBlog) setStage(1);
+              else navigate('/', { replace: true });
+            }}
+            setShouldCreateBlog={setShouldCreateBlog}
+          />
         )}
       </div>
     </main>

@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 type TooltipProps = { outerText: string; children: ReactNode };
 
-export default function Tooltip({ outerText, children }: TooltipProps) {
+export function Tooltip({ outerText, children }: TooltipProps) {
   return (
     <span className="ml-1.5 cursor-pointer relative group rounded-full bg-secondary-300 inline-flex items-center justify-center w-4 h-4">
       {outerText}

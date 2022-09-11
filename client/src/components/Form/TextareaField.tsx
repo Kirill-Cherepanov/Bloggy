@@ -6,7 +6,7 @@ import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 type TextAreaFieldProps = FieldWrapperPassThroughProps & {
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
-  defaultValue: string;
+  defaultValue?: string;
 };
 
 export function TextAreaField(props: TextAreaFieldProps) {

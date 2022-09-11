@@ -6,26 +6,22 @@ import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 type CheckboxFieldProps = FieldWrapperPassThroughProps & {
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export const CheckboxField = (props: CheckboxFieldProps) => {
-  const { label, className, registration, error } = props;
+export function CheckboxField(props: CheckboxFieldProps) {
+  const { label, className, registration, error, onChange } = props;
 
   return (
     <>
-      <FieldWrapper
-        label={label}
-        error={error}
-        className="flex gap-2 mt-4 mb-4"
-      >
+      <FieldWrapper label={label} error={error} className="m-0 flex gap-2">
         <input
           type="checkbox"
-          id="start-blog"
-          // onChange={(e) => setStage(Number(e.target.checked))}
+          onChange={onChange}
           className={clsx('cool-checkbox', className)}
           {...registration}
         />
       </FieldWrapper>
     </>
   );
-};
+}

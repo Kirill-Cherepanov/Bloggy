@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { Icon, Logo } from 'components/Elements';
 import { LoginForm } from './LoginForm';
-import { PreRegisterForm } from './PreRegisterForm';
+import { PreRegistrationForm } from './PreRegistrationForm';
 
 type AuthDrawerProps = {
   closeMenu: () => unknown;
@@ -44,7 +44,7 @@ export function AuthDrawer({
             swapForm={toggleType}
           />
         ) : (
-          <PreRegisterForm
+          <PreRegistrationForm
             onSuccess={() => navigate('/registration')}
             swapForm={toggleType}
           />
