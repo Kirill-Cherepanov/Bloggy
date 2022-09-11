@@ -1,11 +1,12 @@
-import Icon from 'components/Elements/Icon';
-import { getPostsData, blogInfo } from 'utility/mockData';
 import { Link, useNavigate } from 'react-router-dom';
-import formatDate from 'utility/formatDate';
-import Aside from 'components/Layout/Aside/Aside';
-import ParallelogramCurtains from 'features/blogs&posts/components/PostPreview/ParallelogramCurtains';
 
-export default function Post() {
+import { getPostsData, blogInfo } from 'utility/mockData';
+import formatDate from 'utility/formatDate';
+import { Icon } from 'components/Elements';
+import { Aside } from 'components/Layout';
+import { ParallelogramCurtains } from '../components';
+
+export function Post() {
   const postData = getPostsData(1)[0];
   const navigate = useNavigate();
 

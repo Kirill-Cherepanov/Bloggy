@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { Icon } from './';
+
+import { Icon } from '.';
 
 interface PickerProps {
   data: string[];

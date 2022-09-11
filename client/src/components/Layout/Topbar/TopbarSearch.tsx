@@ -1,7 +1,8 @@
-import Icon from 'components/Elements/Icon';
 import { useEffect, useRef, useState } from 'react';
 
-export default function TopbarSearch() {
+import { Icon } from 'components/Elements';
+
+export function TopbarSearch() {
   const [isOpen, setIsOpen] = useState(false);
   const search = useRef<HTMLDivElement | null>(null);
   const inputField = useRef<HTMLInputElement | null>(null);

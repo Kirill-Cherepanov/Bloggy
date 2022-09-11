@@ -1,11 +1,12 @@
-import Icon from 'components/Elements/Icon';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/a11y';
 import 'swiper/css/navigation';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+
+import { Icon } from 'components/Elements';
 
 type Props = { blogsInfo: Blog[] };
 
@@ -16,7 +17,7 @@ const getSlidesAmount = () => {
   return 1;
 };
 
-export default function BlogSwiper({ blogsInfo }: Props) {
+export function BlogSwiper({ blogsInfo }: Props) {
   const [slidesAmount, setSlidesAmount] = useState(getSlidesAmount());
   useEffect(() => {
     const setSlides = () => setSlidesAmount(getSlidesAmount());

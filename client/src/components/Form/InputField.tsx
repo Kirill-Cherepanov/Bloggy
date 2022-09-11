@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
+import { FieldWrapper, FieldWrapperPassThroughProps } from '.';
 
 type InputFieldProps = FieldWrapperPassThroughProps & {
   type?: 'text' | 'email' | 'password';

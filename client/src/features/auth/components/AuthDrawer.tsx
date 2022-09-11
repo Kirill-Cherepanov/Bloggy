@@ -2,8 +2,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router';
 
 import { Icon, Logo } from 'components/Elements';
-import { LoginForm } from './LoginForm';
-import { PreRegistrationForm } from './PreRegistrationForm';
+import { LoginForm, PreRegistrationForm } from '.';
 
 type AuthDrawerProps = {
   closeMenu: () => unknown;
@@ -20,7 +19,7 @@ export function AuthDrawer({
 
   return createPortal(
     <div
-      onMouseDown={(e) => {
+      onClick={(e) => {
         if (e.currentTarget !== e.target) return true;
         closeMenu();
       }}

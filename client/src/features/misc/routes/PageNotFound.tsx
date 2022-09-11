@@ -1,4 +1,4 @@
-export default function PageNotFound() {
+export function PageNotFound() {
   return (
     <div className="px-page h-[calc(100vh-80px)] flex flex-col justify-center items-center">
       <h2 className="font-display font-bold text-[120px] xs:text-[180px] sm:text-[240px] md:text-[300px] leading-[200px] sm:leading-[260px] md:leading-[320px] text-center">

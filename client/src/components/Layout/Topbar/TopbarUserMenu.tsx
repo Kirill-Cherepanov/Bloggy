@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import Icon from 'components/Elements/Icon';
-import Authentification from 'features/auth/components/AuthDrawer';
 
-export default function TopbarUserMenu() {
+import { Icon } from 'components/Elements';
+import { AuthDrawer } from 'features/auth';
+
+export function TopbarUserMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const [authOpen, setAuthOpen] = useState<false | 'login' | 'signup'>(false);
   const menu = useRef<HTMLDivElement | null>(null);
@@ -78,7 +79,7 @@ export default function TopbarUserMenu() {
         </div>
       </div>
       {!authOpen ? null : (
-        <Authentification
+        <AuthDrawer
           closeMenu={() => setAuthOpen(false)}
           authType={authOpen}
           toggleType={() =>

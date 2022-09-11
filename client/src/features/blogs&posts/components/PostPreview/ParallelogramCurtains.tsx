@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import getRelativeCursorPos from 'utility/getRelativeCursorPos';
 import isMobile from 'utility/isMobile';
 
@@ -8,7 +9,7 @@ type Props = {
   className?: string;
 };
 
-export default function ParallelogramCurtains({ postsData, className }: Props) {
+export function ParallelogramCurtains({ postsData, className }: Props) {
   const [zoomedXPos, setZoomedXPos] = useState<number | undefined>();
   return (
     <ul

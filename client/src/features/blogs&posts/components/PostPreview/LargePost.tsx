@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import formatDate from 'utility/formatDate';
-import Icon from 'components/Elements/Icon';
+import { Icon } from 'components/Elements';
 
 interface Props extends Post {
   color?: string;
@@ -9,7 +10,7 @@ interface Props extends Post {
   textBoxClass?: string;
 }
 
-export default function LargePost({
+export function LargePost({
   _id,
   title,
   text,

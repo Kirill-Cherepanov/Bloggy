@@ -1,5 +1,3 @@
-import Icon from 'components/Elements/Icon';
-import LargePost from 'features/blogs&posts/components/PostPreview/LargePost';
 import { EffectFlip, Navigation, A11y } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -7,9 +5,12 @@ import 'swiper/css/a11y';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-flip';
 
+import { Icon } from 'components/Elements';
+import { LargePost } from '.';
+
 type Props = { postsData: Post[]; className?: string };
 
-export default function PostSwiper({ postsData, className }: Props) {
+export function PostSwiper({ postsData, className }: Props) {
   return (
     <div className={'w-full flex items-center ' + (className || '')}>
       <Swiper

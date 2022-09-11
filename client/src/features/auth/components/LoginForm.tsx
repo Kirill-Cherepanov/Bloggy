@@ -1,7 +1,6 @@
 import * as z from 'zod';
 
-import { Form } from 'components/Form';
-import { InputField } from 'components/Form';
+import { Form, InputField } from 'components/Form';
 import { Button } from 'components/Elements';
 
 const schema = z.object({

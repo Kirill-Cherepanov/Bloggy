@@ -1,11 +1,11 @@
-import ExtensiveSearchBar from 'features/blogs&posts/components/ExtensiveSearchBar';
-import Aside from 'components/Layout/Aside/Aside';
-import LargePost from 'features/blogs&posts/components/PostPreview/LargePost';
-import SmallPost from 'features/blogs&posts/components/PostPreview/SmallPost';
-import { getPostsData } from 'utility/mockData';
-import Icon from 'components/Elements/Icon';
+import { ExtensiveSearchBar } from '../components';
 
-export default function Catalog() {
+import { getPostsData } from 'utility/mockData';
+import { Icon } from 'components/Elements';
+import { Aside } from 'components/Layout';
+import { LargePost, SmallPost } from '../components';
+
+export function Catalog() {
   const posts = getPostsData(10);
 
   return (

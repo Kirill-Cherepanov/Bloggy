@@ -1,15 +1,17 @@
-import HeroSection from 'features/misc/components/HeroSection';
-import ParallelogramCurtains from 'features/blogs&posts/components/PostPreview/ParallelogramCurtains';
-import SmallPost from 'features/blogs&posts/components/PostPreview/SmallPost';
-import LargePost from 'features/blogs&posts/components/PostPreview/LargePost';
-import BlogSwiper from 'features/blogs&posts/components/BlogSwiper';
-import PostSwiper from 'features/blogs&posts/components/PostPreview/PostSwiper';
-import BgTransition from 'components/Layout/BgTransition/BgTransition';
-
-import { getPostsData, blogInfo } from 'utility/mockData';
 import { useEffect, useState } from 'react';
 
-export default function Home() {
+import { getPostsData, blogInfo } from 'utility/mockData';
+import { BgTransition } from 'components/Layout';
+import { HeroSection } from '../components';
+import {
+  ParallelogramCurtains,
+  SmallPost,
+  LargePost,
+  BlogSwiper,
+  PostSwiper,
+} from 'features/blogs&posts';
+
+export function Landing() {
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth < 1024);
   useEffect(() => {
     const updateIsLargeScreen = (e: MediaQueryListEvent) => {

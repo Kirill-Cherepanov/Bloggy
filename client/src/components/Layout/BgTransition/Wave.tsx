@@ -1,6 +1,6 @@
 type IconProps = { type: string; className?: string };
 
-export default function Wave({ type, className = '' }: IconProps) {
+export function Wave({ type, className = '' }: IconProps) {
   switch (type) {
     case 'single':
       return (

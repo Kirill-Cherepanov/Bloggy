@@ -8,7 +8,7 @@ type Props = {
 const INITIAL_STATE: ContextValue = {
   user: JSON.parse(localStorage.getItem('user') || 'null'),
   isFetching: false,
-  error: false
+  error: false,
 };
 
 export const Context = createContext(INITIAL_STATE);
@@ -26,7 +26,7 @@ export const ContextProvider = ({ children }: Props) => {
         user: state.user,
         isFetching: state.isFetching,
         error: state.error,
-        dispatch
+        dispatch,
       }}
     >
       {children}

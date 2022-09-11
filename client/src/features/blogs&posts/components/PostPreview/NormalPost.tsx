@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import formatDate from 'utility/formatDate';
-import Icon from 'components/Elements/Icon';
 
-export default function NormalPost({
+import formatDate from 'utility/formatDate';
+import { Icon } from 'components/Elements';
+
+export function NormalPost({
   _id,
   title,
   text,

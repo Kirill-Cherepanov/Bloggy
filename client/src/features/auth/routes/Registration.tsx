@@ -1,12 +1,9 @@
-import clsx from 'clsx';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
 
 import { Icon, Logo } from 'components/Elements';
-import {
-  AccountRegistration,
-  BlogRegistration,
-} from 'features/auth/components';
+import { AccountRegistration, BlogRegistration } from '../components';
 
 export function Registration() {
   const [stage, setStage] = useState(0);

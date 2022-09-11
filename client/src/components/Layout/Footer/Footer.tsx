@@ -1,8 +1,9 @@
-import Icon from 'components/Elements/Icon';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-export default function Footer() {
+import { Icon } from 'components/Elements';
+
+export function Footer() {
   const [followBoxParams, setFollowBoxParams] = useState({
     width: 0,
     top: 0,

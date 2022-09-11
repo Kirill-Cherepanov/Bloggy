@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router';
-import Icon from 'components/Elements/Icon';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import { Link } from 'react-router-dom';
 
-export default function Create() {
+import { Icon } from 'components/Elements';
+
+export function Create() {
   const navigate = useNavigate();
 
   return (

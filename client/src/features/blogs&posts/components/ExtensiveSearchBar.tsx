@@ -1,6 +1,6 @@
-import Icon from 'components/Elements/Icon';
+import { Icon } from 'components/Elements';
 
-export default function ExtensiveSearchBar() {
+export function ExtensiveSearchBar() {
   return (
     <div className="">
       <div className="flex items-center h-12 relative">

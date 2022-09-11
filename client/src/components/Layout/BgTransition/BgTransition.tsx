@@ -1,12 +1,9 @@
-import Icon from 'components/Elements/Icon';
-import Wave from 'components/Layout/BgTransition/Wave';
+import { Icon } from 'components/Elements';
+import { Wave } from '.';
 
 type BgTransitionProps = { type: string; className?: string };
 
-export default function BgTransition({
-  type,
-  className = '',
-}: BgTransitionProps) {
+export function BgTransition({ type, className = '' }: BgTransitionProps) {
   switch (type) {
     case 'hero':
       return (

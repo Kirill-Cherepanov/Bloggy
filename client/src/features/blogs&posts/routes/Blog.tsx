@@ -1,8 +1,5 @@
-import BlogCard from 'features/blogs&posts/components/BlogCard';
-import SmallPost from 'features/blogs&posts/components/PostPreview/SmallPost';
-import NormalPost from 'features/blogs&posts/components/PostPreview/NormalPost';
-import LargePost from 'features/blogs&posts/components/PostPreview/LargePost';
 import { getPostsData, blogInfo } from 'utility/mockData';
+import { BlogCard, SmallPost, NormalPost, LargePost } from '../components';
 
 const renderPost = (postData: Post) => {
   switch (postData.displayType) {
@@ -21,7 +18,7 @@ const renderPost = (postData: Post) => {
   }
 };
 
-export default function Blog() {
+export function Blog() {
   const postsData = getPostsData(10);
 
   return (

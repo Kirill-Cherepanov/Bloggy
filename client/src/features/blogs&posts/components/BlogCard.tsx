@@ -1,6 +1,6 @@
-import Icon from 'components/Elements/Icon';
+import { Icon } from 'components/Elements';
 
-export default function BlogCard({
+export function BlogCard({
   username,
   profilePic,
   likes,

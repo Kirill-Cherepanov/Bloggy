@@ -4,13 +4,7 @@ interface Props extends Post {
   className?: string;
 }
 
-export default function TinyPost({
-  _id,
-  title,
-  image,
-  categories,
-  className,
-}: Props) {
+export function TinyPost({ _id, title, image, categories, className }: Props) {
   return (
     <li
       className={

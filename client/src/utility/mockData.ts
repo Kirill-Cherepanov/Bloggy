@@ -1,4 +1,4 @@
-import mockImage from 'images/mock-up-image.webp';
+import mockImage from 'assets/images/mock-up-image.webp';
 
 export const blogInfo: Blog = {
   _id: '0',

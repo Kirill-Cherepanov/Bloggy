@@ -1,13 +1,14 @@
-import TinyPost from 'features/blogs&posts/components/PostPreview/TinyPost';
-import { getPostsData } from 'utility/mockData';
 import { useEffect, useRef, useState } from 'react';
+
+import { getPostsData } from 'utility/mockData';
+import { TinyPost } from 'features/blogs&posts';
 
 type Props = {
   shouldRenderPopular?: boolean;
   children?: JSX.Element;
 };
 
-export default function Aside({ children, shouldRenderPopular = true }: Props) {
+export function Aside({ children, shouldRenderPopular = true }: Props) {
   const maxHeightElement = useRef<HTMLDivElement | null>(null);
   const minHeightElement = useRef<HTMLElement | null>(null);
   const [amountOfPosts, setAmountOfPosts] = useState(0);

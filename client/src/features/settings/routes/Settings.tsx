@@ -1,12 +1,12 @@
-import Icon from 'components/Elements/Icon';
-import GeneralSettings from 'features/settings/components/GeneralSettings';
-import BlogSettings from 'features/settings/components/BlogSettings';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
-import { blogInfo } from 'utility/mockData';
 
-export default function Settings() {
+import { blogInfo } from 'utility/mockData';
+import { Icon } from 'components/Elements';
+import { GeneralSettings, BlogSettings } from '../components';
+
+export function Settings() {
   const [tabOpen, setTabOpen] = useState('general');
   const navigate = useNavigate();
 

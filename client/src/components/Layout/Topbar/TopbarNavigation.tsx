@@ -5,7 +5,7 @@ type NavigationProps = {
   links: [string, string][];
 };
 
-export default function TopbarNavigation({ links }: NavigationProps) {
+export function TopbarNavigation({ links }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleHamburger = () => setIsOpen((isOpen) => !isOpen);
   const menu = useRef<HTMLDivElement | null>(null);

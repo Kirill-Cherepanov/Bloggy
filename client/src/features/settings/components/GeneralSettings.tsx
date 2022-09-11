@@ -1,6 +1,6 @@
 type Props = User;
 
-export default function General({ email, username, profilePic }: Props) {
+export function GeneralSettings({ email, username, profilePic }: Props) {
   return (
     <div>
       <h3 className="text-3xl font-medium font-display mb-5">General</h3>

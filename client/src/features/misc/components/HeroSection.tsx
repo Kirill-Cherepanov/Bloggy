@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
-import BgTransition from 'components/Layout/BgTransition/BgTransition';
-import Icon from 'components/Elements/Icon';
 
-export default function HeroSection() {
+import { BgTransition } from 'components/Layout';
+import { Icon } from 'components/Elements';
+
+export function HeroSection() {
   return (
     <section className="min-h-[calc(100vh-80px)] sm:min-h-[calc(100vh+120px)] flex flex-col items-center bg-accent-400 relative overflow-hidden">
       <Icon
