@@ -8,7 +8,7 @@ import {
   UseFormProps,
   FieldValues,
 } from 'react-hook-form';
-import { ZodType, ZodTypeDef } from 'zod';
+import { ZodType } from 'zod';
 
 type FormProps<TFormValues extends FieldValues, Schema> = {
   className?: string;
@@ -19,13 +19,9 @@ type FormProps<TFormValues extends FieldValues, Schema> = {
   schema?: Schema;
 };
 
-export const Form = <
+export function Form<
   TFormValues extends Record<string, unknown> = Record<string, unknown>,
-  Schema extends ZodType<unknown, ZodTypeDef, unknown> = ZodType<
-    unknown,
-    ZodTypeDef,
-    unknown
-  >
+  Schema extends ZodType<unknown> = ZodType<unknown>
 >({
   onSubmit,
   children,
@@ -33,7 +29,7 @@ export const Form = <
   options,
   id,
   schema,
-}: FormProps<TFormValues, Schema>) => {
+}: FormProps<TFormValues, Schema>) {
   const methods = useForm<TFormValues>({
     ...options,
     resolver: schema && zodResolver(schema),
@@ -48,4 +44,4 @@ export const Form = <
       {children(methods)}
     </form>
   );
-};
+}

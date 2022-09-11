@@ -9,7 +9,7 @@ type TextAreaFieldProps = FieldWrapperPassThroughProps & {
   defaultValue: string;
 };
 
-export const TextAreaField = (props: TextAreaFieldProps) => {
+export function TextAreaField(props: TextAreaFieldProps) {
   const { label, className, registration, error, defaultValue } = props;
   return (
     <FieldWrapper label={label} error={error}>
@@ -24,4 +24,4 @@ export const TextAreaField = (props: TextAreaFieldProps) => {
       />
     </FieldWrapper>
   );
-};
+}

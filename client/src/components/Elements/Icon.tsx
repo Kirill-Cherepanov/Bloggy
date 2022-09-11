@@ -4,7 +4,7 @@ type IconProps = {
   style?: React.CSSProperties | undefined;
 };
 
-export default function Icon({ type, className = '', style }: IconProps) {
+export function Icon({ type, className = '', style }: IconProps) {
   switch (type) {
     case 'close':
       return (

@@ -1,18 +1,21 @@
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router';
-import Icon from 'components/Elements/Icon';
 
-type Props = {
+import { Icon, Logo } from 'components/Elements';
+import { LoginForm } from './LoginForm';
+import { PreRegisterForm } from './PreRegisterForm';
+
+type AuthDrawerProps = {
   closeMenu: () => unknown;
   authType: 'login' | 'signup';
   toggleType: () => unknown;
 };
 
-export default function Authentification({
+export function AuthDrawer({
   closeMenu,
   authType,
   toggleType,
-}: Props) {
+}: AuthDrawerProps) {
   const navigate = useNavigate();
 
   return createPortal(
@@ -30,66 +33,22 @@ export default function Authentification({
         >
           <Icon type="close" className="w-8 h-8 select-none" />
         </button>
-        <div className="my-2 mb-4 text-3xl font-sansita select-none flex justify-center text-center">
-          Bloggy
-        </div>
+        <Logo size="sm" variant="dark" className="my-2 mb-4" />
         <h3 className="font-display font-bold text-center text-3xl mt-4 mb-6">
           Welcome to Bloggy
         </h3>
-        <form className="w-72 mx-auto" onSubmit={(e) => e.preventDefault()}>
-          <label
-            htmlFor="authentification__input-1"
-            className="block font-light ml-2 text-sm mb-1"
-          >
-            Email
-          </label>
-          <input
-            type="text"
-            id="authentification__input-1"
-            placeholder="Email"
-            className="styled-input w-full mb-2"
+
+        {authType === 'login' ? (
+          <LoginForm
+            onSuccess={() => navigate('/blog/KissMyUSSR')}
+            swapForm={toggleType}
           />
-          <label
-            htmlFor="authentification__input-2"
-            className="block font-light ml-2 text-sm mb-1"
-          >
-            {authType === 'login' ? 'Password' : 'Username'}
-          </label>
-          <input
-            type="text"
-            id="authentification__input-2"
-            placeholder={authType === 'login' ? 'Password' : 'Username'}
-            className="styled-input w-full mb-2"
+        ) : (
+          <PreRegisterForm
+            onSuccess={() => navigate('/registration')}
+            swapForm={toggleType}
           />
-          {authType === 'signup' ? null : (
-            <button className="block text-sm text-secodary-600 hover:underline">
-              Forgot your password?
-            </button>
-          )}
-          <div className="flex flex-col mt-5">
-            <button
-              className="w-full py-2 bg-secondary-800 text-main font-bold rounded-3xl transition-color hover:bg-secondary-900"
-              style={{ order: authType === 'login' ? 1 : 3 }}
-              onClick={authType === 'signup' ? toggleType : () => {}}
-            >
-              Log in
-            </button>
-            <div className="text-center my-1.5 font-semibold text-sm order-2">
-              OR
-            </div>
-            <button
-              className="w-full py-2 bg-accent-800 text-main font-bold rounded-3xl transition-color hover:bg-accent-900"
-              style={{ order: authType === 'signup' ? 1 : 3 }}
-              onClick={
-                authType === 'login'
-                  ? toggleType
-                  : () => navigate('/registration')
-              }
-            >
-              Sign up
-            </button>
-          </div>
-        </form>
+        )}
       </div>
     </div>,
     document.getElementById('authentification')!

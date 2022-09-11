@@ -22,6 +22,7 @@
     "easymde": "^2.16.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-error-boundary": "^3.1.4",
     "react-hook-form": "^7.34.2",
     "react-query-auth": "^1.1.0",
     "react-router": "^6.3.0",

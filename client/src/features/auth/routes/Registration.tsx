@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import Icon from 'components/Elements/Icon';
+import { Icon } from 'components/Elements';
 import AccountRegistration from 'features/auth/components/AccountRegistration';
 import BlogRegistration from 'features/auth/components/BlogRegistration';
 
