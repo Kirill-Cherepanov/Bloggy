@@ -3,12 +3,12 @@ import { UseFormRegisterReturn } from 'react-hook-form';
 
 import { FieldWrapper, FieldWrapperPassThroughProps } from './FieldWrapper';
 
-type InputFieldProps = FieldWrapperPassThroughProps & {
+type CheckboxFieldProps = FieldWrapperPassThroughProps & {
   className?: string;
   registration: Partial<UseFormRegisterReturn>;
 };
 
-export const InputField = (props: InputFieldProps) => {
+export const CheckboxField = (props: CheckboxFieldProps) => {
   const { label, className, registration, error } = props;
 
   return (

@@ -1,13 +1,13 @@
-import Topbar from './components/Topbar/Topbar';
-import Footer from './components/Footer/Footer';
-import Homepage from './pages/Homepage/Homepage';
-import Registration from './pages/Registration/Registration';
-import Post from './pages/Post/Post';
-import Create from './pages/Create/Create';
-import Settings from './pages/Settings/Settings';
-import Blog from './pages/Blog/Blog';
-import Catalog from './pages/Catalog/Catalog';
-import PageNotFound from './pages/PageNotFound/PageNotFound';
+import Topbar from './components/Layout/Topbar/Topbar';
+import Footer from './components/Layout/Footer/Footer';
+import Homepage from './features/misc/routes/Landing';
+import Registration from './features/auth/routes/Registration';
+import Post from './features/blogs&posts/routes/Post';
+import Create from './features/blogs&posts/routes/Create';
+import Settings from './features/settings/routes/Settings';
+import Blog from './features/blogs&posts/routes/Blog';
+import Catalog from './features/blogs&posts/routes/Catalog';
+import PageNotFound from './features/misc/routes/PageNotFound';
 
 import { Routes, Route, useLocation } from 'react-router-dom';
 
