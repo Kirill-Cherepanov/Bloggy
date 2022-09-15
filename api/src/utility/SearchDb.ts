@@ -131,7 +131,6 @@ export class SearchBlogs extends SearchDb {
     if (this.params.page <= 0) throw Error('Incorrect page');
 
     const query: SearchQuery = this.getQuery();
-    console.log(query);
 
     return User.find(query)
       .sort(this.getSortQuery(this.params.sort))
@@ -157,8 +156,6 @@ export class SearchBlogs extends SearchDb {
 
 export async function searchBlogPosts(username: string, page: number) {
   const POSTS_PER_PAGE = 10;
-
-  console.log(username);
 
   return Post.find({ authorName: username })
     .sort({ createdAt: 1 })

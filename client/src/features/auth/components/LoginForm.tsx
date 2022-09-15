@@ -2,6 +2,7 @@ import * as z from 'zod';
 
 import { Form, InputField } from 'components/Form';
 import { Button } from 'components/Elements';
+import { LoginValues } from '../types';
 
 const schema = z.object({
   email: z.string().email(),
@@ -10,11 +11,6 @@ const schema = z.object({
     .min(5, 'Password must be at least 3 characters long')
     .max(20, 'Password must be at most 20 characters long'),
 });
-
-type LoginValues = {
-  email: string;
-  password: string;
-};
 
 type LoginFormProps = {
   onSuccess: () => void;

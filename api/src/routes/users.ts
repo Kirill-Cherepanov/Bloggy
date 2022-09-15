@@ -8,12 +8,7 @@ import User from '../models/User';
 import Post from '../models/Post';
 import { SearchBlogs, searchBlogPosts } from '../utility/SearchDb';
 import { upload } from '../utility/middleware';
-import {
-  getCategories,
-  validateJsonBlob,
-  validatePassword,
-} from '../utility/validations';
-import { handleEmailVerification } from '../utility/emailVerification';
+import { getCategories, validateJsonBlob } from '../utility/validations';
 import { verifyAccessToken, generateAccessToken } from '../utility/jsonTokens';
 
 const usersRouter = express.Router();
@@ -29,7 +24,7 @@ const updloadFields = upload.fields([
   },
 ]);
 
-// update
+// update user
 usersRouter.put('/:username', updloadFields, async (req, res) => {
   try {
     const verificationRes = await verifyAccessToken(req.body.accessToken);
@@ -118,7 +113,7 @@ usersRouter.put('/:username', updloadFields, async (req, res) => {
   }
 });
 
-// delete
+// delete user
 usersRouter.delete('/:username', async (req, res) => {
   try {
     const verificationRes = await verifyAccessToken(req.body.accessToken);
@@ -168,11 +163,15 @@ usersRouter.get('/:username', async (req, res) => {
       return res.status(500).json(`User ${req.params.username} was not found!`);
     }
 
-    const { password, __v, ...userInfo } = user._doc;
-    const posts = await searchBlogPosts(
-      req.params.username,
-      Number(req.query.page) || 1
-    );
+    const { password, email, __v, ...userInfo } = user._doc;
+
+    let posts: TBlog[] = [];
+    if (userInfo.blog) {
+      posts = await searchBlogPosts(
+        req.params.username,
+        Number(req.query.page) || 1
+      );
+    }
 
     res.status(200).json({ ...userInfo, posts });
   } catch (err: any) {
@@ -189,45 +188,6 @@ usersRouter.get('/', async (req, res) => {
     const searchBlogs = new SearchBlogs(req.query);
     const blogs = await searchBlogs.getBlogs();
     res.status(200).json(blogs);
-  } catch (err: any) {
-    console.error(err);
-    if (err && typeof err === 'object' && 'message' in err) {
-      res.status(500).json(err.message);
-    }
-  }
-});
-
-// restore password
-usersRouter.post('/:username/restore-password', async (req, res) => {
-  try {
-    const verificationRes = await verifyAccessToken(req.body.accessToken);
-    if (verificationRes.err === true) {
-      return res.status(verificationRes.status).json(verificationRes.message);
-    }
-    if (verificationRes.username !== req.params.username) {
-      return res.status(403).json('No access');
-    }
-
-    const { newPassword, confirmationMessage } = req.body;
-
-    const passwordError = validatePassword(newPassword);
-    if (passwordError) throw passwordError;
-
-    const user = await User.findOne(verificationRes);
-    if (user === null) return res.status(500).json(`User was not found`);
-
-    const emailVerified = await handleEmailVerification(
-      user.email,
-      confirmationMessage
-    );
-    if (!emailVerified.res) return res.status(200).json(emailVerified.message);
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(newPassword, salt);
-    user.password = hashedPassword;
-    user.save();
-
-    res.status(200).json(user._doc);
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

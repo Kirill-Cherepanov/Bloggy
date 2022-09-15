@@ -2,12 +2,18 @@ import User from '../models/User';
 import bcrypt from 'bcrypt';
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { validateRegistration } from '../utility/validations';
+
+import { validateRegistration, validatePassword } from '../utility/validations';
 import { handleEmailVerification } from '../utility/emailVerification';
-import { generateAccessToken, verifyToken } from '../utility/jsonTokens';
+import {
+  generateAccessToken,
+  verifyToken,
+  verifyAccessToken,
+} from '../utility/jsonTokens';
 
 const authRouter = express.Router();
 
+// register
 authRouter.post('/registration', async (req, res) => {
   try {
     const validationResult = await validateRegistration(req.body);
@@ -63,7 +69,7 @@ authRouter.post('/registration', async (req, res) => {
   }
 });
 
-// TESTED
+// login TESTED
 authRouter.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -125,8 +131,67 @@ authRouter.get('/token', async (req, res) => {
   }
 });
 
+// get self
+authRouter.get('/self', async (req, res) => {
+  try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+
+    const user = await User.findOne(verificationRes);
+    if (!user) return res.status(500).json('User not found');
+
+    const { password, email, __v, ...userInfo } = user._doc;
+
+    res.status(200).json(userInfo);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
+  }
+});
+
+// logout
 authRouter.delete('/logout', (req, res) => {
   res.clearCookie('refresh-token');
+});
+
+// reset password
+authRouter.post('/reset-password', async (req, res) => {
+  try {
+    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+
+    const { newPassword, confirmationMessage } = req.body;
+
+    const passwordError = validatePassword(newPassword);
+    if (passwordError) throw passwordError;
+
+    const user = await User.findOne(verificationRes);
+    if (user === null) return res.status(500).json(`User was not found`);
+
+    const emailVerified = await handleEmailVerification(
+      user.email,
+      confirmationMessage
+    );
+    if (!emailVerified.res) return res.status(200).json(emailVerified.message);
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    user.save();
+
+    res.status(200).json(user._doc);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
+  }
 });
 
 export default authRouter;

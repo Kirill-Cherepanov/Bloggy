@@ -2,6 +2,7 @@ import * as z from 'zod';
 
 import { Form, InputField, CheckboxField } from 'components/Form';
 import { Button } from 'components/Elements';
+import { RegistrationValues } from '../types';
 
 const schema = z.object({
   email: z.string().email(),
@@ -16,14 +17,6 @@ const schema = z.object({
   'confirm-email': z.string().optional(),
   'start-blog': z.boolean(),
 });
-
-type AccountValues = {
-  email: string;
-  username: string;
-  password: string;
-  'confirm-email': string;
-  'start-blog': boolean;
-};
 
 type AccountRegistrationProps = {
   setShouldCreateBlog: (b: boolean) => void;
@@ -42,7 +35,7 @@ export function AccountRegistration({
         Sign up
       </h2>
 
-      <Form<AccountValues, typeof schema>
+      <Form<RegistrationValues, typeof schema>
         className="max-auto w-full space-y-2"
         onSubmit={async (values) => {
           // await register(values);
