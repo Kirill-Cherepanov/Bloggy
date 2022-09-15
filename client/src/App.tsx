@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 
+import { AppProvider } from 'providers/AppProvider';
 import { Footer, TopBar } from 'components/Layout';
 import { Registration } from 'features/auth';
 import { Catalog, Post, Create, Blog } from 'features/blogs&posts';
@@ -10,7 +11,7 @@ export default function App() {
   const { pathname } = useLocation();
 
   return (
-    <>
+    <AppProvider>
       {pathname !== '/registration' && pathname !== '/create' && <TopBar />}
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -23,6 +24,6 @@ export default function App() {
         <Route path="*" element={<PageNotFound />}></Route>
       </Routes>
       {pathname !== '/registration' && pathname !== '/create' && <Footer />}
-    </>
+    </AppProvider>
   );
 }

@@ -15,6 +15,7 @@ const BlogSchema = new mongoose.Schema<Blog>(
     description: {
       type: String,
       default: '',
+      maxLength: [1000, 'Description must be at most 1000 characters long'],
     },
   },
   { timestamps: true, versionKey: false, autoIndex: true }
@@ -22,10 +23,6 @@ const BlogSchema = new mongoose.Schema<Blog>(
 
 const UserSchema = new mongoose.Schema<User>(
   {
-    // refreshToken: {
-    //   type: String,
-    //   required: true,
-    // },
     username: {
       type: String,
       required: true,
