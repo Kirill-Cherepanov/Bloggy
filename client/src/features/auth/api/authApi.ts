@@ -1,7 +1,7 @@
-import { apiSlice } from 'lib/api';
 import { RegistrationValues, LoginValues, ResetPasswordValues } from '../types';
+import { generalApi } from 'lib/generalApi';
 
-export const authApiSlice = apiSlice.injectEndpoints({
+export const authApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
     getSelf: builder.query({
       query: (accessToken: string) => ({
@@ -9,7 +9,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { accessToken },
       }),
     }),
-    getAccessToken: builder.query({
+    getAccessToken: builder.query<string, void>({
       query: () => '/auth/token',
     }),
     register: builder.mutation({
@@ -49,6 +49,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useResetPasswordMutation,
-} = authApiSlice;
+} = authApi;
 
-// export const selectUsersResult = extendedApiSlice.endpoints.getUsers.select();
+// export const selectUsersResult = authSlice.endpoints.getUsers.select();

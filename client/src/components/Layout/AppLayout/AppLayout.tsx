@@ -13,7 +13,7 @@ export const AppLayout = () => {
       <Suspense
         fallback={
           <div className="h-full w-full flex items-center justify-center">
-            <Spinner size="xl" />
+            <Spinner size="lg" />
           </div>
         }
       >

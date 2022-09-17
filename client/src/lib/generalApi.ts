@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const apiSlice = createApi({
-  reducerPath: 'api',
+export const generalApi = createApi({
+  reducerPath: 'general',
   baseQuery: fetchBaseQuery({ baseUrl: '' }),
   endpoints: (builder) => ({
     getImage: builder.query({
@@ -10,5 +10,4 @@ export const apiSlice = createApi({
   }),
 });
 
-// Export the auto-generated hook for the `getPosts` query endpoint
-export const { useGetImageQuery } = apiSlice;
+export const { useGetImageQuery } = generalApi;

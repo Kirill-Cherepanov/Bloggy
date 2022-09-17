@@ -7,7 +7,7 @@
     "node": "17.8.0"
   },
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "nodemon -e js dist/app --ignore client",
     "postinstall": "tsc",
     "nodemon": "nodemon -e js dist/app --ignore client",
     "watch-ts": "tsc -w"
