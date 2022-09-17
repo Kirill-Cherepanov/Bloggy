@@ -32,7 +32,7 @@ export function AuthDrawer({
         >
           <Icon type="close" className="w-8 h-8 select-none" />
         </button>
-        <Logo size="sm" variant="dark" className="my-2 mb-4" />
+        <Logo size="sm" variant="dark" className="my-2 mb-4 text-center" />
         <h3 className="font-display font-bold text-center text-3xl mt-4 mb-6">
           Welcome to Bloggy
         </h3>

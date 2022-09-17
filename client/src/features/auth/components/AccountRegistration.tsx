@@ -15,16 +15,17 @@ const schema = z.object({
     .min(3, 'Password must be at least 3 characters long')
     .max(20, 'Password must be at most 20 characters long'),
   'confirm-email': z.string().optional(),
-  'start-blog': z.boolean(),
 });
 
 type AccountRegistrationProps = {
+  shouldCreateBlog: boolean;
   setShouldCreateBlog: (b: boolean) => void;
   onSuccess: () => void;
 };
 
 export function AccountRegistration({
   onSuccess,
+  shouldCreateBlog,
   setShouldCreateBlog,
 }: AccountRegistrationProps) {
   const wasMessageSent = true;
@@ -55,22 +56,22 @@ export function AccountRegistration({
             />
             <InputField
               label="Username"
-              error={formState.errors['email']}
-              registration={register('email')}
+              error={formState.errors['username']}
+              registration={register('username')}
             />
             <InputField
               type="password"
               label="Password"
-              error={formState.errors['email']}
-              registration={register('email')}
+              error={formState.errors['password']}
+              registration={register('password')}
             />
 
             {wasMessageSent && (
               <>
                 <InputField
                   label="Confirmation email message"
-                  error={formState.errors['email']}
-                  registration={register('email')}
+                  error={formState.errors['confirm-email']}
+                  registration={register('confirm-email')}
                 />
 
                 <button className="ml-2 block text-secondary-600 mb-4 text-sm hover:underline">
@@ -82,16 +83,16 @@ export function AccountRegistration({
             <CheckboxField
               label="Do you want to start a blog? (it's free)"
               onChange={(e) => setShouldCreateBlog(e.target.checked)}
-              error={formState.errors['email']}
-              registration={register('email')}
+              checked={shouldCreateBlog}
+              className="!my-3"
             />
 
-            <p className="text-sm text-secondary-600 my-4">
+            <p className="text-sm text-secondary-600 !my-4">
               You will be able to change anything, or start a blog, later in the
               settings
             </p>
 
-            <Button type="submit" />
+            <Button type="submit">Sign up</Button>
           </>
         )}
       </Form>

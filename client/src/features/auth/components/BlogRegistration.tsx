@@ -42,20 +42,22 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
               registration={register('description')}
             />
 
-            <p className="flex items-center font-light text-sm mb-2">
-              Add categories that your blog specializes in
-              <Tooltip outerText="?">
-                Please choose categories in order of their importance to you.
-                Also, you will be able to make posts from any category. They are
-                needed mostly for search optimization.
-              </Tooltip>
-            </p>
-            <Picker
-              data={categories}
-              setData={setCategories}
-              maxLength={10}
-              filter={(category) => category !== '' && category.length <= 20}
-            />
+            <div>
+              <div className="flex items-center font-light text-sm mb-2">
+                Add categories that your blog specializes in
+                <Tooltip outerText="?">
+                  Please choose categories in order of their importance to you.
+                  Also, you will be able to make posts from any category. They
+                  are needed mostly for search optimization.
+                </Tooltip>
+              </div>
+              <Picker
+                data={categories}
+                setData={setCategories}
+                maxLength={10}
+                filter={(category) => category !== '' && category.length <= 20}
+              />
+            </div>
 
             <Button className="mt-6">Create a blog</Button>
           </>

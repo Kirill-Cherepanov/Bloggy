@@ -1,27 +1,38 @@
-import clsx from 'clsx';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
-import { FieldWrapper, FieldWrapperPassThroughProps } from '.';
-
-type CheckboxFieldProps = FieldWrapperPassThroughProps & {
+type CheckboxFieldProps = {
+  label?: string | undefined;
+  name?: string | undefined;
+  error?: FieldError | undefined;
   className?: string;
-  registration: Partial<UseFormRegisterReturn>;
+  registration?: Partial<UseFormRegisterReturn>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checked: boolean;
 };
 
 export function CheckboxField(props: CheckboxFieldProps) {
-  const { label, className, registration, error, onChange } = props;
-
+  const { label, className, registration, error, onChange, checked } = props;
   return (
-    <>
-      <FieldWrapper label={label} error={error} className="m-0 flex gap-2">
+    <div className={className}>
+      <label className="mb-1 flex gap-2">
         <input
           type="checkbox"
           onChange={onChange}
-          className={clsx('cool-checkbox', className)}
+          checked={checked}
+          className="cool-checkbox"
           {...registration}
         />
-      </FieldWrapper>
-    </>
+        <span className="mt-[-1px]">{label}</span>
+      </label>
+      {error?.message && (
+        <div
+          role="alert"
+          aria-label={error.message}
+          className="mt-1 text-sm text-red-600"
+        >
+          {error.message}
+        </div>
+      )}
+    </div>
   );
 }

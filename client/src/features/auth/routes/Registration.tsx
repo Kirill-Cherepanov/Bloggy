@@ -27,7 +27,7 @@ export function Registration() {
             />
           </button>
           <div className="mx-auto flex">
-            {stage
+            {shouldCreateBlog
               ? [0, 0].map((v, i) => (
                   <span
                     key={i}
@@ -39,12 +39,8 @@ export function Registration() {
                 ))
               : null}
           </div>
-          <h1>
-            <Logo
-              size="sm"
-              variant="dark"
-              className="my-2 mb-4 absolute right-2"
-            />
+          <h1 className="my-2 mb-4 absolute right-2">
+            <Logo size="sm" variant="dark" />
           </h1>
         </div>
         {stage ? (
@@ -60,6 +56,7 @@ export function Registration() {
               else navigate('/', { replace: true });
             }}
             setShouldCreateBlog={setShouldCreateBlog}
+            shouldCreateBlog={shouldCreateBlog}
           />
         )}
       </div>

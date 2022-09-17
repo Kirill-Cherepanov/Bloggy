@@ -13,10 +13,11 @@ export const InputField = (props: InputFieldProps) => {
   const { type = 'text', label, className, registration, error } = props;
 
   return (
-    <FieldWrapper label={label} error={error}>
+    <FieldWrapper label={label} name={registration.name} error={error}>
       <input
         type={type}
-        className={clsx('styled-input w-80', className)}
+        placeholder={label}
+        className={clsx('styled-input w-full', className)}
         {...registration}
       />
     </FieldWrapper>

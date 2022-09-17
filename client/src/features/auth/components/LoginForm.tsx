@@ -31,7 +31,7 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
         <>
           <InputField
             type="email"
-            label="Email address"
+            label="Email"
             error={formState.errors['email']}
             registration={register('email')}
           />
@@ -45,13 +45,11 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
             Forgot your password?
           </button>
 
-          <div className="flex flex-col mt-5">
+          <div className="flex flex-col !mt-5">
             <Button type="submit" variant="secondary">
               Log in
             </Button>
-            <div className="text-center my-1.5 font-semibold text-sm order-2">
-              OR
-            </div>
+            <div className="text-center my-1.5 font-semibold text-sm">OR</div>
             <Button onClick={swapForm}>Sign up</Button>
           </div>
         </>

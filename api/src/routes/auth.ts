@@ -120,9 +120,11 @@ authRouter.get('/token', async (req, res) => {
     const user = await User.findOne({ userData });
     if (!user) return res.status(401).json('Incorrect refresh token');
 
+    const { password, __v, ...userInfo } = user._doc;
+
     const accessToken = generateAccessToken(user.username, user.email);
 
-    res.json({ accessToken });
+    res.json({ accessToken, ...userInfo });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -142,7 +144,7 @@ authRouter.get('/self', async (req, res) => {
     const user = await User.findOne(verificationRes);
     if (!user) return res.status(500).json('User not found');
 
-    const { password, email, __v, ...userInfo } = user._doc;
+    const { password, __v, ...userInfo } = user._doc;
 
     res.status(200).json(userInfo);
   } catch (err: any) {
