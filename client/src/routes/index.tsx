@@ -8,6 +8,7 @@ import { Spinner } from 'components/Elements';
 import { AppLayout } from 'components/Layout';
 
 const { PageNotFound, Landing } = lazily(() => import('features/misc'));
+const { Catalog, Post, Blog } = lazily(() => import('features/blogs&posts'));
 
 export const AppRoutes = () => {
   const { data: token, isFetching, isError, error } = useGetAccessTokenQuery();
@@ -16,6 +17,9 @@ export const AppRoutes = () => {
     {
       element: <AppLayout />,
       children: [
+        { path: '/blog/:name', element: <Blog /> },
+        { path: '/catalog', element: <Catalog /> },
+        { path: '/post/:id', element: <Post /> },
         { path: '/', element: <Landing /> },
         { path: '*', element: <PageNotFound /> },
       ],

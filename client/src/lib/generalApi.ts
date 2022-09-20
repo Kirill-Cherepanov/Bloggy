@@ -1,8 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
+
+import { customBaseQuery } from './customBaseQuery';
 
 export const generalApi = createApi({
   reducerPath: 'general',
-  baseQuery: fetchBaseQuery({ baseUrl: '' }),
+  baseQuery: customBaseQuery,
   endpoints: (builder) => ({
     getImage: builder.query({
       query: (image) => `/images/${image}`,

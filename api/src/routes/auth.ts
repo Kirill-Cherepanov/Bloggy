@@ -33,7 +33,7 @@ authRouter.post('/registration', async (req, res) => {
       email,
       confirmationMessage
     );
-    if (!emailVerified.res) res.status(200).json(emailVerified.message);
+    if (!emailVerified.res) return res.status(200).json(emailVerified.message);
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -89,8 +89,10 @@ authRouter.post('/login', async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET!
     );
 
-    res.cookie('refresh-token', refreshToken, { httpOnly: true });
-    res.status(200).json({ ...publicData, accessToken });
+    res.cookie('refresh_token', refreshToken, { httpOnly: true });
+    res.cookie('access_token', accessToken, { httpOnly: true });
+
+    res.status(200).json({ ...publicData, isLoggedIn: true });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -103,14 +105,14 @@ authRouter.post('/login', async (req, res) => {
 authRouter.get('/token', async (req, res) => {
   try {
     const refreshToken: string | undefined = req.cookies['refresh-token'];
-    if (!refreshToken) return res.status(401).json('No refresh token');
+    if (!refreshToken) return res.status(200).json({ isLoggedIn: false });
 
     const { err, decoded: userData } = await verifyToken(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET!
     );
 
-    if (err) return res.status(401).json('Incorrect refresh token');
+    if (err) return res.status(200).json({ isLoggedIn: false });
 
     if (typeof userData === 'string' || userData === undefined) {
       console.error('The user is incorrect. User: ' + userData);
@@ -118,13 +120,14 @@ authRouter.get('/token', async (req, res) => {
     }
 
     const user = await User.findOne({ userData });
-    if (!user) return res.status(401).json('Incorrect refresh token');
+    if (!user) return res.status(200).json({ isLoggedIn: false });
 
     const { password, __v, ...userInfo } = user._doc;
 
     const accessToken = generateAccessToken(user.username, user.email);
+    res.cookie('access_token', accessToken, { httpOnly: true });
 
-    res.json({ accessToken, ...userInfo });
+    res.status(200).json({ ...userInfo, isLoggedIn: true });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -158,6 +161,7 @@ authRouter.get('/self', async (req, res) => {
 // logout
 authRouter.delete('/logout', (req, res) => {
   res.clearCookie('refresh-token');
+  res.status(200).json({ success: true });
 });
 
 // reset password
@@ -187,7 +191,9 @@ authRouter.post('/reset-password', async (req, res) => {
     user.password = hashedPassword;
     user.save();
 
-    res.status(200).json(user._doc);
+    const { password, __v, ...userInfo } = user._doc;
+
+    res.status(200).json(userInfo);
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

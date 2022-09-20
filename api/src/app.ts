@@ -18,7 +18,7 @@ mongoose
 
 app.use(cookieParser());
 app.use(express.json());
-app.use('/images', express.static(path.join(__dirname, '/images')));
+app.use('/api/images', express.static(path.join(__dirname, '/images')));
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);

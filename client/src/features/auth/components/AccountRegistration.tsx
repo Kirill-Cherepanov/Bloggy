@@ -1,8 +1,10 @@
 import * as z from 'zod';
+import { useState } from 'react';
 
 import { Form, InputField, CheckboxField } from 'components/Form';
 import { Button } from 'components/Elements';
 import { RegistrationValues } from '../types';
+import { useRegisterMutation } from '../api/authApi';
 
 const schema = z.object({
   email: z.string().email(),
@@ -28,7 +30,8 @@ export function AccountRegistration({
   shouldCreateBlog,
   setShouldCreateBlog,
 }: AccountRegistrationProps) {
-  const wasMessageSent = true;
+  const [wasMessageSent, setWasMessageSent] = useState(false);
+  const [register] = useRegisterMutation();
 
   return (
     <>
@@ -39,10 +42,10 @@ export function AccountRegistration({
       <Form<RegistrationValues, typeof schema>
         className="max-auto w-full space-y-2"
         onSubmit={async (values) => {
-          // await register(values);
+          if (!wasMessageSent) return setWasMessageSent(true);
 
-          // We would also need to await a responce from the server here
-          if (wasMessageSent) onSuccess();
+          const response = await register(values);
+          if ('data' in response) onSuccess();
         }}
         schema={schema}
       >

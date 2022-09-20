@@ -1,5 +1,7 @@
 import jwt, { VerifyErrors, JwtPayload } from 'jsonwebtoken';
 
+const ACCESS_TOKEN_EXPIRATION_TIME = '10m';
+
 export const verifyToken = async (
   token: string,
   key: string
@@ -16,7 +18,7 @@ export const verifyToken = async (
 
 export const generateAccessToken = (username: string, email: string) =>
   jwt.sign({ username, email }, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: '10m',
+    expiresIn: ACCESS_TOKEN_EXPIRATION_TIME,
   });
 
 export const verifyAccessToken = async (accessToken: string) => {
