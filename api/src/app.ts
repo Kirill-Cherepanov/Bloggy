@@ -9,6 +9,7 @@ import { handleMiddlewareErrors } from './utility/middleware';
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
 import postsRouter from './routes/posts';
+import settingsRouter from './routes/settings';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/images', express.static(path.join(__dirname, '/images')));
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
+app.use('/api/settings', settingsRouter);
 app.use(handleMiddlewareErrors);
 
 app.listen(5000, () => console.log('Backend is running'));

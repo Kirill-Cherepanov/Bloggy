@@ -3,6 +3,7 @@ import * as z from 'zod';
 
 import { Form, TextAreaField } from 'components/Form';
 import { Button, Picker, Tooltip } from 'components/Elements';
+import { useUpdateUserMutation } from 'features/settings/api/settingsApi';
 
 const schema = z.object({
   description: z
@@ -20,6 +21,7 @@ type BlogRegistrationProps = {
 
 export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
   const [categories, setCategories] = useState<string[]>([]);
+  const [updateUser] = useUpdateUserMutation();
 
   return (
     <>
@@ -28,10 +30,17 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
       </h2>
       <Form<BlogValues, typeof schema>
         className="mx-auto w-full"
-        onSubmit={(values) => {
-          // await sendData({...values, categories})
+        onSubmit={async (values) => {
+          const blogData = {
+            blog: {
+              ...values,
+              categories,
+            },
+          };
+          const response = await updateUser(blogData);
 
-          onSuccess();
+          if ('error' in response) throw response.error;
+          if ('success' in response.data) onSuccess();
         }}
       >
         {({ register, formState }) => (

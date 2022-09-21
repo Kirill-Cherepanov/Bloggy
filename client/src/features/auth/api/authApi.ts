@@ -1,9 +1,5 @@
-import {
-  RegistrationValues,
-  LoginValues,
-  ResetPasswordValues,
-  ProtectedData,
-} from '../types';
+import { ProtectedData } from 'types';
+import { RegistrationValues, LoginValues, ResetPasswordValues } from '../types';
 import { logout, setUser } from '../stores/authSlice';
 import { generalApi } from 'lib/generalApi';
 
@@ -39,7 +35,7 @@ export const authApi = generalApi.injectEndpoints({
       }),
       async onQueryStarted(args, api) {
         const { data } = await api.queryFulfilled;
-        if (data && data.isLoggedIn) api.dispatch(setUser(data));
+        if (data.isLoggedIn) api.dispatch(setUser(data));
       },
     }),
 
@@ -97,5 +93,3 @@ export const {
   useLogoutMutation,
   useResetPasswordMutation,
 } = authApi;
-
-// export const selectUsersResult = authSlice.endpoints.getUsers.select();
