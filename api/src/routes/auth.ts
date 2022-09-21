@@ -26,14 +26,14 @@ authRouter.post('/registration', async (req, res) => {
       email,
       username,
       blog,
-      confirmationMessage,
-    }: TUser & { confirmationMessage: string } = req.body;
+      'confirm-email': confirmationMessage,
+    }: TUser & { 'confirm-email': string | undefined | null } = req.body;
 
     const emailVerified = await handleEmailVerification(
       email,
       confirmationMessage
     );
-    if (!emailVerified.res) return res.status(200).json(emailVerified.message);
+    if (!emailVerified.res) return res.status(200).json({ messageSent: true });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -48,7 +48,7 @@ authRouter.post('/registration', async (req, res) => {
       },
     };
     const user = await new User(userData).save();
-    const { password: p_, ...publicData } = user._doc;
+    const { password: p_, ...protectedData } = user._doc;
 
     const refreshToken = jwt.sign(
       {
@@ -60,7 +60,9 @@ authRouter.post('/registration', async (req, res) => {
     const accessToken = generateAccessToken(user.username, user.email);
 
     res.cookie('refresh-token', refreshToken, { httpOnly: true });
-    res.status(200).json({ ...publicData, accessToken });
+    res.cookie('access-token', accessToken, { httpOnly: true });
+
+    res.status(200).json({ ...protectedData, success: true });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -90,7 +92,7 @@ authRouter.post('/login', async (req, res) => {
     );
 
     res.cookie('refresh_token', refreshToken, { httpOnly: true });
-    res.cookie('access_token', accessToken, { httpOnly: true });
+    res.cookie('access-token', accessToken, { httpOnly: true });
 
     res.status(200).json({ ...publicData, isLoggedIn: true });
   } catch (err: any) {
@@ -125,7 +127,7 @@ authRouter.get('/token', async (req, res) => {
     const { password, __v, ...userInfo } = user._doc;
 
     const accessToken = generateAccessToken(user.username, user.email);
-    res.cookie('access_token', accessToken, { httpOnly: true });
+    res.cookie('access-token', accessToken, { httpOnly: true });
 
     res.status(200).json({ ...userInfo, isLoggedIn: true });
   } catch (err: any) {
@@ -139,7 +141,9 @@ authRouter.get('/token', async (req, res) => {
 // get self
 authRouter.get('/self', async (req, res) => {
   try {
-    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
     if (verificationRes.err === true) {
       return res.status(verificationRes.status).json(verificationRes.message);
     }
@@ -167,7 +171,9 @@ authRouter.delete('/logout', (req, res) => {
 // reset password
 authRouter.post('/reset-password', async (req, res) => {
   try {
-    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
     if (verificationRes.err === true) {
       return res.status(verificationRes.status).json(verificationRes.message);
     }

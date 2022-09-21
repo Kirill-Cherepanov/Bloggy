@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ProtectedData } from '../types';
 
 type UserState = {
+  isLoggedIn: boolean;
   user: ProtectedData | null;
 };
 
 const initialState: UserState = {
+  isLoggedIn: false,
   user: null,
 };
 
@@ -16,7 +18,10 @@ export const authSlice = createSlice({
   reducers: {
     logout: () => initialState,
     setUser: (state, action: PayloadAction<ProtectedData | null>) => {
-      state.user = action.payload;
+      state = {
+        isLoggedIn: true,
+        user: action.payload,
+      };
     },
   },
 });

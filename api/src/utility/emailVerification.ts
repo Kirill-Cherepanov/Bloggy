@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+
 import Confirmation from '../models/Confirmation';
 import { validateEmail } from './validations';
 
@@ -10,11 +11,25 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const getNewMessage = () => 'You are cool!';
+const MESSAGES = [
+  'You are cool!',
+  'You are the best!',
+  'You are so beautiful!',
+  'Everyone loves you! <3',
+  'You are wonderful!',
+];
+
+const getNewMessage = () => {
+  const randomIndex = Math.floor(Math.random() * MESSAGES.length);
+  return MESSAGES[randomIndex];
+};
+
 const getMailMessage = (email: string, message: string) => ({
+  from: process.env.GMAIL_USER,
   to: email,
   subject: 'Confirm Email',
-  html: `<h1>Your confirmation message</h1><p>Message: ${message}</p><p><small>This message will expire in 20 minutes</small></p>`,
+  html: `<h1>Your confirmation message</h1><p style="
+  font-size: 1.25rem;">Message: <b style="padding: 2px; background-color: #ccc;">${message}</b></p><p><i>This message will expire in 20 minutes</i></p>`,
 });
 
 const sendNewConfirmation = (email: string) => {
@@ -25,18 +40,21 @@ const sendNewConfirmation = (email: string) => {
     message,
   }).save();
 
-  transporter.sendMail(getMailMessage(email, message));
+  transporter.sendMail(
+    getMailMessage(email, message),
+    (err) => err ?? console.error(err)
+  );
 };
 
 export const handleEmailVerification = async (
   email: string,
-  message: string
+  message: string | undefined | null
 ): Promise<{ res: boolean; message: string }> => {
   if (!validateEmail(email)) return { res: false, message: 'Incorrect email' };
 
   const confirmation = await Confirmation.findOne({ email });
 
-  if (confirmation === null) {
+  if (!confirmation) {
     sendNewConfirmation(email);
     return {
       res: false,
@@ -44,7 +62,7 @@ export const handleEmailVerification = async (
     };
   }
 
-  if (message === null || message === undefined) {
+  if (!message) {
     await Confirmation.findOneAndDelete({ email });
 
     sendNewConfirmation(email);

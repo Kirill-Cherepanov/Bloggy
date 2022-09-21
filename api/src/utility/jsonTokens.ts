@@ -21,7 +21,7 @@ export const generateAccessToken = (username: string, email: string) =>
     expiresIn: ACCESS_TOKEN_EXPIRATION_TIME,
   });
 
-export const verifyAccessToken = async (accessToken: string) => {
+export const verifyAccessToken = async (accessToken: string | undefined) => {
   if (!accessToken) {
     return { err: true, status: 401, message: 'No access token' };
   }
@@ -32,7 +32,7 @@ export const verifyAccessToken = async (accessToken: string) => {
   );
 
   if (err) {
-    return { err: true, status: 401, message: 'Incorrect refresh token' };
+    return { err: true, status: 401, message: 'Incorrect access token' };
   }
 
   if (typeof user === 'string' || user === undefined) {

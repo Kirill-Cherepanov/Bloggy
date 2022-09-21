@@ -2,7 +2,8 @@ import path from 'path';
 import mongoose from 'mongoose';
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 import { handleMiddlewareErrors } from './utility/middleware';
 import authRouter from './routes/auth';

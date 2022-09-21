@@ -9,7 +9,7 @@ export function TopbarSearch() {
 
   useEffect(() => {
     const closeMenu = (e: MouseEvent) => {
-      if (search.current!.contains(e.target as Node)) return;
+      if (search.current?.contains(e.target as Node)) return;
       setIsOpen(false);
     };
 

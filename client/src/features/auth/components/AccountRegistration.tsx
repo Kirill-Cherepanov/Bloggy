@@ -42,10 +42,15 @@ export function AccountRegistration({
       <Form<RegistrationValues, typeof schema>
         className="max-auto w-full space-y-2"
         onSubmit={async (values) => {
-          if (!wasMessageSent) return setWasMessageSent(true);
-
           const response = await register(values);
-          if ('data' in response) onSuccess();
+
+          if ('error' in response) throw response.error;
+
+          if (!wasMessageSent && 'messageSent' in response.data) {
+            return setWasMessageSent(true);
+          }
+
+          if ('success' in response.data) onSuccess();
         }}
         schema={schema}
       >

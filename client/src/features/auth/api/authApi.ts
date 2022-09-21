@@ -13,8 +13,11 @@ type GetTokenReturnType =
     })
   | {
       isLoggedIn: false;
-    }
-  | undefined;
+    };
+
+type RegisterReturnType =
+  | (ProtectedData & { success: true })
+  | { messageSent: true };
 
 export const authApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,7 +26,6 @@ export const authApi = generalApi.injectEndpoints({
         url: `/auth/self`,
         credentials: 'include',
       }),
-      transformResponse: (result: { data: ProtectedData }) => result.data,
       async onQueryStarted(args, api) {
         const { data } = await api.queryFulfilled;
         if (data) api.dispatch(setUser(data));
@@ -35,23 +37,21 @@ export const authApi = generalApi.injectEndpoints({
         url: '/auth/token',
         credentials: 'include',
       }),
-      transformResponse: (result: { data?: GetTokenReturnType }) => result.data,
       async onQueryStarted(args, api) {
         const { data } = await api.queryFulfilled;
         if (data && data.isLoggedIn) api.dispatch(setUser(data));
       },
     }),
 
-    register: builder.mutation<ProtectedData, RegistrationValues>({
+    register: builder.mutation<RegisterReturnType, RegistrationValues>({
       query: (registrationData: RegistrationValues) => ({
         url: `/auth/registration`,
         method: `POST`,
         body: registrationData,
       }),
-      transformResponse: (result: { data: ProtectedData }) => result.data,
       async onQueryStarted(args, api) {
         const { data } = await api.queryFulfilled;
-        if (data) api.dispatch(setUser(data));
+        if ('success' in data) api.dispatch(setUser(data));
       },
     }),
 
@@ -61,7 +61,6 @@ export const authApi = generalApi.injectEndpoints({
         method: `POST`,
         body: loginData,
       }),
-      transformResponse: (result: { data: ProtectedData }) => result.data,
       async onQueryStarted(args, api) {
         const { data } = await api.queryFulfilled;
         if (data) api.dispatch(setUser(data));

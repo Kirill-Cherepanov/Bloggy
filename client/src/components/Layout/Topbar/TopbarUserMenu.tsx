@@ -10,7 +10,7 @@ export function TopbarUserMenu() {
 
   useEffect(() => {
     const closeMenu = (e: MouseEvent) => {
-      if (menu.current!.contains(e.target as Node)) return;
+      if (menu.current?.contains(e.target as Node)) return;
       setIsOpen(false);
     };
 

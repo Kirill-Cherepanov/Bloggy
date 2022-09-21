@@ -17,9 +17,9 @@ export const customBaseQuery: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+  let response = await baseQuery(args, api, extraOptions);
 
-  if (result.error?.status !== 401) return result;
+  if (!response.error || response.error.status !== 401) return response;
 
   // Handle a 401 error
   const refreshResult = await baseQuery(
@@ -29,11 +29,11 @@ export const customBaseQuery: BaseQueryFn<
   );
 
   if ((refreshResult.data as any)?.isLoggedIn) {
-    result = await baseQuery(args, api, extraOptions);
+    response = await baseQuery(args, api, extraOptions);
   } else {
     api.dispatch(logout());
     // Preferably open a login pop up
   }
 
-  return result;
+  return response;
 };
