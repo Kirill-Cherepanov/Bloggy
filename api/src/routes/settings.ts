@@ -24,16 +24,136 @@ const updloadFields = upload.fields([
   },
 ]);
 
-// update user
+// update profile picture
+settingsRouter.put(
+  '/profile-pic',
+  upload.single('profile-picture'),
+  async (req, res) => {
+    try {
+      const accessToken: string | undefined = req.cookies['access-token'];
+      const verificationRes = await verifyAccessToken(accessToken);
+      if (verificationRes.err) {
+        return res.status(verificationRes.status).json(verificationRes.message);
+      }
+
+      if (!req.files || !('profile-picture' in req.files)) {
+        return res.status(400).json('No profile picture');
+      }
+
+      const user = await User.findOne({ username: verificationRes.username });
+      if (user === null) {
+        return res
+          .status(500)
+          .json(`User ${verificationRes.username} was not found!`);
+      }
+
+      if (user.profilePic) {
+        fs.unlink(user.profilePic, (err) => {
+          if (err) console.error(err);
+        });
+      }
+
+      const newProfilePic = req.files['profile-picture'][0];
+
+      const filename =
+        path.parse(newProfilePic.originalname).name +
+        `.${Date.now()}` +
+        path.extname(newProfilePic.originalname);
+
+      user.profilePic = filename;
+
+      const filePath = './images/profilePics/' + filename;
+
+      fs.writeFile(filePath, newProfilePic.buffer, (err) => {
+        if (err) throw err;
+      });
+      user.save();
+
+      res.status(200).json({ profilePic: newProfilePic });
+    } catch (err: any) {
+      console.error(err);
+      if (err && typeof err === 'object' && 'message' in err) {
+        res.status(500).json(err.message);
+      }
+    }
+  }
+);
+
+// update everything but profile picture
+settingsRouter.patch('/data', async (req, res) => {
+  try {
+    const accessToken: string | undefined = req.cookies['access-token'];
+    const verificationRes = await verifyAccessToken(accessToken);
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+
+    const user = await User.findOne({ username: verificationRes.username });
+    if (user === null) {
+      return res
+        .status(500)
+        .json(`User ${verificationRes.username} was not found!`);
+    }
+
+    const updatedUserData: Partial<TUser> & {
+      oldPassword?: string;
+      blog?: { shouldDelete?: boolean };
+    } = getUserData(req.body);
+
+    if (updatedUserData.password || updatedUserData.email) {
+      if (!updatedUserData.oldPassword) {
+        return res.status(500).json('Old password was not sent');
+      }
+
+      const validated = await bcrypt.compare(
+        updatedUserData.oldPassword,
+        user.password
+      );
+
+      if (!validated) {
+        return res.status(500).json('Incorrect previous password!');
+      }
+
+      delete updatedUserData.oldPassword;
+    }
+
+    Object.assign(user, updatedUserData);
+    await user.save();
+
+    const { password, ...protectedData } = user._doc;
+
+    const newAccessToken = generateAccessToken(user.username, user.email);
+    const newRefreshToken = jwt.sign(
+      {
+        email: protectedData.email,
+        username: protectedData.username,
+      },
+      process.env.REFRESH_TOKEN_SECRET!
+    );
+
+    res.cookie('access-token', newAccessToken, { httpOnly: true });
+    res.cookie('refresh-token', newRefreshToken, { httpOnly: true });
+
+    res.status(200).json({ ...protectedData });
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
+  }
+});
+
+// update everything
 settingsRouter.patch('', updloadFields, async (req, res) => {
   try {
-    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    const accessToken: string | undefined = req.cookies['access-token'];
+    const verificationRes = await verifyAccessToken(accessToken);
     if (verificationRes.err === true) {
       return res.status(verificationRes.status).json(verificationRes.message);
     }
 
     const jsonBuffer = await validateJsonBlob(req.files);
-    if (!jsonBuffer) throw Error('Incorrect request');
+    if (!jsonBuffer) return res.status(400).json('Incorrect request');
     const sentData: Partial<TUser> = JSON.parse(jsonBuffer.buffer.toString());
 
     const user = await User.findOne({ username: verificationRes.username });
@@ -93,8 +213,8 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
 
     const { password, ...protectedData } = user._doc;
 
-    const accessToken = generateAccessToken(user.username, user.email);
-    const refreshToken = jwt.sign(
+    const newAccessToken = generateAccessToken(user.username, user.email);
+    const newRefreshToken = jwt.sign(
       {
         email: protectedData.email,
         username: protectedData.username,
@@ -102,8 +222,10 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
       process.env.REFRESH_TOKEN_SECRET!
     );
 
-    res.cookie('refresh-token', refreshToken, { httpOnly: true });
-    res.status(200).json({ protectedData, accessToken });
+    res.cookie('access-token', newAccessToken, { httpOnly: true });
+    res.cookie('refresh-token', newRefreshToken, { httpOnly: true });
+
+    res.status(200).json({ ...protectedData });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -144,6 +266,10 @@ settingsRouter.delete('', async (req, res) => {
 
     await Post.deleteMany({ username: user.username });
     await User.findOneAndDelete({ username: user.username });
+
+    res.clearCookie('access-token');
+    res.clearCookie('refresh-token');
+
     res.status(200).json('User has been deleted');
   } catch (err: any) {
     console.error(err);

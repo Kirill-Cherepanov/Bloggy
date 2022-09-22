@@ -5,16 +5,36 @@ import { UpdateUserValues } from '../types';
 
 export const settingsApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
-    updateUser: builder.mutation<ProtectedData, UpdateUserValues>({
-      query: (updateData) => ({
-        url: '/settings/',
+    updateUser: builder.mutation<
+      ProtectedData,
+      Omit<UpdateUserValues, 'profile-picture'>
+    >({
+      query: (updatedData) => ({
+        url: '/settings/data',
         method: 'PATCH',
         credentials: 'include',
-        body: updateData,
+        body: updatedData,
       }),
       async onQueryStarted(args, api) {
-        const { data } = await api.queryFulfilled;
-        if (data) api.dispatch(setUser(data));
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data) api.dispatch(setUser(data));
+        } catch {}
+      },
+    }),
+
+    updateProfilePic: builder.mutation<ProtectedData, File>({
+      query: (profilePicture) => ({
+        url: '/settings/profile-picture',
+        method: 'PUT',
+        credentials: 'include',
+        body: profilePicture,
+      }),
+      async onQueryStarted(args, api) {
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data) api.dispatch(setUser(data));
+        } catch {}
       },
     }),
 
@@ -32,4 +52,8 @@ export const settingsApi = generalApi.injectEndpoints({
   }),
 });
 
-export const { useUpdateUserMutation, useDeleteUserMutation } = settingsApi;
+export const {
+  useUpdateUserMutation,
+  useUpdateProfilePicMutation,
+  useDeleteUserMutation,
+} = settingsApi;

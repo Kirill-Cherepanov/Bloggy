@@ -3,7 +3,7 @@ import * as z from 'zod';
 
 import { Form, TextAreaField } from 'components/Form';
 import { Button, Picker, Tooltip } from 'components/Elements';
-import { useUpdateUserMutation } from 'features/settings/api/settingsApi';
+import { useUpdateUserMutation } from 'features/settings';
 
 const schema = z.object({
   description: z

@@ -52,13 +52,7 @@ export function Settings() {
         {tabOpen === 'general' ? (
           <GeneralSettings {...blogInfo} />
         ) : (
-          <div className="w-full">
-            <h3 className="text-3xl font-medium font-display mb-5">Blog</h3>
-            <BlogSettings {...blogInfo} labelClass="block mb-2" />
-            <button className="mt-8 py-1 px-3 rounded-md border-2 bg-red-50 font-semibold text-red-600 border-red-300 hover:bg-red-300 hover:text-red-900">
-              Delete blog
-            </button>
-          </div>
+          <BlogSettings />
         )}
       </div>
     </main>

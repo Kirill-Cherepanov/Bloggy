@@ -7,13 +7,15 @@ const variants = {
   primary: 'bg-accent-800 text-main hover:bg-accent-900',
   secondary: 'bg-secondary-800 text-main',
   danger: 'bg-red-600 text-white',
+  none: '',
 };
 
 const sizes = {
-  sm: 'py-2 px-4 text-sm',
+  sm: 'py-1 px-3',
   md: 'py-2 px-6',
   lg: 'py-3 px-8 text-lg',
   full: 'py-2 w-full',
+  none: '',
 };
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {

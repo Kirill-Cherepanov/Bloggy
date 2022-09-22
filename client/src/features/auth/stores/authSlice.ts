@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { deepmerge } from 'deepmerge-ts';
 
 import { ProtectedData } from 'types';
 
@@ -19,7 +20,7 @@ export const authSlice = createSlice({
     logout: () => initialState,
     setUser: (state, action: PayloadAction<ProtectedData | null>) => {
       state.isLoggedIn = true;
-      state.user = action.payload;
+      deepmerge(state.user, action.payload);
     },
   },
 });
