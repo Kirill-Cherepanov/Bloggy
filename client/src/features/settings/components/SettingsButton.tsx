@@ -7,9 +7,10 @@ const variants = {
     'bg-accent-50 font-semibold text-accent-700 border-accent-300 hover:bg-accent-300 hover:text-accent-900',
   danger:
     'bg-red-50 font-semibold text-red-600 border-red-300 hover:bg-red-300 hover:text-red-900',
+  simple: 'border-secondary-300 bg-secondary-200 hover:bg-secondary-300',
 };
 
-type SettingsButtonProps = Omit<ButtonProps, 'size' | 'variants'> & {
+type SettingsButtonProps = Omit<ButtonProps, 'size' | 'variant'> & {
   variant?: keyof typeof variants;
 };
 

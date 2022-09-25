@@ -4,27 +4,27 @@ import { logout, setUser } from '../stores/authSlice';
 import { generalApi } from 'lib/generalApi';
 
 type GetTokenReturnType =
-  | (ProtectedData & {
-      isLoggedIn: true;
-    })
-  | {
-      isLoggedIn: false;
-    };
+  | { isLoggedIn: true; user: ProtectedData }
+  | { isLoggedIn: false };
 
 type RegisterReturnType =
-  | (ProtectedData & { success: true })
-  | { messageSent: true };
+  | { status: 'message sent' }
+  | { status: 'success'; user: ProtectedData };
+
+type ResetPasswordReturnType = RegisterReturnType;
 
 export const authApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
-    getSelf: builder.query<ProtectedData | undefined, void>({
+    getSelf: builder.query<{ user: ProtectedData }, void>({
       query: () => ({
         url: `/auth/self`,
         credentials: 'include',
       }),
       async onQueryStarted(args, api) {
-        const { data } = await api.queryFulfilled;
-        if (data) api.dispatch(setUser(data));
+        try {
+          const { data } = await api.queryFulfilled;
+          api.dispatch(setUser(data.user));
+        } catch {}
       },
     }),
 
@@ -34,8 +34,11 @@ export const authApi = generalApi.injectEndpoints({
         credentials: 'include',
       }),
       async onQueryStarted(args, api) {
-        const { data } = await api.queryFulfilled;
-        if (data.isLoggedIn) api.dispatch(setUser(data));
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data.isLoggedIn) api.dispatch(setUser(data.user));
+          else api.dispatch(logout());
+        } catch {}
       },
     }),
 
@@ -46,20 +49,24 @@ export const authApi = generalApi.injectEndpoints({
         body: registrationData,
       }),
       async onQueryStarted(args, api) {
-        const { data } = await api.queryFulfilled;
-        if ('success' in data) api.dispatch(setUser(data));
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data.status === 'success') api.dispatch(setUser(data.user));
+        } catch {}
       },
     }),
 
-    login: builder.mutation<ProtectedData, LoginValues>({
+    login: builder.mutation<{ user: ProtectedData }, LoginValues>({
       query: (loginData: LoginValues) => ({
         url: `/auth/login`,
         method: `POST`,
         body: loginData,
       }),
       async onQueryStarted(args, api) {
-        const { data } = await api.queryFulfilled;
-        if (data) api.dispatch(setUser(data));
+        try {
+          const { data } = await api.queryFulfilled;
+          api.dispatch(setUser(data.user));
+        } catch {}
       },
     }),
 
@@ -69,18 +76,29 @@ export const authApi = generalApi.injectEndpoints({
         method: `DELETE`,
       }),
       async onQueryStarted(args, api) {
-        const { data } = await api.queryFulfilled;
-        if (data) api.dispatch(logout());
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data.success) api.dispatch(logout());
+        } catch {}
       },
     }),
 
-    resetPassword: builder.mutation<ProtectedData, ResetPasswordValues>({
+    resetPassword: builder.mutation<
+      ResetPasswordReturnType,
+      ResetPasswordValues
+    >({
       query: ({ newPassword, message }: ResetPasswordValues) => ({
         url: '/auth/reset-password',
         method: 'POST',
         credentials: 'include',
         body: { newPassword, confirmationMessage: message },
       }),
+      async onQueryStarted(args, api) {
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data.status === 'success') api.dispatch(setUser(data.user));
+        } catch {}
+      },
     }),
   }),
 });

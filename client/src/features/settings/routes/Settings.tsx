@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { blogInfo } from 'utility/mockData';
 import { Icon } from 'components/Elements';
-import { GeneralSettings, BlogSettings } from '../components';
+import { AccountSettings, BlogSettings } from '../components';
+import { useAppSelector } from 'stores/globalStore';
 
 export function Settings() {
   const [tabOpen, setTabOpen] = useState('general');
   const navigate = useNavigate();
+  const user = useAppSelector((state) => state.authSlice.user);
+
+  if (user === null) throw Error('User data is null!');
 
   return (
     <main className="px-page py-8">
@@ -18,10 +21,10 @@ export function Settings() {
         </button>
         <h2 className="text-2xl font-light">Settings</h2>
         <Link
-          to={'/blog/' + blogInfo.username}
+          to={'/blog/' + user.username}
           className="font-medium hover:underline absolute right-0"
         >
-          {blogInfo.username}
+          {user.username}
         </Link>
       </div>
       <div className="flex gap-12">
@@ -49,11 +52,7 @@ export function Settings() {
             Blog
           </button>
         </div>
-        {tabOpen === 'general' ? (
-          <GeneralSettings {...blogInfo} />
-        ) : (
-          <BlogSettings />
-        )}
+        {tabOpen === 'general' ? <AccountSettings /> : <BlogSettings />}
       </div>
     </main>
   );

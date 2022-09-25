@@ -18,9 +18,9 @@ export const authSlice = createSlice({
   name: 'authSlice',
   reducers: {
     logout: () => initialState,
-    setUser: (state, action: PayloadAction<ProtectedData | null>) => {
+    setUser: (state, action: PayloadAction<ProtectedData>) => {
       state.isLoggedIn = true;
-      deepmerge(state.user, action.payload);
+      state.user = deepmerge(state.user, action.payload);
     },
   },
 });

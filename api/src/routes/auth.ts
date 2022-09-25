@@ -33,7 +33,8 @@ authRouter.post('/registration', async (req, res) => {
       email,
       confirmationMessage
     );
-    if (!emailVerified.res) return res.status(200).json({ messageSent: true });
+    if (!emailVerified.res)
+      return res.status(200).json({ status: 'message sent' });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -62,7 +63,7 @@ authRouter.post('/registration', async (req, res) => {
     res.cookie('refresh-token', refreshToken, { httpOnly: true });
     res.cookie('access-token', accessToken, { httpOnly: true });
 
-    res.status(200).json({ ...protectedData, success: true });
+    res.status(200).json({ user: protectedData, status: 'success' });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -80,13 +81,13 @@ authRouter.post('/login', async (req, res) => {
     const validated = await bcrypt.compare(req.body.password, user.password);
     if (!validated) return res.status(400).json('Wrong credentials!');
 
-    const { password, ...publicData } = user._doc;
+    const { password, ...protectedData } = user._doc;
 
     const accessToken = generateAccessToken(user.username, user.email);
     const refreshToken = jwt.sign(
       {
-        email: publicData.email,
-        username: publicData.username,
+        email: protectedData.email,
+        username: protectedData.username,
       },
       process.env.REFRESH_TOKEN_SECRET!
     );
@@ -94,7 +95,7 @@ authRouter.post('/login', async (req, res) => {
     res.cookie('refresh_token', refreshToken, { httpOnly: true });
     res.cookie('access-token', accessToken, { httpOnly: true });
 
-    res.status(200).json({ ...publicData, isLoggedIn: true });
+    res.status(200).json({ user: protectedData });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -129,7 +130,7 @@ authRouter.get('/token', async (req, res) => {
     const accessToken = generateAccessToken(user.username, user.email);
     res.cookie('access-token', accessToken, { httpOnly: true });
 
-    res.status(200).json({ ...userInfo, isLoggedIn: true });
+    res.status(200).json({ user: userInfo, isLoggedIn: true });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -149,11 +150,11 @@ authRouter.get('/self', async (req, res) => {
     }
 
     const user = await User.findOne(verificationRes);
-    if (!user) return res.status(500).json('User not found');
+    if (!user) return res.status(401).json('User not found');
 
     const { password, __v, ...userInfo } = user._doc;
 
-    res.status(200).json(userInfo);
+    res.status(200).json({ user: userInfo });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -190,7 +191,8 @@ authRouter.post('/reset-password', async (req, res) => {
       user.email,
       confirmationMessage
     );
-    if (!emailVerified.res) return res.status(200).json(emailVerified.message);
+    if (!emailVerified.res)
+      return res.status(200).json({ status: 'message sent' });
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -199,7 +201,7 @@ authRouter.post('/reset-password', async (req, res) => {
 
     const { password, __v, ...userInfo } = user._doc;
 
-    res.status(200).json(userInfo);
+    res.status(200).json({ user: userInfo, status: 'success' });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
