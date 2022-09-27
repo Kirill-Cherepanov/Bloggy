@@ -26,15 +26,19 @@ authRouter.post('/registration', async (req, res) => {
       email,
       username,
       blog,
-      'confirm-email': confirmationMessage,
-    }: TUser & { 'confirm-email': string | undefined | null } = req.body;
+      confirmationMessage,
+    }: TUser & { confirmationMessage: string | undefined | null } = req.body;
 
     const emailVerified = await handleEmailVerification(
       email,
       confirmationMessage
     );
-    if (!emailVerified.res)
+    if (emailVerified.status >= 400) {
+      return res.status(emailVerified.status).json(emailVerified.message);
+    }
+    if (emailVerified.message === 'message sent') {
       return res.status(200).json({ status: 'message sent' });
+    }
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -181,9 +185,6 @@ authRouter.post('/reset-password', async (req, res) => {
 
     const { newPassword, confirmationMessage } = req.body;
 
-    const passwordError = validatePassword(newPassword);
-    if (passwordError) throw passwordError;
-
     const user = await User.findOne(verificationRes);
     if (user === null) return res.status(500).json(`User was not found`);
 
@@ -191,8 +192,15 @@ authRouter.post('/reset-password', async (req, res) => {
       user.email,
       confirmationMessage
     );
-    if (!emailVerified.res)
+    if (emailVerified.status >= 400) {
+      return res.status(emailVerified.status).json(emailVerified.message);
+    }
+    if (emailVerified.message === 'message sent') {
       return res.status(200).json({ status: 'message sent' });
+    }
+
+    const passwordError = validatePassword(newPassword);
+    if (passwordError) res.status(400).json('Incorrect password!');
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);

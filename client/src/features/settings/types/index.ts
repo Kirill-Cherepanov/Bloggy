@@ -7,3 +7,7 @@ export type UpdateUserValues = {
   'profile-pic'?: string;
   blog?: Partial<BlogData>;
 };
+
+export type ConfirmPasswordValues = {
+  'old-password': string;
+} | void;

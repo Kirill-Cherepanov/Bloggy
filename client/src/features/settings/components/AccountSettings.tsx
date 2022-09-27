@@ -1,14 +1,26 @@
 import { useAppSelector } from 'stores/globalStore';
+import { useDisclosure } from 'hooks';
+import { useResetPasswordMutation } from 'features/auth';
 import {
-  useUpdateProfilePicMutation,
+  useDeleteUserMutation,
   useUpdateUserMutation,
 } from '../api/settingsApi';
-import { SettingsButton, UpdateUserForm } from './';
+import {
+  SettingsButton,
+  UpdateUserForm,
+  ResetPasswordForm,
+  UpdateProfilePictureForm,
+  ConfirmPasswordForm,
+} from './';
 
 export function AccountSettings() {
   const user = useAppSelector((state) => state.authSlice.user);
+
   const [updateUser] = useUpdateUserMutation();
-  const [updateProfilePic] = useUpdateProfilePicMutation();
+  const [resetPassword] = useResetPasswordMutation();
+  const [deleteAccount] = useDeleteUserMutation();
+
+  const confirmEmailDisclosure = useDisclosure();
 
   if (user === null) throw Error('User data is null!');
 
@@ -22,29 +34,50 @@ export function AccountSettings() {
         <UpdateUserForm updateSelector="password" />
       </div>
 
-      <button className="block text-sm text-secodary-600 hover:underline mb-8">
+      <button
+        className="block text-sm text-secodary-600 hover:underline mb-8"
+        onClick={() => {
+          resetPassword();
+          confirmEmailDisclosure.open();
+        }}
+      >
         Forgot your password?
       </button>
-
-      <label htmlFor="profile-pic" className="block mb-2 ml-2">
-        Profile picture
-      </label>
-      <div className="flex gap-5 mb-10">
-        <img
-          src={user['profile-pic']}
-          alt="profile"
-          className="aspect-square rounded-full object-cover w-36"
+      {confirmEmailDisclosure.isOpen && (
+        <ResetPasswordForm
+          closeMenu={confirmEmailDisclosure.close}
+          onSuccess={resetPassword}
         />
-        <div className="flex flex-col justify-evenly">
-          <SettingsButton variant="simple">Upload</SettingsButton>
-          <SettingsButton variant="simple">Change</SettingsButton>
-        </div>
-      </div>
+      )}
+
+      <UpdateProfilePictureForm />
 
       <div className="flex gap-6">
-        <SettingsButton>Create blog</SettingsButton>
-        <SettingsButton variant="danger">Delete account</SettingsButton>
+        {!user.blog && (
+          <SettingsButton onClick={() => updateUser({ blog: {} })}>
+            Create blog
+          </SettingsButton>
+        )}
+        <SettingsButton
+          variant="danger"
+          onClick={() => {
+            deleteAccount();
+            confirmEmailDisclosure.open();
+          }}
+        >
+          Delete account
+        </SettingsButton>
       </div>
+      {confirmEmailDisclosure.isOpen && (
+        <ConfirmPasswordForm
+          closeMenu={confirmEmailDisclosure.close}
+          onSuccess={async (values) => {
+            const response = await deleteAccount(values);
+
+            if ('error' in response) throw response.error;
+          }}
+        />
+      )}
     </div>
   );
 }

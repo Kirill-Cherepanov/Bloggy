@@ -12,6 +12,6 @@ export type LoginValues = {
 };
 
 export type ResetPasswordValues = {
-  newPassword: string;
-  message?: string;
-};
+  'new-password': string;
+  'confirm-email': string;
+} | void;

@@ -96,17 +96,17 @@ settingsRouter.patch('/data', async (req, res) => {
     }
 
     const updatedUserData: Partial<TUser> & {
-      oldPassword?: string;
+      'old-password'?: string;
       blog?: { shouldDelete?: boolean };
     } = getUserData(req.body);
 
     if (updatedUserData.password || updatedUserData.email) {
-      if (!updatedUserData.oldPassword) {
+      if (!updatedUserData['old-password']) {
         return res.status(500).json('Old password was not sent');
       }
 
       const validated = await bcrypt.compare(
-        updatedUserData.oldPassword,
+        updatedUserData['old-password'],
         user.password
       );
 
@@ -114,7 +114,7 @@ settingsRouter.patch('/data', async (req, res) => {
         return res.status(500).json('Incorrect previous password!');
       }
 
-      delete updatedUserData.oldPassword;
+      delete updatedUserData['old-password'];
     }
 
     Object.assign(user, updatedUserData);
@@ -164,17 +164,17 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
     }
 
     const updatedUserData: Partial<TUser> & {
-      oldPassword?: string;
+      'old-password'?: string;
       blog?: { shouldDelete?: boolean };
     } = getUserData(sentData);
 
     if (updatedUserData.password || updatedUserData.email) {
-      if (!updatedUserData.oldPassword) {
+      if (!updatedUserData['old-password']) {
         return res.status(500).json('Old password was not sent');
       }
 
       const validated = await bcrypt.compare(
-        updatedUserData.oldPassword,
+        updatedUserData['old-password'],
         user.password
       );
 
@@ -182,7 +182,7 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
         return res.status(500).json('Incorrect previous password!');
       }
 
-      delete updatedUserData.oldPassword;
+      delete updatedUserData['old-password'];
     }
 
     if ('profile-picture' in req.files!) {
@@ -249,11 +249,14 @@ settingsRouter.delete('', async (req, res) => {
         .json(`User ${verificationRes.username} was not found!`);
     }
 
-    if (!req.body.oldPassword) {
+    if (!req.body['old-password']) {
       return res.status(500).json('Old password was not sent');
     }
 
-    const validated = await bcrypt.compare(req.body.oldPassword, user.password);
+    const validated = await bcrypt.compare(
+      req.body['old-password'],
+      user.password
+    );
     if (!validated) {
       return res.status(500).json('Incorrect previous password!');
     }

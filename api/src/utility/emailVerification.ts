@@ -49,16 +49,16 @@ const sendNewConfirmation = (email: string) => {
 export const handleEmailVerification = async (
   email: string,
   message: string | undefined | null
-): Promise<{ res: boolean; message: string }> => {
-  if (!validateEmail(email)) return { res: false, message: 'Incorrect email' };
+): Promise<{ status: number; message: string }> => {
+  if (!validateEmail(email)) return { status: 400, message: 'Incorrect email' };
 
   const confirmation = await Confirmation.findOne({ email });
 
   if (!confirmation) {
     sendNewConfirmation(email);
     return {
-      res: false,
-      message: `Email verification message was sent to ${email}`,
+      status: 200,
+      message: `message sent`,
     };
   }
 
@@ -68,14 +68,14 @@ export const handleEmailVerification = async (
     sendNewConfirmation(email);
 
     return {
-      res: false,
-      message: `Email verification message was sent to ${email}`,
+      status: 200,
+      message: `message sent`,
     };
   }
 
   if (confirmation.message !== message) {
-    return { res: false, message: 'Incorrect verification message' };
+    return { status: 400, message: 'Incorrect verification message' };
   }
 
-  return { res: true, message: 'Verification passed' };
+  return { status: 200, message: 'success' };
 };

@@ -1,7 +1,7 @@
 import { logout, setUser } from 'features/auth';
 import { generalApi } from 'lib/generalApi';
 import { ProtectedData } from 'types';
-import { UpdateUserValues } from '../types';
+import { UpdateUserValues, ConfirmPasswordValues } from '../types';
 
 export const settingsApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -23,7 +23,7 @@ export const settingsApi = generalApi.injectEndpoints({
       },
     }),
 
-    updateProfilePic: builder.mutation<ProtectedData, File>({
+    updateProfilePic: builder.mutation<ProtectedData, FormData>({
       query: (profilePicture) => ({
         url: '/settings/profile-picture',
         method: 'PUT',
@@ -38,7 +38,7 @@ export const settingsApi = generalApi.injectEndpoints({
       },
     }),
 
-    deleteUser: builder.mutation<{ success: true }, void>({
+    deleteUser: builder.mutation<{ success: true }, ConfirmPasswordValues>({
       query: () => ({
         url: `/settings/`,
         method: 'DELETE',
