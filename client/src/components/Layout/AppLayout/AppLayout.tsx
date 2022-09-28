@@ -12,7 +12,7 @@ export const AppLayout = () => {
       {pathname !== '/registration' && pathname !== '/create' && <TopBar />}
       <Suspense
         fallback={
-          <div className="h-full w-full flex items-center justify-center">
+          <div className="h-100 w-full flex items-center justify-center">
             <Spinner size="lg" />
           </div>
         }

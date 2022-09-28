@@ -32,7 +32,13 @@ export const AppRoutes = () => {
 
   const element = useRoutes([...commonRoutes, ...routes]);
 
-  if (isFetching) return <Spinner />;
+  if (isFetching) {
+    return (
+      <div className="flex justify-center items-center h-screen w-screen">
+        <Spinner />
+      </div>
+    );
+  }
   if (isError && !('status' in error && error.status !== 401)) throw error;
 
   return <>{element}</>;

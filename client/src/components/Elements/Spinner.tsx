@@ -27,23 +27,16 @@ export const Spinner = ({
   const currentSize = sizes[size];
 
   return (
-    <>
-      <div
-        className={clsx(
-          'spinner',
-          currentVariant[0],
-          currentSize[0],
-          className
-        )}
-      >
-        <div className={clsx('blob top', currentSize[1])}></div>
-        <div className={clsx('blob bottom', currentSize[1])}></div>
-        <div className={clsx('blob left', currentSize[1])}></div>
+    <div
+      className={clsx('spinner', currentVariant[0], currentSize[0], className)}
+    >
+      <div className={clsx('blob top', currentSize[1])}></div>
+      <div className={clsx('blob bottom', currentSize[1])}></div>
+      <div className={clsx('blob left', currentSize[1])}></div>
 
-        <div
-          className={clsx('blob move-blob', currentSize[1], currentVariant[1])}
-        ></div>
-      </div>
-    </>
+      <div
+        className={clsx('blob move-blob', currentSize[1], currentVariant[1])}
+      ></div>
+    </div>
   );
 };
