@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import clsx from 'clsx';
 import * as React from 'react';
 import {
   useForm,
@@ -37,7 +36,7 @@ export function Form<
 
   return (
     <form
-      className={clsx('space-y-6', className)}
+      className={className}
       onSubmit={methods.handleSubmit(onSubmit)}
       id={id}
     >

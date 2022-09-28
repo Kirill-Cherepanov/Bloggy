@@ -60,7 +60,6 @@
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.0",
     "autoprefixer": "^10.4.8",
-    "deepmerge-ts": "^4.2.2",
     "postcss": "^8.4.16",
     "tailwindcss": "^3.1.8"
   }

@@ -17,7 +17,11 @@ type BlogValues = {
   description: string;
 };
 
-export function BlogSettings() {
+type BlogSettingsProps = {
+  changeTab: () => unknown;
+};
+
+export function BlogSettings({ changeTab }: BlogSettingsProps) {
   const blog = useAppSelector((state) => state.authSlice.user?.blog);
   const [categories, setCategories] = useState<string[]>(
     blog?.categories || []
@@ -28,7 +32,7 @@ export function BlogSettings() {
     <div className="w-full">
       <h3 className="text-3xl font-medium font-display mb-5">Blog</h3>
       <Form<BlogValues, typeof schema>
-        className="mx-auto w-full"
+        className="mx-auto w-full space-y-6"
         onSubmit={async (values) => {
           const blogData = {
             blog: {
@@ -69,7 +73,15 @@ export function BlogSettings() {
 
             <div className="flex gap-6">
               <SettingsButton type="submit">Update blog</SettingsButton>
-              <SettingsButton variant="danger">Delete blog</SettingsButton>
+              <SettingsButton
+                variant="danger"
+                onClick={() => {
+                  updateUser({ blog: { shouldDelete: true } });
+                  changeTab();
+                }}
+              >
+                Delete blog
+              </SettingsButton>
             </div>
           </>
         )}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon } from 'components/Elements';
@@ -6,6 +6,7 @@ import { useAppSelector } from 'stores/globalStore';
 import { useLogoutMutation } from 'features/auth';
 import { AuthDrawer } from 'features/auth';
 import { useDisclosure } from 'hooks';
+import { setPreRegistrationData } from 'features/auth';
 
 export function Footer() {
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
@@ -16,6 +17,7 @@ export function Footer() {
     left: 0,
   });
   const authDisclosure = useDisclosure();
+  const emailInput = useRef<HTMLInputElement>(null);
 
   return (
     <footer className="bg-secondary-900 text-secondary-200 z-10 relative">
@@ -30,18 +32,27 @@ export function Footer() {
                 Become one of our exclusive first members
               </div>
             </div>
-            <form className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start">
+            <form
+              className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start"
+              onSubmit={(e) => {
+                if (emailInput.current?.value) {
+                  setPreRegistrationData({ email: emailInput.current.value });
+                }
+                window.location.replace('/registration');
+              }}
+            >
               <input
+                ref={emailInput}
                 type="text"
                 placeholder="Enter your email adress here"
                 className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
               />
-              <Link
-                to="/registration"
+              <button
+                type="submit"
                 className="flex items-center justify-center bg-secondary-900 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600"
               >
                 Sign up
-              </Link>
+              </button>
             </form>
           </div>
         </div>

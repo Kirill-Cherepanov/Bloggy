@@ -5,6 +5,7 @@ import { Form, InputField, CheckboxField } from 'components/Form';
 import { Button } from 'components/Elements';
 import { RegistrationValues } from '../types';
 import { useRegisterMutation } from '../api/authApi';
+import { useAppSelector } from 'stores/globalStore';
 
 const schema = z.object({
   email: z.string().email(),
@@ -30,6 +31,9 @@ export function AccountRegistration({
   shouldCreateBlog,
   setShouldCreateBlog,
 }: AccountRegistrationProps) {
+  const initial = useAppSelector(
+    (state) => state.authSlice.preRegistrationData
+  );
   const [wasMessageSent, setWasMessageSent] = useState(false);
   const [register] = useRegisterMutation();
 
@@ -57,12 +61,14 @@ export function AccountRegistration({
         {({ register, formState }) => (
           <>
             <InputField
+              defaultValue={initial.email}
               type="email"
               label="Email address"
               error={formState.errors['email']}
               registration={register('email')}
             />
             <InputField
+              defaultValue={initial.username}
               label="Username"
               error={formState.errors['username']}
               registration={register('username')}

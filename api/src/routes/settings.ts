@@ -119,10 +119,15 @@ settingsRouter.patch('/data', async (req, res) => {
       delete updatedUserData['old-password'];
     }
 
+    if (updatedUserData.blog?.shouldDelete) {
+      delete user.blog;
+      delete updatedUserData.blog;
+    }
+
     Object.assign(user, updatedUserData);
     await user.save();
 
-    const { password, ...protectedData } = user._doc;
+    const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
     const newAccessToken = generateAccessToken(user.username, user.email);
     const newRefreshToken = jwt.sign(
@@ -217,7 +222,7 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
     Object.assign(user, updatedUserData);
     await user.save();
 
-    const { password, ...protectedData } = user._doc;
+    const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
     const newAccessToken = generateAccessToken(user.username, user.email);
     const newRefreshToken = jwt.sign(

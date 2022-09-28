@@ -1,3 +1,8 @@
+export type PreRegistrationValues = {
+  email?: string;
+  username?: string;
+};
+
 export type RegistrationValues = {
   email: string;
   username: string;

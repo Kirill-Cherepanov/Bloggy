@@ -2,6 +2,8 @@ import * as z from 'zod';
 
 import { Form, InputField } from 'components/Form';
 import { Button } from 'components/Elements';
+import { PreRegistrationValues } from '../types';
+import { setPreRegistrationData } from '../stores/authSlice';
 
 const schema = z.object({
   email: z.string().email(),
@@ -10,11 +12,6 @@ const schema = z.object({
     .min(3, 'Username must be at least 3 characters long')
     .max(20, 'Username must be at most 20 characters long'),
 });
-
-type PreRegistrationValues = {
-  email: string;
-  username: string;
-};
 
 type PreRegistrationFormProps = {
   onSuccess: () => void;
@@ -28,8 +25,8 @@ export function PreRegistrationForm({
   return (
     <Form<PreRegistrationValues, typeof schema>
       className="w-72 mx-auto space-y-2"
-      onSubmit={async (values) => {
-        // await login(values);
+      onSubmit={(values) => {
+        setPreRegistrationData(values);
         onSuccess();
       }}
       schema={schema}

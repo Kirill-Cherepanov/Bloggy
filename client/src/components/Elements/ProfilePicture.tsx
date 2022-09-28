@@ -17,10 +17,7 @@ export function ProfilePicture({ src, className = '' }: ProfilePictureProps) {
     <img
       src={base + (src || currentProfilePic)}
       alt="Profile"
-      className={clsx(
-        'aspect-square rounded-full object-cover w-36',
-        className
-      )}
+      className={clsx('aspect-square rounded-full object-cover', className)}
     />
   );
 }

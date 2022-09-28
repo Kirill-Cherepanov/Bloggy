@@ -40,19 +40,25 @@ export function Settings() {
           >
             General
           </button>
-          <button
-            onClick={() => setTabOpen('blog')}
-            className={
-              'rounded-md px-2 py-0.5 flex items-center text-lg ml-2 relative hover:bg-secondary-300 ' +
-              (tabOpen === 'blog'
-                ? 'bg-secondary-200 before:h-6 before:inline-block before:absolute before:-left-2 before:w-1 before:rounded-md before:bg-accent-600'
-                : '')
-            }
-          >
-            Blog
-          </button>
+          {user.blog && (
+            <button
+              onClick={() => setTabOpen('blog')}
+              className={
+                'rounded-md px-2 py-0.5 flex items-center text-lg ml-2 relative hover:bg-secondary-300 ' +
+                (tabOpen === 'blog'
+                  ? 'bg-secondary-200 before:h-6 before:inline-block before:absolute before:-left-2 before:w-1 before:rounded-md before:bg-accent-600'
+                  : '')
+              }
+            >
+              Blog
+            </button>
+          )}
         </div>
-        {tabOpen === 'general' ? <AccountSettings /> : <BlogSettings />}
+        {tabOpen === 'general' ? (
+          <AccountSettings />
+        ) : (
+          <BlogSettings changeTab={() => setTabOpen('general')} />
+        )}
       </div>
     </main>
   );

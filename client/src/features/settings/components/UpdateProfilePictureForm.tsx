@@ -22,7 +22,7 @@ export function UpdateProfilePictureForm() {
         Profile picture
       </label>
       <div className="flex gap-5 mb-10">
-        <ProfilePicture />
+        <ProfilePicture className="h-36" />
         <div className="flex flex-col justify-evenly">
           <SettingsButton
             variant="simple"

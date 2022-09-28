@@ -5,7 +5,9 @@ export type UpdateUserValues = {
   email?: string;
   username?: string;
   'profile-picture'?: string;
-  blog?: Partial<BlogData>;
+  blog?: Partial<BlogData> & {
+    shouldDelete?: true;
+  };
 };
 
 export type ConfirmPasswordValues = {
