@@ -53,7 +53,8 @@ authRouter.post('/registration', async (req, res) => {
       },
     };
     const user = await new User(userData).save();
-    const { password: p_, ...protectedData } = user._doc;
+
+    const { password: p_, __v, _id, updatedAt, ...protectedData } = user._doc;
 
     const refreshToken = jwt.sign(
       {
@@ -76,28 +77,28 @@ authRouter.post('/registration', async (req, res) => {
   }
 });
 
-// login TESTED
+// login
 authRouter.post('/login', async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ email: req.body.email });
     if (user === null) return res.status(400).json('Wrong credentials!');
 
     const validated = await bcrypt.compare(req.body.password, user.password);
     if (!validated) return res.status(400).json('Wrong credentials!');
 
-    const { password, ...protectedData } = user._doc;
+    const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
     const accessToken = generateAccessToken(user.username, user.email);
     const refreshToken = jwt.sign(
       {
-        email: protectedData.email,
-        username: protectedData.username,
+        username: user.username,
+        email: user.email,
       },
       process.env.REFRESH_TOKEN_SECRET!
     );
 
-    res.cookie('refresh_token', refreshToken, { httpOnly: true });
     res.cookie('access-token', accessToken, { httpOnly: true });
+    res.cookie('refresh-token', refreshToken, { httpOnly: true });
 
     res.status(200).json({ user: protectedData });
   } catch (err: any) {
@@ -112,29 +113,44 @@ authRouter.post('/login', async (req, res) => {
 authRouter.get('/token', async (req, res) => {
   try {
     const refreshToken: string | undefined = req.cookies['refresh-token'];
-    if (!refreshToken) return res.status(200).json({ isLoggedIn: false });
+    if (!refreshToken) {
+      return res
+        .status(200)
+        .json({ message: 'No refresh token', isLoggedIn: false });
+    }
 
-    const { err, decoded: userData } = await verifyToken(
+    const verificationRes = await verifyToken(
       refreshToken,
       process.env.REFRESH_TOKEN_SECRET!
     );
 
-    if (err) return res.status(200).json({ isLoggedIn: false });
+    if ('err' in verificationRes) {
+      return res.status(200).json({
+        message: 'Refresh token verification error',
+        isLoggedIn: false,
+      });
+    }
+
+    const userData = verificationRes.decoded;
 
     if (typeof userData === 'string' || userData === undefined) {
       console.error('The user is incorrect. User: ' + userData);
       return res.status(500).json('Oops... Something went very wrong!');
     }
 
-    const user = await User.findOne({ userData });
-    if (!user) return res.status(200).json({ isLoggedIn: false });
+    const user = await User.findOne({ ...userData });
+    if (!user) {
+      return res
+        .status(200)
+        .json({ message: 'User does not exist', isLoggedIn: false });
+    }
 
-    const { password, __v, ...userInfo } = user._doc;
+    const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
     const accessToken = generateAccessToken(user.username, user.email);
     res.cookie('access-token', accessToken, { httpOnly: true });
 
-    res.status(200).json({ user: userInfo, isLoggedIn: true });
+    res.status(200).json({ user: protectedData, isLoggedIn: true });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -156,9 +172,9 @@ authRouter.get('/self', async (req, res) => {
     const user = await User.findOne(verificationRes);
     if (!user) return res.status(401).json('User not found');
 
-    const { password, __v, ...userInfo } = user._doc;
+    const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
-    res.status(200).json({ user: userInfo });
+    res.status(200).json({ user: protectedData });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -176,16 +192,13 @@ authRouter.delete('/logout', (req, res) => {
 // reset password
 authRouter.post('/reset-password', async (req, res) => {
   try {
-    const verificationRes = await verifyAccessToken(
-      req.cookies['access-token']
-    );
-    if (verificationRes.err === true) {
-      return res.status(verificationRes.status).json(verificationRes.message);
+    const { newPassword, confirmationMessage, email } = req.body;
+
+    if (typeof email !== 'string' || !email) {
+      return res.status(400).json('Incorrect email value');
     }
 
-    const { newPassword, confirmationMessage } = req.body;
-
-    const user = await User.findOne(verificationRes);
+    const user = await User.findOne({ email });
     if (user === null) return res.status(500).json(`User was not found`);
 
     const emailVerified = await handleEmailVerification(
@@ -200,16 +213,16 @@ authRouter.post('/reset-password', async (req, res) => {
     }
 
     const passwordError = validatePassword(newPassword);
-    if (passwordError) res.status(400).json('Incorrect password!');
+    if (passwordError) return res.status(400).json('Incorrect password!');
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
     user.password = hashedPassword;
     user.save();
 
-    const { password, __v, ...userInfo } = user._doc;
+    const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
-    res.status(200).json({ user: userInfo, status: 'success' });
+    res.status(200).json({ user: protectedData, status: 'success' });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

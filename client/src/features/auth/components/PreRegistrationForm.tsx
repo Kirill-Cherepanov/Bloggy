@@ -49,7 +49,7 @@ export function PreRegistrationForm({
             registration={register('username')}
           />
 
-          <div className="flex flex-col !mt-5">
+          <div className="flex flex-col !mt-7">
             <Button type="submit">Sign up</Button>
             <div className="text-center my-1.5 font-semibold text-sm">OR</div>
             <Button variant="secondary" onClick={swapForm}>

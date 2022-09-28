@@ -26,7 +26,7 @@ const updloadFields = upload.fields([
 
 // update profile picture
 settingsRouter.put(
-  '/profile-pic',
+  '/profile-picture',
   upload.single('profile-picture'),
   async (req, res) => {
     try {
@@ -36,9 +36,7 @@ settingsRouter.put(
         return res.status(verificationRes.status).json(verificationRes.message);
       }
 
-      if (!req.files || !('profile-picture' in req.files)) {
-        return res.status(400).json('No profile picture');
-      }
+      if (!req.file) return res.status(400).json('No profile picture');
 
       const user = await User.findOne({ username: verificationRes.username });
       if (user === null) {
@@ -53,7 +51,7 @@ settingsRouter.put(
         });
       }
 
-      const newProfilePic = req.files['profile-picture'][0];
+      const newProfilePic = req.file;
 
       const filename =
         path.parse(newProfilePic.originalname).name +
@@ -100,7 +98,11 @@ settingsRouter.patch('/data', async (req, res) => {
       blog?: { shouldDelete?: boolean };
     } = getUserData(req.body);
 
-    if (updatedUserData.password || updatedUserData.email) {
+    if (
+      updatedUserData.password ||
+      updatedUserData.email ||
+      updatedUserData.username
+    ) {
       if (!updatedUserData['old-password']) {
         return res.status(500).json('Old password was not sent');
       }
@@ -168,7 +170,11 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
       blog?: { shouldDelete?: boolean };
     } = getUserData(sentData);
 
-    if (updatedUserData.password || updatedUserData.email) {
+    if (
+      updatedUserData.password ||
+      updatedUserData.email ||
+      updatedUserData.username
+    ) {
       if (!updatedUserData['old-password']) {
         return res.status(500).json('Old password was not sent');
       }

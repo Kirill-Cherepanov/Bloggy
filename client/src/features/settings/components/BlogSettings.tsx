@@ -20,7 +20,7 @@ type BlogValues = {
 export function BlogSettings() {
   const blog = useAppSelector((state) => state.authSlice.user?.blog);
   const [categories, setCategories] = useState<string[]>(
-    blog?.categories ?? []
+    blog?.categories || []
   );
   const [updateUser] = useUpdateUserMutation();
 

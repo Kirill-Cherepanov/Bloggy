@@ -1,37 +1,40 @@
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
-import { Logo, Drawer } from 'components/Elements';
 import { LoginForm, PreRegistrationForm } from '.';
+import { Logo, Drawer } from 'components/Elements';
 
 type AuthDrawerProps = {
   closeMenu: () => unknown;
   authType: 'login' | 'signup';
-  toggleType: () => unknown;
 };
 
-export function AuthDrawer({
-  closeMenu,
-  authType,
-  toggleType,
-}: AuthDrawerProps) {
+export function AuthDrawer({ closeMenu, authType = 'login' }: AuthDrawerProps) {
+  const [type, setType] = useState(authType);
   const navigate = useNavigate();
 
   return (
-    <Drawer id="authentification" closeMenu={closeMenu}>
-      <Logo size="sm" variant="dark" className="my-2 mb-4 text-center" />
-      <h3 className="font-display font-bold text-center text-3xl mt-4 mb-6">
+    <Drawer id="authentification" closeMenu={closeMenu} className="pb-20">
+      <Logo size="sm" variant="dark" className="my-2 mb-8 block text-center" />
+      <h3 className="font-display font-bold text-center text-3xl mb-6">
         Welcome to Bloggy
       </h3>
 
-      {authType === 'login' ? (
+      {type === 'login' ? (
         <LoginForm
-          onSuccess={() => navigate('/blog/KissMyUSSR')}
-          swapForm={toggleType}
+          onSuccess={() => {
+            navigate('/blog/KissMyUSSR');
+            closeMenu();
+          }}
+          swapForm={() => setType('signup')}
         />
       ) : (
         <PreRegistrationForm
-          onSuccess={() => navigate('/registration')}
-          swapForm={toggleType}
+          onSuccess={() => {
+            navigate('/registration');
+            closeMenu();
+          }}
+          swapForm={() => setType('login')}
         />
       )}
     </Drawer>

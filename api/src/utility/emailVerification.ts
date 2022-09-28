@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASSWORD,
+    pass: process.env.APP_PASSWORD,
   },
 });
 
@@ -32,7 +32,7 @@ const getMailMessage = (email: string, message: string) => ({
   font-size: 1.25rem;">Message: <b style="padding: 2px; background-color: #ccc;">${message}</b></p><p><i>This message will expire in 20 minutes</i></p>`,
 });
 
-const sendNewConfirmation = (email: string) => {
+const sendNewConfirmation = (email: string): Promise<void> => {
   const message = getNewMessage();
 
   new Confirmation({
@@ -40,42 +40,50 @@ const sendNewConfirmation = (email: string) => {
     message,
   }).save();
 
-  transporter.sendMail(
-    getMailMessage(email, message),
-    (err) => err ?? console.error(err)
-  );
+  return new Promise<void>((resolve, reject) => {
+    transporter.sendMail(getMailMessage(email, message), (err) =>
+      err ? reject(err) : resolve()
+    );
+  });
 };
 
 export const handleEmailVerification = async (
   email: string,
   message: string | undefined | null
 ): Promise<{ status: number; message: string }> => {
-  if (!validateEmail(email)) return { status: 400, message: 'Incorrect email' };
+  try {
+    if (!validateEmail(email))
+      return { status: 400, message: 'Incorrect email' };
 
-  const confirmation = await Confirmation.findOne({ email });
+    const confirmation = await Confirmation.findOne({ email });
 
-  if (!confirmation) {
-    sendNewConfirmation(email);
-    return {
-      status: 200,
-      message: `message sent`,
-    };
+    if (!confirmation) {
+      await sendNewConfirmation(email);
+
+      return {
+        status: 200,
+        message: `message sent`,
+      };
+    }
+
+    if (!message) {
+      await Confirmation.findOneAndDelete({ email });
+
+      await sendNewConfirmation(email);
+
+      return {
+        status: 200,
+        message: `message sent`,
+      };
+    }
+
+    if (confirmation.message !== message) {
+      return { status: 400, message: 'Incorrect verification message' };
+    }
+
+    return { status: 200, message: 'success' };
+  } catch (err: any) {
+    console.error(err);
+    throw Error('Email verification error');
   }
-
-  if (!message) {
-    await Confirmation.findOneAndDelete({ email });
-
-    sendNewConfirmation(email);
-
-    return {
-      status: 200,
-      message: `message sent`,
-    };
-  }
-
-  if (confirmation.message !== message) {
-    return { status: 400, message: 'Incorrect verification message' };
-  }
-
-  return { status: 200, message: 'success' };
 };

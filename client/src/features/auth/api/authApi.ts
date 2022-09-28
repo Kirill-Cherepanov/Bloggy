@@ -91,10 +91,14 @@ export const authApi = generalApi.injectEndpoints({
         url: '/auth/reset-password',
         method: 'POST',
         credentials: 'include',
-        body: values && {
-          ...values,
-          confirmationMessage: values['confirm-email'],
-        },
+        body:
+          'confirm-email' in values
+            ? {
+                ...values,
+                newPassword: values['new-password'],
+                confirmationMessage: values['confirm-email'],
+              }
+            : values,
       }),
       async onQueryStarted(args, api) {
         try {

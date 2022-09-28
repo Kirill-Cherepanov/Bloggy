@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { ProfilePicture } from 'components/Elements';
 import { useAppSelector } from 'stores/globalStore';
 import { inputFiles } from 'utility/inputFiles';
 import { useUpdateProfilePicMutation } from '../api/settingsApi';
@@ -17,15 +18,11 @@ export function UpdateProfilePictureForm() {
 
   return (
     <>
-      <label htmlFor="profile-pic" className="block mb-2 ml-2">
+      <label htmlFor="profile-picture" className="block mb-2 ml-2">
         Profile picture
       </label>
       <div className="flex gap-5 mb-10">
-        <img
-          src={user['profile-pic']}
-          alt="Profile"
-          className="aspect-square rounded-full object-cover w-36"
-        />
+        <ProfilePicture />
         <div className="flex flex-col justify-evenly">
           <SettingsButton
             variant="simple"
@@ -46,7 +43,7 @@ export function UpdateProfilePictureForm() {
               if (!newProfilePic) return;
 
               const data = new FormData();
-              data.append('profile-pic', newProfilePic.file);
+              data.append('profile-picture', newProfilePic.file);
               updateProfilePic(data);
             }}
           >

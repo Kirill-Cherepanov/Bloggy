@@ -1,4 +1,3 @@
-import path from 'path';
 import mongoose from 'mongoose';
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -20,7 +19,7 @@ mongoose
 
 app.use(cookieParser());
 app.use(express.json());
-app.use('/api/images', express.static(path.join(__dirname, '/images')));
+app.use('/api/images', express.static('images'));
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);

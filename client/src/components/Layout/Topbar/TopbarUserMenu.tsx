@@ -79,15 +79,7 @@ export function TopbarUserMenu() {
         </div>
       </div>
       {!authOpen ? null : (
-        <AuthDrawer
-          closeMenu={() => setAuthOpen(false)}
-          authType={authOpen}
-          toggleType={() =>
-            setAuthOpen((authOpen) =>
-              authOpen === 'login' ? 'signup' : 'login'
-            )
-          }
-        />
+        <AuthDrawer closeMenu={() => setAuthOpen(false)} authType={authOpen} />
       )}
     </div>
   );

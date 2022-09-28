@@ -2,41 +2,51 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Icon } from 'components/Elements';
+import { useAppSelector } from 'stores/globalStore';
+import { useLogoutMutation } from 'features/auth';
+import { AuthDrawer } from 'features/auth';
+import { useDisclosure } from 'hooks';
 
 export function Footer() {
+  const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
+  const [logout] = useLogoutMutation();
   const [followBoxParams, setFollowBoxParams] = useState({
     width: 0,
     top: 0,
     left: 0,
   });
+  const authDisclosure = useDisclosure();
 
   return (
     <footer className="bg-secondary-900 text-secondary-200 z-10 relative">
-      <div className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
-        <div className="text-center lg:flex justify-center items-center gap-6">
-          <div>
-            <div className="text-2xl xs:text-3xl font-semibold md:font-bold uppercase">
-              Sign up now
+      {isLoggedIn || (
+        <div className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
+          <div className="text-center lg:flex justify-center items-center gap-6">
+            <div>
+              <div className="text-2xl xs:text-3xl font-semibold md:font-bold uppercase">
+                Sign up now
+              </div>
+              <div className="tracking-tight text-sm font-medium md:font-semibold md:text-base xs:text-lg uppercase mb-4 lg:mb-0">
+                Become one of our exclusive first members
+              </div>
             </div>
-            <div className="tracking-tight text-sm font-medium md:font-semibold md:text-base xs:text-lg uppercase mb-4 lg:mb-0">
-              Become one of our exclusive first members
-            </div>
+            <form className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start">
+              <input
+                type="text"
+                placeholder="Enter your email adress here"
+                className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
+              />
+              <Link
+                to="/registration"
+                className="flex items-center justify-center bg-secondary-900 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600"
+              >
+                Sign up
+              </Link>
+            </form>
           </div>
-          <form className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start">
-            <input
-              type="text"
-              placeholder="Enter your email adress here"
-              className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
-            />
-            <Link
-              to="/sign-up"
-              className="flex items-center justify-center bg-secondary-900 min-h-[40px] h-full text-main w-32 uppercase font-bold hover:text-accent-600"
-            >
-              Sign up
-            </Link>
-          </form>
         </div>
-      </div>
+      )}
+
       <ul className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 pt-5 lg:pt-8 hidden sm:flex justify-center gap-3 relative flex-wrap">
         {Array(20)
           .fill('Music')
@@ -58,9 +68,10 @@ export function Footer() {
           className="FOOOTER-FOLLOW-BORDER pointer-events-none opacity-0 absolute border border-accent-400 rounded-sm px-1 transition-all"
           style={followBoxParams}
         >
-          <span className="opacity-0">a{/* needed to measure height*/}</span>
+          <span className="opacity-0">a{/* is needed to measure height*/}</span>
         </li>
       </ul>
+
       <div className="max-w-7xl mx-auto py-5 lg:py-8 flex flex-col">
         <ul className="px-4 xs:px-8 sm:px-12 md:px-20 py-5 border-main border-opacity-10 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">
           <li className="hover:text-accent-400">
@@ -74,15 +85,26 @@ export function Footer() {
             </Link>
           </li>
           <li className="hover:text-accent-400">
-            <Link className="link" to="/contact">
+            <Link className="link" to="/contacts">
               Contacts
             </Link>
           </li>
           <li className="hover:text-accent-400 cursor-pointer">
-            <Link to="/login">Sign in</Link>
-            {/* Log out */}
+            {isLoggedIn ? (
+              <button
+                onClick={() => {
+                  logout();
+                  window.location.replace('/');
+                }}
+              >
+                Logout
+              </button>
+            ) : (
+              <button onClick={authDisclosure.open}>Sign in</button>
+            )}
           </li>
         </ul>
+
         <div className="px-4 xs:px-8 sm:px-12 md:px-20 mt-5 lg:mt-8 flex justify-center items-center flex-wrap sm:flex-nowrap">
           <div className="text-lg xs:text-xl md:text-2xl font-bold font-display basis-1/3 shrink-0 grow sm:basis-48 sm:shrink-1">
             2022
@@ -108,6 +130,9 @@ export function Footer() {
           </ul>
         </div>
       </div>
+      {authDisclosure.isOpen && (
+        <AuthDrawer closeMenu={authDisclosure.close} authType="login" />
+      )}
     </footer>
   );
 }

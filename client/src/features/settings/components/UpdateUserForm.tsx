@@ -10,7 +10,7 @@ import { ConfirmPasswordForm } from './';
 import { useUpdateUserMutation } from '../api/settingsApi';
 
 type UpdateUserFormProps = {
-  updateSelector: keyof Omit<PrivateData, 'blog' | 'profile-pic'>;
+  updateSelector: keyof Omit<PrivateData, 'blog' | 'profilePic'>;
   className?: string;
 };
 

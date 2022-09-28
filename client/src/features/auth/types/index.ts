@@ -11,7 +11,10 @@ export type LoginValues = {
   password: string;
 };
 
-export type ResetPasswordValues = {
-  'new-password': string;
-  'confirm-email': string;
-} | void;
+export type ResetPasswordValues =
+  | {
+      email: string;
+      'new-password': string;
+      'confirm-email': string;
+    }
+  | { email: string };

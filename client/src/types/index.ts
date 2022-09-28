@@ -5,7 +5,7 @@ export type BlogData = {
 };
 export type PublicData = {
   username: string;
-  'profile-pic'?: string;
+  profilePic?: string;
   blog?: BlogData;
 };
 export interface ProtectedData extends PublicData {

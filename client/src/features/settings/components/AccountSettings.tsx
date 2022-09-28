@@ -1,6 +1,6 @@
 import { useAppSelector } from 'stores/globalStore';
 import { useDisclosure } from 'hooks';
-import { useResetPasswordMutation } from 'features/auth';
+import { ResetPasswordForm, useLogoutMutation } from 'features/auth';
 import {
   useDeleteUserMutation,
   useUpdateUserMutation,
@@ -8,7 +8,6 @@ import {
 import {
   SettingsButton,
   UpdateUserForm,
-  ResetPasswordForm,
   UpdateProfilePictureForm,
   ConfirmPasswordForm,
 } from './';
@@ -16,11 +15,12 @@ import {
 export function AccountSettings() {
   const user = useAppSelector((state) => state.authSlice.user);
 
+  const [logout] = useLogoutMutation();
   const [updateUser] = useUpdateUserMutation();
-  const [resetPassword] = useResetPasswordMutation();
   const [deleteAccount] = useDeleteUserMutation();
 
-  const confirmEmailDisclosure = useDisclosure();
+  const resetPasswordDisclosure = useDisclosure();
+  const deleteAccountDisclosure = useDisclosure();
 
   if (user === null) throw Error('User data is null!');
 
@@ -35,19 +35,14 @@ export function AccountSettings() {
       </div>
 
       <button
+        type="button"
         className="block text-sm text-secodary-600 hover:underline mb-8"
-        onClick={() => {
-          resetPassword();
-          confirmEmailDisclosure.open();
-        }}
+        onClick={() => resetPasswordDisclosure.open()}
       >
-        Forgot your password?
+        Reset password
       </button>
-      {confirmEmailDisclosure.isOpen && (
-        <ResetPasswordForm
-          closeMenu={confirmEmailDisclosure.close}
-          onSuccess={resetPassword}
-        />
+      {resetPasswordDisclosure.isOpen && (
+        <ResetPasswordForm closeMenu={resetPasswordDisclosure.close} />
       )}
 
       <UpdateProfilePictureForm />
@@ -61,16 +56,25 @@ export function AccountSettings() {
         <SettingsButton
           variant="danger"
           onClick={() => {
+            logout();
+            window.location.replace('/');
+          }}
+        >
+          Logout
+        </SettingsButton>
+        <SettingsButton
+          variant="danger"
+          onClick={() => {
             deleteAccount();
-            confirmEmailDisclosure.open();
+            deleteAccountDisclosure.open();
           }}
         >
           Delete account
         </SettingsButton>
       </div>
-      {confirmEmailDisclosure.isOpen && (
+      {deleteAccountDisclosure.isOpen && (
         <ConfirmPasswordForm
-          closeMenu={confirmEmailDisclosure.close}
+          closeMenu={deleteAccountDisclosure.close}
           onSuccess={async (values) => {
             const response = await deleteAccount(values);
 

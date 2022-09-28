@@ -4,7 +4,7 @@ export type UpdateUserValues = {
   password?: string;
   email?: string;
   username?: string;
-  'profile-pic'?: string;
+  'profile-picture'?: string;
   blog?: Partial<BlogData>;
 };
 
