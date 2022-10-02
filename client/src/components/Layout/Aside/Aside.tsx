@@ -3,12 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { getPostsData } from 'utility/mockData';
 import { TinyPost } from 'features/blogs&posts';
 
-type Props = {
+type AsideProps = {
   shouldRenderPopular?: boolean;
-  children?: JSX.Element;
+  children?: React.ReactNode;
 };
 
-export function Aside({ children, shouldRenderPopular = true }: Props) {
+export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
   const maxHeightElement = useRef<HTMLDivElement | null>(null);
   const minHeightElement = useRef<HTMLElement | null>(null);
   const [amountOfPosts, setAmountOfPosts] = useState(0);
@@ -21,6 +21,7 @@ export function Aside({ children, shouldRenderPopular = true }: Props) {
     if (newAmountOfPosts < 0) return;
     if (newAmountOfPosts > 5) newAmountOfPosts = 5;
 
+    // Need to fix this
     setAmountOfPosts(newAmountOfPosts);
     setTimeout(() => setAmountOfPosts(newAmountOfPosts), 500);
     setTimeout(() => setAmountOfPosts(newAmountOfPosts), 1000);
@@ -40,7 +41,7 @@ export function Aside({ children, shouldRenderPopular = true }: Props) {
           </h3>
           <ul>
             {getPostsData(amountOfPosts).map((postData) => (
-              <TinyPost key={postData._id} {...postData} />
+              <TinyPost key={postData._id} postData={postData} />
             ))}
           </ul>
         </div>

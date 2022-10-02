@@ -5,7 +5,7 @@ import { Form, InputField } from 'components/Form';
 import { Button } from 'components/Elements';
 import { LoginValues } from '../types';
 import { useLoginMutation } from '../api/authApi';
-import { ResetPasswordForm } from './';
+import { ResetPasswordForm } from '.';
 
 const schema = z.object({
   email: z.string().email(),

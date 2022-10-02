@@ -49,43 +49,43 @@
   }
 
   /* MARKDOWN PREVIEW */
-  .custom-markdown-preview {
+  .custom-markdown {
     @apply bg-main;
   }
-  .custom-markdown-preview h1 {
-    @apply text-3xl font-bold;
+  .custom-markdown h1 {
+    @apply text-3xl font-bold leading-[3.5rem];
   }
-  .custom-markdown-preview h2 {
-    @apply text-2xl font-bold;
+  .custom-markdown h2 {
+    @apply text-2xl font-bold leading-10;
   }
-  .custom-markdown-preview h3 {
+  .custom-markdown h3 {
     @apply text-xl font-bold;
   }
-  .custom-markdown-preview h4 {
+  .custom-markdown h4 {
     @apply text-lg font-bold;
   }
-  .custom-markdown-preview h5,
-  .custom-markdown-preview h6 {
+  .custom-markdown h5,
+  .custom-markdown h6 {
     @apply font-bold;
   }
-  .custom-markdown-preview blockquote {
+  .custom-markdown blockquote {
     @apply bg-secondary-100 border-l-8 border-secondary-400 my-4 mx-2 py-1 px-2;
     quotes: "\201C""\201D""\2018""\2019";
   }
-  .custom-markdown-preview blockquote:before {
+  .custom-markdown blockquote:before {
     @apply text-secondary-400 content-[open-quote] text-5xl leading-[0.1rem] mr-1;
     vertical-align: -0.4em;
   }
-  .custom-markdown-preview blockquote p {
+  .custom-markdown blockquote p {
     @apply inline;
   }
-  .custom-markdown-preview ul {
+  .custom-markdown ul {
     @apply list-disc pl-7;
   }
-  .custom-markdown-preview ol {
+  .custom-markdown ol {
     @apply list-decimal pl-7;
   }
-  .custom-markdown-preview a {
+  .custom-markdown a {
     @apply text-accent-800 underline;
   }
 

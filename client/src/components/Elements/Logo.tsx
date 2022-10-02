@@ -7,6 +7,7 @@ const variants = {
 
 const sizes = {
   lg: 'text-4xl xs:text-5xl',
+  md: 'text-4xl',
   sm: 'text-3xl',
 };
 

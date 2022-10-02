@@ -121,7 +121,7 @@ export function Landing() {
             <LargePost
               {...getPostsData(1)[0]}
               color="#F50B94"
-              className="shadow-lg transition-transform hover:scale-105 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto lg:col-start-2"
+              className="h-80 sm:h-100 md:h-[440px] lg:h-auto shadow-lg transition-transform hover:scale-105 row-start-1 lg:row-end-4 lg:col-start-2"
               textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:h-64"
             />
             {getPostsData(3).map((postData) => (

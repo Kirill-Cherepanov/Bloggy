@@ -1,4 +1,4 @@
-export default function getRelativeCursorPos(e: React.MouseEvent) {
+export function getRelativeCursorPos(e: React.MouseEvent) {
   const x =
     e.clientX - (e.currentTarget as HTMLDivElement).getBoundingClientRect().x;
   const y =

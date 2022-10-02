@@ -4,7 +4,9 @@ const WEEK = DAY * 7;
 const MONTH = DAY * 31;
 const YEAR = DAY * 365;
 
-export default function formatDate(date: Date) {
+export function formatDate(date_: Date | string) {
+  const date = typeof date_ === 'string' ? new Date(date_) : date_;
+
   const yearsPassed = Math.floor((Date.now() - date.getTime()) / YEAR);
   const monthsPassed = Math.floor((Date.now() - date.getTime()) / MONTH);
   const weeksPassed = Math.floor((Date.now() - date.getTime()) / WEEK);

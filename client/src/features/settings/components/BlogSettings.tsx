@@ -4,7 +4,7 @@ import * as z from 'zod';
 import { Form, TextAreaField } from 'components/Form';
 import { Picker, Tooltip } from 'components/Elements';
 import { useUpdateUserMutation } from '../api/settingsApi';
-import { SettingsButton } from './';
+import { SettingsButton } from '.';
 import { useAppSelector } from 'stores/globalStore';
 
 const schema = z.object({

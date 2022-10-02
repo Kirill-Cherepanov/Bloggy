@@ -7,10 +7,11 @@ import 'swiper/css/effect-flip';
 
 import { Icon } from 'components/Elements';
 import { LargePost } from '.';
+import { PostData } from 'types';
 
-type Props = { postsData: Post[]; className?: string };
+type PostSwiperProps = { postsData: PostData[]; className?: string };
 
-export function PostSwiper({ postsData, className }: Props) {
+export function PostSwiper({ postsData, className }: PostSwiperProps) {
   return (
     <div className={'w-full flex items-center ' + (className || '')}>
       <Swiper

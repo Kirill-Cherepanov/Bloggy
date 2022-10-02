@@ -8,7 +8,7 @@ export type SearchParams = {
   time: 'week' | 'month' | 'year' | 'all';
   page: number;
 };
-type SearchQuery = any; // I'm to lazy to write a huge type for this thing. Maybe later...
+type SearchQuery = any; // I'm too lazy to write a huge type for this thing. Maybe later...
 
 class SearchDb {
   protected DEFAULT_PARAMS: SearchParams = {

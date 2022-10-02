@@ -10,7 +10,7 @@ import {
   UpdateUserForm,
   UpdateProfilePictureForm,
   ConfirmPasswordForm,
-} from './';
+} from '.';
 
 export function AccountSettings() {
   const user = useAppSelector((state) => state.authSlice.user);

@@ -6,11 +6,11 @@ import { PrivateData } from 'types';
 import { useAppSelector } from 'stores/globalStore';
 import { Form, ButtonInputField } from 'components/Form';
 import { capitalize } from 'utility/functionsOnStrings';
-import { ConfirmPasswordForm } from './';
+import { ConfirmPasswordForm } from '.';
 import { useUpdateUserMutation } from '../api/settingsApi';
 
 type UpdateUserFormProps = {
-  updateSelector: keyof Omit<PrivateData, 'blog' | 'profilePic'>;
+  updateSelector: keyof Omit<PrivateData, 'blog' | 'profilePic' | 'createdAt'>;
   className?: string;
 };
 

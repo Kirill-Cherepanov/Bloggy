@@ -1,7 +1,9 @@
 import React from 'react';
 
+export type IconTypes = keyof typeof ICONS;
+
 type IconProps = {
-  type: keyof typeof ICONS;
+  type: IconTypes;
   className?: string;
   style?: React.CSSProperties | undefined;
 };

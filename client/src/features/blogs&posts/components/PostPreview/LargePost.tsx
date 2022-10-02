@@ -1,113 +1,119 @@
-import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import formatDate from 'utility/formatDate';
+import { PostDataProp } from '../../types';
+import { useCalculateLines } from '../../hooks';
+import { LikeButton, PostInfo } from '.';
 import { Icon } from 'components/Elements';
 
-interface Props extends Post {
-  color?: string;
+const textBoxPositions = {
+  bottomLeft: 'left-0 bottom-8',
+};
+
+const sizes = {
+  md: {
+    wrapper: 'h-80 sm:h-100 md:h-[440px]',
+    textBox: 'w-5/6 h-40 sm:h-48 md:h-56',
+  },
+  none: { wrapper: '', textBox: '' },
+};
+
+const animationClass = 'transition-transform hover:scale-105';
+
+type LargePostProps = {
+  postData: PostDataProp;
   className?: string;
   textBoxClass?: string;
-}
+  textBoxPosition?: keyof typeof textBoxPositions;
+  size?: keyof typeof sizes;
+  shouldAnimate?: boolean;
+  color?: string;
+};
 
 export function LargePost({
-  _id,
-  title,
-  text,
-  image,
-  likes,
-  authorName,
-  createdAt,
+  postData,
   color,
-  className,
-  textBoxClass,
-  categories,
-}: Props) {
-  const [amountOfLines, setAmountOfLines] = useState(0);
-  const textBoxRef = useRef<HTMLDivElement | null>(null);
+  className = '',
+  textBoxClass = '',
+  textBoxPosition = 'bottomLeft',
+  size = 'md',
+  shouldAnimate = false,
+}: LargePostProps) {
+  const textBoxLineHeight = 24;
+  const { amountOfLines, textBoxRef } = useCalculateLines(textBoxLineHeight);
 
-  useEffect(() => {
-    const setLines = () => {
-      const lines = Math.floor(
-        textBoxRef.current!.getBoundingClientRect().height / 24
-      );
-      setAmountOfLines(lines);
-    };
-    window.addEventListener('resize', setLines);
-    setLines();
-    // There is a bug - that occures only from time to time - of lines not properly setting on mounting for some reason
-    setTimeout(setLines, 500);
-    setTimeout(setLines, 1000);
-
-    return () => {
-      window.removeEventListener('resize', setLines);
-    };
-  }, []);
+  const wrapper = postData._id ? <li /> : <div />;
 
   return (
-    <li className={'relative ' + (className || '')}>
-      <Link to={'/post/' + _id}>
-        <img
-          src={image}
-          alt="Post"
-          className="w-full h-full object-cover cursor-pointer"
-        />
-      </Link>
-      <div
-        className={
-          'flex flex-col absolute bg-opacity-40 bg-black shadow-lg text-white px-4 py-4 xs:px-6 md:px-8 ' +
-          (textBoxClass || '')
-        }
+    <wrapper.type
+      className={clsx(
+        'relative',
+        sizes[size].wrapper,
+        shouldAnimate && animationClass,
+        className
+      )}
+    >
+      {/* Post image */}
+      <Link
+        to={'/post/' + (postData._id || '')}
+        onClick={(e) => postData._id || e.preventDefault()}
+        className="flex items-center justify-center w-full h-full cursor-pointer bg-accent-200"
       >
-        <div
-          className="absolute p-1 top-0 left-8 -translate-y-1/2 flex justify-center items-center bg-accent-400 text-black font-display uppercase text-sm font-bold cursor-pointer hover:underline"
-          style={{ backgroundColor: color }}
-        >
-          {categories[0]}
-        </div>
+        {postData.image ? (
+          <img
+            src={postData.image}
+            alt="Post"
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <Icon type="image" className="h-4/5" />
+        )}
+      </Link>
+
+      <div
+        className={clsx(
+          'flex flex-col absolute bg-opacity-40 bg-black shadow-lg text-white px-4 py-4 xs:px-6 md:px-8',
+          sizes[size].textBox,
+          textBoxPositions[textBoxPosition],
+          textBoxClass
+        )}
+      >
+        {/* Main category */}
+        {postData.categories.length > 0 && (
+          <div
+            className="absolute p-1 top-0 left-8 -translate-y-1/2 flex justify-center items-center bg-accent-400 text-black font-display uppercase text-sm font-bold cursor-pointer hover:underline"
+            style={{ backgroundColor: color }}
+          >
+            {postData.categories[0]}
+          </div>
+        )}
+
+        {/* Post title */}
         <h3 className="mt-2 basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold xl:mb-2 text-2xl md:text-3xl">
-          <Link to={'/post/' + _id} className="hover:underline cursor-pointer">
-            {title}
+          <Link
+            to={'/post/' + (postData._id || '')}
+            onClick={(e) => postData._id || e.preventDefault()}
+            className="hover:underline cursor-pointer"
+          >
+            {postData.title}
           </Link>
         </h3>
+
+        {/* Post text */}
         <div className="basis-0 shrink grow mb-3 min-h-0" ref={textBoxRef}>
           <p
             className="font-extralight line-clamp-3 text-base"
             style={{ WebkitLineClamp: amountOfLines }}
           >
-            {amountOfLines ? text : ''}
+            {amountOfLines ? postData.description : ''}
           </p>
         </div>
-        <div className="flex justify-between items-center">
-          <div className="font-semibold flex items-center cursor-pointer group">
-            <span className="relative w-5 h-5 mr-2">
-              <Icon
-                type="heart-outline"
-                className="absolute top-0 left-0 w-full text-main group-hover:text-transparent"
-              />
-              <Icon
-                type="heart"
-                className="absolute top-0 left-0 w-full fill-transparent group-hover:fill-red-400"
-              />
-            </span>
-            {likes}
-          </div>
-          <div className="text-sm sm:text-base">
-            By{' '}
-            <Link
-              to={'/blog/' + authorName}
-              className="cursor-pointer font-bold hover:underline text-accent-600"
-              style={{ color }}
-            >
-              {authorName}
-            </Link>
-            <span className="mx-2">|</span>
-            <span className=" font-extralight text-sm md:text-base">
-              {formatDate(createdAt)}
-            </span>
-          </div>
+
+        <div className="flex justify-between items-end">
+          <LikeButton likes={postData.likes} />
+          <PostInfo {...postData} />
         </div>
       </div>
-    </li>
+    </wrapper.type>
   );
 }

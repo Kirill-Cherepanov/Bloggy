@@ -7,10 +7,9 @@ import { SearchPosts } from '../utility/SearchDb';
 import { upload } from '../utility/middleware';
 import { getCategories, validateJsonBlob } from '../utility/validations';
 import { verifyAccessToken } from '../utility/jsonTokens';
+import User from '../models/User';
 
 const postsRouter = express.Router();
-
-const authorName = 'test';
 
 const uploadFields = upload.fields([
   {
@@ -26,13 +25,14 @@ const uploadFields = upload.fields([
 // create post
 postsRouter.post('/', uploadFields, async (req, res) => {
   try {
-    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
     if (verificationRes.err === true) {
       return res.status(verificationRes.status).json(verificationRes.message);
     }
-    if (verificationRes.username !== req.params.username) {
-      return res.status(403).json('No access');
-    }
+    const user = await User.findOne(verificationRes);
+    if (!user?.blog) return res.status(400).json("User doesn't have a blog");
 
     const jsonBuffer = await validateJsonBlob(req.files);
     if (!jsonBuffer) throw Error('Incorrect request');
@@ -51,21 +51,27 @@ postsRouter.post('/', uploadFields, async (req, res) => {
       newPostData.image = filename;
 
       const filePath = './images/postImgs/' + filename;
-
       fs.writeFile(filePath, file.buffer, (err) => {
-        if (err) throw err;
+        if (!err) return;
+        console.error(err);
+        throw Error('Server error');
       });
     }
 
-    const newPost = new Post({ ...newPostData, ...{ authorName } });
-    res.status(200).json(await newPost.save());
-  } catch (err) {
-    res.status(500).json(err);
+    const newPost = new Post({ ...newPostData, authorName: user.username });
+    await newPost.save();
+
+    res.status(200).json({ success: true, post: newPost });
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 
 // update post
-postsRouter.put('/:id', uploadFields, async (req, res) => {
+postsRouter.patch('/:id', uploadFields, async (req, res) => {
   try {
     const verificationRes = await verifyAccessToken(req.body.accessToken);
     if (verificationRes.err === true) {
@@ -166,11 +172,10 @@ postsRouter.get('/', async (req, res) => {
 export default postsRouter;
 
 function getPostData(postData: Partial<TPost>) {
-  // Check if req.body.authorName is the same person as the authorized one
   const { likes, authorName, ...newPostData } = postData;
 
   if (postData.categories) {
-    newPostData.categories = getCategories(postData.categories);
+    newPostData.categories = getCategories(postData.categories).slice(0, 10);
   }
 
   return newPostData;

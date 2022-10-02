@@ -29,6 +29,7 @@ interface User extends import('mongoose').Document, TUser {
 type TPost = {
   title: string;
   text: string;
+  description: string;
   image: string;
   authorName: string;
   likes: number;

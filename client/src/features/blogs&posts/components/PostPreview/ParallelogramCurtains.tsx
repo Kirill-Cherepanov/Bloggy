@@ -1,22 +1,24 @@
+import clsx from 'clsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PostData } from 'types';
 
 import getRelativeCursorPos from 'utility/getRelativeCursorPos';
 import isMobile from 'utility/isMobile';
 
-type Props = {
-  postsData: Post[];
+type CurtainsProps = {
+  postsData: PostData[];
   className?: string;
 };
 
-export function ParallelogramCurtains({ postsData, className }: Props) {
+export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
   const [zoomedXPos, setZoomedXPos] = useState<number | undefined>();
   return (
     <ul
-      className={
-        'flex justify-between w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear pointer-events-none ' +
-        (className || '')
-      }
+      className={clsx(
+        'flex justify-between w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear pointer-events-none ',
+        className
+      )}
     >
       {postsData.map((postData, i) => (
         <li
@@ -28,26 +30,25 @@ export function ParallelogramCurtains({ postsData, className }: Props) {
             className="block w-[calc(100%+120px)]"
           >
             <div
-              className={
-                'overflow-hidden w-full h-80 ' +
-                (i === 0
+              className={clsx(
+                'overflow-hidden w-full h-80',
+                i === 0
                   ? 'clip-parallelogram-right'
                   : i === postsData.length - 1
                   ? 'clip-parallelogram-left'
-                  : 'clip-parallelogram')
-              }
+                  : 'clip-parallelogram'
+              )}
             >
               <div className="ml-[-10%] w-[120%] h-full">
                 <img
                   src={postData.image}
                   alt="Post"
                   onMouseMove={(e) => setZoomedXPos(getRelativeCursorPos(e).x)}
-                  className={
-                    'object-cover object-center h-full' +
-                    (isMobile()
-                      ? ''
-                      : ' transition-transform duration-200 ease-out group-hover:scale-110')
-                  }
+                  className={clsx(
+                    'object-cover object-center h-full',
+                    isMobile() ||
+                      'transition-transform duration-200 ease-out group-hover:scale-110'
+                  )}
                   style={{
                     transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
                   }}

@@ -19,12 +19,14 @@ export const FieldWrapper = (props: FieldWrapperProps) => {
   const { label, name, className, error, children } = props;
   return (
     <div>
-      <label
-        htmlFor={name}
-        className={clsx('block ml-2 font-light text-sm mb-1', className)}
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={name}
+          className={clsx('block ml-2 font-light text-sm mb-1', className)}
+        >
+          {label}
+        </label>
+      )}
       {children}
       {error?.message && (
         <div

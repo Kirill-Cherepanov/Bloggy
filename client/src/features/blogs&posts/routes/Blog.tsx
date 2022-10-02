@@ -1,39 +1,51 @@
-import { getPostsData, blogInfo } from 'utility/mockData';
-import { BlogCard, SmallPost, NormalPost, LargePost } from '../components';
+import { useParams } from 'react-router-dom';
 
-const renderPost = (postData: Post) => {
-  switch (postData.displayType) {
-    case 0:
-      return <NormalPost key={postData._id} {...postData} />;
-    case 1:
-      return <SmallPost key={postData._id} {...postData} />;
-    case 2:
-      return (
-        <LargePost
-          key={postData._id}
-          {...postData}
-          textBoxClass="bottom-0 w-5/6 h-full max-h-64"
-        />
-      );
-  }
-};
+import { useGetUserQuery } from '../api/usersApi';
+import { BlogCard } from '../components';
+import { useRenderPost } from '../hooks';
+import { PageNotFound } from 'features/misc';
+import { Spinner } from 'components/Elements';
+import { PublicData } from 'types';
 
 export function Blog() {
-  const postsData = getPostsData(10);
+  const { name } = useParams();
+  const { data, isFetching, isError, error } = useGetUserQuery(name!, {
+    skip: !name,
+  });
+  const renderPost = useRenderPost();
+
+  if (isFetching) {
+    return (
+      <div className="w-full h-100 flex items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!name || !data?.user?.blog) return <PageNotFound />;
+  if (isError) {
+    console.error(error);
+    return <PageNotFound />;
+  }
+
+  const user = data.user as Required<PublicData>;
+  const posts = data.posts;
 
   return (
     <main className="py-8 px-page">
       <div className="flex flex-row-reverse gap-4 xs:gap-8">
-        <BlogCard {...blogInfo} />
-        <div className="">
-          <div className="p-4 bg-accent-200 mb-6 rounded-md">
-            <h3 className="font-display font-semibold text-2xl mb-2">
-              Description
-            </h3>
-            <p>{blogInfo.description}</p>
-          </div>
+        <BlogCard {...user} />
+        <div className="grow">
+          {user.blog.description && (
+            <div className="w-full p-4 bg-accent-200 mb-6 rounded-md">
+              <h3 className="font-display font-semibold text-2xl mb-2">
+                Description
+              </h3>
+              <p>{user.blog.description}</p>
+            </div>
+          )}
           <ul className="[&>*]:mb-6 [&>*]:rounded-md [&>*:last-child]:mb-0">
-            {postsData.map((postData) => renderPost(postData))}
+            {posts.map((post) => renderPost(post))}
           </ul>
         </div>
       </div>

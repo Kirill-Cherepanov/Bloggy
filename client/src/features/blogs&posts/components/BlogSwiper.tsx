@@ -7,8 +7,7 @@ import 'swiper/css/a11y';
 import 'swiper/css/navigation';
 
 import { Icon } from 'components/Elements';
-
-type Props = { blogsInfo: Blog[] };
+import { PublicData } from 'types';
 
 const getSlidesAmount = () => {
   if (window.innerWidth >= 1200) return 4;
@@ -17,7 +16,9 @@ const getSlidesAmount = () => {
   return 1;
 };
 
-export function BlogSwiper({ blogsInfo }: Props) {
+type BlogSwiperProps = { blogsInfo: PublicData[] };
+
+export function BlogSwiper({ blogsInfo }: BlogSwiperProps) {
   const [slidesAmount, setSlidesAmount] = useState(getSlidesAmount());
   useEffect(() => {
     const setSlides = () => setSlidesAmount(getSlidesAmount());
@@ -44,41 +45,43 @@ export function BlogSwiper({ blogsInfo }: Props) {
         }}
         className="[--swiper-theme-color: #000000]"
       >
-        {/* <div className="BLOG_SWIPER_NEXT_ELEMENT" /> */}
-        {blogsInfo.map((blogInfo, i) => (
-          <SwiperSlide key={blogInfo._id + i} className="py-4">
-            <div className="px-4 py-2 bg-main shadow-lg transition-transform hover:scale-105 xs:mx-5 rounded-md">
-              <Link to={'/blog/' + blogInfo.username} className="block">
-                <img
-                  src={blogInfo.profilePic}
-                  alt="Blogger"
-                  className="mb-4 rounded-full aspect-square object-cover select-none cursor-pointer"
-                />
-              </Link>
-              <h4 className="font-bold text-lg text-center text-ellipsis overflow-hidden mb-1">
-                <Link
-                  to={'/blog/' + blogInfo.username}
-                  className="hover:underline"
-                >
-                  {blogInfo.username}
-                </Link>
-              </h4>
-              <div className="flex gap-4 mb-2 overflow-hidden flex-wrap h-7">
-                {blogInfo.categories.map((category) => (
-                  <span
-                    key={category}
-                    className="border border-dark inline-block h-full px-1 hover:border-accent-600 hover:text-accent-600 hover:shadow-md hover:shadow-accent-400 cursor-pointer"
-                  >
-                    {category}
-                  </span>
-                ))}
-              </div>
-              <div className="line-clamp-6 text-ellipsis">
-                {blogInfo.description}
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+        {blogsInfo.map(
+          (blogInfo, i) =>
+            blogInfo.blog && (
+              <SwiperSlide key={blogInfo.username + i} className="py-4">
+                <div className="px-4 py-2 bg-main shadow-lg transition-transform hover:scale-105 xs:mx-5 rounded-md">
+                  <Link to={'/blog/' + blogInfo.username} className="block">
+                    <img
+                      src={blogInfo.profilePic}
+                      alt="Blogger"
+                      className="mb-4 rounded-full aspect-square object-cover select-none cursor-pointer"
+                    />
+                  </Link>
+                  <h4 className="font-bold text-lg text-center text-ellipsis overflow-hidden mb-1">
+                    <Link
+                      to={'/blog/' + blogInfo.username}
+                      className="hover:underline"
+                    >
+                      {blogInfo.username}
+                    </Link>
+                  </h4>
+                  <div className="flex gap-4 mb-2 overflow-hidden flex-wrap h-7">
+                    {blogInfo.blog.categories.map((category) => (
+                      <span
+                        key={category}
+                        className="border border-dark inline-block h-full px-1 hover:border-accent-600 hover:text-accent-600 hover:shadow-md hover:shadow-accent-400 cursor-pointer"
+                      >
+                        {category}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="line-clamp-6 text-ellipsis">
+                    {blogInfo.blog.description}
+                  </div>
+                </div>
+              </SwiperSlide>
+            )
+        )}
       </Swiper>
       <Icon
         type="angle"

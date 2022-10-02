@@ -12,7 +12,11 @@ const PostSchema = new mongoose.Schema<Post>(
     },
     text: {
       type: String,
-      maxLength: [10000, 'Description must be 10000 characters at most'],
+      maxLength: [10000, 'Text must be 10000 characters at most'],
+    },
+    description: {
+      type: String,
+      maxLength: [300, 'Description must be 300 characters at most'],
     },
     image: String,
     authorName: {

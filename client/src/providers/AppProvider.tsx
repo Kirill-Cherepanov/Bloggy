@@ -21,8 +21,8 @@ const ErrorFallback = () => (
       Ooops, something went terribly wrong :(
     </h2>
     <Button
-      className="mt-4"
-      onClick={() => window.location.assign(window.location.origin)}
+      className="mt-4 w-40"
+      onClick={() => window.location.assign(window.location.href)}
     >
       Refresh
     </Button>

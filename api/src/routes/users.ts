@@ -13,17 +13,17 @@ usersRouter.get('/:username', async (req, res) => {
       return res.status(500).json(`User ${req.params.username} was not found!`);
     }
 
-    const { password, email, __v, ...userInfo } = user._doc;
+    const { password, email, __v, _id, updatedAt, ...publicInfo } = user._doc;
 
     let posts: TBlog[] = [];
-    if (userInfo.blog) {
+    if (publicInfo.blog) {
       posts = await searchBlogPosts(
         req.params.username,
         Number(req.query.page) || 1
       );
     }
 
-    res.status(200).json({ ...userInfo, posts });
+    res.status(200).json({ user: publicInfo, posts });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

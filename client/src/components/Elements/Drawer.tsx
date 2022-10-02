@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { createPortal } from 'react-dom';
 
-import { Icon } from './';
+import { Icon } from '.';
 
 type DrawerProps = {
   id: string;
