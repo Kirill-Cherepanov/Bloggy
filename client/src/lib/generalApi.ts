@@ -6,7 +6,7 @@ export const generalApi = createApi({
   reducerPath: 'general',
   baseQuery: customBaseQuery,
   endpoints: (builder) => ({
-    getImage: builder.query({
+    getImage: builder.query<File, string>({
       query: (image) => `/images/${image}`,
     }),
   }),

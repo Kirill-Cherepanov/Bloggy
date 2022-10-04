@@ -1,2 +1,2 @@
-export * from './useRenderPost';
+export * from './usePost';
 export * from './useCalculateLines';

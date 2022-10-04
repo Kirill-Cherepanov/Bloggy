@@ -31,11 +31,14 @@ postsRouter.post('/', uploadFields, async (req, res) => {
     if (verificationRes.err === true) {
       return res.status(verificationRes.status).json(verificationRes.message);
     }
+
     const user = await User.findOne(verificationRes);
-    if (!user?.blog) return res.status(400).json("User doesn't have a blog");
+    if (!user?.blog) {
+      return res.status(400).json("User doesn't have a blog or doesn't exist");
+    }
 
     const jsonBuffer = await validateJsonBlob(req.files);
-    if (!jsonBuffer) throw Error('Incorrect request');
+    if (!jsonBuffer) return res.status(400).json('Incorrect request');
     const sentData: Partial<TPost> = JSON.parse(jsonBuffer.buffer.toString());
 
     const newPostData = getPostData(sentData);
@@ -51,6 +54,7 @@ postsRouter.post('/', uploadFields, async (req, res) => {
       newPostData.image = filename;
 
       const filePath = './images/postImgs/' + filename;
+
       fs.writeFile(filePath, file.buffer, (err) => {
         if (!err) return;
         console.error(err);
@@ -153,8 +157,11 @@ postsRouter.delete('/:id', async (req, res) => {
 postsRouter.get('/:id', async (req, res) => {
   try {
     res.status(200).json(await Post.findById(req.params.id));
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 

@@ -64,7 +64,7 @@ export function SmallPost({
         </div>
 
         {/* Post title */}
-        <h3 className="mt-6 font-display basis-[max-content] shrink-0 line-clamp-4 lg:line-clamp-4 font-bold mb-1 text-lg md:text-xl">
+        <h3 className="mt-7 lg:mt-6 font-display basis-[max-content] shrink-0 line-clamp-4 font-bold mb-1 text-lg sm:text-xl">
           <Link
             to={'/post/' + (postData._id || '')}
             onClick={(e) => postData._id || e.preventDefault()}

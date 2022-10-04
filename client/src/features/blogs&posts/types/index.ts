@@ -1,13 +1,25 @@
 import { PostData } from 'types';
 
 export type CreatePostValues = {
-  title: string;
-  text: string;
-  description: string;
-  categories: string[];
-  displayType: number;
+  data: {
+    title: string;
+    text: string;
+    description: string;
+    categories: string[];
+    displayType: number;
+  };
+  image?: File;
 };
 
-export type PostDataProp = Omit<PostData, '_id'> & {
-  _id?: string;
+export interface UpdatePostValues extends CreatePostValues {
+  data: CreatePostValues['data'] & {
+    _id: string;
+  };
+}
+
+export type PostValues = Omit<PostData, 'image'> & {
+  image?: {
+    src: string;
+    file: File;
+  };
 };

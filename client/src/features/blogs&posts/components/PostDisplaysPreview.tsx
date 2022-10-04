@@ -1,6 +1,6 @@
 import { Drawer, Icon } from 'components/Elements';
 import { useAppSelector } from 'stores/globalStore';
-import { useRenderPost } from '../hooks';
+import { usePost } from '../hooks';
 import { PostDataProp } from '../types';
 
 type PostDisplaysPreviewProps = {
@@ -17,7 +17,7 @@ export function PostDisplaysPreview({
   image,
 }: PostDisplaysPreviewProps) {
   const user = useAppSelector((state) => state.authSlice.user);
-  const { renderPost, getDisplayName } = useRenderPost();
+  const { renderPost, getDisplayName } = usePost();
   const incrementDisplay = () => {
     setDisplay((display) => (display >= 2 ? 2 : display + 1));
   };

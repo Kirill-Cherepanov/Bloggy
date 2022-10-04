@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PostData } from 'types';
 
-import getRelativeCursorPos from 'utility/getRelativeCursorPos';
-import isMobile from 'utility/isMobile';
+import { getRelativeCursorPos, isMobile } from 'utility';
 
 type CurtainsProps = {
   postsData: PostData[];

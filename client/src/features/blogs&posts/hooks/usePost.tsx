@@ -1,7 +1,7 @@
 import { NormalPost, SmallPost, LargePost } from '../components';
 import { PostDataProp } from '../types';
 
-export const useRenderPost = () => ({
+export const usePost = () => ({
   renderPost: (postData: PostDataProp) => {
     switch (postData.displayType) {
       case 0:

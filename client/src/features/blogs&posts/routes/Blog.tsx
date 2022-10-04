@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 
 import { useGetUserQuery } from '../api/usersApi';
 import { BlogCard } from '../components';
-import { useRenderPost } from '../hooks';
+import { usePost } from '../hooks';
 import { PageNotFound } from 'features/misc';
 import { Spinner } from 'components/Elements';
 import { PublicData } from 'types';
@@ -12,7 +12,7 @@ export function Blog() {
   const { data, isFetching, isError, error } = useGetUserQuery(name!, {
     skip: !name,
   });
-  const renderPost = useRenderPost();
+  const { renderPost } = usePost();
 
   if (isFetching) {
     return (

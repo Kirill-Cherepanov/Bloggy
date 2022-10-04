@@ -1,6 +1,6 @@
-import { PostData } from 'types';
+import { PostData, PublicData } from 'types';
 import { generalApi } from 'lib/generalApi';
-import { CreatePostValues } from '../types';
+import { CreatePostValues, UpdatePostValues } from '../types';
 
 type CreatePostReturnType =
   | {
@@ -9,24 +9,16 @@ type CreatePostReturnType =
     }
   | { success: false };
 
-type CreatePostFullValues = { data: CreatePostValues; image?: File };
-
-interface UpdatePostValues extends CreatePostFullValues {
-  data: CreatePostFullValues['data'] & {
-    _id: string;
-  };
-}
-
 export const postsApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
-    createPost: builder.mutation<CreatePostReturnType, CreatePostFullValues>({
-      query: ({ data: data_, image }) => {
-        const data = new Blob([JSON.stringify(data_)], {
+    createPost: builder.mutation<CreatePostReturnType, CreatePostValues>({
+      query: (values) => {
+        const data = new Blob([JSON.stringify(values.data)], {
           type: 'application/json',
         });
         const body = new FormData();
         body.append('request-json', data);
-        if (image) body.append('post-image', image);
+        if (values.image) body.append('post-image', values.image);
 
         return {
           url: '/posts/',
@@ -37,16 +29,16 @@ export const postsApi = generalApi.injectEndpoints({
       },
     }),
     editPost: builder.mutation<CreatePostReturnType, UpdatePostValues>({
-      query: ({ data: data_, image }) => {
-        const data = new Blob([JSON.stringify(data_)], {
+      query: (values) => {
+        const data = new Blob([JSON.stringify(values.data)], {
           type: 'application/json',
         });
         const body = new FormData();
         body.append('request-json', data);
-        if (image) body.append('post-image', image);
+        if (values.image) body.append('post-image', values.image);
 
         return {
-          url: `/posts/${data_._id}`,
+          url: `/posts/${values.data._id}`,
           method: 'PATCH',
           credentials: 'include',
           body,
@@ -60,7 +52,10 @@ export const postsApi = generalApi.injectEndpoints({
         credentials: 'include',
       }),
     }),
-    getPost: builder.query<PostData, string>({
+    getPost: builder.query<
+      { post: PostData; author: PublicData; otherPosts: PostData[] },
+      string
+    >({
       query: (id) => ({
         url: `/posts/${id}`,
       }),

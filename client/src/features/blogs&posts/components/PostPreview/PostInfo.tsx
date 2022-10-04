@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import formatDate from 'utility/formatDate';
+import { formatDate } from 'utility';
 
 type PostInfoProps = {
   _id?: string;

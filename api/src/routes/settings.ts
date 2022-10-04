@@ -215,7 +215,9 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
       const filePath = './images/profilePics/' + filename;
 
       fs.writeFile(filePath, file.buffer, (err) => {
-        if (err) throw err;
+        if (!err) return;
+        console.error(err);
+        throw Error('Server error');
       });
     }
 

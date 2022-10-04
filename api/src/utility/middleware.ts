@@ -9,8 +9,10 @@ export const upload = multer({
       ext !== '.png' &&
       ext !== '.jpg' &&
       ext !== '.jpeg' &&
-      ext !== '.json'
+      ext !== '.json' &&
+      file.mimetype !== 'application/json'
     ) {
+      console.error(file);
       return callback(new Error('Only images and json are allowed'));
     }
     callback(null, true);
@@ -27,7 +29,6 @@ export const handleMiddlewareErrors: ErrorRequestHandler = (
   res,
   next
 ) => {
-  console.log(req.files);
   console.error(err);
   res.status(500).json('Oops... Something went wrong');
 };
