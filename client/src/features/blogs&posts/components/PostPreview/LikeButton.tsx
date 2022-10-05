@@ -4,15 +4,15 @@ type LikeButtonProps = { likes: number };
 
 export function LikeButton({ likes }: LikeButtonProps) {
   return (
-    <button className="font-semibold flex items-center cursor-pointer group">
+    <button className="font-semibold flex items-center cursor-pointer like-button">
       <span className="relative w-5 h-5 mr-2">
         <Icon
           type="heart-outline"
-          className="absolute top-0 left-0 w-full text-secondary-800 group-hover:text-transparent"
+          className="heart-outline absolute top-0 left-0 w-full"
         />
         <Icon
           type="heart"
-          className="absolute top-0 left-0 w-full fill-transparent group-hover:fill-red-400"
+          className="heart absolute top-0 left-0 w-full"
         />
       </span>
       {likes}

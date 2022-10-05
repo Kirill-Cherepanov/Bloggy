@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 
 import Post from '../models/Post';
-import { SearchPosts } from '../utility/SearchDb';
+import { SearchPosts, searchBlogPosts } from '../utility/SearchDb';
 import { upload } from '../utility/middleware';
 import { getCategories, validateJsonBlob } from '../utility/validations';
 import { verifyAccessToken } from '../utility/jsonTokens';
@@ -77,12 +77,11 @@ postsRouter.post('/', uploadFields, async (req, res) => {
 // update post
 postsRouter.patch('/:id', uploadFields, async (req, res) => {
   try {
-    const verificationRes = await verifyAccessToken(req.body.accessToken);
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
     if (verificationRes.err === true) {
       return res.status(verificationRes.status).json(verificationRes.message);
-    }
-    if (verificationRes.username !== req.params.username) {
-      return res.status(403).json('No access');
     }
 
     const jsonBuffer = await validateJsonBlob(req.files);
@@ -95,13 +94,16 @@ postsRouter.patch('/:id', uploadFields, async (req, res) => {
     const updatedPostData = getPostData(sentData);
 
     if ('post-image' in req.files!) {
-      if (post.image) {
-        fs.unlink(post.image, (err) => {
-          if (err) console.error(err);
-        });
-      }
-
       const file = req.files!['post-image' as keyof typeof req.files][0];
+
+      const imageLocation = './images/postImgs/';
+
+      if (post.image) {
+        fs.unlink(
+          './images/postImgs/' + post.image,
+          (err) => err && console.error(err)
+        );
+      }
 
       const filename =
         path.parse(file.originalname).name +
@@ -110,18 +112,24 @@ postsRouter.patch('/:id', uploadFields, async (req, res) => {
 
       updatedPostData.image = filename;
 
-      const filePath = './images/postImgs/' + filename;
+      const filePath = imageLocation + filename;
 
       fs.writeFile(filePath, file.buffer, (err) => {
-        if (err) throw err;
+        if (!err) return;
+        console.error(err);
+        throw Error('Server error');
       });
     }
 
     Object.assign(post, updatedPostData);
+    await post.save();
 
-    res.status(200).json(await post.save());
-  } catch (err) {
-    res.status(500).json(err);
+    res.status(200).json({ success: true, post });
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 
@@ -156,7 +164,15 @@ postsRouter.delete('/:id', async (req, res) => {
 // get post
 postsRouter.get('/:id', async (req, res) => {
   try {
-    res.status(200).json(await Post.findById(req.params.id));
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(400).json('Post was not found');
+
+    const user = await User.findOne({ username: post.authorName });
+    if (!user) throw Error('Author of the post was not found');
+
+    const otherPosts = (await searchBlogPosts(user.username, 1)).slice(0, 4);
+
+    res.status(200).json({ post, user, otherPosts });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -172,9 +188,15 @@ postsRouter.get('/', async (req, res) => {
     const posts = await searchPosts.getPosts();
     res.status(200).json(posts);
   } catch (err: any) {
-    res.status(500).json(err.toString());
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
+
+// like a post
+postsRouter.put('/like/:id', async (req, res) => {});
 
 export default postsRouter;
 

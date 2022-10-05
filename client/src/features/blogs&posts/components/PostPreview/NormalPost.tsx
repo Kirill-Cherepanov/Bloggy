@@ -1,18 +1,21 @@
-import { Icon } from 'components/Elements';
 import { Link } from 'react-router-dom';
 
+import { Icon } from 'components/Elements';
+import { useAppSelector } from 'stores/globalStore';
+import { PostData } from 'types';
 import { LikeButton, PostInfo } from '.';
-import { PostDataProp } from '../../types';
 
 type NormalPostType = {
-  postData: PostDataProp;
+  postData: PostData;
+  isPreview?: boolean;
 };
 
-export function NormalPost({ postData }: NormalPostType) {
-  const wrapper = postData._id ? <li /> : <div />;
+export function NormalPost({ postData, isPreview }: NormalPostType) {
+  const user = useAppSelector((state) => state.authSlice.user);
+  const wrapper = isPreview ? <div /> : <li />;
 
   return (
-    <wrapper.type className="lg:bg-accent-50 py-5 px-8">
+    <wrapper.type className="lg:bg-accent-50 py-5 px-8 group">
       {/* Main category */}
       <div className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline">
         {postData.categories[0]}
@@ -21,8 +24,8 @@ export function NormalPost({ postData }: NormalPostType) {
       {/* Post title */}
       <h3 className="my-1 font-display font-bold text-xl">
         <Link
-          to={'/post/' + (postData._id || '')}
-          onClick={(e) => postData._id || e.preventDefault()}
+          to={`/post/${postData._id}`}
+          onClick={(e) => isPreview && e.preventDefault()}
           className="hover:underline cursor-pointer"
         >
           {postData.title}
@@ -34,13 +37,13 @@ export function NormalPost({ postData }: NormalPostType) {
 
       {/* Post image */}
       <Link
-        to={'/post/' + (postData._id || '')}
-        onClick={(e) => postData._id || e.preventDefault()}
+        to={`/post/${postData._id}`}
+        onClick={(e) => isPreview && e.preventDefault()}
         className="block w-full"
       >
         {postData.image ? (
           <img
-            src={postData.image}
+            src={`/api/images/postImgs/${postData.image}`}
             alt="Post"
             className="max-w-full mb-3 mx-auto"
           />
@@ -51,7 +54,21 @@ export function NormalPost({ postData }: NormalPostType) {
 
       <div className="flex justify-between items-center">
         <LikeButton likes={postData.likes} />
-        <PostInfo {...postData} />
+
+        {user?.username === postData.authorName ? (
+          <>
+            <PostInfo {...postData} className="group-hover:hidden" />
+            <Link
+              to={`/edit/${postData._id}`}
+              onClick={(e) => isPreview && e.preventDefault()}
+              className="hidden group-hover:inline hover:underline"
+            >
+              Edit post
+            </Link>
+          </>
+        ) : (
+          <PostInfo {...postData} />
+        )}
       </div>
     </wrapper.type>
   );

@@ -6,7 +6,7 @@ import { Spinner } from 'components/Elements';
 const variants = {
   primary: 'bg-accent-800 text-main hover:bg-accent-900',
   secondary: 'bg-secondary-800 text-main',
-  danger: 'bg-red-600 text-white',
+  danger: 'bg-red-700 text-white',
   none: '',
 };
 

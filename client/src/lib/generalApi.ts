@@ -5,11 +5,5 @@ import { customBaseQuery } from './customBaseQuery';
 export const generalApi = createApi({
   reducerPath: 'general',
   baseQuery: customBaseQuery,
-  endpoints: (builder) => ({
-    getImage: builder.query<File, string>({
-      query: (image) => `/images/${image}`,
-    }),
-  }),
+  endpoints: (builder) => ({}),
 });
-
-export const { useGetImageQuery } = generalApi;

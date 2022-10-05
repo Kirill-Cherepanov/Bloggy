@@ -155,10 +155,12 @@ export class SearchBlogs extends SearchDb {
 }
 
 export async function searchBlogPosts(username: string, page: number) {
-  const POSTS_PER_PAGE = 10;
+  // currently since I don't have many posts, I won't need pagination
+  // and I'm a bit reluctant to be implementing infinite scroll right now
 
-  return Post.find({ authorName: username })
-    .sort({ createdAt: 1 })
-    .skip((page - 1) * POSTS_PER_PAGE)
-    .limit(page * POSTS_PER_PAGE);
+  // const POSTS_PER_PAGE = 10;
+
+  return Post.find({ authorName: username }).sort({ createdAt: 1 });
+  // .skip((page - 1) * POSTS_PER_PAGE)
+  // .limit(page * POSTS_PER_PAGE);
 }

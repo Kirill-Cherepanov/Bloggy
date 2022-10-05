@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 import { formatDate } from 'utility';
@@ -7,11 +8,23 @@ type PostInfoProps = {
   authorName: string;
   color?: string;
   createdAt: string;
+  className?: string;
 };
 
-export function PostInfo({ _id, authorName, color, createdAt }: PostInfoProps) {
+export function PostInfo({
+  _id,
+  authorName,
+  color,
+  createdAt,
+  className = '',
+}: PostInfoProps) {
   return (
-    <div className="mt-auto text-text-600 flex flex-col xs:block">
+    <div
+      className={clsx(
+        'mt-auto text-text-600 flex flex-col xs:block',
+        className
+      )}
+    >
       <span className="hidden xs:inline">By </span>
       <Link
         to={'/blog/' + authorName}

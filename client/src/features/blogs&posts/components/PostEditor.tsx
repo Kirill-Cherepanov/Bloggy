@@ -12,7 +12,7 @@ import { usePost } from '../hooks';
 import { Post } from '../routes';
 import { Icon, Picker, Logo } from 'components/Elements';
 import { inputFiles } from 'utility/inputFiles';
-import { useDisclosure } from 'hooks';
+import { useDisclosure, useContentEditable } from 'hooks';
 import { PostData, PublicData } from 'types';
 
 const simpleMDEOptions: SimpleMDE.Options = {
@@ -26,18 +26,23 @@ type SubmitPostValues = CreatePostValues & UpdatePostValues;
 type PostEditorProps = {
   initialData: { post: PostValues; author: PublicData };
   onSubmit: (values: SubmitPostValues) => unknown;
+  children: React.ReactNode;
 };
 
-export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
+export function PostEditor({
+  initialData: init,
+  onSubmit,
+  children,
+}: PostEditorProps) {
   const navigate = useNavigate();
   const { getDisplayName } = usePost();
   const displaysPreviewDisclosure = useDisclosure();
   const resultPreviewDisclosure = useDisclosure();
 
+  const title = useContentEditable<HTMLHeadingElement>(init.post.title);
   const [image, setImage] = useState(init.post.image);
   const [categories, setCategories] = useState<string[]>(init.post.categories);
   const [displayType, setDisplayType] = useState(init.post.displayType);
-  const [title, setTitle] = useState(init.post.title);
   const [text, setText] = useState(init.post.text);
   const [description, setDescription] = useState(init.post.description);
 
@@ -45,7 +50,7 @@ export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
     _id: init.post._id,
     categories,
     displayType,
-    title,
+    title: title.content,
     text,
     description,
   };
@@ -53,7 +58,7 @@ export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
   const previewPostData: PostData = {
     ...init.post,
     ...postData,
-    image: init.post.image?.src,
+    image: image?.src,
   };
 
   const author = init.author;
@@ -76,7 +81,9 @@ export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
           className="absolute right-0 text-xl transition-all hover:tracking-wider group"
           onClick={async () => {
             if (!resultPreviewDisclosure.isOpen) {
-              if (title.length < 1) return setTitle('Enter your title here');
+              if (title.content.length < 1) {
+                return title.setContent('Enter your title here');
+              }
               return resultPreviewDisclosure.open();
             }
 
@@ -99,16 +106,17 @@ export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
       ) : (
         <>
           <h2
+            ref={title.contentRef}
             className="text-3xl font-bold text-center my-5 focus:outline-none focus:bg-secondary-200 hover:bg-secondary-200"
             contentEditable={true}
             suppressContentEditableWarning={true}
-            onChange={(e) => setTitle(e.currentTarget.textContent || '')}
+            onInput={title.onInput}
           >
-            {title}
+            {title.content}
           </h2>
 
-          <button
-            className="relative w-full flex justify-center group focus:bg-secondary-200 hover:bg-secondary-200 mb-10  "
+          <div
+            className="relative w-full flex justify-center group focus:bg-secondary-200 hover:bg-secondary-200 mb-10 cursor-pointer"
             onClick={() => {
               inputFiles((files) => {
                 if (image) URL.revokeObjectURL(image.src);
@@ -141,7 +149,7 @@ export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
             ) : (
               <Icon type="image" className="h-40" />
             )}
-          </button>
+          </div>
 
           <SimpleMDEReact
             className="custom-markdown"
@@ -191,6 +199,8 @@ export function PostEditor({ initialData: init, onSubmit }: PostEditorProps) {
               image={image?.src}
             />
           )}
+
+          {children}
         </>
       )}
     </main>

@@ -1,10 +1,11 @@
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-import { PostDataProp } from '../../types';
 import { useCalculateLines } from '../../hooks';
 import { LikeButton, PostInfo } from '.';
 import { Icon } from 'components/Elements';
+import { PostData } from 'types';
+import { useAppSelector } from 'stores/globalStore';
 
 const textBoxPositions = {
   bottomLeft: 'left-0 bottom-8',
@@ -21,7 +22,8 @@ const sizes = {
 const animationClass = 'transition-transform hover:scale-105';
 
 type LargePostProps = {
-  postData: PostDataProp;
+  postData: PostData;
+  isPreview?: boolean;
   className?: string;
   textBoxClass?: string;
   textBoxPosition?: keyof typeof textBoxPositions;
@@ -32,6 +34,7 @@ type LargePostProps = {
 
 export function LargePost({
   postData,
+  isPreview = false,
   color,
   className = '',
   textBoxClass = '',
@@ -39,15 +42,16 @@ export function LargePost({
   size = 'md',
   shouldAnimate = false,
 }: LargePostProps) {
+  const user = useAppSelector((state) => state.authSlice.user);
   const textBoxLineHeight = 24;
   const { amountOfLines, textBoxRef } = useCalculateLines(textBoxLineHeight);
 
-  const wrapper = postData._id ? <li /> : <div />;
+  const wrapper = isPreview ? <div /> : <li />;
 
   return (
     <wrapper.type
       className={clsx(
-        'relative',
+        'relative group',
         sizes[size].wrapper,
         shouldAnimate && animationClass,
         className
@@ -55,13 +59,13 @@ export function LargePost({
     >
       {/* Post image */}
       <Link
-        to={'/post/' + (postData._id || '')}
-        onClick={(e) => postData._id || e.preventDefault()}
+        to={`/post/${postData._id}`}
+        onClick={(e) => isPreview && e.preventDefault()}
         className="flex items-center justify-center w-full h-full cursor-pointer bg-accent-200"
       >
         {postData.image ? (
           <img
-            src={postData.image}
+            src={`/api/images/postImgs/${postData.image}`}
             alt="Post"
             className="w-full h-full object-cover"
           />
@@ -91,8 +95,8 @@ export function LargePost({
         {/* Post title */}
         <h3 className="mt-2 basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold xl:mb-2 text-2xl md:text-3xl">
           <Link
-            to={'/post/' + (postData._id || '')}
-            onClick={(e) => postData._id || e.preventDefault()}
+            to={`/post/${postData._id}`}
+            onClick={(e) => isPreview && e.preventDefault()}
             className="hover:underline cursor-pointer"
           >
             {postData.title}
@@ -111,7 +115,20 @@ export function LargePost({
 
         <div className="flex justify-between items-end">
           <LikeButton likes={postData.likes} />
-          <PostInfo {...postData} />
+          {user?.username === postData.authorName ? (
+            <>
+              <PostInfo {...postData} className="group-hover:hidden" />
+              <Link
+                to={`/edit/${postData._id}`}
+                onClick={(e) => isPreview && e.preventDefault()}
+                className="hidden group-hover:inline hover:underline"
+              >
+                Edit post
+              </Link>
+            </>
+          ) : (
+            <PostInfo {...postData} />
+          )}
         </div>
       </div>
     </wrapper.type>

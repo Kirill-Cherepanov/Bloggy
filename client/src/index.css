@@ -26,6 +26,20 @@
 }
 
 @layer components {
+  .like-button .heart-outline {
+    @apply text-secondary-800
+  }
+  .like-button .heart {
+    @apply fill-transparent
+  }
+  .like-button:hover .heart-outline {
+    @apply text-transparent;
+  }
+  .like-button:hover .heart {
+    @apply fill-red-400
+  }
+  
+
   .px-page {
     @apply px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto;
   }

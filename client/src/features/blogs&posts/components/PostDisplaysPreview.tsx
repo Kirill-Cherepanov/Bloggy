@@ -1,12 +1,12 @@
 import { Drawer, Icon } from 'components/Elements';
 import { useAppSelector } from 'stores/globalStore';
+import { PostData } from 'types';
 import { usePost } from '../hooks';
-import { PostDataProp } from '../types';
 
 type PostDisplaysPreviewProps = {
   close: () => unknown;
   setDisplay: React.Dispatch<React.SetStateAction<number>>;
-  postData: PostDataProp;
+  postData: PostData;
   image?: string;
 };
 
@@ -17,7 +17,7 @@ export function PostDisplaysPreview({
   image,
 }: PostDisplaysPreviewProps) {
   const user = useAppSelector((state) => state.authSlice.user);
-  const { renderPost, getDisplayName } = usePost();
+  const { renderPost, getDisplayName } = usePost(true);
   const incrementDisplay = () => {
     setDisplay((display) => (display >= 2 ? 2 : display + 1));
   };
