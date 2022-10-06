@@ -16,7 +16,7 @@ type GetPostReturnType = {
   otherPosts: PostData[];
 };
 
-type SearchPostsReturnType = { posts: PostData[] };
+type SearchPostsReturnType = { posts: PostData[]; total: number };
 
 export const postsApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -184,6 +184,8 @@ function provideSearchPostsTags(
   result?: SearchPostsReturnType
 ): TagDescription<'Post' | 'User'>[] {
   if (!result) return [{ type: 'Post', id: 'PARTIAL-LIST' }];
+
+  console.log(result);
 
   const postsTags = result.posts.map(({ _id }) => ({
     type: 'Post' as const,

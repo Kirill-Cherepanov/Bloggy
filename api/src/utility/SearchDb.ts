@@ -44,7 +44,8 @@ class SearchDb {
   }
 
   protected getSearchQuery(search: string, query: string): SearchQuery {
-    // CHECK WHAT HAPPENS WHEN params.q === ''
+    if (!query) return {};
+
     const searchSwitch = {
       title: this.getTitleQuery(query),
       categories: this.getCategoriesQuery(query),
@@ -110,18 +111,25 @@ export class SearchPosts extends SearchDb {
     super(requestParams);
   }
 
-  public getPosts() {
+  public async getPosts() {
     if (this.params.page <= 0) throw Error('Incorrect page');
 
     const query: SearchQuery = this.getQuery();
 
-    return Post.find(query)
-      .sort(this.getSortQuery(this.params.sort))
-      .skip((this.params.page - 1) * this.POSTS_PER_PAGE)
-      .limit(this.params.page * this.POSTS_PER_PAGE);
+    const allPosts = await Post.find(query).sort(
+      this.getSortQuery(this.params.sort)
+    );
+
+    const posts = allPosts.slice(
+      (this.params.page - 1) * this.POSTS_PER_PAGE,
+      this.params.page * this.POSTS_PER_PAGE
+    );
+
+    return { posts, total: allPosts.length };
   }
 }
 
+// would need to rewrite it a bit
 export class SearchBlogs extends SearchDb {
   constructor(requestParams: Partial<SearchParams>) {
     super(requestParams);

@@ -181,7 +181,7 @@ postsRouter.get('/:id', async (req, res) => {
     const sentPostData: ClientTPost = {
       ...post,
       likes: post.likes.length,
-      isLiked: isLoggedIn && post.likes.includes(verificationRes._id),
+      isLiked: isLoggedIn && post.likes.includes(verificationRes.id),
     };
 
     res.status(200).json({ post: sentPostData, author, otherPosts });
@@ -196,9 +196,22 @@ postsRouter.get('/:id', async (req, res) => {
 // search posts TESTED
 postsRouter.get('/', async (req, res) => {
   try {
+    let isLoggedIn = false;
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
+    if (!verificationRes.err) isLoggedIn = true;
+
     const searchPosts = new SearchPosts(req.query);
-    const posts = await searchPosts.getPosts();
-    res.status(200).json(posts);
+    const searchResult = await searchPosts.getPosts();
+
+    const sentPostsData: ClientTPost[] = searchResult.posts.map((post) => ({
+      ...post._doc,
+      likes: post.likes.length,
+      isLiked: isLoggedIn && post.likes.includes(verificationRes.id),
+    }));
+
+    res.status(200).json({ posts: sentPostsData, total: searchResult.total });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

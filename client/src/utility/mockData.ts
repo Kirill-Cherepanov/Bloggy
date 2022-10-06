@@ -41,5 +41,6 @@ export const getPostsData = (postsAmount: number): PostData[] => {
       authorName: 'KissMyUSSR',
       createdAt: new Date().toDateString(),
       displayType: i % 3,
+      isLiked: false,
     }));
 };

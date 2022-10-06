@@ -1,84 +1,83 @@
-import { ExtensiveSearchBar } from '../components';
-
-import { getPostsData } from 'utility/mockData';
-import { Icon } from 'components/Elements';
-import { Aside } from 'components/Layout';
-import { LargePost, SmallPost } from '../components';
+import { useSearchPostsQuery } from '../api/postsApi';
+import { ExtensiveSearchBar, CatalogPosts } from '../components';
+import { Icon, Spinner } from 'components/Elements';
+import { useQueryParams } from '../hooks';
+import { useNavigate } from 'react-router';
 
 export function Catalog() {
-  const posts = getPostsData(10);
+  const navigate = useNavigate();
+  const query = useQueryParams();
+  const { data, isFetching, isError, error } = useSearchPostsQuery(
+    query.toString(),
+    { skip: !query.toString() }
+  );
+
+  if (isError) console.error(error);
+
+  // NEED TO MEMOIZE A LOT OF STUFF EVERYWHERE
+  // NEED TO MEMOIZE A LOT OF STUFF EVERYWHERE
+  // NEED TO MEMOIZE A LOT OF STUFF EVERYWHERE
+  // NEED TO MEMOIZE A LOT OF STUFF EVERYWHERE
+  // NEED TO MEMOIZE A LOT OF STUFF EVERYWHERE
+  const page = (query.get('page') && Number(query.get('page'))) || 1;
 
   return (
     <main className="pt-8 px-page">
       <ExtensiveSearchBar />
-      <ul>
-        {posts.length < 10 ? (
-          <div className="flex relative gap-10">
-            <div className="flex flex-col gap-6">
-              {posts.map((post) => (
-                <SmallPost
-                  key={post._id}
-                  className="hover:scale-103"
-                  {...post}
-                />
-              ))}
-            </div>
-            <Aside />
+
+      {isFetching && (
+        <div className="w-full h-80 flex items-center justify-center">
+          <Spinner />
+        </div>
+      )}
+
+      {isError && (
+        <div className="w-full h-64 flex items-center justify-center">
+          <div className="text-center sm:text-2xl md:text-3xl lg:text-4xl space-y-2">
+            <div>Oops... Something went terribly wrong</div>
+            <div>You may try searching again</div>
           </div>
-        ) : (
-          <>
-            <div className="mb-10 grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-8">
-              <LargePost
-                {...posts[0]}
-                className="shadow-lg transition-transform hover:scale-103 row-start-1 lg:row-end-4 h-80 sm:h-100 md:h-[440px] lg:h-auto"
-                textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:h-64"
-              />
-              {posts.slice(1, 4).map((postData) => (
-                <SmallPost
-                  key={postData._id}
-                  {...postData}
-                  className="shadow-lg hover:scale-103"
-                />
-              ))}
-            </div>
+        </div>
+      )}
 
-            <div className="flex relative gap-10 mb-10">
-              <div className="flex flex-col gap-6">
-                {posts.slice(4, 7).map((post) => (
-                  <SmallPost {...post} className="shadow-lg hover:scale-103" />
-                ))}
-                <LargePost
-                  className="max-h-100 shadow-lg transition-transform hover:scale-103"
-                  textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:h-64"
-                  {...posts[7]}
-                />
-              </div>
-              <Aside />
-            </div>
+      {!isFetching && !isError && data && (
+        <>
+          <CatalogPosts posts={data.posts} />
 
-            <div className="flex gap-8 h-80">
-              {posts.slice(8, 10).map((post) => (
-                <LargePost
-                  {...post}
-                  className="h-full shadow-lg transition-transform hover:scale-103 hidden lg:block"
-                  textBoxClass="bottom-0 w-5/6 h-full h-64"
-                />
-              ))}
-            </div>
-          </>
-        )}
-      </ul>
+          <div className="flex justify-center gap-6">
+            {page > 1 && (
+              <button
+                className="uppercase h-14 w-40 flex gap-1 items-center justify-center bg-secondary-800 text-main text-lg font-medium hover:tracking-widest transition-all"
+                onClick={() => {
+                  const newQuery = new URLSearchParams(query.toString());
+                  newQuery.set('page', `${page - 1}`);
+                  navigate(`/catalog${newQuery}`);
+                }}
+              >
+                <Icon type="angle" className="h-5 -translate-y-[1px]" />
+                Previous
+              </button>
+            )}
 
-      <div className="flex justify-center mt-12 gap-6">
-        <button className="uppercase h-14 w-40 flex gap-1 items-center justify-center bg-secondary-800 text-main text-lg font-medium hover:tracking-widest transition-all">
-          <Icon type="angle" className="h-5 -translate-y-[1px]" />
-          Previous
-        </button>
-        <button className="uppercase h-14 w-40 flex gap-1 items-center justify-center bg-secondary-800 text-main text-lg font-medium hover:tracking-widest transition-all">
-          Next
-          <Icon type="angle" className="rotate-180 h-5 -translate-y-[1px]" />
-        </button>
-      </div>
+            {data.total - page * 10 > 0 && (
+              <button
+                className="uppercase h-14 w-40 flex gap-1 items-center justify-center bg-secondary-800 text-main text-lg font-medium hover:tracking-widest transition-all"
+                onClick={() => {
+                  const newQuery = new URLSearchParams(query.toString());
+                  newQuery.set('page', `${page + 1}`);
+                  navigate(`/catalog${newQuery}`);
+                }}
+              >
+                Next
+                <Icon
+                  type="angle"
+                  className="rotate-180 h-5 -translate-y-[1px]"
+                />
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </main>
   );
 }
