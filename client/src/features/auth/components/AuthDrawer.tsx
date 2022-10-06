@@ -23,7 +23,7 @@ export function AuthDrawer({ closeMenu, authType = 'login' }: AuthDrawerProps) {
       {type === 'login' ? (
         <LoginForm
           onSuccess={() => {
-            navigate('/blog/KissMyUSSR');
+            navigate('/');
             closeMenu();
           }}
           swapForm={() => setType('signup')}

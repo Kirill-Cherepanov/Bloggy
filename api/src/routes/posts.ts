@@ -164,15 +164,27 @@ postsRouter.delete('/:id', async (req, res) => {
 // get post
 postsRouter.get('/:id', async (req, res) => {
   try {
+    let isLoggedIn = false;
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
+    if (!verificationRes.err) isLoggedIn = true;
+
     const post = await Post.findById(req.params.id);
     if (!post) return res.status(400).json('Post was not found');
 
-    const user = await User.findOne({ username: post.authorName });
-    if (!user) throw Error('Author of the post was not found');
+    const author = await User.findOne({ username: post.authorName });
+    if (!author) throw Error('Author of the post was not found');
 
-    const otherPosts = (await searchBlogPosts(user.username, 1)).slice(0, 4);
+    const otherPosts = (await searchBlogPosts(author.username, 1)).slice(0, 4);
 
-    res.status(200).json({ post, user, otherPosts });
+    const sentPostData: ClientTPost = {
+      ...post,
+      likes: post.likes.length,
+      isLiked: isLoggedIn && post.likes.includes(verificationRes._id),
+    };
+
+    res.status(200).json({ post: sentPostData, author, otherPosts });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {
@@ -195,8 +207,46 @@ postsRouter.get('/', async (req, res) => {
   }
 });
 
-// like a post
-postsRouter.put('/like/:id', async (req, res) => {});
+// like/dislike a post
+postsRouter.put('/like/:id', async (req, res) => {
+  try {
+    const verificationRes = await verifyAccessToken(
+      req.cookies['access-token']
+    );
+    if (verificationRes.err === true) {
+      return res.status(verificationRes.status).json(verificationRes.message);
+    }
+
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(400).json('Post was not found');
+
+    const author = await User.findOne({ username: post.authorName });
+    if (!author?.blog) {
+      console.error(post);
+      throw Error(`The post ${post._id} doesn't have an author?!`);
+    }
+
+    if (post.likes.includes(verificationRes.id)) {
+      post.likes = post.likes.filter(
+        (upvoter) => upvoter !== verificationRes.id
+      );
+      author.blog.likes--;
+    } else {
+      post.likes.push(verificationRes.id);
+      author.blog.likes++;
+    }
+
+    post.save();
+    author.save();
+
+    res.status(200).json({ success: true });
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
+  }
+});
 
 export default postsRouter;
 

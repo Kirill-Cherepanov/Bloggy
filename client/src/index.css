@@ -32,10 +32,12 @@
   .like-button .heart {
     @apply fill-transparent
   }
-  .like-button:hover .heart-outline {
+  .like-button:hover .heart-outline,
+  .like-button.like-button-active .heart-outline {
     @apply text-transparent;
   }
-  .like-button:hover .heart {
+  .like-button:hover .heart,
+  .like-button.like-button-active .heart {
     @apply fill-red-400
   }
   

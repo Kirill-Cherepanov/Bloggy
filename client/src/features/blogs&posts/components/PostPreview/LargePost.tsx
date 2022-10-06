@@ -114,7 +114,11 @@ export function LargePost({
         </div>
 
         <div className="flex justify-between items-end">
-          <LikeButton likes={postData.likes} />
+          <LikeButton
+            likes={postData.likes}
+            id={postData._id}
+            isLiked={postData.isLiked}
+          />
           {user?.username === postData.authorName ? (
             <>
               <PostInfo {...postData} className="group-hover:hidden" />

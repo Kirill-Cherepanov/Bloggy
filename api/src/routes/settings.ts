@@ -129,7 +129,11 @@ settingsRouter.patch('/data', async (req, res) => {
 
     const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
-    const newAccessToken = generateAccessToken(user.username, user.email);
+    const newAccessToken = generateAccessToken(
+      _id.toString(),
+      user.username,
+      user.email
+    );
     const newRefreshToken = jwt.sign(
       {
         email: protectedData.email,
@@ -226,7 +230,11 @@ settingsRouter.patch('', updloadFields, async (req, res) => {
 
     const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
-    const newAccessToken = generateAccessToken(user.username, user.email);
+    const newAccessToken = generateAccessToken(
+      _id.toString(),
+      user.username,
+      user.email
+    );
     const newRefreshToken = jwt.sign(
       {
         email: protectedData.email,
@@ -280,6 +288,7 @@ settingsRouter.delete('', async (req, res) => {
       });
     }
 
+    deleteAllLikes(user.username);
     await Post.deleteMany({ username: user.username });
     await User.findOneAndDelete({ username: user.username });
 
@@ -296,6 +305,18 @@ settingsRouter.delete('', async (req, res) => {
 });
 
 export default settingsRouter;
+
+async function deleteAllLikes(username: string) {
+  const likedPosts = await Post.find({ likes: username });
+  likedPosts.forEach(async (post) => {
+    post.likes = post.likes.filter((upvoter) => upvoter === username);
+
+    const postAuthor = await User.findOne({ username: post.authorName });
+    if (!postAuthor?.blog?.likes) return;
+    postAuthor.blog.likes--;
+    postAuthor.save();
+  });
+}
 
 function getUserData(userData: any) {
   const newUserData: any = JSON.parse(JSON.stringify(userData));

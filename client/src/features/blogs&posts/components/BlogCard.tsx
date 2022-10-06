@@ -6,7 +6,7 @@ export function BlogCard({ username, profilePic, blog }: Required<PublicData>) {
 
   return (
     <div className="flex flex-col p-6 w-80 shrink-0 bg-accent-200 h-min rounded-md">
-      <ProfilePicture className="mb-3 h-auto" />
+      <ProfilePicture className="mb-3 h-auto" src={profilePic} />
       <h2 className="font-display font-bold text-center text-3xl mb-4">
         {username}
       </h2>

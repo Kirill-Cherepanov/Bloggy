@@ -53,7 +53,11 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
       </Link>
 
       <div className="flex justify-between items-center">
-        <LikeButton likes={postData.likes} />
+        <LikeButton
+          likes={postData.likes}
+          id={postData._id}
+          isLiked={postData.isLiked}
+        />
 
         {user?.username === postData.authorName ? (
           <>

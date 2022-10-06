@@ -104,7 +104,11 @@ export function SmallPost({
         </div>
 
         <div className="flex justify-between items-center">
-          <LikeButton likes={postData.likes} />
+          <LikeButton
+            likes={postData.likes}
+            id={postData._id}
+            isLiked={postData.isLiked}
+          />
 
           <div className="mt-auto text-text-600">
             <span>By </span>

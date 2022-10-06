@@ -24,6 +24,7 @@ export type PostData = {
   description: string;
   authorName: string;
   likes: number;
+  isLiked: boolean;
   categories: string[];
   displayType: number;
   createdAt: string;

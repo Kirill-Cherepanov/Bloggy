@@ -45,9 +45,7 @@ export function Registration() {
         </div>
         {stage ? (
           <BlogRegistration
-            onSuccess={() => {
-              navigate('/blog/KissMe');
-            }}
+            onSuccess={() => navigate('/', { replace: true })}
           />
         ) : (
           <AccountRegistration

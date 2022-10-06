@@ -1,7 +1,7 @@
 type TBlog = {
-  likes?: number;
-  categories?: string[];
-  description?: string;
+  likes: number;
+  categories: string[];
+  description: string;
 };
 
 interface Blog extends import('mongoose').Document, TBlog {
@@ -32,10 +32,12 @@ type TPost = {
   description: string;
   image: string;
   authorName: string;
-  likes: number;
+  likes: string[];
   categories: string[];
   displayType: number;
 };
+
+type ClientTPost = Omit<TPost, 'likes'> & { likes: number; isLiked: boolean };
 
 interface Post extends import('mongoose').Document, TPost {
   _id: import('mongoose').ObjectId;

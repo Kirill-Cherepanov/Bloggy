@@ -56,9 +56,47 @@ export const postsApi = generalApi.injectEndpoints({
       { post: PostData; author: PublicData; otherPosts: PostData[] },
       string
     >({
+      providesTags: (result, error, args) =>
+        result ? [{ type: 'Post', id: result.post._id }, 'Post'] : ['Post'],
       query: (id) => ({
         url: `/posts/${id}`,
       }),
+    }),
+    likePost: builder.mutation<{ success: boolean }, string>({
+      invalidatesTags: (result, error, id) =>
+        result?.success ? [{ type: 'Post', id }] : [],
+      query: (id) => ({
+        url: `/posts/like/${id}`,
+        method: 'PUT',
+        credentials: 'include',
+      }),
+      // TODO: OPTIMISTIC UPDATES
+      // onQueryStarted: async (id, api) => {
+      //   const patchedGetPost = api.dispatch(
+      //     postsApi.util.updateQueryData('getPost', id, (getPostData) => {
+      //       getPostData.post.likes += getPostData.post.isLiked ? -1 : 1;
+      //       getPostData.post.isLiked = !getPostData.post.isLiked;
+      //     })
+      //   );
+      //   const username = [];
+      //   const patchedGetUser = api.dispatch(
+      //     usersApi.util.updateQueryData('getUser', username, (getUserData) => {
+      //       const post = getUserData.posts.find(post => post._id === id);
+      //       if (!post) return;
+      //       post.likes += post.isLiked ? -1 : 1;
+      //       post.isLiked = !post.isLiked;
+      //     })
+      //   )
+      //   try {
+      //     const { data } = await api.queryFulfilled;
+      //     if (data.success) return;
+      //      patchedGetPost.undo();
+      //      patchedGetUser.undo();
+      //     } catch {
+      //       patchedGetPost.undo();
+      //       patchedGetUser.undo();
+      //   }
+      // },
     }),
   }),
 });
@@ -68,4 +106,5 @@ export const {
   useEditPostMutation,
   useDeletePostMutation,
   useGetPostQuery,
+  useLikePostMutation,
 } = postsApi;

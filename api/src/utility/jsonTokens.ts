@@ -15,8 +15,12 @@ export const verifyToken = async (
   });
 };
 
-export const generateAccessToken = (username: string, email: string) =>
-  jwt.sign({ username, email }, process.env.ACCESS_TOKEN_SECRET!, {
+export const generateAccessToken = (
+  id: string,
+  username: string,
+  email: string
+) =>
+  jwt.sign({ id, username, email }, process.env.ACCESS_TOKEN_SECRET!, {
     expiresIn: ACCESS_TOKEN_EXPIRATION_TIME,
   });
 

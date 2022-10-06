@@ -43,7 +43,9 @@ authRouter.post('/registration', async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const userData: TUser = {
+    const userData: Omit<Partial<TUser>, 'blog'> & {
+      blog?: Partial<TUser['blog']>;
+    } = {
       password: hashedPassword,
       email,
       username,
@@ -63,7 +65,11 @@ authRouter.post('/registration', async (req, res) => {
       },
       process.env.REFRESH_TOKEN_SECRET!
     );
-    const accessToken = generateAccessToken(user.username, user.email);
+    const accessToken = generateAccessToken(
+      user._id.toString(),
+      user.username,
+      user.email
+    );
 
     res.cookie('refresh-token', refreshToken, { httpOnly: true });
     res.cookie('access-token', accessToken, { httpOnly: true });
@@ -88,7 +94,11 @@ authRouter.post('/login', async (req, res) => {
 
     const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
-    const accessToken = generateAccessToken(user.username, user.email);
+    const accessToken = generateAccessToken(
+      user._id.toString(),
+      user.username,
+      user.email
+    );
     const refreshToken = jwt.sign(
       {
         username: user.username,
@@ -147,7 +157,11 @@ authRouter.get('/token', async (req, res) => {
 
     const { password, __v, _id, updatedAt, ...protectedData } = user._doc;
 
-    const accessToken = generateAccessToken(user.username, user.email);
+    const accessToken = generateAccessToken(
+      user._id.toString(),
+      user.username,
+      user.email
+    );
     res.cookie('access-token', accessToken, { httpOnly: true });
 
     res.status(200).json({ user: protectedData, isLoggedIn: true });
