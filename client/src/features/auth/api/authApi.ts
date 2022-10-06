@@ -13,6 +13,9 @@ type RegisterReturnType =
 
 type ResetPasswordReturnType = RegisterReturnType;
 
+// I don't need tags here because all of the data is accessed through authSlice
+// Cache is just not used here
+
 export const authApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
     getSelf: builder.query<{ user: ProtectedData }, void>({

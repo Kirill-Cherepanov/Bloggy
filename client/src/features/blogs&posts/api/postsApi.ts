@@ -1,6 +1,7 @@
 import { PostData, PublicData } from 'types';
 import { generalApi } from 'lib/generalApi';
 import { CreatePostValues, UpdatePostValues } from '../types';
+import { TagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 
 type CreatePostReturnType =
   | {
@@ -9,9 +10,18 @@ type CreatePostReturnType =
     }
   | { success: false };
 
+type GetPostReturnType = {
+  post: PostData;
+  author: PublicData;
+  otherPosts: PostData[];
+};
+
+type SearchPostsReturnType = { posts: PostData[] };
+
 export const postsApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
     createPost: builder.mutation<CreatePostReturnType, CreatePostValues>({
+      invalidatesTags: invalidateCreatePostTags,
       query: (values) => {
         const data = new Blob([JSON.stringify(values.data)], {
           type: 'application/json',
@@ -28,7 +38,9 @@ export const postsApi = generalApi.injectEndpoints({
         };
       },
     }),
+
     editPost: builder.mutation<CreatePostReturnType, UpdatePostValues>({
+      invalidatesTags: invalidateEditPostTags,
       query: (values) => {
         const data = new Blob([JSON.stringify(values.data)], {
           type: 'application/json',
@@ -45,23 +57,16 @@ export const postsApi = generalApi.injectEndpoints({
         };
       },
     }),
+
     deletePost: builder.mutation<{ success: boolean }, string>({
+      invalidatesTags: invalidateDeletePostTags,
       query: (id) => ({
         url: `/posts/${id}`,
         method: 'DELETE',
         credentials: 'include',
       }),
     }),
-    getPost: builder.query<
-      { post: PostData; author: PublicData; otherPosts: PostData[] },
-      string
-    >({
-      providesTags: (result, error, args) =>
-        result ? [{ type: 'Post', id: result.post._id }, 'Post'] : ['Post'],
-      query: (id) => ({
-        url: `/posts/${id}`,
-      }),
-    }),
+
     likePost: builder.mutation<{ success: boolean }, string>({
       invalidatesTags: (result, error, id) =>
         result?.success ? [{ type: 'Post', id }] : [],
@@ -98,6 +103,20 @@ export const postsApi = generalApi.injectEndpoints({
       //   }
       // },
     }),
+
+    getPost: builder.query<GetPostReturnType, string>({
+      providesTags: provideGetPostTags,
+      query: (id) => ({
+        url: `/posts/${id}`,
+      }),
+    }),
+
+    searchPosts: builder.query<SearchPostsReturnType, string>({
+      providesTags: provideSearchPostsTags,
+      query: (query) => ({
+        url: `/posts?${query}`,
+      }),
+    }),
   }),
 });
 
@@ -105,6 +124,71 @@ export const {
   useCreatePostMutation,
   useEditPostMutation,
   useDeletePostMutation,
-  useGetPostQuery,
   useLikePostMutation,
+  useGetPostQuery,
+  useSearchPostsQuery,
 } = postsApi;
+
+function invalidateCreatePostTags(
+  result?: CreatePostReturnType
+): TagDescription<'Post' | 'User'>[] {
+  if (!result?.success) return [];
+
+  return [
+    { type: 'Post', id: 'PARTIAL-LIST' },
+    { type: 'User', id: result.post.authorName },
+  ];
+}
+
+function invalidateEditPostTags(
+  result?: CreatePostReturnType
+): TagDescription<'Post' | 'User'>[] {
+  if (!result?.success) return [];
+
+  return [
+    { type: 'Post', id: 'PARTIAL-LIST' },
+    { type: 'Post', id: result.post._id },
+  ];
+}
+
+function invalidateDeletePostTags(
+  result?: { success: boolean },
+  error?: unknown,
+  id?: string
+): TagDescription<'Post' | 'User'>[] {
+  if (!result?.success) return [];
+
+  return [
+    { type: 'Post', id },
+    { type: 'Post', id: 'PARTIAL-LIST' },
+  ];
+}
+
+function provideGetPostTags(
+  result?: GetPostReturnType
+): TagDescription<'Post' | 'User'>[] {
+  if (!result) return ['Post', 'User'];
+
+  const postTag = { type: 'Post' as const, id: result.post._id };
+  const userTag = { type: 'User' as const, id: result.author.username };
+
+  const otherPostsTags = result.otherPosts.map(({ _id }) => ({
+    type: 'Post' as const,
+    id: _id,
+  }));
+
+  return [...otherPostsTags, postTag, userTag];
+}
+
+function provideSearchPostsTags(
+  result?: SearchPostsReturnType
+): TagDescription<'Post' | 'User'>[] {
+  if (!result) return [{ type: 'Post', id: 'PARTIAL-LIST' }];
+
+  const postsTags = result.posts.map(({ _id }) => ({
+    type: 'Post' as const,
+    id: _id,
+  }));
+
+  return [...postsTags, { type: 'Post', id: 'PARTIAL-LIST' }];
+}

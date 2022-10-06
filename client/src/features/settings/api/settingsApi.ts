@@ -9,6 +9,8 @@ export const settingsApi = generalApi.injectEndpoints({
       ProtectedData,
       Omit<UpdateUserValues, 'profile-picture'>
     >({
+      invalidatesTags: (result) =>
+        result ? [{ type: 'User', id: result.username }] : [],
       query: (updatedData) => ({
         url: '/settings/data',
         method: 'PATCH',
@@ -24,6 +26,8 @@ export const settingsApi = generalApi.injectEndpoints({
     }),
 
     updateProfilePic: builder.mutation<ProtectedData, FormData>({
+      invalidatesTags: (result) =>
+        result ? [{ type: 'User', id: result.username }] : [],
       query: (profilePicture) => ({
         url: '/settings/profile-picture',
         method: 'PUT',
@@ -39,6 +43,11 @@ export const settingsApi = generalApi.injectEndpoints({
     }),
 
     deleteUser: builder.mutation<{ success: true }, ConfirmPasswordValues>({
+      invalidatesTags: (result, error) =>
+        // That's a bit lazy
+        // But otherwise I'd need to retrieve all of the posts of the user from cache,
+        // which is too much of a bother
+        result?.success ? ['Post', 'User'] : [],
       query: () => ({
         url: `/settings/`,
         method: 'DELETE',
