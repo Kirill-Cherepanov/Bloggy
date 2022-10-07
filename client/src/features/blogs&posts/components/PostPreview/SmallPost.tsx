@@ -108,6 +108,7 @@ export function SmallPost({
             likes={postData.likes}
             id={postData._id}
             isLiked={postData.isLiked}
+            shouldMutate={!isPreview}
           />
 
           <div className="mt-auto text-text-600">

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { getPostsData } from 'utility/mockData';
-import { TinyPost } from 'features/blogs&posts';
+import { TinyPost, useSearchPostsQuery } from 'features/blogs&posts';
 
 type AsideProps = {
   shouldRenderPopular?: boolean;
@@ -9,6 +8,43 @@ type AsideProps = {
 };
 
 export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
+  const { maxHeightElement, minHeightElement, amountOfPosts } =
+    useCalculatePosts();
+
+  const { data, isError, error } = useSearchPostsQuery(
+    'type=posts&sort=popular&time=all',
+    { skip: !shouldRenderPopular && amountOfPosts > 0 }
+  );
+
+  if (isError) console.error(error);
+
+  return (
+    <aside
+      ref={minHeightElement}
+      className="w-80 h-min shrink-0 bg-secondary-800 flex flex-col rounded-md"
+    >
+      <div className="absolute top-0 bottom-0" ref={maxHeightElement}>
+        {/* This element measures the maximum height that Aside can take */}
+        {/* For that you need to set position property of the container to relative */}
+      </div>
+      {children}
+      {shouldRenderPopular && amountOfPosts > 0 && data?.posts && (
+        <div className="mt-3">
+          <h3 className="mx-auto mb-1 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
+            Popular posts
+          </h3>
+          <ul>
+            {data.posts.slice(0, amountOfPosts).map((post) => (
+              <TinyPost key={post._id} postData={post} />
+            ))}
+          </ul>
+        </div>
+      )}
+    </aside>
+  );
+}
+
+const useCalculatePosts = () => {
   const maxHeightElement = useRef<HTMLDivElement | null>(null);
   const minHeightElement = useRef<HTMLElement | null>(null);
   const [amountOfPosts, setAmountOfPosts] = useState(0);
@@ -27,25 +63,5 @@ export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
     setTimeout(() => setAmountOfPosts(newAmountOfPosts), 1000);
   }, []);
 
-  return (
-    <aside
-      ref={minHeightElement}
-      className="w-80 h-min shrink-0 bg-secondary-800 flex flex-col rounded-md"
-    >
-      <div className="absolute top-0 bottom-0" ref={maxHeightElement}></div>
-      {children}
-      {shouldRenderPopular && amountOfPosts ? (
-        <div className="mt-3">
-          <h3 className="mx-auto mb-1 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
-            Popular posts
-          </h3>
-          <ul>
-            {getPostsData(amountOfPosts).map((postData) => (
-              <TinyPost key={postData._id} postData={postData} />
-            ))}
-          </ul>
-        </div>
-      ) : null}
-    </aside>
-  );
-}
+  return { maxHeightElement, minHeightElement, amountOfPosts };
+};

@@ -34,12 +34,8 @@ export function PostSwiper({ postsData, className }: PostSwiperProps) {
           className="BLOG_SWIPER_PREV_ELEMENT bg-opacity-70 bg-secondary-800 text-main w-10 z-20 absolute left-0 top-1/2 -translate-y-1/2"
         />
         {postsData.map((postData) => (
-          <SwiperSlide key={postData._id} className="">
-            <LargePost
-              {...postData}
-              className="h-80 sm:h-100 md:h-[440px]"
-              textBoxClass="bottom-8 w-5/6 h-40 sm:h-48 xl:max-h-64"
-            />
+          <SwiperSlide key={postData._id}>
+            <LargePost postData={postData} />
           </SwiperSlide>
         ))}
         <Icon

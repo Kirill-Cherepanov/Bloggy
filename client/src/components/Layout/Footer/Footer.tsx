@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Icon, IconTypes } from 'components/Elements';
+import { Icon, IconType } from 'components/Elements';
 import { useAppSelector } from 'stores/globalStore';
 import { useLogoutMutation } from 'features/auth';
 import { AuthDrawer } from 'features/auth';
@@ -132,7 +132,7 @@ export function Footer() {
               <li key={i}>
                 <a href={v[1]} target="_blank" rel="noreferrer">
                   <Icon
-                    type={v[0] as IconTypes}
+                    type={v[0] as IconType}
                     className="h-10 transition-colors fill-secondary-200 hover:fill-accent-600 mx-2 last:mr-0"
                   />
                 </a>

@@ -45,7 +45,7 @@ export function TopbarUserMenu() {
       <div
         className={clsx(
           'z-20 absolute right-0 top-full transition-[height] overflow-hidden',
-          isOpen ? 'flex h-48' : 'h-0'
+          isOpen ? (isLoggedIn ? 'flex h-48' : 'flex h-32') : 'h-0'
         )}
       >
         <div

@@ -185,8 +185,6 @@ function provideSearchPostsTags(
 ): TagDescription<'Post' | 'User'>[] {
   if (!result) return [{ type: 'Post', id: 'PARTIAL-LIST' }];
 
-  console.log(result);
-
   const postsTags = result.posts.map(({ _id }) => ({
     type: 'Post' as const,
     id: _id,

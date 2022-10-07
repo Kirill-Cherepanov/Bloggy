@@ -1,2 +1,2 @@
-export * from './BgTransition';
 export * from './Wave';
+export * from './BgTransition';

@@ -9,12 +9,13 @@ import { useAppSelector } from 'stores/globalStore';
 
 const textBoxPositions = {
   bottomLeft: 'left-0 bottom-8',
+  fullBottomLeft: 'left-0 bottom-0',
 };
 
 const sizes = {
   md: {
     wrapper: 'h-80 sm:h-100 md:h-[440px]',
-    textBox: 'w-5/6 h-40 sm:h-48 md:h-56',
+    textBox: 'w-5/6 h-40 sm:h-48 lg:h-56 xl:h-64',
   },
   none: { wrapper: '', textBox: '' },
 };
@@ -106,7 +107,7 @@ export function LargePost({
         {/* Post text */}
         <div className="basis-0 shrink grow mb-3 min-h-0" ref={textBoxRef}>
           <p
-            className="font-extralight line-clamp-3 text-base"
+            className="font-extralight line-clamp-5 text-base"
             style={{ WebkitLineClamp: amountOfLines }}
           >
             {amountOfLines ? postData.description : ''}
@@ -118,6 +119,7 @@ export function LargePost({
             likes={postData.likes}
             id={postData._id}
             isLiked={postData.isLiked}
+            shouldMutate={!isPreview}
           />
           {user?.username === postData.authorName ? (
             <>

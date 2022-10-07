@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PostData } from 'types';
 
-import { getRelativeCursorPos, isMobile } from 'utility';
+import { getRelativeCursorPos } from 'utility';
 
 type CurtainsProps = {
   postsData: PostData[];
@@ -43,11 +43,7 @@ export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
                   src={postData.image}
                   alt="Post"
                   onMouseMove={(e) => setZoomedXPos(getRelativeCursorPos(e).x)}
-                  className={clsx(
-                    'object-cover object-center h-full',
-                    isMobile() ||
-                      'transition-transform duration-200 ease-out group-hover:scale-110'
-                  )}
+                  className="object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"
                   style={{
                     transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
                   }}

@@ -9,7 +9,7 @@ export const useFetch = <T>(
   url: string,
   { skip = false, isBlob = false }: FetchOptions
 ) => {
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<unknown>();
   const [isError, setIsError] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [data, setData] = useState<T>();
@@ -24,13 +24,13 @@ export const useFetch = <T>(
         setIsFetching(false);
 
         if (fetchRes.ok) {
-          if (isBlob) return setData((await fetchRes.blob()) as T);
+          if (isBlob) return setData((await fetchRes.blob()) as unknown as T);
           return setData(await fetchRes.json());
         }
 
         setIsError(true);
         setError(await fetchRes.json());
-      } catch (err: any) {
+      } catch (err: unknown) {
         setIsFetching(false);
         setIsError(true);
         setError(err);

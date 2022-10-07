@@ -26,7 +26,7 @@ type SubmitPostValues = CreatePostValues & UpdatePostValues;
 type PostEditorProps = {
   initialData: { post: PostValues; author: PublicData };
   onSubmit: (values: SubmitPostValues) => unknown;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 };
 
 export function PostEditor({

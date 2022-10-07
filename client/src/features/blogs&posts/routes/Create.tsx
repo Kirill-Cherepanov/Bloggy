@@ -16,6 +16,7 @@ const initialPostValues: PostValues = {
   authorName: '',
   likes: 100,
   createdAt: new Date().toISOString(),
+  isLiked: false,
 };
 
 export function Create() {

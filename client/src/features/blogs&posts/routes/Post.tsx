@@ -47,6 +47,8 @@ export function Post({ initialData }: PostProps) {
     author = data.author;
   }
 
+  console.log(post);
+
   return (
     <main className="py-8 px-page">
       <div className="border-b pb-1 border-secondary-300 flex justify-between group">

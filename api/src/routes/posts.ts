@@ -179,7 +179,7 @@ postsRouter.get('/:id', async (req, res) => {
     const otherPosts = (await searchBlogPosts(author.username, 1)).slice(0, 4);
 
     const sentPostData: ClientTPost = {
-      ...post,
+      ...post._doc,
       likes: post.likes.length,
       isLiked: isLoggedIn && post.likes.includes(verificationRes.id),
     };

@@ -57,6 +57,7 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
           likes={postData.likes}
           id={postData._id}
           isLiked={postData.isLiked}
+          shouldMutate={!isPreview}
         />
 
         {user?.username === postData.authorName ? (
