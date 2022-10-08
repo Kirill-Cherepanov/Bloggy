@@ -91,6 +91,11 @@ export function Footer() {
             </Link>
           </li>
           <li className="hover:text-accent-400">
+            <Link className="link" to="/catalog">
+              Catalog
+            </Link>
+          </li>
+          <li className="hover:text-accent-400">
             <Link className="link" to="/about">
               About
             </Link>

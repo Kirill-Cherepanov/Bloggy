@@ -1,45 +1,35 @@
-import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
+
+import { useDisclosure, useOnClickOutside } from 'hooks';
 
 type NavigationProps = {
   links: [string, string][];
 };
 
 export function TopbarNavigation({ links }: NavigationProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleHamburger = () => setIsOpen((isOpen) => !isOpen);
-  const menu = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const closeMenu = (e: MouseEvent) => {
-      if (menu.current?.contains(e.target as Node)) return;
-      setIsOpen(false);
-    };
-
-    document.addEventListener('click', closeMenu);
-
-    return () => document.removeEventListener('click', closeMenu);
-  }, []);
+  const { isOpen, close, toggle } = useDisclosure();
+  const container = useOnClickOutside<HTMLDivElement>(close);
 
   return (
     <>
       <div
-        ref={menu}
+        ref={container}
         className={'MOBILE-MENU basis-1/2 flex items-center p-2 h-12 lg:hidden'}
       >
         <button
-          className={'hamburger-menu-btn' + (isOpen ? ' open' : '')}
-          onClick={toggleHamburger}
+          className={clsx('hamburger-menu-btn', isOpen && 'open')}
+          onClick={toggle}
         >
           <span />
           <span />
           <span />
         </button>
         <ul
-          className={
-            (!isOpen ? '-translate-x-screen ' : '') +
+          className={clsx(
+            !isOpen && '-translate-x-screen',
             'absolute top-20 left-0 transition-transform flex flex-col bg-secondary-800 w-full'
-          }
+          )}
         >
           {links.map((link, i) => (
             <li
@@ -47,7 +37,7 @@ export function TopbarNavigation({ links }: NavigationProps) {
               className="group text-xl font-medium transition-colors hover:bg-secondary-600 hover:text-secondary-200 "
             >
               <NavLink
-                onClick={toggleHamburger}
+                onClick={toggle}
                 to={link[1]}
                 className="p-4 sm:p-5 block w-full h-full"
               >

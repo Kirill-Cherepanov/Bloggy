@@ -3,3 +3,4 @@ export * from './useContentEditable';
 export * from './useFetch';
 export * from './useOnClickRerender';
 export * from './useScreenSize';
+export * from './useOnClickOutside';

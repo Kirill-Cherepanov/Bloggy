@@ -1,28 +1,18 @@
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 
 import { Icon, ProfilePicture } from 'components/Elements';
 import { AuthDrawer, useLogoutMutation } from 'features/auth';
 import { useAppSelector } from 'stores/globalStore';
-import { useDisclosure } from 'hooks';
+import { useDisclosure, useOnClickOutside } from 'hooks';
 
 export function TopbarUserMenu() {
   const { close, toggle, isOpen } = useDisclosure();
+  const menu = useOnClickOutside<HTMLDivElement>(close);
   const [authOpen, setAuthOpen] = useState<false | 'login' | 'signup'>(false);
-  const menu = useRef<HTMLDivElement | null>(null);
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const user = useAppSelector((state) => state.authSlice.user);
   const [logout] = useLogoutMutation();
-
-  useEffect(() => {
-    const closeMenu = (e: MouseEvent) => {
-      if (!menu.current?.contains(e.target as Node)) close();
-    };
-
-    document.addEventListener('click', closeMenu);
-
-    return () => document.removeEventListener('click', closeMenu);
-  }, [close]);
 
   return (
     <div
