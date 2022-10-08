@@ -18,9 +18,7 @@ export function TopbarNavigation({ links }: NavigationProps) {
 
     document.addEventListener('click', closeMenu);
 
-    return () => {
-      document.removeEventListener('click', closeMenu);
-    };
+    return () => document.removeEventListener('click', closeMenu);
   }, []);
 
   return (

@@ -9,6 +9,7 @@ import authRouter from './routes/auth';
 import usersRouter from './routes/users';
 import postsRouter from './routes/posts';
 import settingsRouter from './routes/settings';
+import searchRouter from './routes/search';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/settings', settingsRouter);
+app.use('/api/search', searchRouter);
 app.use(handleMiddlewareErrors);
 
 app.listen(5000, () => console.log('Backend is running'));

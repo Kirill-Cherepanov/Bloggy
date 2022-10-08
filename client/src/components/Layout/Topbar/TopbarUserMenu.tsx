@@ -21,9 +21,7 @@ export function TopbarUserMenu() {
 
     document.addEventListener('click', closeMenu);
 
-    return () => {
-      document.removeEventListener('click', closeMenu);
-    };
+    return () => document.removeEventListener('click', closeMenu);
   }, [close]);
 
   return (
@@ -32,7 +30,7 @@ export function TopbarUserMenu() {
       className="h-full flex items-center justify-center xl:relative"
     >
       <button className="flex items-center" onClick={toggle}>
-        <ProfilePicture className="h-8 sm:h-10" />
+        <ProfilePicture className="h-8 sm:h-10 select-none" />
         <Icon
           type="angle"
           className={clsx(

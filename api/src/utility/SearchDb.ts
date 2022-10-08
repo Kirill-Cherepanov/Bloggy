@@ -18,7 +18,6 @@ class SearchDb {
     time: 'all',
     page: 1,
   };
-  protected POSTS_PER_PAGE = 10;
 
   protected params: SearchParams;
 
@@ -107,6 +106,8 @@ class SearchDb {
 }
 
 export class SearchPosts extends SearchDb {
+  protected POSTS_PER_PAGE = 10;
+
   constructor(requestParams: Partial<SearchParams>) {
     super(requestParams);
   }
@@ -131,19 +132,27 @@ export class SearchPosts extends SearchDb {
 
 // would need to rewrite it a bit
 export class SearchBlogs extends SearchDb {
+  protected BLOGS_PER_PAGE = 10;
+
   constructor(requestParams: Partial<SearchParams>) {
     super(requestParams);
   }
 
-  public getBlogs() {
+  public async getBlogs() {
     if (this.params.page <= 0) throw Error('Incorrect page');
 
     const query: SearchQuery = this.getQuery();
 
-    return User.find(query)
-      .sort(this.getSortQuery(this.params.sort))
-      .skip((this.params.page - 1) * this.POSTS_PER_PAGE)
-      .limit(this.params.page * this.POSTS_PER_PAGE);
+    const allBlogs = await User.find(query).sort(
+      this.getSortQuery(this.params.sort)
+    );
+
+    const blogs = allBlogs.slice(
+      (this.params.page - 1) * this.BLOGS_PER_PAGE,
+      this.params.page * this.BLOGS_PER_PAGE
+    );
+
+    return { blogs, total: allBlogs.length };
   }
 
   protected getSortQuery(sort: string) {

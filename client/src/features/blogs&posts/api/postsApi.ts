@@ -16,8 +16,6 @@ type GetPostReturnType = {
   otherPosts: PostData[];
 };
 
-type SearchPostsReturnType = { posts: PostData[]; total: number };
-
 export const postsApi = generalApi.injectEndpoints({
   endpoints: (builder) => ({
     createPost: builder.mutation<CreatePostReturnType, CreatePostValues>({
@@ -110,13 +108,6 @@ export const postsApi = generalApi.injectEndpoints({
         url: `/posts/${id}`,
       }),
     }),
-
-    searchPosts: builder.query<SearchPostsReturnType, string>({
-      providesTags: provideSearchPostsTags,
-      query: (query) => ({
-        url: `/posts?${query}`,
-      }),
-    }),
   }),
 });
 
@@ -126,7 +117,6 @@ export const {
   useDeletePostMutation,
   useLikePostMutation,
   useGetPostQuery,
-  useSearchPostsQuery,
 } = postsApi;
 
 function invalidateCreatePostTags(
@@ -178,17 +168,4 @@ function provideGetPostTags(
   }));
 
   return [...otherPostsTags, postTag, userTag];
-}
-
-function provideSearchPostsTags(
-  result?: SearchPostsReturnType
-): TagDescription<'Post' | 'User'>[] {
-  if (!result) return [{ type: 'Post', id: 'PARTIAL-LIST' }];
-
-  const postsTags = result.posts.map(({ _id }) => ({
-    type: 'Post' as const,
-    id: _id,
-  }));
-
-  return [...postsTags, { type: 'Post', id: 'PARTIAL-LIST' }];
 }

@@ -5,3 +5,5 @@ export * from './PostPreview';
 export * from './PostDisplaysPreview';
 export * from './PostEditor';
 export * from './CatalogPosts';
+export * from './CatalogBlogs';
+export * from './BlogPreview';

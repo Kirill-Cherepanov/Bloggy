@@ -108,24 +108,26 @@ export function Landing() {
         )}
       </QuerySection>
 
-      {/* IMPLEMENT BLOG SEARCH */}
-      {/* <QuerySection
-          query=""
-          bgTransitionType="popular-blogs"
-          className="bg-accent-500 pb-6"
-          minLength={3}
-        >
-          {(posts) => (
-            <>
-              <div className="px-page">
-                <h2 className="font-display font-bold text-3xl text-center mb-4">
-                  Popular blogs
-                </h2>
-                <BlogSwiper blogsInfo={Array(10).fill(blogInfo)} />
-              </div>
-            </>
-          )}
-        </QuerySection> */}
+      <QuerySection
+        query="type=blogs&sort=popular"
+        bgTransitionType="popular-blogs"
+        className="bg-accent-500 pb-6"
+        minLength={3}
+      >
+        {(blogs) => (
+          <>
+            <div className="px-page">
+              <h2 className="font-display font-bold text-3xl text-center mb-4">
+                Popular blogs
+              </h2>
+              <BlogSwiper
+                bloggers={blogs}
+                sliderClassName={{ wrapper: 'shadow-lg' }}
+              />
+            </div>
+          </>
+        )}
+      </QuerySection>
 
       <QuerySection
         query="q=music&search=categories&sort=popular"

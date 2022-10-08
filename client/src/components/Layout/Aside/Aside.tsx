@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { TinyPost, useSearchPostsQuery } from 'features/blogs&posts';
+import { TinyPost, useSearchQuery } from 'features/blogs&posts';
+import { PostData } from 'types';
 
 type AsideProps = {
   shouldRenderPopular?: boolean;
@@ -11,10 +12,9 @@ export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
   const { maxHeightElement, minHeightElement, amountOfPosts } =
     useCalculatePosts();
 
-  const { data, isError, error } = useSearchPostsQuery(
-    'type=posts&sort=popular&time=all',
-    { skip: !shouldRenderPopular && amountOfPosts > 0 }
-  );
+  const { data, isError, error } = useSearchQuery('sort=popular', {
+    skip: !shouldRenderPopular && amountOfPosts > 0,
+  });
 
   if (isError) console.error(error);
 
@@ -24,17 +24,18 @@ export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
       className="w-80 h-min shrink-0 bg-secondary-800 flex flex-col rounded-md"
     >
       <div className="absolute top-0 bottom-0" ref={maxHeightElement}>
+        {/* In order to calculate how many posts can fit into the Aside */}
         {/* This element measures the maximum height that Aside can take */}
         {/* For that you need to set position property of the container to relative */}
       </div>
       {children}
-      {shouldRenderPopular && amountOfPosts > 0 && data?.posts && (
+      {shouldRenderPopular && amountOfPosts > 0 && data?.values && (
         <div className="mt-3">
           <h3 className="mx-auto mb-1 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
             Popular posts
           </h3>
           <ul>
-            {data.posts.slice(0, amountOfPosts).map((post) => (
+            {(data.values as PostData[]).slice(0, amountOfPosts).map((post) => (
               <TinyPost key={post._id} postData={post} />
             ))}
           </ul>

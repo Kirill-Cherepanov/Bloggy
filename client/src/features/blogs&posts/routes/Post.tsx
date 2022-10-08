@@ -47,10 +47,10 @@ export function Post({ initialData }: PostProps) {
     author = data.author;
   }
 
-  console.log(post);
+  const wrapper = initialData ? <div /> : <main />;
 
   return (
-    <main className="py-8 px-page">
+    <wrapper.type className="py-8 px-page">
       <div className="border-b pb-1 border-secondary-300 flex justify-between group">
         <button onClick={() => initialData || navigate(-1)}>
           <Icon type="long-arrow" className="h-4 text-secondary-700" />
@@ -177,6 +177,6 @@ export function Post({ initialData }: PostProps) {
           <ParallelogramCurtains postsData={data.otherPosts} />
         </div>
       )}
-    </main>
+    </wrapper.type>
   );
 }

@@ -5,14 +5,6 @@ import { PostData } from 'types';
 type CatalogPostsProps = { posts: PostData[] };
 
 export function CatalogPosts({ posts }: CatalogPostsProps) {
-  if (posts.length === 0) {
-    return (
-      <div className="w-full h-48 flex items-center justify-center sm:text-2xl md:text-3xl lg:text-4xl">
-        It looks like your query did not match anything
-      </div>
-    );
-  }
-
   if (posts.length < 10) {
     return (
       <div className="flex relative gap-10 my-12">

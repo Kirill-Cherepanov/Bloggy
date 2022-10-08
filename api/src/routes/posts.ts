@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 
 import Post from '../models/Post';
-import { SearchPosts, searchBlogPosts } from '../utility/SearchDb';
+import { searchBlogPosts } from '../utility/SearchDb';
 import { upload } from '../utility/middleware';
 import { getCategories, validateJsonBlob } from '../utility/validations';
 import { verifyAccessToken } from '../utility/jsonTokens';
@@ -185,33 +185,6 @@ postsRouter.get('/:id', async (req, res) => {
     };
 
     res.status(200).json({ post: sentPostData, author, otherPosts });
-  } catch (err: any) {
-    console.error(err);
-    if (err && typeof err === 'object' && 'message' in err) {
-      res.status(500).json(err.message);
-    }
-  }
-});
-
-// search posts TESTED
-postsRouter.get('/', async (req, res) => {
-  try {
-    let isLoggedIn = false;
-    const verificationRes = await verifyAccessToken(
-      req.cookies['access-token']
-    );
-    if (!verificationRes.err) isLoggedIn = true;
-
-    const searchPosts = new SearchPosts(req.query);
-    const searchResult = await searchPosts.getPosts();
-
-    const sentPostsData: ClientTPost[] = searchResult.posts.map((post) => ({
-      ...post._doc,
-      likes: post.likes.length,
-      isLiked: isLoggedIn && post.likes.includes(verificationRes.id),
-    }));
-
-    res.status(200).json({ posts: sentPostsData, total: searchResult.total });
   } catch (err: any) {
     console.error(err);
     if (err && typeof err === 'object' && 'message' in err) {

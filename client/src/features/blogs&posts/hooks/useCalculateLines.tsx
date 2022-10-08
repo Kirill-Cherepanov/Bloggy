@@ -16,9 +16,7 @@ export const useCalculateLines = (lineHeight: number) => {
     window.addEventListener('resize', setLines);
     setLines();
 
-    return () => {
-      window.removeEventListener('resize', setLines);
-    };
+    return () => window.removeEventListener('resize', setLines);
   }, [lineHeight]);
 
   return { amountOfLines, textBoxRef };

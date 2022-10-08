@@ -28,24 +28,23 @@ export function Blog() {
     return <PageNotFound />;
   }
 
-  const user = data.user as Required<PublicData>;
-  const posts = data.posts;
-
   return (
     <main className="py-8 px-page">
       <div className="flex flex-row-reverse gap-4 xs:gap-8">
-        <BlogCard {...user} />
+        <BlogCard {...(data.user as Required<PublicData>)} />
         <div className="grow">
-          {user.blog.description && (
+          {data.user.blog.description && (
             <div className="w-full p-4 bg-accent-200 mb-6 rounded-md">
               <h3 className="font-display font-semibold text-2xl mb-2">
                 Description
               </h3>
-              <p>{user.blog.description}</p>
+              <p>
+                {data.user.blog.description || 'This blog has no description'}
+              </p>
             </div>
           )}
           <ul className="[&>*]:mb-6 [&>*]:rounded-md [&>*:last-child]:mb-0">
-            {posts.map((post) => renderPost(post))}
+            {data.posts.map((post) => renderPost(post))}
           </ul>
         </div>
       </div>

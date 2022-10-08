@@ -1,6 +1,10 @@
 import { Icon } from 'components/Elements';
 
-export function ExtensiveSearchBar() {
+type ExtensiveSearchBarProps = {
+  defaultQuery?: URLSearchParams;
+};
+
+export function ExtensiveSearchBar({ defaultQuery }: ExtensiveSearchBarProps) {
   return (
     <form>
       <div className="flex items-center h-12 relative">
@@ -13,6 +17,7 @@ export function ExtensiveSearchBar() {
           className="focus:border-accent-400 outline-none w-full border-2 border-secondary-300 rounded-l-3xl pl-14 pr-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light"
           placeholder="Search"
           name="q"
+          defaultValue={defaultQuery?.get('q') || ''}
         />
         <button
           type="submit"
@@ -26,18 +31,18 @@ export function ExtensiveSearchBar() {
       </div>
 
       <div className="mt-2 pl-6 pr-14 flex justify-between [&>*]:cursor-pointer [&>*]:hover: [&>*]:border-secondary-300 [&>*]:border [&>*]:shadow-sm [&>*]:rounded-md [&>*]:pb-1 [&>*]:px-0.5 [&>*]:outline-none">
-        {/* NOT YET IMPLEMENTED (designing this thing is such a bother) */}
-        <select name="type" defaultValue="posts">
+        <select name="type" defaultValue={defaultQuery?.get('type') || 'posts'}>
           <option value="" disabled={true}>
             Type
           </option>
           <option value="posts">Posts</option>
-          <option value="blogs" disabled={true}>
-            Blogs
-          </option>
+          <option value="blogs">Blogs</option>
         </select>
 
-        <select name="search" defaultValue="both">
+        <select
+          name="search"
+          defaultValue={defaultQuery?.get('search') || 'both'}
+        >
           <option value="" disabled={true}>
             Search by
           </option>
@@ -46,7 +51,7 @@ export function ExtensiveSearchBar() {
           <option value="title">Title</option>
         </select>
 
-        <select name="sort" defaultValue="new">
+        <select name="sort" defaultValue={defaultQuery?.get('sort') || 'new'}>
           <option value="" disabled={true}>
             Sort by
           </option>
@@ -54,7 +59,7 @@ export function ExtensiveSearchBar() {
           <option value="popular">By popularity</option>
         </select>
 
-        <select name="time" defaultValue="all">
+        <select name="time" defaultValue={defaultQuery?.get('time') || 'all'}>
           <option value="" disabled={true}>
             Over time
           </option>
