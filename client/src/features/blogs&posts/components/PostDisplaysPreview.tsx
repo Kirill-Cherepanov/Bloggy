@@ -1,5 +1,5 @@
 import { Drawer, Icon } from 'components/Elements';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { PostData } from 'types';
 import { usePost } from '../hooks';
 

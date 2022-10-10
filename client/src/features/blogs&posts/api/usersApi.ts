@@ -1,10 +1,10 @@
 import { PublicData, PostData } from 'types';
-import { generalApi } from 'lib/generalApi';
+import { rootApi } from 'lib/rootApi';
 import { TagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 
 type GetUserReturnType = { user: PublicData; posts: PostData[] };
 
-export const usersApi = generalApi.injectEndpoints({
+export const usersApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query<GetUserReturnType, string>({
       providesTags: provideGetUserTags,

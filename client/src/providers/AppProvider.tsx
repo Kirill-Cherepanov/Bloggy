@@ -3,7 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import { store } from 'stores/globalStore';
+import { store } from 'stores/rootStore';
 import { Button, Spinner } from 'components/Elements';
 
 const SuspenseFallback = (

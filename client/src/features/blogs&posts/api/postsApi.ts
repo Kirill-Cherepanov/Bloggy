@@ -1,7 +1,9 @@
 import { PostData, PublicData } from 'types';
-import { generalApi } from 'lib/generalApi';
+import { rootApi } from 'lib/rootApi';
 import { CreatePostValues, UpdatePostValues } from '../types';
 import { TagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
+import { usersApi } from './usersApi';
+import { searchApi, SearchReturnType } from './searchApi';
 
 type CreatePostReturnType =
   | {
@@ -16,7 +18,7 @@ type GetPostReturnType = {
   otherPosts: PostData[];
 };
 
-export const postsApi = generalApi.injectEndpoints({
+export const postsApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     createPost: builder.mutation<CreatePostReturnType, CreatePostValues>({
       invalidatesTags: invalidateCreatePostTags,
@@ -65,41 +67,83 @@ export const postsApi = generalApi.injectEndpoints({
       }),
     }),
 
-    likePost: builder.mutation<{ success: boolean }, string>({
-      invalidatesTags: (result, error, id) =>
-        result?.success ? [{ type: 'Post', id }] : [],
-      query: (id) => ({
-        url: `/posts/like/${id}`,
+    likePost: builder.mutation<{ success: boolean }, PostData>({
+      // invalidatesTags: (result, error, { _id }) =>
+      //   result?.success ? [{ type: 'Post', _id }] : [],
+      query: ({ _id }) => ({
+        url: `/posts/like/${_id}`,
         method: 'PUT',
         credentials: 'include',
       }),
-      // TODO: OPTIMISTIC UPDATES
-      // onQueryStarted: async (id, api) => {
-      //   const patchedGetPost = api.dispatch(
-      //     postsApi.util.updateQueryData('getPost', id, (getPostData) => {
-      //       getPostData.post.likes += getPostData.post.isLiked ? -1 : 1;
-      //       getPostData.post.isLiked = !getPostData.post.isLiked;
-      //     })
-      //   );
-      //   const username = [];
-      //   const patchedGetUser = api.dispatch(
-      //     usersApi.util.updateQueryData('getUser', username, (getUserData) => {
-      //       const post = getUserData.posts.find(post => post._id === id);
-      //       if (!post) return;
-      //       post.likes += post.isLiked ? -1 : 1;
-      //       post.isLiked = !post.isLiked;
-      //     })
-      //   )
-      //   try {
-      //     const { data } = await api.queryFulfilled;
-      //     if (data.success) return;
-      //      patchedGetPost.undo();
-      //      patchedGetUser.undo();
-      //     } catch {
-      //       patchedGetPost.undo();
-      //       patchedGetUser.undo();
-      //   }
-      // },
+      onQueryStarted: async ({ _id, authorName, isLiked }, api) => {
+        const patchedGetPost = api.dispatch(
+          postsApi.util.updateQueryData('getPost', _id, (getPostData) => {
+            getPostData.post.likes += isLiked ? -1 : 1;
+            getPostData.post.isLiked = !isLiked;
+          })
+        );
+
+        const patchedGetUser = api.dispatch(
+          usersApi.util.updateQueryData(
+            'getUser',
+            authorName,
+            (getUserData) => {
+              const post = getUserData.posts.find((post) => post._id === _id);
+              if (!post) return;
+              post.likes += isLiked ? -1 : 1;
+              post.isLiked = !isLiked;
+              getUserData.user.blog!.likes += isLiked ? -1 : 1;
+            }
+          )
+        );
+
+        // Not having normalized cache is stupid. Here is proof
+        const queries = Object.values(api.getState().rootApi.queries)
+          .filter((query) => {
+            if (query?.endpointName !== 'search') return false;
+
+            const data = query?.data as SearchReturnType | undefined;
+
+            if (data?.type === 'posts') {
+              return !!data.values.find((post) => post._id === _id);
+            } else if (data?.type === 'blogs') {
+              return !!data.values.find((user) => user.username === authorName);
+            }
+            return false;
+          })
+          .map((query) => query?.originalArgs as string);
+
+        const patchedQueries = queries.map((query) =>
+          api.dispatch(
+            searchApi.util.updateQueryData('search', query, (searchData) => {
+              if (searchData.type === 'posts') {
+                const post = searchData.values.find((post) => post._id === _id);
+                if (!post) return;
+                post.likes += isLiked ? -1 : 1;
+                post.isLiked = !isLiked;
+              } else {
+                const author = searchData.values.find(
+                  (blog) => blog.username === authorName
+                );
+                if (!author) return;
+                author.blog.likes += isLiked ? -1 : 1;
+              }
+            })
+          )
+        );
+
+        try {
+          const { data } = await api.queryFulfilled;
+          if (data.success) return;
+          patchedGetPost.undo();
+          patchedGetUser.undo();
+          patchedQueries.forEach((query) => query.undo());
+        } catch {
+          patchedGetPost.undo();
+          patchedGetUser.undo();
+          patchedQueries.forEach((query) => query.undo());
+        }
+      },
     }),
 
     getPost: builder.query<GetPostReturnType, string>({

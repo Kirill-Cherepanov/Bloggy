@@ -6,7 +6,7 @@ import { LikeButton } from '.';
 import { Icon } from 'components/Elements';
 import { formatDate } from 'utility';
 import { PostData } from 'types';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 type SmallPostProps = {
   postData: PostData;
@@ -104,12 +104,7 @@ export function SmallPost({
         </div>
 
         <div className="flex justify-between items-center">
-          <LikeButton
-            likes={postData.likes}
-            id={postData._id}
-            isLiked={postData.isLiked}
-            shouldMutate={!isPreview}
-          />
+          <LikeButton postData={postData} shouldMutate={!isPreview} />
 
           <div className="mt-auto text-text-600">
             <span>By </span>

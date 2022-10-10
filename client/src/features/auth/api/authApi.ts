@@ -1,7 +1,7 @@
 import { ProtectedData } from 'types';
 import { RegistrationValues, LoginValues, ResetPasswordValues } from '../types';
 import { logout, setUser } from '../stores/authSlice';
-import { generalApi } from 'lib/generalApi';
+import { rootApi } from 'lib/rootApi';
 
 type GetTokenReturnType =
   | { isLoggedIn: true; user: ProtectedData }
@@ -16,7 +16,7 @@ type ResetPasswordReturnType = RegisterReturnType;
 // I don't need tags here because all of the data is accessed through authSlice
 // Cache is just not used here
 
-export const authApi = generalApi.injectEndpoints({
+export const authApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     getSelf: builder.query<{ user: ProtectedData }, void>({
       query: () => ({

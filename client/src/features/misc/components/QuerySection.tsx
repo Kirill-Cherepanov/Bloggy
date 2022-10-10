@@ -18,26 +18,26 @@ export function QuerySection<T extends PostData[] & Required<PublicData>[]>({
   className = '',
   minLength = 0,
 }: QuerySectionProps<T>) {
-  const { data, isFetching, isError, error } = useSearchQuery(query);
+  const { data, isLoading, isError, error } = useSearchQuery(query);
 
   if (isError) {
     console.error(error);
     return <></>;
   }
 
-  if (!isFetching && (!data?.values || data.values.length < minLength)) {
+  if (!isLoading && (!data?.values || data.values.length < minLength)) {
     return <></>;
   }
 
   return (
     <>
       <section className={className}>
-        {isFetching && (
+        {isLoading && (
           <div className="w-full h-80 flex items-center justify-center">
             <Spinner />
           </div>
         )}
-        {!isFetching && data?.values && children(data.values as T)}
+        {!isLoading && data?.values && children(data.values as T)}
       </section>
       {bgTransitionType && <BgTransition type={bgTransitionType} />}
     </>

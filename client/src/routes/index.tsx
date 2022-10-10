@@ -1,7 +1,7 @@
 import { useRoutes } from 'react-router-dom';
 import { lazily } from 'react-lazily';
 
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';
 import { AppLayout } from 'components/Layout';
@@ -25,14 +25,14 @@ export const AppRoutes = () => {
     },
   ];
 
-  const { isFetching, isError, error } = useGetAccessTokenQuery();
+  const { isLoading, isError, error } = useGetAccessTokenQuery();
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
 
   const routes = isLoggedIn ? protectedRoutes : publicRoutes;
 
   const element = useRoutes([...commonRoutes, ...routes]);
 
-  if (isFetching) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen w-screen">
         <Spinner />

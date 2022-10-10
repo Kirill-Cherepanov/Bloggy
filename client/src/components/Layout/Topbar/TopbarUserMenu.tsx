@@ -3,10 +3,12 @@ import { useState } from 'react';
 
 import { Icon, ProfilePicture } from 'components/Elements';
 import { AuthDrawer, useLogoutMutation } from 'features/auth';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { useDisclosure, useOnClickOutside } from 'hooks';
+import { useNavigate } from 'react-router';
 
 export function TopbarUserMenu() {
+  const navigate = useNavigate();
   const { close, toggle, isOpen } = useDisclosure();
   const menu = useOnClickOutside<HTMLDivElement>(close);
   const [authOpen, setAuthOpen] = useState<false | 'login' | 'signup'>(false);
@@ -47,25 +49,17 @@ export function TopbarUserMenu() {
           {isLoggedIn ? (
             <>
               {user?.blog && (
-                <MenuButton
-                  onClick={() => {
-                    window.location.replace(`/blog/${user.username}`);
-                  }}
-                >
+                <MenuButton onClick={() => navigate(`/blog/${user.username}`)}>
                   My blog
                 </MenuButton>
               )}
-              <MenuButton
-                onClick={() => {
-                  window.location.replace('/settings');
-                }}
-              >
+              <MenuButton onClick={() => navigate('/settings')}>
                 Settigns
               </MenuButton>
               <MenuButton
                 onClick={() => {
                   logout();
-                  window.location.replace('/');
+                  navigate('/');
                 }}
               >
                 Logout

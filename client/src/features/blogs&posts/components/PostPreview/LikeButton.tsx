@@ -1,29 +1,23 @@
 import clsx from 'clsx';
 import { Icon } from 'components/Elements';
 import { useLikePostMutation } from 'features/blogs&posts/api/postsApi';
+import { PostData } from 'types';
 
 type LikeButtonProps = {
-  likes: number;
-  isLiked: boolean;
-  id: string;
+  postData: PostData;
   shouldMutate?: boolean;
 };
 
-export function LikeButton({
-  likes,
-  isLiked,
-  id,
-  shouldMutate = true,
-}: LikeButtonProps) {
+export function LikeButton({ postData, shouldMutate = true }: LikeButtonProps) {
   const [likePost] = useLikePostMutation();
 
   return (
     <button
       className={clsx(
         'font-semibold flex items-center cursor-pointer like-button',
-        isLiked && 'like-button-active'
+        postData.isLiked && 'like-button-active'
       )}
-      onClick={() => shouldMutate && likePost(id)}
+      onClick={() => shouldMutate && likePost(postData)}
     >
       <span className="relative w-5 h-5 mr-2">
         <Icon
@@ -32,7 +26,7 @@ export function LikeButton({
         />
         <Icon type="heart" className="heart absolute top-0 left-0 w-full" />
       </span>
-      {likes}
+      {postData.likes}
     </button>
   );
 }

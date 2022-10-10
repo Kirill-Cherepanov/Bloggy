@@ -11,7 +11,7 @@ export const useFetch = <T>(
 ) => {
   const [error, setError] = useState<unknown>();
   const [isError, setIsError] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isLoading, setIsFetching] = useState(false);
   const [data, setData] = useState<T>();
 
   useEffect(() => {
@@ -40,5 +40,5 @@ export const useFetch = <T>(
     fetchData();
   }, [isBlob, skip, url]);
 
-  return { data, isFetching, isError, error };
+  return { data, isLoading, isError, error };
 };

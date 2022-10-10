@@ -5,7 +5,7 @@ import { Form, TextAreaField } from 'components/Form';
 import { Picker, Tooltip } from 'components/Elements';
 import { useUpdateUserMutation } from '../api/settingsApi';
 import { SettingsButton } from '.';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 const schema = z.object({
   description: z

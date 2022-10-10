@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 type ProfilePictureProps = {
   src?: string;

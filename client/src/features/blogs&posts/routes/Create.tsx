@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import { PostEditor } from '../components';
 import { CreatePostValues, PostValues } from '../types';
 import { useCreatePostMutation } from '../api/postsApi';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { PageNotFound } from 'features/misc';
 
 const initialPostValues: PostValues = {

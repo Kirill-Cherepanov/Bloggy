@@ -7,10 +7,9 @@ import { useNavigate } from 'react-router';
 export function Catalog() {
   const navigate = useNavigate();
   const query = useQueryParams();
-  const { data, isFetching, isError, error } = useSearchQuery(
-    query.toString(),
-    { skip: !query.toString() }
-  );
+  const { data, isLoading, isError, error } = useSearchQuery(query.toString(), {
+    skip: !query.toString(),
+  });
 
   if (isError) console.error(error);
 
@@ -26,7 +25,7 @@ export function Catalog() {
     <main className="pt-8 px-page min-h-[300px]">
       <ExtensiveSearchBar defaultQuery={query} />
 
-      {isFetching && (
+      {isLoading && (
         <div className="w-full h-80 flex items-center justify-center">
           <Spinner />
         </div>
@@ -47,7 +46,7 @@ export function Catalog() {
         </div>
       )}
 
-      {!isFetching && !isError && data?.values.length && (
+      {!isLoading && !isError && data?.values.length && (
         <>
           {data.type === 'posts' ? (
             <CatalogPosts posts={data.values} />

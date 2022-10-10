@@ -1,9 +1,9 @@
 import { logout, setUser } from 'features/auth';
-import { generalApi } from 'lib/generalApi';
+import { rootApi } from 'lib/rootApi';
 import { ProtectedData } from 'types';
 import { UpdateUserValues, ConfirmPasswordValues } from '../types';
 
-export const settingsApi = generalApi.injectEndpoints({
+export const settingsApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     updateUser: builder.mutation<
       ProtectedData,

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 import { Icon } from 'components/Elements';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { PostData } from 'types';
 import { LikeButton, PostInfo } from '.';
 
@@ -53,12 +53,7 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
       </Link>
 
       <div className="flex justify-between items-center">
-        <LikeButton
-          likes={postData.likes}
-          id={postData._id}
-          isLiked={postData.isLiked}
-          shouldMutate={!isPreview}
-        />
+        <LikeButton postData={postData} shouldMutate={!isPreview} />
 
         {user?.username === postData.authorName ? (
           <>

@@ -1,14 +1,15 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Icon, IconType } from 'components/Elements';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { useLogoutMutation } from 'features/auth';
 import { AuthDrawer } from 'features/auth';
 import { useDisclosure } from 'hooks';
 import { setPreRegistrationData } from 'features/auth';
 
 export function Footer() {
+  const navigate = useNavigate();
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const [logout] = useLogoutMutation();
   const [followBoxParams, setFollowBoxParams] = useState({
@@ -38,7 +39,7 @@ export function Footer() {
                 if (emailInput.current?.value) {
                   setPreRegistrationData({ email: emailInput.current.value });
                 }
-                window.location.replace('/registration');
+                navigate('/registration');
               }}
             >
               <input
@@ -110,7 +111,7 @@ export function Footer() {
               <button
                 onClick={() => {
                   logout();
-                  window.location.replace('/');
+                  navigate('/');
                 }}
               >
                 Logout

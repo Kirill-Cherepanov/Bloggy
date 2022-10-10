@@ -1,4 +1,4 @@
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { useDisclosure } from 'hooks';
 import { ResetPasswordForm, useLogoutMutation } from 'features/auth';
 import {
@@ -11,8 +11,10 @@ import {
   UpdateProfilePictureForm,
   ConfirmPasswordForm,
 } from '.';
+import { useNavigate } from 'react-router';
 
 export function AccountSettings() {
+  const navigate = useNavigate();
   const user = useAppSelector((state) => state.authSlice.user);
 
   const [logout] = useLogoutMutation();
@@ -57,7 +59,7 @@ export function AccountSettings() {
           variant="danger"
           onClick={() => {
             logout();
-            window.location.replace('/');
+            navigate('/');
           }}
         >
           Logout

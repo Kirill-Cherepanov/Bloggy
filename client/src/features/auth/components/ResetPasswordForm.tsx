@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Form, InputField } from 'components/Form';
 import { Button, Drawer } from 'components/Elements';
 import { useResetPasswordMutation } from 'features/auth';
+import { useNavigate } from 'react-router';
 
 // Decided to put all three components here to decrease the amount of files
 // Especially considering that I'm not planning to use them anywhere else
@@ -13,6 +14,7 @@ type ResetPasswordFormProps = {
 };
 
 export function ResetPasswordForm({ closeMenu }: ResetPasswordFormProps) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState<string>();
   const [resetPassword] = useResetPasswordMutation();
 
@@ -25,7 +27,7 @@ export function ResetPasswordForm({ closeMenu }: ResetPasswordFormProps) {
 
             if ('error' in response) throw response.error;
 
-            window.location.replace('/');
+            navigate('/');
           }}
         />
       ) : (

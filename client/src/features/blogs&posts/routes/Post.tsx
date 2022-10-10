@@ -8,7 +8,7 @@ import { ParallelogramCurtains } from '../components';
 import { useGetPostQuery } from '../api/postsApi';
 import { PageNotFound } from 'features/misc';
 import { PostData, PublicData } from 'types';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 type PostProps = {
   initialData?: {
@@ -24,12 +24,12 @@ export function Post({ initialData }: PostProps) {
 
   let author = initialData?.author;
   let post = initialData?.post;
-  const { data, isFetching, isError, error } = useGetPostQuery(id!, {
+  const { data, isLoading, isError, error } = useGetPostQuery(id!, {
     skip: !id || !!initialData,
   });
 
   if (!post) {
-    if (isFetching) {
+    if (isLoading) {
       return (
         <div className="w-full h-100 flex items-center justify-center">
           <Spinner />
@@ -41,6 +41,7 @@ export function Post({ initialData }: PostProps) {
       console.error(error);
       return <PageNotFound />;
     }
+
     if (!id || !data) return <PageNotFound />;
 
     post = data.post;

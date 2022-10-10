@@ -9,12 +9,12 @@ import { PublicData } from 'types';
 
 export function Blog() {
   const { name } = useParams();
-  const { data, isFetching, isError, error } = useGetUserQuery(name!, {
+  const { data, isLoading, isError, error } = useGetUserQuery(name!, {
     skip: !name,
   });
   const { renderPost } = usePost();
 
-  if (isFetching) {
+  if (isLoading) {
     return (
       <div className="w-full h-100 flex items-center justify-center">
         <Spinner />
@@ -23,6 +23,7 @@ export function Blog() {
   }
 
   if (!name || !data?.user?.blog) return <PageNotFound />;
+
   if (isError) {
     console.error(error);
     return <PageNotFound />;

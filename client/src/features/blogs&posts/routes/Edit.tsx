@@ -16,7 +16,7 @@ export function Edit() {
   const { id } = useParams();
   const [editPostMutation] = useEditPostMutation();
   const [deletePostMutation] = useDeletePostMutation();
-  const { data, isFetching, isError, error } = useGetPostQuery(id!, {
+  const { data, isLoading, isError, error } = useGetPostQuery(id!, {
     skip: !id,
   });
   const image = useFetch<Blob>(`/api/images/postImgs/${data?.post.image!}`, {
@@ -24,7 +24,7 @@ export function Edit() {
     isBlob: true,
   });
 
-  if (isFetching || image.isFetching) {
+  if (isLoading || image.isLoading) {
     return (
       <div className="w-full h-100 flex items-center justify-center">
         <Spinner />

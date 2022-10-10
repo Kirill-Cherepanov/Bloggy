@@ -5,7 +5,7 @@ import { Form, InputField, CheckboxField } from 'components/Form';
 import { Button } from 'components/Elements';
 import { RegistrationValues } from '../types';
 import { useRegisterMutation } from '../api/authApi';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 const schema = z.object({
   email: z.string().email(),

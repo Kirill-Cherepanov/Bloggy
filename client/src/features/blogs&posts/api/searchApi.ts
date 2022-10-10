@@ -1,5 +1,5 @@
 import { PostData, PublicData } from 'types';
-import { generalApi } from 'lib/generalApi';
+import { rootApi } from 'lib/rootApi';
 import { TagDescription } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 
 export type SearchPostsReturnType = {
@@ -16,7 +16,7 @@ export type SearchBlogsReturnType = {
 
 export type SearchReturnType = SearchBlogsReturnType | SearchPostsReturnType;
 
-export const searchApi = generalApi.injectEndpoints({
+export const searchApi = rootApi.injectEndpoints({
   endpoints: (builder) => ({
     search: builder.query<SearchReturnType, string>({
       providesTags: provideSearchTags,

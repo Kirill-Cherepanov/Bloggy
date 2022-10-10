@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { ProfilePicture } from 'components/Elements';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { inputFiles } from 'utility/inputFiles';
 import { useUpdateProfilePicMutation } from '../api/settingsApi';
 import { SettingsButton } from './SettingsButton';

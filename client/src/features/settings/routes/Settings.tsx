@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Icon } from 'components/Elements';
 import { AccountSettings, BlogSettings } from '../components';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 export function Settings() {
   const [tabOpen, setTabOpen] = useState('general');

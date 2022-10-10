@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { useDisclosure } from 'hooks';
 import { PrivateData } from 'types';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 import { Form, ButtonInputField } from 'components/Form';
 import { capitalize } from 'utility/functionsOnStrings';
 import { ConfirmPasswordForm } from '.';

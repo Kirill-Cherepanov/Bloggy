@@ -5,7 +5,7 @@ import { useCalculateLines } from '../../hooks';
 import { LikeButton, PostInfo } from '.';
 import { Icon } from 'components/Elements';
 import { PostData } from 'types';
-import { useAppSelector } from 'stores/globalStore';
+import { useAppSelector } from 'stores/rootStore';
 
 const textBoxPositions = {
   bottomLeft: 'left-0 bottom-8',
@@ -115,12 +115,7 @@ export function LargePost({
         </div>
 
         <div className="flex justify-between items-end">
-          <LikeButton
-            likes={postData.likes}
-            id={postData._id}
-            isLiked={postData.isLiked}
-            shouldMutate={!isPreview}
-          />
+          <LikeButton postData={postData} shouldMutate={!isPreview} />
           {user?.username === postData.authorName ? (
             <>
               <PostInfo {...postData} className="group-hover:hidden" />
