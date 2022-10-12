@@ -44,7 +44,7 @@ postsRouter.post('/', uploadFields, async (req, res) => {
     const newPostData = getPostData(sentData);
 
     if ('post-image' in req.files!) {
-      const file = req.files!['post-image' as keyof typeof req.files][0];
+      const file = req.files!['post-image'][0];
 
       const filename =
         path.parse(file.originalname).name +
@@ -156,8 +156,11 @@ postsRouter.delete('/:id', async (req, res) => {
 
     await post.delete();
     res.status(200).json('Post has been deleted');
-  } catch (err) {
-    res.status(500).json(err);
+  } catch (err: any) {
+    console.error(err);
+    if (err && typeof err === 'object' && 'message' in err) {
+      res.status(500).json(err.message);
+    }
   }
 });
 

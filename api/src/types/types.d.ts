@@ -1,3 +1,5 @@
+// TO REMOVE
+
 type TBlog = {
   likes: number;
   categories: string[];
@@ -52,6 +54,18 @@ type TConfirmation = {
 };
 
 interface Confirmation extends import('mongoose').Document, TConfirmation {
+  _id: import('mongoose').ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
+  _doc: Omit<this, '_doc'>;
+}
+
+type TCategory = {
+  name: string;
+  postAmount: number;
+};
+
+interface Category extends import('mongoose').Document, TCategory {
   _id: import('mongoose').ObjectId;
   createdAt: Date;
   updatedAt: Date;

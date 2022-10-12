@@ -9,6 +9,7 @@
     "skipLibCheck": true,
     "lib": [
       "ES2021.String"
-    ]
+    ],
+    "baseUrl": "src"
   }
 }
