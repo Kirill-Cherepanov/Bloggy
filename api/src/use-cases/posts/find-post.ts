@@ -1,7 +1,6 @@
-import Post from '../../models/Post';
+import Post from 'models/Post';
+import { formatPost } from 'use-cases/lib';
 
-export const findPost = async (id: string) => {
-  const post = await Post.findById(id);
-  if (!post) return { err: 'Post was not found', status: 500 };
-  return post;
+export const findPost = async (postId: string, userId?: string) => {
+  return formatPost(await Post.findById(postId, userId));
 };

@@ -93,18 +93,17 @@ export const getCategories = (categories: string[]) =>
   [...new Set(categories)].filter((category) => category);
 
 export const validateJsonBlob = async (
-  files:
+  files?:
     | {
         [fieldname: string]: Express.Multer.File[];
       }
     | Express.Multer.File[]
-    | undefined
 ): Promise<Express.Multer.File | false> => {
   if (!files || !('request-json' in files)) return false;
 
-  const file = files['request-json' as keyof typeof files][0];
+  const jsonBuffer = files['request-json'][0];
 
-  if (file.mimetype !== 'application/json') return false;
+  if (jsonBuffer.mimetype !== 'application/json') return false;
 
-  return file;
+  return jsonBuffer;
 };

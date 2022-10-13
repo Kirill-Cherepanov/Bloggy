@@ -9,6 +9,7 @@ export type SearchParams = {
   sort: 'popular' | 'new';
   time: 'week' | 'month' | 'year' | 'all';
   page: number;
+  author?: string;
 };
 
 // I don't want to write the whole type for this thing
@@ -33,7 +34,13 @@ class SearchDb {
     return {
       ...this.getSearchQuery(this.params.search, this.params.q),
       ...this.getTimeQuery(this.params.time),
+      ...this.getAuthorQuery(this.params.author),
     };
+  }
+
+  protected getAuthorQuery(author?: string): SearchQuery {
+    if (!author) return {};
+    return { authorName: author };
   }
 
   protected getSortQuery(sort: string): SearchQuery {
@@ -176,8 +183,8 @@ export class SearchBlogs extends SearchDb {
 }
 
 export async function searchBlogPosts(username: string, page: number) {
-  // currently since I don't have many posts, I won't need pagination
-  // and I'm a bit reluctant to be implementing infinite scroll right now
+  // Currently since I don't have many posts, I won't need pagination
+  // And I'm a bit reluctant to be implementing infinite scroll on the client right now
 
   // const POSTS_PER_PAGE = 10;
 

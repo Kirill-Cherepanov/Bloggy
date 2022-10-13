@@ -1,15 +1,20 @@
 import { makePost } from 'entity-validators';
 import { deepmerge } from 'deepmerge-ts';
-import { findPost } from './find-post';
 
-export const editPost = async (id: string, data: unknown) => {
-  const post = await findPost(id);
+import Post from 'models/Post';
+import { formatPost } from 'use-cases/lib';
 
-  if ('err' in post) return post;
+export const editPost = async (
+  postId: string,
+  data: unknown,
+  image?: string
+) => {
+  const post = await Post.findById(postId);
+  if (!post) return post;
 
-  deepmerge(post, makePost(data));
+  deepmerge(post, makePost(data), { image });
 
   await post.save();
 
-  return post;
+  return formatPost(post, post.authorName);
 };

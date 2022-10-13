@@ -4,14 +4,14 @@ import cookieParser from 'cookie-parser';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import authRouter from './routes/auth';
-import usersRouter from './routes/users';
-import postsRouter from './routes/posts';
-import settingsRouter from './routes/settings';
-import searchRouter from './routes/search';
+import authRouter from 'routes/auth';
+import usersRouter from 'routes/users';
+import settingsRouter from 'routes/settings';
+import searchRouter from 'routes/search';
 
 // new
-import { handleTokens, handleErrors } from 'middleware';
+import { handleTokens, handleMiddlewareErrors } from 'middleware';
+import postsRouter from 'controllers/posts';
 
 const app = express();
 
@@ -29,6 +29,6 @@ app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/search', searchRouter);
-app.use(handleErrors);
+app.use(handleMiddlewareErrors);
 
 app.listen(5000, () => console.log('Backend is running'));

@@ -7,9 +7,9 @@
     "node": "17.8.0"
   },
   "scripts": {
-    "start": "nodemon -e js dist/app --ignore client",
+    "start": "cross-env NODE_PATH=./dist nodemon -e js dist/app --ignore client",
     "postinstall": "tsc",
-    "nodemon": "nodemon -e js dist/app --ignore client",
+    "nodemon": "cross-env NODE_PATH=./dist nodemon -e js dist/app --ignore client",
     "watch-ts": "tsc -w"
   },
   "author": "KissMyUSSR",

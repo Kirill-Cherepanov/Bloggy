@@ -1,3 +1,3 @@
-export * from './error-handling';
-export * from './file-uploading';
+export * from './handle-middleware-errors';
+export * from './upload-files';
 export * from './tokens';
