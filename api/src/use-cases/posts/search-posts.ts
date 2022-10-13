@@ -7,7 +7,7 @@ export const searchPosts = async (
   const searchPosts = new SearchPosts(query);
   const searchResult = await searchPosts.getPosts();
 
-  const values = searchResult.posts.map((post) => formatPost(post));
+  const values = searchResult.posts.map((post) => formatPost(post, userId));
 
   return { values, total: searchResult.total };
 };

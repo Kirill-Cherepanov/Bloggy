@@ -6,12 +6,12 @@ dotenv.config();
 
 import authRouter from 'routes/auth';
 import settingsRouter from 'routes/settings';
-import searchRouter from 'routes/search';
 
 // new
 import { handleTokens, handleMiddlewareErrors } from 'middleware';
 import usersRouter from 'controllers/users';
 import postsRouter from 'controllers/posts';
+import searchRouter from 'controllers/search';
 
 const app = express();
 
