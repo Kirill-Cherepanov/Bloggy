@@ -5,12 +5,12 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import authRouter from 'routes/auth';
-import usersRouter from 'routes/users';
 import settingsRouter from 'routes/settings';
 import searchRouter from 'routes/search';
 
 // new
 import { handleTokens, handleMiddlewareErrors } from 'middleware';
+import usersRouter from 'controllers/users';
 import postsRouter from 'controllers/posts';
 
 const app = express();
