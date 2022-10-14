@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { uploadPostFields } from 'middleware';
+import { uploadPostFields } from 'web/middleware';
 
 import { createPostController } from './create-post.controller';
 import { updatePostController } from './update-post.controller';

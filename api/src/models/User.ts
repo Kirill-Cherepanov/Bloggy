@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { validateEmail } from '../utility/validations';
+
+import { validateEmail } from 'entity-validators/user';
 
 const BlogSchema = new mongoose.Schema<Blog>(
   {
@@ -10,6 +11,10 @@ const BlogSchema = new mongoose.Schema<Blog>(
     categories: {
       type: [String],
       default: [],
+      validate: {
+        validator: (categories: string[]) => categories.length <= 10,
+        message: 'Must be 10 categories at most',
+      },
       index: 1,
     },
     description: {

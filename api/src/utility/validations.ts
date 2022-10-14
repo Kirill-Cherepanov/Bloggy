@@ -86,6 +86,7 @@ const getMongoDbValidationErrorObj = ({
   value,
 });
 
+// checks if !!x is true
 const truthyFilter = <T>(x: T | false | undefined | null | '' | 0): x is T =>
   !!x;
 

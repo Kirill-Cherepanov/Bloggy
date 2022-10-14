@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { validateCategories } from '../utility/validations';
 
 const PostSchema = new mongoose.Schema<Post>(
   {
@@ -31,7 +30,7 @@ const PostSchema = new mongoose.Schema<Post>(
       type: [String],
       default: [],
       validate: {
-        validator: validateCategories,
+        validator: (categories: string[]) => categories.length <= 10,
         message: 'Must be 10 categories at most',
       },
       index: 1,

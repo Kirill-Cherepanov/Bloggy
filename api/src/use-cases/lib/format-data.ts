@@ -1,4 +1,8 @@
-type FormattedPost = Omit<TPost, 'likes'> & { likes: number; isLiked: boolean };
+type FormattedPost = Omit<TPost, 'likes'> & {
+  _id: string;
+  likes: number;
+  isLiked: boolean;
+};
 
 export const formatPost = (
   post: Post | null,
@@ -8,21 +12,20 @@ export const formatPost = (
 
   return {
     ...post._doc,
+    _id: post._id.toString(),
     likes: post.likes.length,
     isLiked: !!userId && post.likes.includes(userId),
   };
 };
 
-export type AccessLevelType = 'protected' | 'public';
+export const formatUserProtected = (user: User) => {
+  const { password, updatedAt, ...protectedData } = user._doc;
 
-export const formatUser = (
-  user: User | null,
-  accessLevel?: AccessLevelType
-) => {
-  if (!user) return user;
+  return { ...protectedData, _id: protectedData._id.toString() };
+};
 
-  const { password, email, _id, updatedAt, ...publicInfo } = user._doc;
+export const formatUserPublic = (user: User) => {
+  const { email, ...publicData } = formatUserProtected(user)!;
 
-  if (accessLevel === 'protected') return { ...publicInfo, email };
-  return publicInfo;
+  return publicData;
 };
