@@ -1,8 +1,7 @@
 import * as z from 'zod';
 import { RequestHandler } from 'express';
-import bcrypt from 'bcrypt';
 
-import { findUser, updateUser } from 'use-cases/users';
+import { findUser, updateUserNoValidation } from 'use-cases/users';
 import {
   deleteConfirmations,
   sendConfirmation,
@@ -51,7 +50,10 @@ export const resetPasswordController: RequestHandler = async (
 
     if (!newPassword) return res.status(400).json('New password was not sent');
 
-    const updatedUser = updateUser({ password: newPassword });
+    const updatedUser = updateUserNoValidation(
+      { password: newPassword },
+      { email }
+    );
 
     res.status(200).json({ user: updatedUser, status: 'success' });
   } catch (err) {

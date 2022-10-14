@@ -1,34 +1,21 @@
 import bcrypt from 'bcrypt';
 import deepmerge from 'deepmerge';
 
-import User from 'models/User';
 import { makePartialUser } from 'entity-validators/user';
-import { formatUserProtected } from 'use-cases/lib';
+import User from 'models/User';
 import { deleteProfilePic } from 'web/file-manipulation';
+import { FindUserProps } from './find-user';
+import { formatUserProtected } from 'use-cases/lib';
 
-export const updateUser = async (
+export const updateUserNoValidation = async (
   data: unknown,
-  id: string,
-  oldPassword?: string,
-  shouldDeleteBlog: boolean = false,
-  verifyPassword: boolean = true
+  findUserData: FindUserProps,
+  shouldDeleteBlog: boolean = false
 ) => {
-  const user = await User.findById(id);
+  const user = await User.findOne(findUserData);
   if (user === null) return { err: 'User was not found', status: 500 };
 
   const userData = makePartialUser(data);
-
-  if (
-    (userData.password || userData.email || userData.username) &&
-    verifyPassword
-  ) {
-    if (!oldPassword) return { err: 'Old password was not sent', status: 400 };
-
-    const validationResult = await bcrypt.compare(oldPassword, user.password);
-    if (!validationResult) {
-      return { err: 'Incorrect previous password', status: 400 };
-    }
-  }
 
   if (userData.password) {
     const salt = await bcrypt.genSalt(10);

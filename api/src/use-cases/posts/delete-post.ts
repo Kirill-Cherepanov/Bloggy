@@ -1,7 +1,6 @@
-import fs from 'fs';
-
 import Post from 'models/Post';
 import User from 'models/User';
+import { deletePostImage } from 'web/file-manipulation';
 
 export const deletePost = async (postId: string, username: string) => {
   const post = await Post.findById(postId);
@@ -17,7 +16,7 @@ export const deletePost = async (postId: string, username: string) => {
     );
   }
 
-  if (post.image) fs.unlink(post.image, (err) => err && console.error(err));
+  if (post.image) deletePostImage(post.image);
 
   await post.delete();
 

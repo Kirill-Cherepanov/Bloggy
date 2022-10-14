@@ -2,7 +2,8 @@ import { RequestHandler } from 'express';
 
 import { editPost } from 'use-cases/posts';
 import { findUser } from 'use-cases/users';
-import { getJsonBuffer, savePostImage } from './lib';
+import { savePostImage } from 'web/file-manipulation';
+import { getJsonBuffer } from './lib';
 
 export const updatePostController: RequestHandler = async (req, res, next) => {
   try {

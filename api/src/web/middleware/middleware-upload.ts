@@ -32,3 +32,14 @@ export const uploadPostFields = upload.fields([
     maxCount: 1,
   },
 ]);
+
+export const updloadSettingsFields = upload.fields([
+  {
+    name: 'profile-picture',
+    maxCount: 1,
+  },
+  {
+    name: 'request-json',
+    maxCount: 1,
+  },
+]);

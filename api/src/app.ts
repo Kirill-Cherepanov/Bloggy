@@ -4,14 +4,12 @@ import cookieParser from 'cookie-parser';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import settingsRouter from 'routes/settings';
-
-// new
 import { handleTokens, handleMiddlewareErrors } from 'web/middleware';
 import usersRouter from 'controllers/users';
 import postsRouter from 'controllers/posts';
 import searchRouter from 'controllers/search';
 import authRouter from 'controllers/auth';
+import settingsRouter from 'controllers/settings';
 
 const app = express();
 

@@ -1,5 +1,5 @@
 import { makePost } from 'entity-validators';
-import { deepmerge } from 'deepmerge-ts';
+import deepmerge from 'deepmerge';
 
 import Post from 'models/Post';
 import { formatPost } from 'use-cases/lib';
@@ -12,7 +12,7 @@ export const editPost = async (
   const post = await Post.findById(postId);
   if (!post) return post;
 
-  deepmerge(post, makePost(data), { image });
+  deepmerge.all([post, makePost(data), { image }]);
 
   await post.save();
 

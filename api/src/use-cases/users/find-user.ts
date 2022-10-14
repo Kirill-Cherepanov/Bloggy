@@ -1,7 +1,7 @@
 import User from 'models/User';
 import { formatUserProtected } from 'use-cases/lib';
 
-type FindUserProps = {
+export type FindUserProps = {
   username?: string;
   id?: string;
   email?: string;

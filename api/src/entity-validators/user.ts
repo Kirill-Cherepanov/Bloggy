@@ -60,7 +60,7 @@ export const makeUser = async (
   return user;
 };
 
-export const makePartialUser = async (data: unknown) => {
+export const makePartialUser = (data: unknown) => {
   const user = createUserSchema.deepPartial().parse(data);
 
   if (user.email && !validateEmail(user.email)) throw Error('Incorrect email');

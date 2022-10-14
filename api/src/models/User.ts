@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import { validateEmail } from 'entity-validators/user';
+import { DEFAULT_PROFILE_PICTURE } from 'config';
 
 const BlogSchema = new mongoose.Schema<Blog>(
   {
@@ -51,7 +52,7 @@ const UserSchema = new mongoose.Schema<User>(
     },
     profilePic: {
       type: String,
-      default: 'default.jpg',
+      default: DEFAULT_PROFILE_PICTURE,
     },
     blog: {
       type: BlogSchema,

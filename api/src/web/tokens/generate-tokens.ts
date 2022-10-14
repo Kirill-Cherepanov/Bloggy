@@ -1,7 +1,6 @@
+import { ACCESS_TOKEN_EXPIRATION_TIME } from 'config';
 import jwt from 'jsonwebtoken';
 import { AccessTokenData } from 'types/custom/tokens.types';
-
-const ACCESS_TOKEN_EXPIRATION_TIME = '10m';
 
 // Right now it doesn't make much sense to have two separate tokens. It's for the future
 export const generateAccessToken = ({

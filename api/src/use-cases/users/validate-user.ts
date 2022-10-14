@@ -2,14 +2,10 @@ import bcrypt from 'bcrypt';
 
 import User from 'models/User';
 import { formatUserProtected } from 'use-cases/lib';
-
-type ValidateUserProps = {
-  username?: string;
-  email?: string;
-};
+import { FindUserProps } from './find-user';
 
 export const validateUser = async (
-  userData: ValidateUserProps,
+  userData: FindUserProps,
   password: string
 ) => {
   const user = await User.findOne(userData);
