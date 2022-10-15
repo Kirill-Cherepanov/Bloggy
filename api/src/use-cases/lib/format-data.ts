@@ -1,4 +1,4 @@
-import { TPost, Post, User } from 'types/custom';
+import { TPost, Post, User, Category } from 'types/custom';
 
 type FormattedPost = Omit<TPost, 'likes'> & {
   _id: string;
@@ -30,4 +30,8 @@ export const formatUserPublic = (user: User) => {
   const { email, ...publicData } = formatUserProtected(user)!;
 
   return publicData;
+};
+
+export const formatCategory = (category: Category) => {
+  return { name: category.name, amount: category.postsAmount };
 };

@@ -10,6 +10,7 @@ import postsRouter from 'controllers/posts';
 import searchRouter from 'controllers/search';
 import authRouter from 'controllers/auth';
 import settingsRouter from 'controllers/settings';
+import categoriesRouter from 'controllers/categories';
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/search', searchRouter);
+app.use('/api/categories', categoriesRouter);
 app.use(handleMiddlewareErrors);
 
 app.listen(5000, () => console.log('Backend is running'));

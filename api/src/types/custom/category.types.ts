@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 
 export type TCategory = {
   name: string;
-  postAmount: number;
+  postsAmount: number;
 };
 
 export interface Category extends Document, TCategory {

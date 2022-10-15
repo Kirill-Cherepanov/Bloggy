@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Icon, IconType } from 'components/Elements';
@@ -7,16 +7,12 @@ import { useLogoutMutation } from 'features/auth';
 import { AuthDrawer } from 'features/auth';
 import { useDisclosure } from 'hooks';
 import { setPreRegistrationData } from 'features/auth';
+import { FollowBox } from './FollowBox';
 
 export function Footer() {
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const [logout] = useLogoutMutation();
-  const [followBoxParams, setFollowBoxParams] = useState({
-    width: 0,
-    top: 0,
-    left: 0,
-  });
   const authDisclosure = useDisclosure();
   const emailInput = useRef<HTMLInputElement>(null);
 
@@ -59,30 +55,7 @@ export function Footer() {
         </div>
       )}
 
-      <ul className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 pt-5 lg:pt-8 hidden sm:flex justify-center gap-3 relative flex-wrap">
-        {Array(20)
-          .fill('Music')
-          .map((v, i) => (
-            <li
-              key={i}
-              onMouseOver={(e) => {
-                const width = e.currentTarget.getBoundingClientRect().width;
-                const left = e.currentTarget.offsetLeft;
-                const top = e.currentTarget.offsetTop;
-                setFollowBoxParams({ width, top, left });
-              }}
-              className="[&:hover~.FOOOTER-FOLLOW-BORDER]:opacity-100 [&:hover~.FOOOTER-FOLLOW-BORDER]:cursor-pointer border border-secondary-200 rounded-sm px-1 cursor-pointer hover:text-accent-400 transition-colors"
-            >
-              {v}
-            </li>
-          ))}
-        <li
-          className="FOOOTER-FOLLOW-BORDER pointer-events-none opacity-0 absolute border border-accent-400 rounded-sm px-1 transition-all"
-          style={followBoxParams}
-        >
-          <span className="opacity-0">a{/* is needed to measure height*/}</span>
-        </li>
-      </ul>
+      <FollowBox />
 
       <div className="max-w-7xl mx-auto py-5 lg:py-8 flex flex-col">
         <ul className="px-4 xs:px-8 sm:px-12 md:px-20 py-5 border-main border-opacity-10 border-y flex gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">

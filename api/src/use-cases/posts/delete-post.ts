@@ -1,5 +1,6 @@
 import Post from 'models/Post';
 import User from 'models/User';
+import { deleteCategories } from 'use-cases/categories';
 import { deletePostImage } from 'web/file-manipulation';
 
 export const deletePost = async (postId: string, username: string) => {
@@ -15,6 +16,8 @@ export const deletePost = async (postId: string, username: string) => {
       "Author of the post or blog doesn't exist. Proceeding to delete the post"
     );
   }
+
+  deleteCategories(post.categories);
 
   if (post.image) deletePostImage(post.image);
 

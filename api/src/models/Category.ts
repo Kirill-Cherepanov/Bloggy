@@ -7,16 +7,16 @@ const CategorySchema = new mongoose.Schema<Category>(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
-    postAmount: {
+    postsAmount: {
       type: Number,
-      default: 0,
+      default: 1,
+      index: 1,
     },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true, versionKey: false, autoIndex: true }
 );
-
-CategorySchema.index({ updatedAt: 1 }, { expireAfterSeconds: 1200 });
 
 const Category = mongoose.model<Category>('Category', CategorySchema);
 export default Category;
