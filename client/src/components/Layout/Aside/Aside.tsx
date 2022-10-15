@@ -2,13 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 
 import { TinyPost, useSearchQuery } from 'features/blogs&posts';
 import { PostData } from 'types';
+import clsx from 'clsx';
 
 type AsideProps = {
   shouldRenderPopular?: boolean;
   children?: React.ReactNode;
+  className?: string;
 };
 
-export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
+export function Aside({
+  children,
+  shouldRenderPopular = true,
+  className,
+}: AsideProps) {
   const { maxHeightElement, minHeightElement, amountOfPosts } =
     useCalculatePosts();
 
@@ -21,11 +27,14 @@ export function Aside({ children, shouldRenderPopular = true }: AsideProps) {
   return (
     <aside
       ref={minHeightElement}
-      className="w-80 h-min shrink-0 bg-secondary-800 flex flex-col rounded-md"
+      className={clsx(
+        'flex w-80 mx-auto h-min shrink-0 bg-secondary-800 flex-col rounded-md',
+        className
+      )}
     >
       <div className="absolute top-0 bottom-0" ref={maxHeightElement}>
-        {/* In order to calculate how many posts can fit into the Aside */}
         {/* This element measures the maximum height that Aside can take */}
+        {/* To calculate how many popular posts can fit into it */}
         {/* For that you need to set position property of the container to relative */}
       </div>
       {children}

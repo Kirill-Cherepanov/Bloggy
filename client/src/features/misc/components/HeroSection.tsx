@@ -41,19 +41,19 @@ export function HeroSection() {
             <br />
             to the World
           </h2>
-          <p className="text-center sm:text-left text-lg max-w-[600px]">
+          <p className="text-center sm:text-left xs:text-lg max-w-[600px]">
             NEED TO COME UP WITH SOMETHING
             HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           </p>
           {isLoggedIn ? (
             <Link
               to="/catalog?q=&type=blogs"
-              className="mt-6 group w-max flex items-center justify-center font-semibold text-lg transition-all hover:tracking-wide"
+              className="mt-6 mx-auto sm:ml-0 group w-max flex items-center justify-center font-semibold text-lg xs:text-xl transition-all hover:tracking-wide"
             >
               Check out our Community
               <Icon
                 type="arrow"
-                className="text-inherit ml-2 rotate-180 inline h-4 transition-all group-hover:ml-4"
+                className="text-inherit ml-2 rotate-180 h-4 transition-all group-hover:ml-4"
               />
             </Link>
           ) : (

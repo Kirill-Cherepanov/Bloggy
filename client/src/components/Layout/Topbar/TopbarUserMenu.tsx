@@ -49,15 +49,26 @@ export function TopbarUserMenu() {
           {isLoggedIn ? (
             <>
               {user?.blog && (
-                <MenuButton onClick={() => navigate(`/blog/${user.username}`)}>
+                <MenuButton
+                  onClick={() => {
+                    close();
+                    navigate(`/blog/${user.username}`);
+                  }}
+                >
                   My blog
                 </MenuButton>
               )}
-              <MenuButton onClick={() => navigate('/settings')}>
+              <MenuButton
+                onClick={() => {
+                  close();
+                  navigate('/settings');
+                }}
+              >
                 Settigns
               </MenuButton>
               <MenuButton
                 onClick={() => {
+                  close();
                   logout();
                   navigate('/');
                 }}

@@ -11,7 +11,7 @@ export function Registration() {
   const navigate = useNavigate();
 
   return (
-    <main className="px-page max-w-2xl py-8 min-h-screen flex items-center">
+    <main className="px-page max-w-2xl py-8 min-h-screen flex">
       <div className="relative w-full">
         <div className="w-full absolute left-0 top-0 flex items-center h-10 border-b px-2">
           <button

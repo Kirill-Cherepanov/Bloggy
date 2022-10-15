@@ -14,9 +14,13 @@ export function AuthDrawer({ closeMenu, authType = 'login' }: AuthDrawerProps) {
   const navigate = useNavigate();
 
   return (
-    <Drawer id="authentification" closeMenu={closeMenu} className="pb-20">
+    <Drawer
+      id="authentification"
+      closeMenu={closeMenu}
+      className="pb-16 h-full rounded-none xs:h-auto xs:rounded-[32px]"
+    >
       <Logo size="sm" variant="dark" className="my-2 mb-8 block text-center" />
-      <h3 className="font-display font-bold text-center text-3xl mb-6">
+      <h3 className="font-display font-bold text-center text-2xl xs:text-3xl mb-2 xs:mb-6">
         Welcome to Bloggy
       </h3>
 

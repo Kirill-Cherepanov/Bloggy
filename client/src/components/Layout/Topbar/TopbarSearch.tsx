@@ -1,11 +1,12 @@
 import clsx from 'clsx';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { useRef } from 'react';
 
 import { Icon } from 'components/Elements';
 import { useDisclosure, useOnClickOutside } from 'hooks';
 
 export function TopbarSearch() {
+  const location = useLocation();
   const { isOpen, open, close } = useDisclosure();
   const container = useOnClickOutside<HTMLFormElement>(close);
   const mobileInputField = useRef<HTMLInputElement>(null);
@@ -17,6 +18,10 @@ export function TopbarSearch() {
       ref={container}
       onSubmit={(e) => {
         e.preventDefault();
+
+        if (location.pathname === '/catalog') {
+          return document.getElementById('catalog-search-input')?.focus();
+        }
 
         const activeInput =
           window.innerWidth > 1024
@@ -32,7 +37,7 @@ export function TopbarSearch() {
         navigate(`/catalog?q=${activeInput?.value || ''}`);
       }}
     >
-      <div className="lg:relative min-w-[2rem]">
+      <div className="lg:relative min-w-[2rem] flex items-center">
         <button
           type="submit"
           className={clsx(

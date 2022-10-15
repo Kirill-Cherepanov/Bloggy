@@ -17,7 +17,7 @@ export function Footer() {
   const emailInput = useRef<HTMLInputElement>(null);
 
   return (
-    <footer className="bg-secondary-900 text-secondary-200 z-10 relative">
+    <footer className="bg-secondary-900 text-secondary-200 z-10 relative mt-auto">
       {isLoggedIn || (
         <div className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 py-5 lg:py-8 bg-accent-400 text-secondary-1000">
           <div className="text-center lg:flex justify-center items-center gap-6">

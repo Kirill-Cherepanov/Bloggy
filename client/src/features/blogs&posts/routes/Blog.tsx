@@ -31,7 +31,7 @@ export function Blog() {
 
   return (
     <main className="py-8 px-page">
-      <div className="flex flex-row-reverse gap-4 xs:gap-8">
+      <div className="flex flex-col lg:flex-row-reverse gap-4 xs:gap-8">
         <BlogCard {...(data.user as Required<PublicData>)} />
         <div className="grow">
           {data.user.blog.description && (

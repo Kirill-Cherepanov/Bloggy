@@ -13,6 +13,7 @@ export function ExtensiveSearchBar({ defaultQuery }: ExtensiveSearchBarProps) {
           className="absolute h-8 left-3 text-secondary-800"
         />
         <input
+          id="catalog-search-input"
           type="text"
           className="focus:border-accent-400 outline-none w-full border-2 border-secondary-300 rounded-l-3xl pl-14 pr-3 py-2.5 placeholder:text-secondary-500 placeholder:font-light"
           placeholder="Search"
@@ -30,7 +31,7 @@ export function ExtensiveSearchBar({ defaultQuery }: ExtensiveSearchBarProps) {
         </button>
       </div>
 
-      <div className="mt-2 pl-6 pr-14 flex justify-between [&>*]:cursor-pointer [&>*]:hover: [&>*]:border-secondary-300 [&>*]:border [&>*]:shadow-sm [&>*]:rounded-md [&>*]:pb-1 [&>*]:px-0.5 [&>*]:outline-none">
+      <div className="mt-2 px-2 xs:pl-6 xs:pr-14 grid grid-cols-2 text-[12px] gap-2 xs:text-base sm:flex sm:justify-between [&>*]:cursor-pointer [&>*]:hover: [&>*]:border-secondary-300 [&>*]:border [&>*]:shadow-sm [&>*]:rounded-md [&>*]:pb-1 [&>*]:px-0.5 [&>*]:outline-none">
         <select name="type" defaultValue={defaultQuery?.get('type') || 'posts'}>
           <option value="" disabled={true}>
             Type

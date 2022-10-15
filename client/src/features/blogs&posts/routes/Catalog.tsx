@@ -22,7 +22,7 @@ export function Catalog() {
   const page = (query.get('page') && Number(query.get('page'))) || 1;
 
   return (
-    <main className="pt-8 px-page min-h-[300px]">
+    <main className="pt-8 px-page w-full min-h-[300px]">
       <ExtensiveSearchBar defaultQuery={query} />
 
       {isLoading && (

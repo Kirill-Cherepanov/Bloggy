@@ -103,7 +103,27 @@ export function Post({ initialData }: PostProps) {
         />
       )}
 
-      <div className="flex relative gap-20">
+      <div className="lg:hidden">
+        <div className="mb-3 border-b border-black border-opacity-20 pb-3">
+          <h3 className="text-2xl font-medium mb-2">Categories</h3>
+          <div className="flex flex-wrap gap-y-2 gap-x-3 justify-between after:flex-auto">
+            {post.categories.map((category) => (
+              <span
+                key={category}
+                className="text-lg border bg-secondary-800 text-main border-secondary-400 rounded-sm px-1 cursor-pointer hover:bg-main hover:text-accent-900 hover:border-accent-400 transition-colors"
+              >
+                {category}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="mb-10">
+          <h3 className="text-2xl font-medium mb-2">Description</h3>
+          <p>{post.description || "This post doesn't have a description"}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-col lg:flex-row relative gap-20">
         <div className="h-min w-full">
           <div className="text-lg custom-markdown">
             {post.text ? (
@@ -114,11 +134,11 @@ export function Post({ initialData }: PostProps) {
           </div>
 
           {author?.blog && (
-            <div className="mt-10 w-full flex gap-8 bg-secondary-800 py-8 px-5 rounded-lg">
+            <div className="flex flex-col xs:flex-row mt-10 w-full gap-3 xs:gap-8 bg-secondary-800 p-4 xs:py-8 xs:px-5 rounded-lg">
               <Link
                 to={'/blog/' + author.username}
                 onClick={(e) => initialData && e.preventDefault()}
-                className="h-36 w-36 shrink-0 my-auto"
+                className="h-36 w-36 shrink-0 my-auto mx-auto xs:mx-0"
               >
                 <ProfilePicture className="h-full w-full" />
               </Link>
@@ -126,7 +146,7 @@ export function Post({ initialData }: PostProps) {
                 <Link
                   to={'/blog/' + author.username}
                   onClick={(e) => initialData && e.preventDefault()}
-                  className="block w-min text-xl font-bold uppercase mb-3 text-accent-400 cursor-pointer hover:underline"
+                  className="block mx-auto xs:ml-0 w-min text-xl font-bold uppercase mb-3 text-accent-400 cursor-pointer hover:underline"
                 >
                   {author.username}
                 </Link>
@@ -139,13 +159,13 @@ export function Post({ initialData }: PostProps) {
         </div>
 
         {(!initialData || post.categories.length > 0 || post.description) && (
-          <Aside shouldRenderPopular={!initialData}>
+          <Aside shouldRenderPopular={!initialData} className="hidden lg:flex">
             {post.categories.length > 0 && (
               <div className="px-2 my-5">
                 <h3 className="mx-auto mb-3 w-max bg-accent-400 px-3 py-2 font-bold text-xl uppercase">
                   Categories
                 </h3>
-                <div className="flex flex-wrap justify-evenly gap-y-2 gap-x-2">
+                <div className="flex flex-wrap gap-y-2 gap-x-3 justify-between after:flex-auto">
                   {post.categories.map((category) => (
                     <span
                       key={category}

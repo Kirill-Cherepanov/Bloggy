@@ -6,7 +6,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* I want these styles to persist even if I don't use them */
+/* I want these styles to persist even if I don't use them, 
+cuz I use them dynamically and it's a pain with tailwind */
 .parallelogram-4 {
   @apply basis-[calc(25%-72px)] hover:basis-[calc(25%+48px)];
 }
@@ -22,6 +23,9 @@
 @layer base {
   html {
     @apply font-lexend text-secondary-1000 overflow-x-hidden selection:bg-opacity-80 selection:bg-accent-900 selection:text-main;
+  }
+  #root {
+    @apply min-h-screen flex flex-col;
   }
 }
 
