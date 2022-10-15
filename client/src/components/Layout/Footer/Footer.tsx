@@ -2,16 +2,16 @@ import { useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Icon, IconType } from 'components/Elements';
-import { useAppSelector } from 'stores/rootStore';
-import { useLogoutMutation } from 'features/auth';
+import { useAppDispatch, useAppSelector } from 'stores/rootStore';
+import { useLogoutMutation, setPreRegistrationData } from 'features/auth';
 import { AuthDrawer } from 'features/auth';
 import { useDisclosure } from 'hooks';
-import { setPreRegistrationData } from 'features/auth';
 import { FollowBox } from './FollowBox';
 
 export function Footer() {
   const navigate = useNavigate();
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
+  const dispatch = useAppDispatch();
   const [logout] = useLogoutMutation();
   const authDisclosure = useDisclosure();
   const emailInput = useRef<HTMLInputElement>(null);
@@ -33,7 +33,9 @@ export function Footer() {
               className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start"
               onSubmit={(e) => {
                 if (emailInput.current?.value) {
-                  setPreRegistrationData({ email: emailInput.current.value });
+                  dispatch(
+                    setPreRegistrationData({ email: emailInput.current.value })
+                  );
                 }
                 navigate('/registration');
               }}

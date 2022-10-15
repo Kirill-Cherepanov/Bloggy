@@ -4,6 +4,7 @@ import { Form, InputField } from 'components/Form';
 import { Button } from 'components/Elements';
 import { PreRegistrationValues } from '../types';
 import { setPreRegistrationData } from '../stores/authSlice';
+import { useAppDispatch } from 'stores/rootStore';
 
 const schema = z.object({
   email: z.string().email(),
@@ -22,11 +23,13 @@ export function PreRegistrationForm({
   onSuccess,
   swapForm,
 }: PreRegistrationFormProps) {
+  const dispatch = useAppDispatch();
+
   return (
     <Form<PreRegistrationValues, typeof schema>
       className="w-72 mx-auto space-y-2"
       onSubmit={(values) => {
-        setPreRegistrationData(values);
+        dispatch(setPreRegistrationData(values));
         onSuccess();
       }}
       schema={schema}

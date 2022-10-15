@@ -28,6 +28,7 @@ export const authSlice = createSlice({
       state,
       action: PayloadAction<PreRegistrationValues>
     ) => {
+      console.log('emailInput.current.value');
       state.preRegistrationData = action.payload;
     },
   },
