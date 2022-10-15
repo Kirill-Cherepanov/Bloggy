@@ -1,10 +1,19 @@
 import path from 'path';
 
 // .env will be for variables that I don't want to show
-// this config is for public variables
+// This config is for public variables
 
-export const POST_IMAGES_LOCATION = path.join(__dirname, '/images/postImgs');
-export const PROFILE_PICS_LOCATION = path.join(__dirname, '/images/postImgs');
+if (require.main === undefined) throw Error('require.main is undefined');
+export const DIST_DIRECTORY = path.dirname(require.main.filename);
+
+export const POST_IMAGES_LOCATION = path.join(
+  DIST_DIRECTORY,
+  '../images/postImgs'
+);
+export const PROFILE_PICS_LOCATION = path.join(
+  DIST_DIRECTORY,
+  '../images/postImgs'
+);
 
 export const ACCESS_TOKEN_EXPIRATION_TIME = '10m';
 

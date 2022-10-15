@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+
 import { likePost } from 'use-cases/posts';
 
 export const likePostController: RequestHandler = async (req, res, next) => {

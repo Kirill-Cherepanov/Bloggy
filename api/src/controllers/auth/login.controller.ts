@@ -1,5 +1,4 @@
 import { RequestHandler } from 'express';
-import User from 'models/User';
 
 import { validateUser } from 'use-cases/users';
 import { generateAccessToken, generateRefreshToken } from 'web/tokens';

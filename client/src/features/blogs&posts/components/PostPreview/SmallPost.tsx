@@ -23,6 +23,7 @@ export function SmallPost({
   bgColor,
   className,
 }: SmallPostProps) {
+  const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const user = useAppSelector((state) => state.authSlice.user);
   const textBoxLineHeight = 24;
   const { amountOfLines, textBoxRef } = useCalculateLines(textBoxLineHeight);
@@ -104,7 +105,10 @@ export function SmallPost({
         </div>
 
         <div className="flex justify-between items-center">
-          <LikeButton postData={postData} shouldMutate={!isPreview} />
+          <LikeButton
+            postData={postData}
+            shouldMutate={!isPreview && isLoggedIn}
+          />
 
           <div className="mt-auto text-text-600">
             <span>By </span>

@@ -43,6 +43,7 @@ export function LargePost({
   size = 'md',
   shouldAnimate = false,
 }: LargePostProps) {
+  const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const user = useAppSelector((state) => state.authSlice.user);
   const textBoxLineHeight = 24;
   const { amountOfLines, textBoxRef } = useCalculateLines(textBoxLineHeight);
@@ -115,7 +116,10 @@ export function LargePost({
         </div>
 
         <div className="flex justify-between items-end">
-          <LikeButton postData={postData} shouldMutate={!isPreview} />
+          <LikeButton
+            postData={postData}
+            shouldMutate={!isPreview && isLoggedIn}
+          />
           {user?.username === postData.authorName ? (
             <>
               <PostInfo {...postData} className="group-hover:hidden" />

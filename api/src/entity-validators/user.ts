@@ -1,10 +1,6 @@
 import * as z from 'zod';
 
-import User from 'models/User';
-
-// a simple email validation
-export const validateEmail = (email: string): boolean =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+import User, { validateEmail } from 'models/User';
 
 async function validateUniqueness(email?: string, username?: string) {
   if (email) {

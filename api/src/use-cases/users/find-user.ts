@@ -1,5 +1,5 @@
 import User from 'models/User';
-import { formatUserProtected } from 'use-cases/lib';
+import { formatUserProtected, deleteUndefined } from 'use-cases/lib';
 
 export type FindUserProps = {
   username?: string;
@@ -8,7 +8,7 @@ export type FindUserProps = {
 };
 
 export const findUser = async (userData: FindUserProps) => {
-  const user = await User.findOne(userData);
+  const user = await User.findOne(deleteUndefined(userData));
 
   if (!user) return user;
 

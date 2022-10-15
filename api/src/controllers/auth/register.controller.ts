@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { generateAccessToken, generateRefreshToken } from 'web/tokens';
-import { makeUser } from 'entity-validators/user';
+import { makeUser } from 'entity-validators';
 import {
   sendConfirmation,
   validateConfirmation,

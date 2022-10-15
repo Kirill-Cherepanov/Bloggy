@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+
 import { findUser } from 'use-cases/users';
 import { verifyRefreshToken, generateAccessToken } from 'web/tokens';
 

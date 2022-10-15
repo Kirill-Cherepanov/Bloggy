@@ -54,7 +54,7 @@ export const verifyRefreshToken = async (refreshToken: string | undefined) => {
 
   const verificationRes = await verifyToken(
     refreshToken,
-    process.env.ACCESS_TOKEN_SECRET!
+    process.env.REFRESH_TOKEN_SECRET!
   );
 
   if ('err' in verificationRes) {

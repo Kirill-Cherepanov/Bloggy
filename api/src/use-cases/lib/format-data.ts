@@ -1,3 +1,5 @@
+import { TPost, Post, User } from 'types/custom';
+
 type FormattedPost = Omit<TPost, 'likes'> & {
   _id: string;
   likes: number;

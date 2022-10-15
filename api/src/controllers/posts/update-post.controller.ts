@@ -23,7 +23,12 @@ export const updatePostController: RequestHandler = async (req, res, next) => {
     const sentData = JSON.parse(jsonBuffer.buffer.toString());
     const imageName = savePostImage(req.files);
 
-    const post = await editPost(req.params.id, sentData, imageName);
+    const post = await editPost(
+      req.params.id,
+      sentData,
+      req.user.data.id,
+      imageName
+    );
 
     res.status(200).json({ success: true, post });
   } catch (err) {

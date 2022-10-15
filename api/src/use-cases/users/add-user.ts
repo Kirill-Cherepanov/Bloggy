@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-import { makeUser } from 'entity-validators/user';
+import { makeUser } from 'entity-validators';
 import User from 'models/User';
 import { formatUserProtected } from 'use-cases/lib';
 

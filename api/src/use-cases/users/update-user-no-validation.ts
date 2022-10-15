@@ -1,18 +1,18 @@
 import bcrypt from 'bcrypt';
 import deepmerge from 'deepmerge';
 
-import { makePartialUser } from 'entity-validators/user';
+import { makePartialUser } from 'entity-validators';
 import User from 'models/User';
 import { deleteProfilePic } from 'web/file-manipulation';
 import { FindUserProps } from './find-user';
-import { formatUserProtected } from 'use-cases/lib';
+import { formatUserProtected, deleteUndefined } from 'use-cases/lib';
 
 export const updateUserNoValidation = async (
   data: unknown,
   findUserData: FindUserProps,
   shouldDeleteBlog: boolean = false
 ) => {
-  const user = await User.findOne(findUserData);
+  const user = await User.findOne(deleteUndefined(findUserData));
   if (user === null) return { err: 'User was not found', status: 500 };
 
   const userData = makePartialUser(data);

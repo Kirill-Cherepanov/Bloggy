@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { Post } from 'types/custom';
+
 const PostSchema = new mongoose.Schema<Post>(
   {
     title: {

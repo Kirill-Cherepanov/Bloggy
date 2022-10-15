@@ -7,6 +7,7 @@ import { formatPost } from 'use-cases/lib';
 export const editPost = async (
   postId: string,
   data: unknown,
+  userId: string,
   image?: string
 ) => {
   const post = await Post.findById(postId);
@@ -16,5 +17,5 @@ export const editPost = async (
 
   await post.save();
 
-  return formatPost(post, post.authorName);
+  return formatPost(post, userId);
 };

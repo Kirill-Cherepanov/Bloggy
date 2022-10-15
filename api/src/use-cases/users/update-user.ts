@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import deepmerge from 'deepmerge';
 
 import User from 'models/User';
-import { makePartialUser } from 'entity-validators/user';
+import { makePartialUser } from 'entity-validators';
 import { formatUserProtected } from 'use-cases/lib';
 import { deleteProfilePic } from 'web/file-manipulation';
 

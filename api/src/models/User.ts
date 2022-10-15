@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
 
-import { validateEmail } from 'entity-validators/user';
 import { DEFAULT_PROFILE_PICTURE } from 'config';
+import { Blog, User } from 'types/custom';
+
+// a simple email validation
+// had to put it here to avoid circular dependencies with entity-validators/user
+export const validateEmail = (email: string): boolean =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const BlogSchema = new mongoose.Schema<Blog>(
   {

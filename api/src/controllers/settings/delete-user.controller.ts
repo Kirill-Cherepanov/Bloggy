@@ -1,4 +1,5 @@
 import { RequestHandler } from 'express';
+
 import { deleteUser } from 'use-cases/users';
 
 export const deleteUserController: RequestHandler = async (req, res, next) => {

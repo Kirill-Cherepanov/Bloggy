@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+import { Confirmation } from 'types/custom';
+
 const ConfirmationSchema = new mongoose.Schema<Confirmation>(
   {
     email: {

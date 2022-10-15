@@ -11,6 +11,7 @@ type NormalPostType = {
 };
 
 export function NormalPost({ postData, isPreview }: NormalPostType) {
+  const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const user = useAppSelector((state) => state.authSlice.user);
   const wrapper = isPreview ? <div /> : <li />;
 
@@ -53,7 +54,10 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
       </Link>
 
       <div className="flex justify-between items-center">
-        <LikeButton postData={postData} shouldMutate={!isPreview} />
+        <LikeButton
+          postData={postData}
+          shouldMutate={!isPreview && isLoggedIn}
+        />
 
         {user?.username === postData.authorName ? (
           <>
