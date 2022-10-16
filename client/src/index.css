@@ -30,11 +30,17 @@ cuz I use them dynamically and it's a pain with tailwind */
 }
 
 @layer components {
-  .like-button .heart-outline {
+  .like-button-dark .heart-outline {
     @apply text-secondary-800
   }
-  .like-button .heart {
+  .like-button-light .heart-outline {
+    @apply text-transparent
+  }
+  .like-button-dark .heart {
     @apply fill-transparent
+  }
+  .like-button-light .heart {
+    @apply fill-secondary-100
   }
   .like-button:hover .heart-outline,
   .like-button.like-button-active .heart-outline {
@@ -47,7 +53,7 @@ cuz I use them dynamically and it's a pain with tailwind */
   
 
   .px-page {
-    @apply px-4 xs:px-8 sm:px-12 md:px-20 max-w-7xl mx-auto;
+    @apply px-4 xs:px-8 sm:px-12 md:px-20 w-full max-w-7xl mx-auto;
   }
 
   /* STYLED INPUT */

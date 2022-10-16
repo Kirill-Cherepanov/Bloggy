@@ -48,6 +48,10 @@ export function Post({ initialData }: PostProps) {
     author = data.author;
   }
 
+  const imageSrc = initialData
+    ? post.image
+    : `/api/images/postImgs/${post.image}`;
+
   const wrapper = initialData ? <div /> : <main />;
 
   return (
@@ -96,11 +100,7 @@ export function Post({ initialData }: PostProps) {
       <h2 className="text-3xl font-bold text-center my-6">{post.title}</h2>
 
       {post.image && (
-        <img
-          src={`/api/images/postImgs/${post.image}`}
-          alt="post"
-          className="mx-auto max-w-full mb-10"
-        />
+        <img src={imageSrc} alt="post" className="mx-auto max-w-full mb-10" />
       )}
 
       <div className="lg:hidden">

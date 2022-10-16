@@ -8,7 +8,7 @@ export function CatalogPosts({ posts }: CatalogPostsProps) {
   if (posts.length < 10) {
     return (
       <div className="flex relative gap-10 my-12">
-        <ul className="flex flex-col gap-6">
+        <ul className="flex flex-col gap-6 w-full">
           {posts.map((post) => (
             <SmallPost
               key={post._id}
@@ -17,7 +17,7 @@ export function CatalogPosts({ posts }: CatalogPostsProps) {
             />
           ))}
         </ul>
-        <Aside />
+        <Aside className="hidden lg:flex" />
       </div>
     );
   }
@@ -54,7 +54,7 @@ export function CatalogPosts({ posts }: CatalogPostsProps) {
             shouldAnimate={true}
           />
         </div>
-        <Aside />
+        <Aside className="hidden lg:flex" />
       </div>
 
       <div className="gap-8 h-80 hidden lg:flex">

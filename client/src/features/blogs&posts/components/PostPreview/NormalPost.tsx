@@ -13,6 +13,11 @@ type NormalPostType = {
 export function NormalPost({ postData, isPreview }: NormalPostType) {
   const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
   const user = useAppSelector((state) => state.authSlice.user);
+
+  const imageSrc = isPreview
+    ? postData.image
+    : `/api/images/postImgs/${postData.image}`;
+
   const wrapper = isPreview ? <div /> : <li />;
 
   return (
@@ -43,11 +48,7 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
         className="block w-full"
       >
         {postData.image ? (
-          <img
-            src={`/api/images/postImgs/${postData.image}`}
-            alt="Post"
-            className="max-w-full mb-3 mx-auto"
-          />
+          <img src={imageSrc} alt="Post" className="max-w-full mb-3 mx-auto" />
         ) : (
           <Icon type="image" className="mb-3 w-3/5 mx-auto" />
         )}

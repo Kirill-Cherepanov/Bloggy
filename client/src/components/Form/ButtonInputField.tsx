@@ -31,23 +31,25 @@ export const ButtonInputField = (props: ButtonInputFieldProps) => {
       error={error}
       className="text-base font-normal"
     >
-      <input
-        defaultValue={defaultValue}
-        type={type}
-        placeholder={label}
-        className={clsx(
-          'styled-input w-80 rounded-r-none border-r-0',
-          className
-        )}
-        {...registration}
-      />
-      <button
-        type={buttonType}
-        onClick={onClick}
-        className="rounded-r-2xl border-2 px-3 py-2.5 border-secondary-300 focus:outline-accent-400 hover:border-accent-300 hover:bg-accent-300"
-      >
-        Change
-      </button>
+      <div className="w-full flex">
+        <input
+          defaultValue={defaultValue}
+          type={type}
+          placeholder={label}
+          className={clsx(
+            'styled-input min-w-0 rounded-r-none border-r-0',
+            className
+          )}
+          {...registration}
+        />
+        <button
+          type={buttonType}
+          onClick={onClick}
+          className="rounded-r-2xl border-2 px-3 py-2.5 border-secondary-300 focus:outline-accent-400 hover:border-accent-300 hover:bg-accent-300"
+        >
+          Change
+        </button>
+      </div>
     </FieldWrapper>
   );
 };

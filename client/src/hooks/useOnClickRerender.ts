@@ -12,4 +12,6 @@ export const useOnClickRerender = () => {
   }, []);
 
   console.log('Click ' + numberOfClicks);
+
+  return numberOfClicks;
 };

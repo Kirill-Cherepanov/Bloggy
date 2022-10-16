@@ -6,15 +6,21 @@ import { PostData } from 'types';
 type LikeButtonProps = {
   postData: PostData;
   shouldMutate?: boolean;
+  variant?: 'dark' | 'light';
 };
 
-export function LikeButton({ postData, shouldMutate = true }: LikeButtonProps) {
+export function LikeButton({
+  postData,
+  shouldMutate = true,
+  variant = 'dark',
+}: LikeButtonProps) {
   const [likePost] = useLikePostMutation();
 
   return (
     <button
       className={clsx(
-        'font-semibold flex items-center cursor-pointer like-button',
+        'font-semibold flex items-center cursor-pointer text-sm xs:text-base like-button',
+        `like-button-${variant}`,
         postData.isLiked && 'like-button-active'
       )}
       onClick={() => shouldMutate && likePost(postData)}
@@ -22,9 +28,18 @@ export function LikeButton({ postData, shouldMutate = true }: LikeButtonProps) {
       <span className="relative w-5 h-5 mr-2">
         <Icon
           type="heart-outline"
-          className="heart-outline absolute top-0 left-0 w-full"
+          className={clsx(
+            'heart-outline absolute top-0 left-0 w-full',
+            variant === 'light' && 'text-main'
+          )}
         />
-        <Icon type="heart" className="heart absolute top-0 left-0 w-full" />
+        <Icon
+          type="heart"
+          className={clsx(
+            'heart absolute top-0 left-0 w-full',
+            variant === 'light' && 'fill-main'
+          )}
+        />
       </span>
       {postData.likes}
     </button>

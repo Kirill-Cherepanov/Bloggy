@@ -38,7 +38,7 @@ export const getPostsData = (postsAmount: number): PostData[] => {
         'Computer science',
       ],
       likes: 100,
-      authorName: 'KissMyUSSR',
+      authorName: 'KissMyLife',
       createdAt: new Date().toDateString(),
       displayType: i % 3,
       isLiked: false,

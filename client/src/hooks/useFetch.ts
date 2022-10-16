@@ -10,29 +10,24 @@ export const useFetch = <T>(
   { skip = false, isBlob = false }: FetchOptions
 ) => {
   const [error, setError] = useState<unknown>();
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsFetching] = useState(false);
   const [data, setData] = useState<T>();
+  const isError = !!error;
+  const isLoading = skip || (!data && !isError);
 
   useEffect(() => {
     if (skip) return;
 
     const fetchData = async () => {
       try {
-        setIsFetching(true);
         const fetchRes = await fetch(url);
-        setIsFetching(false);
 
         if (fetchRes.ok) {
           if (isBlob) return setData((await fetchRes.blob()) as unknown as T);
           return setData(await fetchRes.json());
         }
 
-        setIsError(true);
         setError(await fetchRes.json());
       } catch (err: unknown) {
-        setIsFetching(false);
-        setIsError(true);
         setError(err);
       }
     };

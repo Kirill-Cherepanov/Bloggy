@@ -28,6 +28,10 @@ export function SmallPost({
   const textBoxLineHeight = 24;
   const { amountOfLines, textBoxRef } = useCalculateLines(textBoxLineHeight);
 
+  const imageSrc = isPreview
+    ? postData.image
+    : `/api/images/postImgs/${postData.image}`;
+
   const wrapper = isPreview ? <div /> : <li />;
 
   return (
@@ -46,7 +50,7 @@ export function SmallPost({
       >
         {postData.image ? (
           <img
-            src={`/api/images/postImgs/${postData.image}`}
+            src={imageSrc}
             alt="Post"
             className="object-cover h-full w-full"
           />
@@ -60,31 +64,31 @@ export function SmallPost({
           className="w-full absolute left-0 top-2 px-4 lg:px-5 flex justify-between"
           style={{ color }}
         >
-          <span className="text-accent-600 font-display uppercase text-sm font-semibold cursor-pointer hover:underline">
+          <span className="text-accent-600 font-display uppercase text-[0.8rem] xs:text-sm font-semibold cursor-pointer hover:underline">
             {postData.categories[0]}
           </span>
           {user?.username === postData.authorName ? (
             <>
-              <span className="font-extralight group-hover:hidden">
+              <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">
                 {formatDate(postData.createdAt)}
               </span>
               <Link
                 to={`/edit/${postData._id}`}
                 onClick={(e) => isPreview && e.preventDefault()}
-                className="font-extralight hidden group-hover:inline hover:underline"
+                className="font-extralight hidden group-hover:inline hover:underline text-[0.8rem] xs:text-base"
               >
                 Edit post
               </Link>
             </>
           ) : (
-            <span className="font-extralight">
+            <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">
               {formatDate(postData.createdAt)}
             </span>
           )}
         </div>
 
         {/* Post title */}
-        <h3 className="mt-7 lg:mt-6 font-display basis-[max-content] shrink-0 line-clamp-4 font-bold mb-1 text-lg sm:text-xl">
+        <h3 className="mt-7 lg:mt-6 font-display basis-[max-content] shrink-0 line-clamp-4 font-bold mb-1 xs:text-lg sm:text-xl">
           <Link
             to={`/post/${postData._id}`}
             onClick={(e) => isPreview && e.preventDefault()}
@@ -97,10 +101,10 @@ export function SmallPost({
         {/* Post text */}
         <div ref={textBoxRef} className="grow min-h-0">
           <p
-            className="line-clamp-3 text-text-600"
+            className="line-clamp-3 text-secondary-800 text-sm xs:text-base"
             style={{ WebkitLineClamp: amountOfLines }}
           >
-            {amountOfLines ? postData.description : ''}
+            {!!amountOfLines && postData.description}
           </p>
         </div>
 
@@ -110,8 +114,8 @@ export function SmallPost({
             shouldMutate={!isPreview && isLoggedIn}
           />
 
-          <div className="mt-auto text-text-600">
-            <span>By </span>
+          <div className="text-secondary-800 text-sm xs:text-base mt-auto">
+            <span className="hidden xs:inline">By </span>
             <Link
               to={`/blog/${postData.authorName}`}
               onClick={(e) => isPreview && e.preventDefault()}

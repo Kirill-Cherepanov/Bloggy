@@ -15,7 +15,7 @@ const textBoxPositions = {
 const sizes = {
   md: {
     wrapper: 'h-80 sm:h-100 md:h-[440px]',
-    textBox: 'w-5/6 h-40 sm:h-48 lg:h-56 xl:h-64',
+    textBox: 'w-5/6 h-40 sm:h-48 md:h-56',
   },
   none: { wrapper: '', textBox: '' },
 };
@@ -48,6 +48,10 @@ export function LargePost({
   const textBoxLineHeight = 24;
   const { amountOfLines, textBoxRef } = useCalculateLines(textBoxLineHeight);
 
+  const imageSrc = isPreview
+    ? postData.image
+    : `/api/images/postImgs/${postData.image}`;
+
   const wrapper = isPreview ? <div /> : <li />;
 
   return (
@@ -67,7 +71,7 @@ export function LargePost({
       >
         {postData.image ? (
           <img
-            src={`/api/images/postImgs/${postData.image}`}
+            src={imageSrc}
             alt="Post"
             className="w-full h-full object-cover"
           />
@@ -95,7 +99,7 @@ export function LargePost({
         )}
 
         {/* Post title */}
-        <h3 className="mt-2 basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold xl:mb-2 text-2xl md:text-3xl">
+        <h3 className="mt-2 basis-[max-content] font-display uppercase shrink-0 text-ellipsis line-clamp-3 xl:line-clamp-5 font-bold xl:mb-2 text-lg xs:text-xl sm:text-2xl md:text-3xl">
           <Link
             to={`/post/${postData._id}`}
             onClick={(e) => isPreview && e.preventDefault()}
@@ -119,6 +123,7 @@ export function LargePost({
           <LikeButton
             postData={postData}
             shouldMutate={!isPreview && isLoggedIn}
+            variant="light"
           />
           {user?.username === postData.authorName ? (
             <>

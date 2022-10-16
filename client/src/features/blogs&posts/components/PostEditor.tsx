@@ -76,7 +76,7 @@ export function PostEditor({
         >
           <Icon type="long-arrow" className="h-4 text-secondary-600" />
         </button>
-        <Logo size="md" />
+        <Logo size="md" className="invisible sm:visible" />
         <button
           className="absolute right-0 text-xl transition-all hover:tracking-wider group"
           onClick={async () => {

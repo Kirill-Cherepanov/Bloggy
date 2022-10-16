@@ -14,7 +14,7 @@ export function Settings() {
   if (user === null) throw Error('User data is null!');
 
   return (
-    <main className="px-page py-8">
+    <main className="px-page py-8 overflow-x-hidden">
       <div className="relative border-b pb-1 border-secondary-300 flex items-end justify-center text-secondary-600 mb-6">
         <button onClick={() => navigate(-1)} className="absolute h-full left-0">
           <Icon type="long-arrow" className="h-4 text-secondary-600" />
@@ -27,8 +27,9 @@ export function Settings() {
           {user.username}
         </Link>
       </div>
-      <div className="flex gap-12">
-        <div className="flex flex-col gap-2 shrink-0 w-48">
+
+      <div className="flex flex-col md:flex-row mt-8 gap-8 md:m-0 md:gap-12">
+        <div className="flex flex-col gap-2 shrink-0 w-full md:w-48">
           <button
             onClick={() => setTabOpen('general')}
             className={
@@ -54,6 +55,7 @@ export function Settings() {
             </button>
           )}
         </div>
+
         {tabOpen === 'general' ? (
           <AccountSettings />
         ) : (

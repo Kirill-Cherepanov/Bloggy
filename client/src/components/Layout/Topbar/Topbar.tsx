@@ -17,7 +17,10 @@ export function TopBar() {
         />
         <h1>
           <NavLink to="/">
-            <Logo className="basis-32 xs:basis-40 shrink-0 -mt-2 flex justify-center text-center" />
+            <Logo
+              variant="light"
+              className="basis-32 xs:basis-40 shrink-0 -mt-2 flex justify-center text-center"
+            />
           </NavLink>
         </h1>
         <div className="basis-1/2 h-full flex justify-end items-center gap-1 xs:gap-4 sm:gap-6 md:gap-8 lg:gap-10 xl:gap-12">

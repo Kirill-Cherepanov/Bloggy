@@ -59,7 +59,10 @@ export function BlogSwiper({ bloggers, sliderClassName }: BlogSwiperProps) {
                   blogger={blogger}
                   classNames={{
                     ...sliderClassName,
-                    wrapper: clsx(sliderClassName?.wrapper, 'xs:mx-5 max-w-xs'),
+                    wrapper: clsx(
+                      sliderClassName?.wrapper,
+                      'mx-3 xs:mx-5 max-w-xs'
+                    ),
                   }}
                 />
               </SwiperSlide>
