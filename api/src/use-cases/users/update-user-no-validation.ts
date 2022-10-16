@@ -1,11 +1,10 @@
 import bcrypt from 'bcrypt';
-import deepmerge from 'deepmerge';
 
 import { makePartialUser } from 'entity-validators';
 import User from 'models/User';
 import { deleteProfilePic } from 'web/file-manipulation';
 import { FindUserProps } from './find-user';
-import { formatUserProtected, deleteUndefined } from 'use-cases/lib';
+import { formatUserProtected, deleteUndefined, deepmerge } from 'use-cases/lib';
 
 export const updateUserNoValidation = async (
   data: unknown,

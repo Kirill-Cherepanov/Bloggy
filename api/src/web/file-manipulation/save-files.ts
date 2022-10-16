@@ -15,7 +15,7 @@ export const saveFile = (file: Express.Multer.File, location: string) => {
     `.${Date.now()}` +
     path.extname(file.originalname);
 
-  const filePath = path.join(__dirname, location, fileName);
+  const filePath = path.join(location, fileName);
 
   fs.writeFile(filePath, file.buffer, (err) => {
     if (!err) return;
