@@ -37,11 +37,12 @@ export function TopbarSearch() {
         navigate(`/catalog?q=${activeInput?.value || ''}`);
       }}
     >
-      <div className="lg:relative min-w-[2rem] flex items-center">
+      <div className="lg:relative min-w-[2.5rem] flex items-center">
         <button
+          data-testid="search-top-button"
           type="submit"
           className={clsx(
-            'lg:absolute lg:h-10 top-[calc(50%-1.25rem)] left-2 transition-all duration-300',
+            'lg:absolute lg:h-10 top-[calc(50%-1.25rem)] left-0 transition-all duration-300',
             isOpen && 'top-[calc(50%-1rem)] left-2 lg:h-8'
           )}
         >
@@ -70,13 +71,13 @@ export function TopbarSearch() {
 
       <div
         className={clsx(
-          'lg:hidden pl-2 pr-12 flex justify-center items-center absolute z-10 top-0 left-0 w-full h-20 transition-transform bg-secondary-900',
+          'lg:hidden pl-2 xs:pl-4 sm:pl-6 md:pl-8 pr-12 flex justify-center items-center absolute z-10 top-0 left-0 w-full h-20 transition-transform bg-secondary-900',
           isOpen ? 'translate-y-0' : '-translate-y-20'
         )}
       >
         <Icon
           type="search"
-          className="h-8 absolute top-[calc(50%-1rem)] left-4 text-secondary-500"
+          className="h-8 absolute top-[calc(50%-1rem)] left-4 xs:left-6 sm:left-8 md:left-10 text-secondary-500"
         />
         <input
           ref={mobileInputField}

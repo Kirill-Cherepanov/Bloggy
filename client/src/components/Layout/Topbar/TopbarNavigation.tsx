@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 import { useDisclosure, useOnClickOutside } from 'hooks';
+import { useAppSelector } from 'stores/rootStore';
+import { Icon } from 'components/Elements';
 
 type NavigationProps = {
   links: [string, string][];
@@ -10,6 +12,7 @@ type NavigationProps = {
 export function TopbarNavigation({ links }: NavigationProps) {
   const { isOpen, close, toggle } = useDisclosure();
   const container = useOnClickOutside<HTMLDivElement>(close);
+  const isLoggedIn = useAppSelector((state) => state.authSlice.isLoggedIn);
 
   return (
     <>
@@ -48,6 +51,15 @@ export function TopbarNavigation({ links }: NavigationProps) {
             </li>
           ))}
         </ul>
+        {isLoggedIn && (
+          <NavLink
+            data-testid="create-top-nav-link"
+            to="/create"
+            className="lg:hidden ml-2 xs:ml-3 sm:ml-4 md:ml-6"
+          >
+            <Icon type="plus" className="h-10 sm:h-12 text-main" />
+          </NavLink>
+        )}
       </div>
 
       <div className="DESKTOP-MENU hidden lg:block basis-1/2 h-full">

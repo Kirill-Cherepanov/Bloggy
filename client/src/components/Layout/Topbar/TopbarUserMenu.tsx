@@ -21,7 +21,11 @@ export function TopbarUserMenu() {
       ref={menu}
       className="h-full flex items-center justify-center xl:relative"
     >
-      <button className="flex items-center" onClick={toggle}>
+      <button
+        className="flex items-center"
+        onClick={toggle}
+        data-testid="topbar-user-menu"
+      >
         <ProfilePicture className="h-8 sm:h-10 select-none" />
         <Icon
           type="angle"
