@@ -44,8 +44,14 @@ export const registerController: RequestHandler = async (req, res, next) => {
 
     const refreshToken = generateRefreshToken({ ...user, id: newUser._id });
     const accessToken = generateAccessToken({ ...user, id: newUser._id });
-    res.cookie('refresh-token', refreshToken, { httpOnly: true });
-    res.cookie('access-token', accessToken, { httpOnly: true });
+    res.cookie('refresh-token', refreshToken, {
+      httpOnly: true,
+      sameSite: 'none',
+    });
+    res.cookie('access-token', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+    });
 
     res.status(200).json({ user: newUser, status: 'success' });
   } catch (err) {

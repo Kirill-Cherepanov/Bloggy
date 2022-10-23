@@ -20,9 +20,12 @@ export const ACCESS_TOKEN_EXPIRATION_TIME = '10m';
 export const DEFAULT_PROFILE_PICTURE = 'default.jpg';
 
 export const ALLOWED_ORIGINS = [
-  'http://localhost:3000',
-  'http://localhost:5000',
   'https://bloggy-kirill-cherepanov.netlify.app',
+  'localhost:3000',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  'http://37.214.72.201:3000',
+  'http://192.168.100.3:3000',
 ];
 
 export const PORT = process.env.PORT || 5000;

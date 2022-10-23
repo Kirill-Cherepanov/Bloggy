@@ -33,7 +33,11 @@ export const getAccessTokenController: RequestHandler = async (
     }
 
     const accessToken = generateAccessToken({ ...user, id: user._id });
-    res.cookie('access-token', accessToken, { httpOnly: true });
+    res.cookie('access-token', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
 
     res.status(200).json({ user, isLoggedIn: true });
   } catch (err) {

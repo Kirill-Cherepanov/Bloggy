@@ -9,6 +9,7 @@ import { useGetPostQuery } from '../api/postsApi';
 import { PageNotFound } from 'features/misc';
 import { PostData, PublicData } from 'types';
 import { useAppSelector } from 'stores/rootStore';
+import { POST_IMGS_LOCATION } from 'config';
 
 type PostProps = {
   initialData?: {
@@ -48,9 +49,7 @@ export function Post({ initialData }: PostProps) {
     author = data.author;
   }
 
-  const imageSrc = initialData
-    ? post.image
-    : `/api/images/postImgs/${post.image}`;
+  const imageSrc = initialData ? post.image : POST_IMGS_LOCATION + post.image;
 
   const wrapper = initialData ? <div /> : <main />;
 

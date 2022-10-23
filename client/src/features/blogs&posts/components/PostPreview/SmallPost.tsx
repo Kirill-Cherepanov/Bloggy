@@ -7,6 +7,7 @@ import { Icon } from 'components/Elements';
 import { formatDate } from 'utility';
 import { PostData } from 'types';
 import { useAppSelector } from 'stores/rootStore';
+import { POST_IMGS_LOCATION } from 'config';
 
 type SmallPostProps = {
   postData: PostData;
@@ -30,7 +31,7 @@ export function SmallPost({
 
   const imageSrc = isPreview
     ? postData.image
-    : `/api/images/postImgs/${postData.image}`;
+    : POST_IMGS_LOCATION + postData.image;
 
   const wrapper = isPreview ? <div /> : <li />;
 

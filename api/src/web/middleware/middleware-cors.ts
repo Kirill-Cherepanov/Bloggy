@@ -2,9 +2,9 @@ import cors from 'cors';
 
 import { ALLOWED_ORIGINS } from 'config';
 
-const corsOptions = {
+const corsOptions: cors.CorsOptions = {
   origin: ALLOWED_ORIGINS,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+  credentials: true,
 };
 
 export const corsMiddleware = cors(corsOptions);

@@ -25,8 +25,14 @@ export const updateUserController: RequestHandler = async (req, res, next) => {
 
     const refreshToken = generateRefreshToken({ ...user, id: user._id });
     const accessToken = generateAccessToken({ ...user, id: user._id });
-    res.cookie('refresh-token', refreshToken, { httpOnly: true });
-    res.cookie('access-token', accessToken, { httpOnly: true });
+    res.cookie('refresh-token', refreshToken, {
+      httpOnly: true,
+      sameSite: 'none',
+    });
+    res.cookie('access-token', accessToken, {
+      httpOnly: true,
+      sameSite: 'none',
+    });
 
     res.status(200).json({ user, status: 'success' });
   } catch (err) {

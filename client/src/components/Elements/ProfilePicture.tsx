@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 
 import { useAppSelector } from 'stores/rootStore';
+import { PROFILE_PICS_LOCATION } from 'config';
 
 type ProfilePictureProps = {
   src?: string;
@@ -8,14 +9,13 @@ type ProfilePictureProps = {
 };
 
 export function ProfilePicture({ src, className = '' }: ProfilePictureProps) {
-  const base = '/api/images/profilePics/';
   const currentProfilePic =
     useAppSelector((state) => state.authSlice.user?.profilePic) ||
     'default.jpg';
 
   return (
     <img
-      src={base + (src || currentProfilePic)}
+      src={PROFILE_PICS_LOCATION + (src || currentProfilePic)}
       alt=""
       className={clsx('aspect-square rounded-full object-cover', className)}
     />

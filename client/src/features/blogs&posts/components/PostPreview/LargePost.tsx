@@ -6,6 +6,7 @@ import { LikeButton, PostInfo } from '.';
 import { Icon } from 'components/Elements';
 import { PostData } from 'types';
 import { useAppSelector } from 'stores/rootStore';
+import { POST_IMGS_LOCATION } from 'config';
 
 const textBoxPositions = {
   bottomLeft: 'left-0 bottom-8',
@@ -50,7 +51,7 @@ export function LargePost({
 
   const imageSrc = isPreview
     ? postData.image
-    : `/api/images/postImgs/${postData.image}`;
+    : POST_IMGS_LOCATION + postData.image;
 
   const wrapper = isPreview ? <div /> : <li />;
 

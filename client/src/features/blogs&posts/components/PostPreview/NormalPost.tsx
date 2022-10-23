@@ -4,6 +4,7 @@ import { Icon } from 'components/Elements';
 import { useAppSelector } from 'stores/rootStore';
 import { PostData } from 'types';
 import { LikeButton, PostInfo } from '.';
+import { POST_IMGS_LOCATION } from 'config';
 
 type NormalPostType = {
   postData: PostData;
@@ -16,7 +17,7 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
 
   const imageSrc = isPreview
     ? postData.image
-    : `/api/images/postImgs/${postData.image}`;
+    : POST_IMGS_LOCATION + postData.image;
 
   const wrapper = isPreview ? <div /> : <li />;
 

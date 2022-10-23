@@ -10,6 +10,7 @@ import { PageNotFound } from 'features/misc';
 import { Button, Spinner } from 'components/Elements';
 import { UpdatePostValues } from '../types';
 import { useFetch } from 'hooks';
+import { POST_IMGS_LOCATION } from 'config';
 
 export function Edit() {
   const navigate = useNavigate();
@@ -19,7 +20,8 @@ export function Edit() {
   const { data, isLoading, isError, error } = useGetPostQuery(id!, {
     skip: !id,
   });
-  const image = useFetch<Blob>(`/api/images/postImgs/${data?.post.image!}`, {
+
+  const image = useFetch<Blob>(POST_IMGS_LOCATION + data?.post.image!, {
     skip: !data?.post.image,
     isBlob: true,
   });
