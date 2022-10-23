@@ -12,7 +12,7 @@ export const useFetch = <T>(
   const [error, setError] = useState<unknown>();
   const [data, setData] = useState<T>();
   const isError = !!error;
-  const isLoading = skip || (!data && !isError);
+  const isLoading = !skip && !data && !isError;
 
   useEffect(() => {
     if (skip) return;

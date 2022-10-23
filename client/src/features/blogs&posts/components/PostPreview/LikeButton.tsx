@@ -18,11 +18,13 @@ export function LikeButton({
 
   return (
     <button
+      data-testid="like-button"
       className={clsx(
         'font-semibold flex items-center cursor-pointer text-sm xs:text-base like-button',
         `like-button-${variant}`,
         postData.isLiked && 'like-button-active'
       )}
+      data-isliked={postData.isLiked}
       onClick={() => shouldMutate && likePost(postData)}
     >
       <span className="relative w-5 h-5 mr-2">

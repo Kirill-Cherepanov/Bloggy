@@ -11,7 +11,7 @@ const schema = z.object({
   email: z.string().email(),
   password: z
     .string()
-    .min(5, 'Password must be at least 3 characters long')
+    .min(5, 'Password must be at least 5 characters long')
     .max(20, 'Password must be at most 20 characters long'),
 });
 

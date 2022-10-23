@@ -68,8 +68,6 @@ export const postsApi = rootApi.injectEndpoints({
     }),
 
     likePost: builder.mutation<{ success: boolean }, PostData>({
-      // invalidatesTags: (result, error, { _id }) =>
-      //   result?.success ? [{ type: 'Post', _id }] : [],
       query: ({ _id }) => ({
         url: `/posts/like/${_id}`,
         method: 'PUT',
@@ -177,6 +175,7 @@ function invalidateCreatePostTags(
 function invalidateEditPostTags(
   result?: CreatePostReturnType
 ): TagDescription<'Post' | 'User'>[] {
+  console.log(result);
   if (!result?.success) return [];
 
   return [

@@ -15,7 +15,7 @@ export function BlogCard({ username, profilePic, blog }: Required<PublicData>) {
           {username}
         </h2>
         <div className="font-medium text-xl flex items-center mb-4">
-          Likes: {likes}
+          Likes: <span data-testid="blog-total-likes">{likes}</span>
           <Icon
             type="heart"
             className="fill-red-500 h-3.5 ml-1 relative bottom-[1px]"
