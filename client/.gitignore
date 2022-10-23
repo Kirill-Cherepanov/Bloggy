@@ -4,6 +4,7 @@
 /cypress/downloads
 /cypress/screenshots
 /cypress/videos
+/cypress/fixtures/example.json
 
 # dependencies
 /node_modules

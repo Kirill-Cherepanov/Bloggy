@@ -22,6 +22,7 @@ mongoose
 app.use(cookieParser());
 app.use(express.json());
 app.use(handleTokens);
+app.use('/api/health-check', (req, res, next) => res.status(200));
 app.use('/api/images', express.static('images'));
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);

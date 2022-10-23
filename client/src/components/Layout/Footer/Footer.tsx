@@ -66,6 +66,13 @@ export function Footer() {
               Home
             </Link>
           </li>
+          {isLoggedIn && (
+            <li className="hover:text-accent-400">
+              <Link className="link" to="/create">
+                Create post
+              </Link>
+            </li>
+          )}
           <li className="hover:text-accent-400">
             <Link className="link" to="/catalog">
               Catalog
