@@ -18,3 +18,11 @@ export const PROFILE_PICS_LOCATION = path.join(
 export const ACCESS_TOKEN_EXPIRATION_TIME = '10m';
 
 export const DEFAULT_PROFILE_PICTURE = 'default.jpg';
+
+export const ALLOWED_ORIGINS = [
+  'http://localhost:3000',
+  'http://localhost:5000',
+  'https://bloggy-kirill-cherepanov.netlify.app',
+];
+
+export const PORT = process.env.PORT || 5000;
