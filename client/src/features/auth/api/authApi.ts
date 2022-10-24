@@ -50,6 +50,7 @@ export const authApi = rootApi.injectEndpoints({
         url: `/auth/registration`,
         method: `POST`,
         body: registrationData,
+        credentials: 'include',
       }),
       async onQueryStarted(args, api) {
         try {
@@ -64,6 +65,7 @@ export const authApi = rootApi.injectEndpoints({
         url: `/auth/login`,
         method: `POST`,
         body: loginData,
+        credentials: 'include',
       }),
       async onQueryStarted(args, api) {
         try {
@@ -77,6 +79,7 @@ export const authApi = rootApi.injectEndpoints({
       query: () => ({
         url: `/auth/logout`,
         method: `DELETE`,
+        credentials: 'include',
       }),
       async onQueryStarted(args, api) {
         try {

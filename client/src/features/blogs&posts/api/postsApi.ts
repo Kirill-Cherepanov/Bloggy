@@ -33,7 +33,6 @@ export const postsApi = rootApi.injectEndpoints({
         return {
           url: '/posts/',
           method: 'POST',
-          credentials: 'include',
           body,
         };
       },
@@ -52,7 +51,6 @@ export const postsApi = rootApi.injectEndpoints({
         return {
           url: `/posts/${values.data._id}`,
           method: 'PATCH',
-          credentials: 'include',
           body,
         };
       },
@@ -63,7 +61,6 @@ export const postsApi = rootApi.injectEndpoints({
       query: (id) => ({
         url: `/posts/${id}`,
         method: 'DELETE',
-        credentials: 'include',
       }),
     }),
 
@@ -71,7 +68,6 @@ export const postsApi = rootApi.injectEndpoints({
       query: ({ _id }) => ({
         url: `/posts/like/${_id}`,
         method: 'PUT',
-        credentials: 'include',
       }),
       onQueryStarted: async ({ _id, authorName, isLiked }, api) => {
         const patchedGetPost = api.dispatch(
@@ -175,7 +171,6 @@ function invalidateCreatePostTags(
 function invalidateEditPostTags(
   result?: CreatePostReturnType
 ): TagDescription<'Post' | 'User'>[] {
-  console.log(result);
   if (!result?.success) return [];
 
   return [

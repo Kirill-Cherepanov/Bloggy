@@ -58,7 +58,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5000/",
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.0",
     "@testing-library/cypress": "^8.0.3",

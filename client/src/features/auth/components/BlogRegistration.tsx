@@ -32,8 +32,6 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
       <Form<BlogValues, typeof schema>
         className="mx-auto w-full"
         onSubmit={async (values) => {
-          console.log('here');
-
           const blogData = {
             blog: {
               ...values,
