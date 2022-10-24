@@ -68,7 +68,7 @@ export function TopbarUserMenu() {
                   navigate('/settings');
                 }}
               >
-                Settigns
+                Settings
               </MenuButton>
               <MenuButton
                 onClick={() => {

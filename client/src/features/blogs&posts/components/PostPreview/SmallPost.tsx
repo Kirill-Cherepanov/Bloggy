@@ -60,17 +60,19 @@ export function SmallPost({
         )}
       </Link>
       <div className="px-4 lg:px-5 lg:py-2 flex flex-col relative grow">
-        {/* Main category */}
         <div
           className="w-full absolute left-0 top-2 px-4 lg:px-5 flex justify-between"
           style={{ color }}
         >
+          {/* Main category */}
           <Link
             to={`/catalog&q=${postData.categories[0]}&type=categories`}
             className="text-accent-600 font-display uppercase text-[0.8rem] xs:text-sm font-semibold cursor-pointer hover:underline"
           >
             {postData.categories[0]}
           </Link>
+
+          {/* Creation date */}
           {user?.username === postData.authorName ? (
             <>
               <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">
@@ -123,9 +125,7 @@ export function SmallPost({
             <Link
               to={`/blog/${postData.authorName}`}
               onClick={(e) => isPreview && e.preventDefault()}
-              className={
-                'cursor-pointer font-bold hover:underline text-accent-600'
-              }
+              className="cursor-pointer font-bold hover:underline text-accent-600"
               style={{ color }}
             >
               {postData.authorName}

@@ -2,11 +2,12 @@ import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
 import { useCalculateLines } from '../../hooks';
-import { LikeButton, PostInfo } from '.';
+import { LikeButton } from '.';
 import { Icon } from 'components/Elements';
 import { PostData } from 'types';
 import { useAppSelector } from 'stores/rootStore';
 import { POST_IMGS_LOCATION } from 'config';
+import { formatDate } from 'utility';
 
 const textBoxPositions = {
   bottomLeft: 'left-0 bottom-8',
@@ -91,13 +92,12 @@ export function LargePost({
       >
         {/* Main category */}
         {postData.categories.length > 0 && (
-          <Link
-            to={`/catalog&q=${postData.categories[0]}&type=categories`}
+          <div
             className="absolute p-1 top-0 left-8 -translate-y-1/2 flex justify-center items-center bg-accent-400 text-black font-display uppercase text-sm font-bold cursor-pointer hover:underline"
             style={{ backgroundColor: color }}
           >
             {postData.categories[0]}
-          </Link>
+          </div>
         )}
 
         {/* Post title */}
@@ -129,7 +129,23 @@ export function LargePost({
           />
           {user?.username === postData.authorName ? (
             <>
-              <PostInfo {...postData} className="group-hover:hidden" />
+              <div className="mt-auto text-text-600 flex flex-col group-hover:hidden">
+                <div>
+                  <span className="hidden xs:inline">By </span>
+                  <Link
+                    to={'/blog/' + postData.authorName}
+                    onClick={(e) => isPreview && e.preventDefault()}
+                    className="cursor-pointer font-bold hover:underline text-accent-600"
+                    style={{ color }}
+                  >
+                    {postData.authorName}
+                  </Link>
+                </div>
+                <span className="font-light text-sm md:text-base">
+                  {formatDate(postData.createdAt)}
+                </span>
+              </div>
+
               <Link
                 to={`/edit/${postData._id}`}
                 onClick={(e) => isPreview && e.preventDefault()}
@@ -139,7 +155,22 @@ export function LargePost({
               </Link>
             </>
           ) : (
-            <PostInfo {...postData} />
+            <div className="mt-auto text-text-600 flex flex-col group-hover:hidden">
+              <div>
+                <span className="hidden xs:inline">By </span>
+                <Link
+                  to={'/blog/' + postData.authorName}
+                  onClick={(e) => isPreview && e.preventDefault()}
+                  className="cursor-pointer font-bold hover:underline text-accent-600"
+                  style={{ color }}
+                >
+                  {postData.authorName}
+                </Link>
+              </div>
+              <span className="font-light text-sm md:text-base">
+                {formatDate(postData.createdAt)}
+              </span>
+            </div>
           )}
         </div>
       </div>

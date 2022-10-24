@@ -45,8 +45,8 @@ class SearchDb {
 
   protected getSortQuery(sort: string): SearchQuery {
     const sortSwitch = {
-      new: { createdAt: 1 },
-      popular: { likes: 1 },
+      new: { createdAt: -1 },
+      popular: { likes: -1 },
     };
 
     if (!(sort in sortSwitch)) throw Error('Incorrect "Sort by" value');
@@ -188,7 +188,7 @@ export async function searchBlogPosts(username: string, page: number) {
 
   // const POSTS_PER_PAGE = 10;
 
-  return Post.find({ authorName: username }).sort({ createdAt: 1 });
+  return Post.find({ authorName: username }).sort({ createdAt: -1 });
   // .skip((page - 1) * POSTS_PER_PAGE)
   // .limit(page * POSTS_PER_PAGE);
 }

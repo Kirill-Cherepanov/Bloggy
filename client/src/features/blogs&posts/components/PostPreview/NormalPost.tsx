@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'components/Elements';
 import { useAppSelector } from 'stores/rootStore';
 import { PostData } from 'types';
-import { LikeButton, PostInfo } from '.';
+import { LikeButton } from '.';
 import { POST_IMGS_LOCATION } from 'config';
+import { formatDate } from 'utility';
 
 type NormalPostType = {
   postData: PostData;
@@ -23,13 +24,35 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
 
   return (
     <wrapper.type className="lg:bg-accent-50 py-5 px-8 group">
-      {/* Main category */}
-      <Link
-        to={`/catalog&q=${postData.categories[0]}&type=categories`}
-        className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline"
-      >
-        {postData.categories[0]}
-      </Link>
+      <div className="w-full flex justify-between">
+        {/* Main category */}
+        <Link
+          to={`/catalog&q=${postData.categories[0]}&type=categories`}
+          className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline"
+        >
+          {postData.categories[0]}
+        </Link>
+
+        {/* Creation date */}
+        {user?.username === postData.authorName ? (
+          <>
+            <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">
+              {formatDate(postData.createdAt)}
+            </span>
+            <Link
+              to={`/edit/${postData._id}`}
+              onClick={(e) => isPreview && e.preventDefault()}
+              className="font-extralight hidden group-hover:inline hover:underline text-[0.8rem] xs:text-base"
+            >
+              Edit post
+            </Link>
+          </>
+        ) : (
+          <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">
+            {formatDate(postData.createdAt)}
+          </span>
+        )}
+      </div>
 
       {/* Post title */}
       <h3 className="my-1 font-display font-bold text-xl">
@@ -63,21 +86,16 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
           postData={postData}
           shouldMutate={!isPreview && isLoggedIn}
         />
-
-        {user?.username === postData.authorName ? (
-          <>
-            <PostInfo {...postData} className="group-hover:hidden" />
-            <Link
-              to={`/edit/${postData._id}`}
-              onClick={(e) => isPreview && e.preventDefault()}
-              className="hidden group-hover:inline hover:underline"
-            >
-              Edit post
-            </Link>
-          </>
-        ) : (
-          <PostInfo {...postData} />
-        )}
+        <div className="text-secondary-800 text-sm xs:text-base mt-auto">
+          <span className="hidden xs:inline">By </span>
+          <Link
+            to={`/blog/${postData.authorName}`}
+            onClick={(e) => isPreview && e.preventDefault()}
+            className="cursor-pointer font-bold hover:underline text-accent-600"
+          >
+            {postData.authorName}
+          </Link>
+        </div>
       </div>
     </wrapper.type>
   );

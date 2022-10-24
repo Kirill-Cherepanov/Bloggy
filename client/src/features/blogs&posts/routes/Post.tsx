@@ -55,14 +55,33 @@ export function Post({ initialData }: PostProps) {
 
   return (
     <wrapper.type className="py-8 px-page">
-      <div className="border-b pb-1 border-secondary-300 flex justify-between group">
-        <button onClick={() => initialData || navigate(-1)}>
-          <Icon type="long-arrow" className="h-4 text-secondary-700" />
-        </button>
+      {!initialData && (
+        <div className="border-b pb-1 border-secondary-300 flex justify-between group">
+          <button onClick={() => initialData || navigate(-1)}>
+            <Icon type="long-arrow" className="h-4 text-secondary-700" />
+          </button>
 
-        {user?.username === post.authorName ? (
-          <>
-            <div className="font-extralight group-hover:hidden">
+          {user?.username === post.authorName ? (
+            <>
+              <div className="font-extralight group-hover:hidden">
+                <span>By </span>
+                <Link
+                  to={'/blog/' + post.authorName}
+                  className="font-normal hover:underline"
+                >
+                  {post.authorName}
+                </Link>
+                <span>{' | ' + formatDate(post.createdAt)}</span>
+              </div>
+              <Link
+                to={`/edit/${post._id}`}
+                className="hidden group-hover:inline hover:underline"
+              >
+                Edit post
+              </Link>
+            </>
+          ) : (
+            <div className="font-extralight">
               <span>By </span>
               <Link
                 to={'/blog/' + post.authorName}
@@ -73,28 +92,9 @@ export function Post({ initialData }: PostProps) {
               </Link>
               <span>{' | ' + formatDate(post.createdAt)}</span>
             </div>
-            <Link
-              to={`/edit/${post._id}`}
-              onClick={(e) => initialData && e.preventDefault()}
-              className="hidden group-hover:inline hover:underline"
-            >
-              Edit post
-            </Link>
-          </>
-        ) : (
-          <div className="font-extralight">
-            <span>By </span>
-            <Link
-              to={'/blog/' + post.authorName}
-              onClick={(e) => initialData && e.preventDefault()}
-              className="font-normal hover:underline"
-            >
-              {post.authorName}
-            </Link>
-            <span>{' | ' + formatDate(post.createdAt)}</span>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
 
       <h2 className="text-3xl font-bold text-center my-6">{post.title}</h2>
 
@@ -141,9 +141,12 @@ export function Post({ initialData }: PostProps) {
                 onClick={(e) => initialData && e.preventDefault()}
                 className="h-36 w-36 shrink-0 my-auto mx-auto xs:mx-0"
               >
-                <ProfilePicture className="h-full w-full" />
+                <ProfilePicture
+                  src={author.profilePic}
+                  className="h-full w-full"
+                />
               </Link>
-              <div>
+              <div className="grow">
                 <Link
                   to={'/blog/' + author.username}
                   onClick={(e) => initialData && e.preventDefault()}

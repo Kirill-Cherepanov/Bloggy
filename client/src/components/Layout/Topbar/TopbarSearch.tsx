@@ -75,10 +75,14 @@ export function TopbarSearch() {
           isOpen ? 'translate-y-0' : '-translate-y-20'
         )}
       >
-        <Icon
-          type="search"
-          className="h-8 absolute top-[calc(50%-1rem)] left-4 xs:left-6 sm:left-8 md:left-10 text-secondary-500"
-        />
+        <button
+          type="submit"
+          className={clsx(
+            'h-8 absolute top-[calc(50%-1rem)] left-4 xs:left-6 sm:left-8 md:left-10'
+          )}
+        >
+          <Icon type="search" className="h-8 text-secondary-500" />
+        </button>
         <input
           ref={mobileInputField}
           type="text"

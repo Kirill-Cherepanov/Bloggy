@@ -46,7 +46,7 @@ export function Catalog() {
         </div>
       )}
 
-      {!isLoading && !isError && data?.values.length && (
+      {!isLoading && !isError && !!data?.values.length && (
         <>
           {data.type === 'posts' ? (
             <CatalogPosts posts={data.values} />
