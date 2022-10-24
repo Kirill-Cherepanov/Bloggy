@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import clsx from 'clsx';
 
 import { Icon, Logo } from 'components/Elements';
@@ -40,7 +40,9 @@ export function Registration() {
               : null}
           </div>
           <h1 className="my-2 mb-4 absolute right-2">
-            <Logo size="sm" variant="dark" />
+            <Link to="/">
+              <Logo size="sm" variant="dark" />
+            </Link>
           </h1>
         </div>
         {stage ? (

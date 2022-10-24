@@ -1,6 +1,7 @@
 import ReactDOMServer from 'react-dom/server';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 import Markdown from 'marked-react';
 import SimpleMDE from 'easymde';
 import SimpleMDEReact from 'react-simplemde-editor';
@@ -76,7 +77,9 @@ export function PostEditor({
         >
           <Icon type="long-arrow" className="h-4 text-secondary-600" />
         </button>
-        <Logo size="md" className="invisible sm:visible" />
+        <Link to="/" className="invisible sm:visible">
+          <Logo size="md" />
+        </Link>
         <button
           className="absolute right-0 text-xl transition-all hover:tracking-wider group"
           onClick={async () => {

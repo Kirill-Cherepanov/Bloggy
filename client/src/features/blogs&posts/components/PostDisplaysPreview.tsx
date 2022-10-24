@@ -18,11 +18,12 @@ export function PostDisplaysPreview({
 }: PostDisplaysPreviewProps) {
   const user = useAppSelector((state) => state.authSlice.user);
   const { renderPost, getDisplayName } = usePost(true);
+
   const incrementDisplay = () => {
-    setDisplay((display) => (display >= 2 ? 2 : display + 1));
+    setDisplay((display) => (display >= 2 ? 0 : display + 1));
   };
   const decrementDisplay = () => {
-    setDisplay((display) => (display <= 0 ? 0 : display - 1));
+    setDisplay((display) => (display <= 0 ? 2 : display - 1));
   };
 
   if (!user) throw Error('User is undefined');

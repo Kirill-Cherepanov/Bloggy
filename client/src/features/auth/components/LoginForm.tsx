@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import { useState } from 'react';
 
 import { useDisclosure } from 'hooks';
 import { Form, InputField } from 'components/Form';
@@ -23,13 +24,19 @@ type LoginFormProps = {
 export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
   const [login] = useLoginMutation();
   const resetPasswordDisclosure = useDisclosure();
+  const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
 
   return (
     <>
       <Form<LoginValues, typeof schema>
         className="w-72 mx-auto space-y-2"
         onSubmit={async (values) => {
+          if (hasOngoingRequest) return;
+          setHasOngoingRequest(true);
+
           const response = await login(values);
+
+          setHasOngoingRequest(false);
 
           if ('error' in response) throw response.error;
 
@@ -60,7 +67,11 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
             </button>
 
             <div className="flex flex-col !mt-7">
-              <Button type="submit" variant="secondary">
+              <Button
+                type="submit"
+                variant="secondary"
+                isLoading={hasOngoingRequest}
+              >
                 Log in
               </Button>
               <div className="text-center my-1.5 font-semibold text-sm">OR</div>

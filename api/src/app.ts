@@ -9,6 +9,7 @@ import {
   handleMiddlewareErrors,
   corsMiddleware,
 } from 'web/middleware';
+import { initFileDirectories } from 'web/file-manipulation';
 import usersRouter from 'controllers/users';
 import postsRouter from 'controllers/posts';
 import searchRouter from 'controllers/search';
@@ -16,6 +17,8 @@ import authRouter from 'controllers/auth';
 import settingsRouter from 'controllers/settings';
 import categoriesRouter from 'controllers/categories';
 import { PORT } from 'config';
+
+initFileDirectories();
 
 connectDb();
 
