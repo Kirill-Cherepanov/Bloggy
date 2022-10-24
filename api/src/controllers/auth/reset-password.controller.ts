@@ -12,7 +12,7 @@ const resetPasswordSchema = z.object({
   email: z.string(),
   newPassword: z.string().optional(),
   shouldSendAgain: z.boolean().optional(),
-  message: z.string().optional(),
+  confirmationMessage: z.string().optional(),
 });
 
 export const resetPasswordController: RequestHandler = async (
@@ -21,8 +21,12 @@ export const resetPasswordController: RequestHandler = async (
   next
 ) => {
   try {
-    const { email, newPassword, shouldSendAgain, message } =
-      resetPasswordSchema.parse(req.body);
+    const {
+      email,
+      newPassword,
+      shouldSendAgain,
+      confirmationMessage: message,
+    } = resetPasswordSchema.parse(req.body);
 
     const user = await findUser({ email });
     if (!user) return res.status(500).json('User was not found');

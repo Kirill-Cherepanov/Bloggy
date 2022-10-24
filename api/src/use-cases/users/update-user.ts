@@ -37,7 +37,7 @@ export const updateUser = async (
   if (user.profilePic && userData.profilePic) deleteProfilePic(user.profilePic);
 
   if (shouldDeleteBlog) {
-    delete user.blog;
+    user.blog = undefined;
     delete userData.blog;
   }
 

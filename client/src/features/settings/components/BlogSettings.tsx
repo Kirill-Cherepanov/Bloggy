@@ -67,7 +67,6 @@ export function BlogSettings({ changeTab }: BlogSettingsProps) {
                 data={categories}
                 setData={setCategories}
                 maxLength={10}
-                filter={(category) => category !== '' && category.length <= 20}
               />
             </div>
 
@@ -75,8 +74,12 @@ export function BlogSettings({ changeTab }: BlogSettingsProps) {
               <SettingsButton type="submit">Update blog</SettingsButton>
               <SettingsButton
                 variant="danger"
-                onClick={() => {
-                  updateUser({ blog: { shouldDelete: true } });
+                onClick={async () => {
+                  const response = await updateUser({
+                    blog: { shouldDelete: true },
+                  });
+
+                  if ('error' in response) throw response.error;
                   changeTab();
                 }}
               >

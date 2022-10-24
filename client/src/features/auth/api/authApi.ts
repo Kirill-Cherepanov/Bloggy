@@ -26,7 +26,7 @@ export const authApi = rootApi.injectEndpoints({
       async onQueryStarted(args, api) {
         try {
           const { data } = await api.queryFulfilled;
-          api.dispatch(setUser(data.user));
+          api.dispatch(setUser(data));
         } catch {}
       },
     }),
@@ -39,7 +39,7 @@ export const authApi = rootApi.injectEndpoints({
       async onQueryStarted(args, api) {
         try {
           const { data } = await api.queryFulfilled;
-          if (data.isLoggedIn) api.dispatch(setUser(data.user));
+          if (data.isLoggedIn) api.dispatch(setUser(data));
           else api.dispatch(logout());
         } catch {}
       },
@@ -54,7 +54,7 @@ export const authApi = rootApi.injectEndpoints({
       async onQueryStarted(args, api) {
         try {
           const { data } = await api.queryFulfilled;
-          if (data.status === 'success') api.dispatch(setUser(data.user));
+          if (data.status === 'success') api.dispatch(setUser(data));
         } catch {}
       },
     }),
@@ -68,7 +68,7 @@ export const authApi = rootApi.injectEndpoints({
       async onQueryStarted(args, api) {
         try {
           const { data } = await api.queryFulfilled;
-          api.dispatch(setUser(data.user));
+          api.dispatch(setUser(data));
         } catch {}
       },
     }),
@@ -90,23 +90,16 @@ export const authApi = rootApi.injectEndpoints({
       ResetPasswordReturnType,
       ResetPasswordValues
     >({
-      query: (values: ResetPasswordValues) => ({
+      query: (resetPasswordData: ResetPasswordValues) => ({
         url: '/auth/reset-password',
         method: 'POST',
         credentials: 'include',
-        body:
-          'confirm-email' in values
-            ? {
-                ...values,
-                newPassword: values['new-password'],
-                confirmationMessage: values['confirm-email'],
-              }
-            : values,
+        body: resetPasswordData,
       }),
       async onQueryStarted(args, api) {
         try {
           const { data } = await api.queryFulfilled;
-          if (data.status === 'success') api.dispatch(setUser(data.user));
+          if (data.status === 'success') api.dispatch(setUser(data));
         } catch {}
       },
     }),

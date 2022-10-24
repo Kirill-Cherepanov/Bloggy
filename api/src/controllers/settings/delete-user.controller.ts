@@ -18,7 +18,7 @@ export const deleteUserController: RequestHandler = async (req, res, next) => {
     res.clearCookie('access-token');
     res.clearCookie('refresh-token');
 
-    res.status(200).json('User has been deleted');
+    res.status(200).json({ success: true });
   } catch (err) {
     next(err);
   }

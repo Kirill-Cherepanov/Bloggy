@@ -10,7 +10,7 @@ export const addUser = async (data: unknown) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(user.password, salt);
 
-  const newUser = await new User({ user, password: hashedPassword }).save();
+  const newUser = await new User({ ...user, password: hashedPassword }).save();
 
   return formatUserProtected(newUser);
 };

@@ -22,6 +22,7 @@ type BlogRegistrationProps = {
 export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
   const [categories, setCategories] = useState<string[]>([]);
   const [updateUser] = useUpdateUserMutation();
+  const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
 
   return (
     <>
@@ -31,13 +32,21 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
       <Form<BlogValues, typeof schema>
         className="mx-auto w-full"
         onSubmit={async (values) => {
+          console.log('here');
+
           const blogData = {
             blog: {
               ...values,
               categories,
             },
           };
+
+          if (hasOngoingRequest) return;
+          setHasOngoingRequest(true);
+
           const response = await updateUser(blogData);
+
+          setHasOngoingRequest(false);
 
           if ('error' in response) throw response.error;
           if ('success' in response.data) onSuccess();
@@ -64,11 +73,16 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
                 data={categories}
                 setData={setCategories}
                 maxLength={10}
-                filter={(category) => category !== '' && category.length <= 20}
               />
             </div>
 
-            <Button className="mt-6">Create a blog</Button>
+            <Button
+              type="submit"
+              className="mt-6"
+              isLoading={hasOngoingRequest}
+            >
+              Create a blog
+            </Button>
           </>
         )}
       </Form>

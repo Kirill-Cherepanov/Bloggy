@@ -7,13 +7,18 @@ interface PickerProps {
   setData: React.Dispatch<React.SetStateAction<string[]>>;
   maxLength?: number;
   filter?: (datum: string) => boolean;
+  transform?: (datum: string) => string;
 }
+
+const defaultFilter = (value: string) => value.length > 0 && value.length < 20;
+const defaultTransform = (value: string) => value.trim().split(' ')[0];
 
 export function Picker({
   data,
   setData,
   maxLength = 100,
-  filter: filter_ = (...args) => true,
+  filter: filter_ = defaultFilter,
+  transform = defaultTransform,
 }: PickerProps) {
   const [isAdding, setIsAdding] = useState(false);
   const newCategoryRef = useRef<HTMLInputElement | null>(null);
@@ -25,7 +30,9 @@ export function Picker({
   const filter = (value: string) => {
     return filter_(value) && !data.includes(value) && data.length < maxLength;
   };
+
   const addValue = (value: string) => setData((data) => [...data, value]);
+
   const removeValue = (value: string) => {
     setData((data) => data.filter((d) => d !== value));
   };
@@ -56,18 +63,28 @@ export function Picker({
               if (filter(e.target.value)) addValue(e.target.value);
             }}
             onKeyDown={(e) => {
+              const value = transform(e.target.value);
               switch (e.code) {
                 case 'Escape':
                   return setIsAdding(false);
                 case 'Enter':
-                  if (filter(e.target.value)) addValue(e.target.value);
+                  if (filter(value)) addValue(value);
                   return setIsAdding(false);
+                case 'Space':
+                  if (filter(value)) {
+                    addValue(value);
+                    if (data.length >= maxLength - 1) setIsAdding(false);
+                  }
+                  e.target.value = '';
               }
             }}
           />
         </div>
       ) : (
-        <button onClick={() => setIsAdding(true)}>
+        <button
+          type="button"
+          onClick={() => data.length < maxLength && setIsAdding(true)}
+        >
           <span className="inline-flex justify-center items-center rounded-3xl border-2 border-accent-700 px-2 py-0.5 gap-1 hover:bg-accent-100 group">
             Add <Icon type="plus" className="h-5 text-accent-900" />
           </span>

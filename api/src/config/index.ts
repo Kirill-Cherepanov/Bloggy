@@ -12,7 +12,7 @@ export const POST_IMAGES_LOCATION = path.join(
 );
 export const PROFILE_PICS_LOCATION = path.join(
   DIST_DIRECTORY,
-  '../images/postImgs'
+  '../images/profilePics'
 );
 
 export const ACCESS_TOKEN_EXPIRATION_TIME = '10m';

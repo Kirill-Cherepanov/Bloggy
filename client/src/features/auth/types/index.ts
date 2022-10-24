@@ -7,8 +7,8 @@ export type RegistrationValues = {
   email: string;
   username: string;
   password: string;
-  'confirm-email': string;
-  'start-blog': boolean;
+  confirmationMessage: string;
+  shouldSendAgain: boolean;
 };
 
 export type LoginValues = {
@@ -19,7 +19,7 @@ export type LoginValues = {
 export type ResetPasswordValues =
   | {
       email: string;
-      'new-password': string;
-      'confirm-email': string;
+      newPassword: string;
+      confirmationMessage: string;
     }
   | { email: string };

@@ -81,6 +81,7 @@ export function AccountSettings() {
             const response = await deleteAccount(values);
 
             if ('error' in response) throw response.error;
+            deleteAccountDisclosure.close();
           }}
         />
       )}

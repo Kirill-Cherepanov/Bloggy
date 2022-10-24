@@ -17,7 +17,7 @@ const schema = z.object({
     .string()
     .min(5, 'Password must be at least 5 characters long')
     .max(20, 'Password must be at most 20 characters long'),
-  'confirm-email': z.string().optional(),
+  confirmationMessage: z.string().optional(),
 });
 
 type AccountRegistrationProps = {
@@ -36,6 +36,7 @@ export function AccountRegistration({
   );
   const [wasMessageSent, setWasMessageSent] = useState(false);
   const [register] = useRegisterMutation();
+  const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
 
   return (
     <>
@@ -46,15 +47,18 @@ export function AccountRegistration({
       <Form<RegistrationValues, typeof schema>
         className="max-auto w-full space-y-2"
         onSubmit={async (values) => {
+          if (hasOngoingRequest) return;
+          setHasOngoingRequest(true);
+
           const response = await register(values);
+
+          setHasOngoingRequest(false);
 
           if ('error' in response) throw response.error;
 
-          if (!wasMessageSent && 'messageSent' in response.data) {
-            return setWasMessageSent(true);
-          }
+          if (response.data.status === 'success') return onSuccess();
 
-          if ('success' in response.data) onSuccess();
+          if (response.data.status === 'message sent') setWasMessageSent(true);
         }}
         schema={schema}
       >
@@ -84,11 +88,20 @@ export function AccountRegistration({
               <>
                 <InputField
                   label="Confirmation email message"
-                  error={formState.errors['confirm-email']}
-                  registration={register('confirm-email')}
+                  error={formState.errors['confirmationMessage']}
+                  registration={register('confirmationMessage')}
                 />
 
-                <button className="ml-2 block text-secondary-600 mb-4 text-sm hover:underline">
+                <button
+                  type="button"
+                  className="ml-2 block text-secondary-600 mb-4 text-sm hover:underline"
+                  onClick={() => {
+                    if (hasOngoingRequest) return;
+                    // register('shouldSendAgain').onChange({
+                    //   target: { value: true },
+                    // });
+                  }}
+                >
                   Send again
                 </button>
               </>
@@ -106,7 +119,9 @@ export function AccountRegistration({
               settings
             </p>
 
-            <Button type="submit">Sign up</Button>
+            <Button type="submit" isLoading={hasOngoingRequest}>
+              Sign up
+            </Button>
           </>
         )}
       </Form>

@@ -2,7 +2,8 @@ import bcrypt from 'bcrypt';
 
 import Post from 'models/Post';
 import User from 'models/User';
-import { deleteProfilePic } from 'web/file-manipulation';
+import { deleteCategories } from 'use-cases/categories';
+import { deletePostImage, deleteProfilePic } from 'web/file-manipulation';
 
 export const deleteUser = async (id: string, oldPassword: string) => {
   const user = await User.findById(id);
@@ -28,7 +29,11 @@ export const deleteUser = async (id: string, oldPassword: string) => {
     postAuthor.save();
   });
 
-  await Post.deleteMany({ authorName: user.username });
+  (await Post.find({ authorName: user.username })).forEach((post) => {
+    deletePostImage(post.image);
+    deleteCategories(post.categories);
+    post.delete();
+  });
   await User.findOneAndDelete({ username: user.username });
 
   return { success: true };

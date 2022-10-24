@@ -11,5 +11,5 @@ export type UpdateUserValues = {
 };
 
 export type ConfirmPasswordValues = {
-  'old-password': string;
+  oldPassword: string;
 } | void;

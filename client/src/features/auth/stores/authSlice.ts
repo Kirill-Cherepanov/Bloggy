@@ -20,9 +20,9 @@ export const authSlice = createSlice({
   name: 'authSlice',
   reducers: {
     logout: () => initialState,
-    setUser: (state, action: PayloadAction<ProtectedData>) => {
+    setUser: (state, action: PayloadAction<{ user: ProtectedData }>) => {
       state.isLoggedIn = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
     },
     setPreRegistrationData: (
       state,

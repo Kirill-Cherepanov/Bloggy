@@ -159,12 +159,7 @@ export function PostEditor({
           />
 
           <h3 className="text-lg mb-2">Categories</h3>
-          <Picker
-            data={categories}
-            setData={setCategories}
-            maxLength={10}
-            filter={(category) => category !== '' && category.length <= 20}
-          />
+          <Picker data={categories} setData={setCategories} maxLength={10} />
 
           <h3 className="text-lg mt-4 mb-2">Description</h3>
           <textarea

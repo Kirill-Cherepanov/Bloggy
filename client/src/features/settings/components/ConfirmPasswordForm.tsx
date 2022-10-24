@@ -12,9 +12,9 @@ type ConfirmPasswordProps = {
 };
 
 const schema = z.object({
-  'old-password': z
+  oldPassword: z
     .string()
-    .min(3, 'Password must be at least 3 characters long')
+    .min(5, 'Password must be at least 5 characters long')
     .max(20, 'Password must be at most 20 characters long'),
 });
 
@@ -30,10 +30,10 @@ export function ConfirmPasswordForm({
             <InputField
               type="password"
               label="Confirm your password"
-              error={formState.errors['old-password']}
-              registration={register('old-password')}
+              error={formState.errors.oldPassword}
+              registration={register('oldPassword')}
+              className="mb-4"
             />
-
             <Button type="submit">Confirm</Button>
           </>
         )}

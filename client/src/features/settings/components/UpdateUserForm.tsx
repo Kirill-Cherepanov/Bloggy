@@ -72,6 +72,7 @@ export function UpdateUserForm({
             const response = await updateUser({ ...changedValues, ...values });
 
             if ('error' in response) throw response.error;
+            close();
           }}
         />
       )}

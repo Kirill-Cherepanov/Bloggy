@@ -37,4 +37,4 @@ app.use('/api/search', searchRouter);
 app.use('/api/categories', categoriesRouter);
 app.use(handleMiddlewareErrors);
 
-app.listen(PORT, () => console.log('Backend is running'));
+app.listen(PORT, () => console.log(`Backend is running at port ${PORT}`));
