@@ -13,7 +13,11 @@ import {
 } from '.';
 import { useNavigate } from 'react-router';
 
-export function AccountSettings() {
+type AccountSettingsProps = {
+  changeTab: () => unknown;
+};
+
+export function AccountSettings({ changeTab }: AccountSettingsProps) {
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.authSlice.user);
 
@@ -51,7 +55,15 @@ export function AccountSettings() {
 
       <div className="flex gap-6">
         {!user.blog && (
-          <SettingsButton onClick={() => updateUser({ blog: {} })}>
+          <SettingsButton
+            onClick={async () => {
+              const response = await updateUser({ blog: {} });
+
+              if ('error' in response) throw response.error;
+
+              changeTab();
+            }}
+          >
             Create blog
           </SettingsButton>
         )}

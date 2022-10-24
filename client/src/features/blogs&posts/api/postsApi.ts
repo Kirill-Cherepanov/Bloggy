@@ -34,6 +34,7 @@ export const postsApi = rootApi.injectEndpoints({
           url: '/posts/',
           method: 'POST',
           body,
+          credentials: 'include',
         };
       },
     }),
@@ -52,6 +53,7 @@ export const postsApi = rootApi.injectEndpoints({
           url: `/posts/${values.data._id}`,
           method: 'PATCH',
           body,
+          credentials: 'include',
         };
       },
     }),
@@ -61,6 +63,7 @@ export const postsApi = rootApi.injectEndpoints({
       query: (id) => ({
         url: `/posts/${id}`,
         method: 'DELETE',
+        credentials: 'include',
       }),
     }),
 
@@ -68,6 +71,7 @@ export const postsApi = rootApi.injectEndpoints({
       query: ({ _id }) => ({
         url: `/posts/like/${_id}`,
         method: 'PUT',
+        credentials: 'include',
       }),
       onQueryStarted: async ({ _id, authorName, isLiked }, api) => {
         const patchedGetPost = api.dispatch(

@@ -7,7 +7,7 @@ import { AccountSettings, BlogSettings } from '../components';
 import { useAppSelector } from 'stores/rootStore';
 
 export function Settings() {
-  const [tabOpen, setTabOpen] = useState('general');
+  const [tabOpen, setTabOpen] = useState<'general' | 'blog'>('general');
   const navigate = useNavigate();
   const user = useAppSelector((state) => state.authSlice.user);
 
@@ -57,7 +57,7 @@ export function Settings() {
         </div>
 
         {tabOpen === 'general' ? (
-          <AccountSettings />
+          <AccountSettings changeTab={() => setTabOpen('blog')} />
         ) : (
           <BlogSettings changeTab={() => setTabOpen('general')} />
         )}

@@ -25,6 +25,7 @@ function provideGetUserTags(
   const postsTags = result.posts.map(({ _id }) => ({
     type: 'Post' as const,
     id: _id,
+    credentials: 'include',
   }));
 
   return [

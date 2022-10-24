@@ -59,8 +59,9 @@ export function Picker({
             size={1}
             className="w-full border-2 border-accent-700 px-2 py-0.5 rounded-3xl focus:outline-none"
             onBlur={(e) => {
+              const value = transform(e.target.value);
+              if (filter(value)) addValue(value);
               setIsAdding(false);
-              if (filter(e.target.value)) addValue(e.target.value);
             }}
             onKeyDown={(e) => {
               const value = transform(e.target.value);
