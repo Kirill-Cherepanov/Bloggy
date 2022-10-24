@@ -1,4 +1,7 @@
 /node_modules
 /dist
 .env
-/images
+
+/images/postImgs/*
+/images/profilePics/*
+!/images/profilePics/default.jpg
