@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useGetCategoriesQuery } from 'features/misc/api/categoriesApi';
-import { Link } from 'react-router-dom';
 
 export function FollowBox() {
   const [followBoxParams, setFollowBoxParams] = useState({

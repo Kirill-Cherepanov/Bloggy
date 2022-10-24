@@ -91,12 +91,13 @@ export function LargePost({
       >
         {/* Main category */}
         {postData.categories.length > 0 && (
-          <div
+          <Link
+            to={`/catalog&q=${postData.categories[0]}&type=categories`}
             className="absolute p-1 top-0 left-8 -translate-y-1/2 flex justify-center items-center bg-accent-400 text-black font-display uppercase text-sm font-bold cursor-pointer hover:underline"
             style={{ backgroundColor: color }}
           >
             {postData.categories[0]}
-          </div>
+          </Link>
         )}
 
         {/* Post title */}

@@ -42,8 +42,8 @@ export function HeroSection() {
             to the World
           </h2>
           <p className="text-center sm:text-left xs:text-lg max-w-[600px]">
-            NEED TO COME UP WITH SOMETHING
-            HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Join us on our journey to make a world a more connected place. Find
+            like-minded individuals and share your experiences with them!
           </p>
           {isLoggedIn ? (
             <Link

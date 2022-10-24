@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router';
+import { useState } from 'react';
 
 import { PostEditor } from '../components';
 import {
@@ -15,6 +16,7 @@ import { POST_IMGS_LOCATION } from 'config';
 export function Edit() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
   const [editPostMutation] = useEditPostMutation();
   const [deletePostMutation] = useDeletePostMutation();
   const { data, isLoading, isError, error } = useGetPostQuery(id!, {
@@ -54,7 +56,12 @@ export function Edit() {
   };
 
   const editPost = async (values: UpdatePostValues) => {
+    if (hasOngoingRequest) return;
+    setHasOngoingRequest(true);
+
     const response = await editPostMutation(values);
+
+    setHasOngoingRequest(false);
 
     if ('error' in response) throw response.error;
     if (response.data.success) {
@@ -63,7 +70,12 @@ export function Edit() {
   };
 
   const deletePost = async () => {
+    if (hasOngoingRequest) return;
+    setHasOngoingRequest(true);
+
     const response = await deletePostMutation(id);
+
+    setHasOngoingRequest(false);
 
     if ('error' in response) throw response.error;
     if (response.data.success) {

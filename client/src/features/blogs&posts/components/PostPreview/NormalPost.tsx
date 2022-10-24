@@ -24,9 +24,12 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
   return (
     <wrapper.type className="lg:bg-accent-50 py-5 px-8 group">
       {/* Main category */}
-      <div className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline">
+      <Link
+        to={`/catalog&q=${postData.categories[0]}&type=categories`}
+        className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline"
+      >
         {postData.categories[0]}
-      </div>
+      </Link>
 
       {/* Post title */}
       <h3 className="my-1 font-display font-bold text-xl">

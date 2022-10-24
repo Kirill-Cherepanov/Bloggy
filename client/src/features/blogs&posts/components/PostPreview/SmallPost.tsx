@@ -65,9 +65,12 @@ export function SmallPost({
           className="w-full absolute left-0 top-2 px-4 lg:px-5 flex justify-between"
           style={{ color }}
         >
-          <span className="text-accent-600 font-display uppercase text-[0.8rem] xs:text-sm font-semibold cursor-pointer hover:underline">
+          <Link
+            to={`/catalog&q=${postData.categories[0]}&type=categories`}
+            className="text-accent-600 font-display uppercase text-[0.8rem] xs:text-sm font-semibold cursor-pointer hover:underline"
+          >
             {postData.categories[0]}
-          </span>
+          </Link>
           {user?.username === postData.authorName ? (
             <>
               <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">

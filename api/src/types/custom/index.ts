@@ -4,3 +4,4 @@ export * from './category.types';
 export * from './confirmation.types';
 export * from './post.types';
 export * from './user.types';
+export * from './image.types';

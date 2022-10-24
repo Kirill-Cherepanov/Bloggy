@@ -107,12 +107,14 @@ export function Post({ initialData }: PostProps) {
           <h3 className="text-2xl font-medium mb-2">Categories</h3>
           <div className="flex flex-wrap gap-y-2 gap-x-3 justify-between after:flex-auto">
             {post.categories.map((category) => (
-              <span
+              <Link
                 key={category}
+                to={`/catalog&q=${category}&type=categories`}
+                onClick={(e) => initialData && e.preventDefault()}
                 className="text-lg border bg-secondary-800 text-main border-secondary-400 rounded-sm px-1 cursor-pointer hover:bg-main hover:text-accent-900 hover:border-accent-400 transition-colors"
               >
                 {category}
-              </span>
+              </Link>
             ))}
           </div>
         </div>

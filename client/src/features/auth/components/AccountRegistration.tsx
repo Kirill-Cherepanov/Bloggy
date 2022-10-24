@@ -37,6 +37,7 @@ export function AccountRegistration({
   const [wasMessageSent, setWasMessageSent] = useState(false);
   const [register] = useRegisterMutation();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
+  const [shouldSendAgain, setShouldSendAgain] = useState(false);
 
   return (
     <>
@@ -50,14 +51,13 @@ export function AccountRegistration({
           if (hasOngoingRequest) return;
           setHasOngoingRequest(true);
 
-          const response = await register(values);
+          const response = await register({ ...values, shouldSendAgain });
 
+          setShouldSendAgain(false);
           setHasOngoingRequest(false);
 
           if ('error' in response) throw response.error;
-
           if (response.data.status === 'success') return onSuccess();
-
           if (response.data.status === 'message sent') setWasMessageSent(true);
         }}
         schema={schema}
@@ -93,14 +93,9 @@ export function AccountRegistration({
                 />
 
                 <button
-                  type="button"
+                  type="submit"
                   className="ml-2 block text-secondary-600 mb-4 text-sm hover:underline"
-                  onClick={() => {
-                    if (hasOngoingRequest) return;
-                    // register('shouldSendAgain').onChange({
-                    //   target: { value: true },
-                    // });
-                  }}
+                  onClick={() => setShouldSendAgain(true)}
                 >
                   Send again
                 </button>
