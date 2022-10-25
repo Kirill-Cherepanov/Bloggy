@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { updateUser } from 'use-cases/users';
-import { generateAccessToken, generateRefreshToken } from 'web/tokens';
+import { setAccessToken, setRefreshToken } from 'web/tokens';
 
 export const updateUserDataController: RequestHandler = async (
   req,
@@ -21,16 +21,8 @@ export const updateUserDataController: RequestHandler = async (
     );
     if ('err' in user) return res.status(user.status).json(user.err);
 
-    const refreshToken = generateRefreshToken({ ...user, id: user._id });
-    const accessToken = generateAccessToken({ ...user, id: user._id });
-    res.cookie('refresh-token', refreshToken, {
-      httpOnly: true,
-      sameSite: 'none',
-    });
-    res.cookie('access-token', accessToken, {
-      httpOnly: true,
-      sameSite: 'none',
-    });
+    setRefreshToken(res, { ...user, id: user._id });
+    setAccessToken(res, { ...user, id: user._id });
 
     res.status(200).json({ user, status: 'success' });
   } catch (err) {

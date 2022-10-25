@@ -52,8 +52,13 @@ export function Registration() {
         ) : (
           <AccountRegistration
             onSuccess={() => {
-              if (shouldCreateBlog) setStage(1);
-              else navigate('/', { replace: true });
+              if (shouldCreateBlog && stage === 0) {
+                console.log('ehr');
+                setStage(1);
+              } else {
+                console.log('here');
+                navigate('/', { replace: true });
+              }
             }}
             setShouldCreateBlog={setShouldCreateBlog}
             shouldCreateBlog={shouldCreateBlog}

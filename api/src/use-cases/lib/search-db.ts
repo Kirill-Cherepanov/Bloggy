@@ -166,6 +166,10 @@ export class SearchBlogs extends SearchDb {
     return { blogs, total: allBlogs.length };
   }
 
+  public getQuery() {
+    return { ...super.getQuery(), blog: { $exists: true } };
+  }
+
   protected getSortQuery(sort: string) {
     return { 'blog.categories': super.getSortQuery(sort).categories };
   }

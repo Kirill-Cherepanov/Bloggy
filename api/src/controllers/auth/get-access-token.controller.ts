@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 
 import { findUser } from 'use-cases/users';
-import { verifyRefreshToken, generateAccessToken } from 'web/tokens';
+import { verifyRefreshToken, setAccessToken } from 'web/tokens';
 
 export const getAccessTokenController: RequestHandler = async (
   req,
@@ -32,12 +32,7 @@ export const getAccessTokenController: RequestHandler = async (
         .json({ message: 'User does not exist', isLoggedIn: false });
     }
 
-    const accessToken = generateAccessToken({ ...user, id: user._id });
-    res.cookie('access-token', accessToken, {
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-    });
+    setAccessToken(res, { ...user, id: user._id });
 
     res.status(200).json({ user, isLoggedIn: true });
   } catch (err) {

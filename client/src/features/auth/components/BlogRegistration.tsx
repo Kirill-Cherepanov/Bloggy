@@ -47,7 +47,8 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
           setHasOngoingRequest(false);
 
           if ('error' in response) throw response.error;
-          if ('success' in response.data) onSuccess();
+
+          if (response.data.status === 'success') onSuccess();
         }}
       >
         {({ register, formState }) => (

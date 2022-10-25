@@ -5,6 +5,7 @@ import { useAppSelector } from 'stores/rootStore';
 import { inputFiles } from 'utility/inputFiles';
 import { useUpdateProfilePicMutation } from '../api/settingsApi';
 import { SettingsButton } from './SettingsButton';
+import clsx from 'clsx';
 
 export function UpdateProfilePictureForm() {
   const user = useAppSelector((state) => state.authSlice.user);
@@ -22,8 +23,13 @@ export function UpdateProfilePictureForm() {
         Profile picture
       </label>
       <div className="flex gap-5 mb-10">
-        <ProfilePicture className="h-36" />
-        <div className="flex flex-col justify-evenly">
+        <ProfilePicture
+          className={clsx(
+            'h-32 sm:h-36',
+            !!newProfilePic && 'hidden xs:block md:hidden lg:block'
+          )}
+        />
+        <div className="flex flex-col justify-evenly order-3 xs:order-2 md:order-3 lg:order-2">
           <SettingsButton
             variant="simple"
             onClick={() => {
@@ -54,7 +60,10 @@ export function UpdateProfilePictureForm() {
           <img
             src={newProfilePic.src}
             alt="New profile"
-            className="aspect-square rounded-full object-cover w-36"
+            className={clsx(
+              'aspect-square rounded-full object-cover h-32 sm:h-36 order-2 xs:order-3 md:order-2 lg:order-3',
+              !newProfilePic && 'hidden xs:block md:hidden lg:block'
+            )}
           />
         )}
       </div>

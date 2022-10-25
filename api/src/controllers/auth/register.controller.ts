@@ -1,6 +1,6 @@
 import { RequestHandler } from 'express';
 
-import { generateAccessToken, generateRefreshToken } from 'web/tokens';
+import { setAccessToken, setRefreshToken } from 'web/tokens';
 import { makeUser } from 'entity-validators';
 import {
   sendConfirmation,
@@ -42,16 +42,8 @@ export const registerController: RequestHandler = async (req, res, next) => {
 
     const newUser = await addUser(user);
 
-    const refreshToken = generateRefreshToken({ ...user, id: newUser._id });
-    const accessToken = generateAccessToken({ ...user, id: newUser._id });
-    res.cookie('refresh-token', refreshToken, {
-      httpOnly: true,
-      sameSite: 'none',
-    });
-    res.cookie('access-token', accessToken, {
-      httpOnly: true,
-      sameSite: 'none',
-    });
+    setRefreshToken(res, { ...user, id: newUser._id });
+    setAccessToken(res, { ...user, id: newUser._id });
 
     res.status(200).json({ user: newUser, status: 'success' });
   } catch (err) {

@@ -25,13 +25,16 @@ connectDb();
 const app = express();
 
 app.use(corsMiddleware);
-app.use(cookieParser());
+app.use('/api/images', express.static('images'));
+
 app.use(express.json());
+app.use(cookieParser());
 app.use(handleTokens);
+
 app.use('/api/health-check', (req, res, next) => {
   res.status(200).json('The server is up and running');
 });
-app.use('/api/images', express.static('images'));
+
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postsRouter);

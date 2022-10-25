@@ -10,6 +10,7 @@ export const usersApi = rootApi.injectEndpoints({
       providesTags: provideGetUserTags,
       query: (username) => ({
         url: `/users/${username}`,
+        credentials: 'include',
       }),
     }),
   }),
@@ -25,7 +26,6 @@ function provideGetUserTags(
   const postsTags = result.posts.map(({ _id }) => ({
     type: 'Post' as const,
     id: _id,
-    credentials: 'include',
   }));
 
   return [
