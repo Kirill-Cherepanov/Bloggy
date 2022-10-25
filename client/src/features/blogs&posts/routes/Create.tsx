@@ -45,7 +45,7 @@ export function Create() {
 
     if ('error' in response) throw response.error;
     if (response.data.success) {
-      navigate(`/post/${response.data.post._id}`);
+      navigate(`/blog/${user.username}`);
     }
   };
 
