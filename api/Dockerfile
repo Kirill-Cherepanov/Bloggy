@@ -1,6 +1,6 @@
 FROM node:19-alpine
 
-ARG API_PORT 8080
+ARG API_PORT=8080
 
 ENV NODE_ENV production
 ENV PORT ${API_PORT}

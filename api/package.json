@@ -7,9 +7,10 @@
     "node": ">=17.8.0"
   },
   "scripts": {
-    "development": "yarn cross-env NODE_PATH=./dist NODE_ENV=development yarn nodemon dist/app",
-    "start": "yarn development",
     "watch-ts": "yarn tsc -w",
+    "nodemon-server": "yarn cross-env NODE_PATH=./dist NODE_ENV=development yarn nodemon dist/app",
+    "development": "yarn concurrently \"yarn watch-ts\" \"yarn nodemon-server\"",
+    "start": "yarn development",
     "build": "yarn tsc",
     "production": "yarn cross-env NODE_PATH=./dist NODE_ENV=production node dist/app",
     "docker:build": "docker build -t bloggy_api .",
@@ -39,6 +40,7 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
+    "concurrently": "^7.5.0",
     "nodemon": "^2.0.20"
   }
 }

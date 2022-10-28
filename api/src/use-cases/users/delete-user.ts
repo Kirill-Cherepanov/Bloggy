@@ -16,10 +16,17 @@ export const deleteUser = async (id: string, oldPassword: string) => {
 
   if (user.profilePic) deleteProfilePic(user.profilePic);
 
-  // delete all likes
-  const likedPosts = await Post.find({ likes: user.username });
+  deleteUserLikes(user.username);
+  deleteUserPosts(user.username);
+  await User.findOneAndDelete({ username: user.username });
+
+  return { success: true };
+};
+
+const deleteUserLikes = async (username: string) => {
+  const likedPosts = await Post.find({ likes: username });
   likedPosts.forEach(async (post) => {
-    post.likes = post.likes.filter((upvoter) => upvoter === user.username);
+    post.likes = post.likes.filter((upvoter) => upvoter === username);
 
     const postAuthor = await User.findOne({ username: post.authorName });
     if (!postAuthor?.blog?.likes) {
@@ -28,13 +35,15 @@ export const deleteUser = async (id: string, oldPassword: string) => {
     postAuthor.blog.likes--;
     postAuthor.save();
   });
+};
 
-  (await Post.find({ authorName: user.username })).forEach((post) => {
+const deleteUserPosts = async (authorName: string) => {
+  const posts = await Post.find({ authorName });
+
+  posts.forEach((post) => {
     deletePostImage(post.image);
     deleteCategories(post.categories);
-    post.delete();
   });
-  await User.findOneAndDelete({ username: user.username });
 
-  return { success: true };
+  await Post.deleteMany({ authorName });
 };

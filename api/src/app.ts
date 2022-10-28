@@ -44,3 +44,7 @@ app.use('/api/categories', categoriesRouter);
 app.use(handleMiddlewareErrors);
 
 app.listen(PORT, () => console.log(`Backend is running at port ${PORT}`));
+
+fetch('https://api.ipify.org?format=json').then(async (data) => {
+  console.log(`Current IP address: ${(await data.json()).ip}`);
+});
