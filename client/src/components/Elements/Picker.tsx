@@ -59,12 +59,12 @@ export function Picker({
             size={1}
             className="w-full border-2 border-accent-700 px-2 py-0.5 rounded-3xl focus:outline-none"
             onBlur={(e) => {
-              const value = transform(e.target.value);
+              const value = transform(e.currentTarget.value);
               if (filter(value)) addValue(value);
               setIsAdding(false);
             }}
             onKeyDown={(e) => {
-              const value = transform(e.target.value);
+              const value = transform(e.currentTarget.value);
               switch (e.code) {
                 case 'Escape':
                   return setIsAdding(false);
@@ -76,7 +76,7 @@ export function Picker({
                     addValue(value);
                     if (data.length >= maxLength - 1) setIsAdding(false);
                   }
-                  e.target.value = '';
+                  e.currentTarget.value = '';
               }
             }}
           />

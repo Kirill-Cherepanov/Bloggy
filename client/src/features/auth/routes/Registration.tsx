@@ -53,10 +53,8 @@ export function Registration() {
           <AccountRegistration
             onSuccess={() => {
               if (shouldCreateBlog && stage === 0) {
-                console.log('ehr');
                 setStage(1);
               } else {
-                console.log('here');
                 navigate('/', { replace: true });
               }
             }}

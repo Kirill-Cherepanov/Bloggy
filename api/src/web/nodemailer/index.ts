@@ -1,10 +1,12 @@
 import nodemailer from 'nodemailer';
 
+import { EMAIL, EMAIL_PASSWORD } from 'config';
+
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.APP_PASSWORD,
+    user: EMAIL,
+    pass: EMAIL_PASSWORD,
   },
 });
 
@@ -14,7 +16,7 @@ export const sendEmailMessage = (
   html: string
 ): Promise<void> => {
   const emailMessage = {
-    from: process.env.GMAIL_USER,
+    from: EMAIL,
     to,
     subject,
     html,

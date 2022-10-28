@@ -1,9 +1,11 @@
+Dockerfile
+.dockerignore
+
 /node_modules
 /dist
-.env
 
 /images/post-images/*
 /images/profile-pictures/*
 !/images/profile-pictures/default.jpg
 
-Dockerfile_old
+.git

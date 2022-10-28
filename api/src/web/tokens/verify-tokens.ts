@@ -1,5 +1,7 @@
 import jwt, { VerifyErrors, JwtPayload } from 'jsonwebtoken';
-import { AccessTokenData } from 'types/custom/tokens.types';
+
+import { AccessTokenData } from 'types/custom';
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from 'config';
 
 export const verifyToken = async (
   token: string,
@@ -19,10 +21,7 @@ export const verifyAccessToken = async (accessToken: string | undefined) => {
     return { err: true, status: 401, message: 'No access token' };
   }
 
-  const verificationRes = await verifyToken(
-    accessToken,
-    process.env.ACCESS_TOKEN_SECRET!
-  );
+  const verificationRes = await verifyToken(accessToken, ACCESS_TOKEN_SECRET);
 
   if ('err' in verificationRes) {
     return {
@@ -52,10 +51,7 @@ export const verifyRefreshToken = async (refreshToken: string | undefined) => {
     return { err: 'No refresh token' };
   }
 
-  const verificationRes = await verifyToken(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET!
-  );
+  const verificationRes = await verifyToken(refreshToken, REFRESH_TOKEN_SECRET);
 
   if ('err' in verificationRes) {
     return { err: `Incorrect refresh token: ${verificationRes.err.message}` };

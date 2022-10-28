@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+// Used for debugging to see which components are being unnecessarily rerendered
+
 export const useOnClickRerender = () => {
   const [numberOfClicks, setNumberOfClicks] = useState(0);
 

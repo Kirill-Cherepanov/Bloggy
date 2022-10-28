@@ -28,8 +28,6 @@ type BlogSwiperProps = {
 export function BlogSwiper({ bloggers, sliderClassName }: BlogSwiperProps) {
   const screenSize = useScreenSize();
 
-  console.log(bloggers.length);
-
   return (
     <div className="w-full flex items-center">
       <Icon

@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+import { PORT } from 'config';
 import { connectDb } from 'web/db';
 import {
   handleTokens,
@@ -16,7 +17,6 @@ import searchRouter from 'controllers/search';
 import authRouter from 'controllers/auth';
 import settingsRouter from 'controllers/settings';
 import categoriesRouter from 'controllers/categories';
-import { PORT } from 'config';
 
 initFileDirectories();
 

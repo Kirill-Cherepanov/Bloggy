@@ -42,7 +42,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "cy": "npx cypress open"
+    "cy": "yarn cypress open"
   },
   "eslintConfig": {
     "extends": [
