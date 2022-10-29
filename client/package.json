@@ -66,6 +66,7 @@
     "@testing-library/cypress": "^8.0.3",
     "cypress": "^10.10.0"
   },
+  "proxy": "http://localhost:8080",
   "jest": {
     "roots": [
       "<rootdir>/",

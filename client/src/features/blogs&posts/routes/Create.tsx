@@ -1,11 +1,10 @@
-import { useNavigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { useState } from 'react';
 
 import { PostEditor } from '../components';
 import { CreatePostValues, PostValues } from '../types';
 import { useCreatePostMutation } from '../api/postsApi';
 import { useAppSelector } from 'stores/rootStore';
-import { PageNotFound } from 'features/misc';
 
 const initialPostValues: PostValues = {
   categories: [],
@@ -26,7 +25,7 @@ export function Create() {
   const user = useAppSelector((state) => state.authSlice.user);
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
 
-  if (!user?.blog) return <PageNotFound />;
+  if (!user?.blog) return <Navigate to="/settings" />;
 
   initialPostValues.authorName = user.username;
 

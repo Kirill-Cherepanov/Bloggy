@@ -72,7 +72,7 @@ export function PostEditor({
           onClick={() => {
             if (resultPreviewDisclosure.isOpen)
               return resultPreviewDisclosure.close();
-            navigate(-1);
+            navigate('/');
           }}
         >
           <Icon type="long-arrow" className="h-4 text-secondary-600" />

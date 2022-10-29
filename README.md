@@ -1,1 +1,1 @@
-## MERN blog
+# Bloggy

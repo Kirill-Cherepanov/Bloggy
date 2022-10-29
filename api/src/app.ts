@@ -4,6 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { PORT } from 'config';
+import { getIP } from 'web/misc';
 import { connectDb } from 'web/db';
 import {
   handleTokens,
@@ -11,6 +12,7 @@ import {
   corsMiddleware,
 } from 'web/middleware';
 import { initFileDirectories } from 'web/file-manipulation';
+
 import usersRouter from 'controllers/users';
 import postsRouter from 'controllers/posts';
 import searchRouter from 'controllers/search';
@@ -45,6 +47,4 @@ app.use(handleMiddlewareErrors);
 
 app.listen(PORT, () => console.log(`Backend is running at port ${PORT}`));
 
-fetch('https://api.ipify.org?format=json').then(async (data) => {
-  console.log(`Current IP address: ${(await data.json()).ip}`);
-});
+getIP().then((ip) => console.log(`Current IP address: ${ip}`));

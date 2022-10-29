@@ -18,7 +18,7 @@ export function Registration() {
             className="absolute"
             onClick={() => {
               if (stage === 1) return setStage(0);
-              navigate(-1);
+              navigate('/');
             }}
           >
             <Icon

@@ -12,15 +12,17 @@ import { Button, Spinner } from 'components/Elements';
 import { UpdatePostValues } from '../types';
 import { useFetch } from 'hooks';
 import { POST_IMGS_LOCATION } from 'config';
+import { useAppSelector } from 'stores/rootStore';
 
 export function Edit() {
+  const user = useAppSelector((state) => state.authSlice.user);
   const navigate = useNavigate();
   const { id } = useParams();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
   const [editPostMutation] = useEditPostMutation();
   const [deletePostMutation] = useDeletePostMutation();
   const { data, isLoading, isError, error } = useGetPostQuery(id!, {
-    skip: !id,
+    skip: !id || !user?.blog,
   });
 
   const image = useFetch<Blob>(POST_IMGS_LOCATION + data?.post.image!, {

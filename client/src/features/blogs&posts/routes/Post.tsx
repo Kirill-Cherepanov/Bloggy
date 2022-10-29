@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Markdown from 'marked-react';
 
 import { formatDate } from 'utility';
@@ -21,7 +21,6 @@ type PostProps = {
 export function Post({ initialData }: PostProps) {
   const user = useAppSelector((state) => state.authSlice.user);
   const { id } = useParams();
-  const navigate = useNavigate();
 
   let author = initialData?.author;
   let post = initialData?.post;
@@ -57,16 +56,19 @@ export function Post({ initialData }: PostProps) {
     <wrapper.type className="py-8 px-page">
       {!initialData && (
         <div className="border-b pb-1 border-secondary-300 flex justify-between group">
-          <button onClick={() => initialData || navigate(-1)}>
+          <Link
+            to={user?.blog ? `/blog/${user.username}` : '/'}
+            onClick={(e) => initialData && e.preventDefault()}
+          >
             <Icon type="long-arrow" className="h-4 text-secondary-700" />
-          </button>
+          </Link>
 
           {user?.username === post.authorName ? (
             <>
               <div className="font-extralight group-hover:hidden">
                 <span>By </span>
                 <Link
-                  to={'/blog/' + post.authorName}
+                  to={`/blog/${post.authorName}`}
                   className="font-normal hover:underline"
                 >
                   {post.authorName}
@@ -84,7 +86,7 @@ export function Post({ initialData }: PostProps) {
             <div className="font-extralight">
               <span>By </span>
               <Link
-                to={'/blog/' + post.authorName}
+                to={`/blog/${post.authorName}`}
                 onClick={(e) => initialData && e.preventDefault()}
                 className="font-normal hover:underline"
               >
@@ -103,25 +105,29 @@ export function Post({ initialData }: PostProps) {
       )}
 
       <div className="lg:hidden">
-        <div className="mb-3 border-b border-black border-opacity-20 pb-3">
-          <h3 className="text-2xl font-medium mb-2">Categories</h3>
-          <div className="flex flex-wrap gap-y-2 gap-x-3 justify-between after:flex-auto">
-            {post.categories.map((category) => (
-              <Link
-                key={category}
-                to={`/catalog&q=${category}&type=categories`}
-                onClick={(e) => initialData && e.preventDefault()}
-                className="text-lg border bg-secondary-800 text-main border-secondary-400 rounded-sm px-1 cursor-pointer hover:bg-main hover:text-accent-900 hover:border-accent-400 transition-colors"
-              >
-                {category}
-              </Link>
-            ))}
+        {post.categories.length > 0 && (
+          <div className="mb-3 border-b border-black border-opacity-20 pb-3">
+            <h3 className="text-2xl font-medium mb-2">Categories</h3>
+            <div className="flex flex-wrap gap-y-2 gap-x-3 justify-between after:flex-auto">
+              {post.categories.map((category) => (
+                <Link
+                  key={category}
+                  to={`/catalog&q=${category}&type=categories`}
+                  onClick={(e) => initialData && e.preventDefault()}
+                  className="text-lg border bg-secondary-800 text-main border-secondary-400 rounded-sm px-1 cursor-pointer hover:bg-main hover:text-accent-900 hover:border-accent-400 transition-colors"
+                >
+                  {category}
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="mb-10">
-          <h3 className="text-2xl font-medium mb-2">Description</h3>
-          <p>{post.description || "This post doesn't have a description"}</p>
-        </div>
+        )}
+        {post.description && (
+          <div className="mb-10">
+            <h3 className="text-2xl font-medium mb-2">Description</h3>
+            <p>{post.description || "This post doesn't have a description"}</p>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col lg:flex-row relative gap-20">
