@@ -31,7 +31,7 @@ export function BlogCard({ username, profilePic, blog }: Required<PublicData>) {
           <div className="flex flex-wrap gap-y-2 gap-x-2 text-lg mb-4">
             {categories.map((category) => (
               <Link
-                to={`/catalog&type=blogs&q=${category}&type=categories`}
+                to={`/catalog&type=blogs&q=${category}&search=categories`}
                 key={category}
                 className="border border-secondary-400 rounded-sm px-1 cursor-pointer hover:text-accent-900 hover:border-accent-400 shadow-accent-400 hover:shadow-sm transition-colors"
               >

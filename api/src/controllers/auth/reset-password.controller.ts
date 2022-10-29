@@ -7,6 +7,7 @@ import {
   sendConfirmation,
   validateConfirmation,
 } from 'use-cases/confirmations';
+import { setAccessToken, setRefreshToken } from 'web/tokens';
 
 const resetPasswordSchema = z.object({
   email: z.string(),
@@ -54,10 +55,17 @@ export const resetPasswordController: RequestHandler = async (
 
     if (!newPassword) return res.status(400).json('New password was not sent');
 
-    const updatedUser = updateUserNoValidation(
+    const updatedUser = await updateUserNoValidation(
       { password: newPassword },
       { email }
     );
+
+    if ('err' in updatedUser) {
+      return res.status(updatedUser.status).json(updatedUser.err);
+    }
+
+    setRefreshToken(res, { ...updatedUser, id: user._id.toString() });
+    setAccessToken(res, { ...updatedUser, id: user._id.toString() });
 
     res.status(200).json({ user: updatedUser, status: 'success' });
   } catch (err) {

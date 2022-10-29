@@ -112,7 +112,7 @@ export function Post({ initialData }: PostProps) {
               {post.categories.map((category) => (
                 <Link
                   key={category}
-                  to={`/catalog&q=${category}&type=categories`}
+                  to={`/catalog&q=${category}&search=categories`}
                   onClick={(e) => initialData && e.preventDefault()}
                   className="text-lg border bg-secondary-800 text-main border-secondary-400 rounded-sm px-1 cursor-pointer hover:bg-main hover:text-accent-900 hover:border-accent-400 transition-colors"
                 >

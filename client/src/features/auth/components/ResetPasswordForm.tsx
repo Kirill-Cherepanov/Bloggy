@@ -4,17 +4,19 @@ import { useState } from 'react';
 import { Form, InputField } from 'components/Form';
 import { Button, Drawer } from 'components/Elements';
 import { useResetPasswordMutation } from 'features/auth';
-import { useNavigate } from 'react-router';
 
 // Decided to put all three components here to decrease the amount of files
 // Especially considering that I'm not planning to use them anywhere else
 
 type ResetPasswordFormProps = {
   closeMenu: () => unknown;
+  onSuccess?: () => unknown;
 };
 
-export function ResetPasswordForm({ closeMenu }: ResetPasswordFormProps) {
-  const navigate = useNavigate();
+export function ResetPasswordForm({
+  closeMenu,
+  onSuccess,
+}: ResetPasswordFormProps) {
   const [email, setEmail] = useState<string>();
   const [resetPassword] = useResetPasswordMutation();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
@@ -34,7 +36,8 @@ export function ResetPasswordForm({ closeMenu }: ResetPasswordFormProps) {
 
             if ('error' in response) throw response.error;
 
-            navigate('/');
+            closeMenu();
+            if (onSuccess) onSuccess();
           }}
         />
       ) : (

@@ -1,10 +1,7 @@
 /node_modules
 /dist
+/images
+
 .env
 
-/images/post-images/*
-/images/profile-pictures/*
-!/images/profile-pictures/default.jpg
-
-Dockerfile_old
 fly.toml

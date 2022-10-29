@@ -3,9 +3,6 @@ Dockerfile
 
 /node_modules
 /dist
-
-/images/post-images/*
-/images/profile-pictures/*
-!/images/profile-pictures/default.jpg
+/images
 
 .git

@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export type TConfirmation = {
   email: string;
@@ -6,8 +6,13 @@ export type TConfirmation = {
 };
 
 export interface Confirmation extends Document, TConfirmation {
-  _id: import('mongoose').ObjectId;
+  _id: ObjectId;
   createdAt: Date;
   updatedAt: Date;
-  _doc: Omit<this, '_doc'>;
+
+  _doc: TConfirmation & {
+    _id: ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }

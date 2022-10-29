@@ -67,7 +67,7 @@ export function Edit() {
 
     if ('error' in response) throw response.error;
     if (response.data.success) {
-      navigate(`/blog/${data.author}`);
+      navigate(`/blog/${data.author.username}`);
     }
   };
 

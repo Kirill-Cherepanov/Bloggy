@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, ObjectId } from 'mongoose';
 
 export type TCategory = {
   name: string;
@@ -6,8 +6,13 @@ export type TCategory = {
 };
 
 export interface Category extends Document, TCategory {
-  _id: import('mongoose').ObjectId;
+  _id: ObjectId;
   createdAt: Date;
   updatedAt: Date;
-  _doc: Omit<this, '_doc'>;
+
+  _doc: TCategory & {
+    _id: ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }

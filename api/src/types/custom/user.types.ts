@@ -10,7 +10,7 @@ export interface Blog extends Document, TBlog {
   _id: ObjectId;
   createdAt: Date;
   updatedAt: Date;
-  _doc: Omit<this, '_doc'>;
+  _doc: TBlog;
 }
 
 export type TUser = {
@@ -25,5 +25,10 @@ export interface User extends Document, TUser {
   _id: ObjectId;
   createdAt: Date;
   updatedAt: Date;
-  _doc: Omit<this, '_doc'>;
+
+  _doc: TUser & {
+    _id: ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
+  };
 }

@@ -30,7 +30,7 @@ export function FollowBox() {
             }}
             className="[&:hover~.FOOOTER-FOLLOW-BORDER]:opacity-100 [&:hover~.FOOOTER-FOLLOW-BORDER]:cursor-pointer border border-secondary-200 rounded-sm px-1 cursor-pointer hover:text-accent-400 transition-colors"
           >
-            <Link to={`/catalog&q=${category.name}&type=categories`}>
+            <Link to={`/catalog?q=${category.name}&search=categories`}>
               {category.name}
             </Link>
           </li>

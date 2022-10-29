@@ -27,7 +27,8 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
       <div className="w-full flex justify-between">
         {/* Main category */}
         <Link
-          to={`/catalog&q=${postData.categories[0]}&type=categories`}
+          to={`/catalog?q=${postData.categories[0]}&search=categories`}
+          onClick={(e) => isPreview && e.preventDefault()}
           className="max-w-min text-accent-600 font-display uppercase text-sm font-bold cursor-pointer hover:underline"
         >
           {postData.categories[0]}

@@ -81,7 +81,10 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
         )}
       </Form>
       {resetPasswordDisclosure.isOpen && (
-        <ResetPasswordForm closeMenu={resetPasswordDisclosure.close} />
+        <ResetPasswordForm
+          closeMenu={resetPasswordDisclosure.close}
+          onSuccess={onSuccess}
+        />
       )}
     </>
   );

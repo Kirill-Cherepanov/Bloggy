@@ -66,7 +66,8 @@ export function SmallPost({
         >
           {/* Main category */}
           <Link
-            to={`/catalog&q=${postData.categories[0]}&type=categories`}
+            to={`/catalog?q=${postData.categories[0]}&search=categories`}
+            onClick={(e) => isPreview && e.preventDefault()}
             className="text-accent-600 font-display uppercase text-[0.8rem] xs:text-sm font-semibold cursor-pointer hover:underline"
           >
             {postData.categories[0]}

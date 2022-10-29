@@ -5,7 +5,7 @@ import User, { validateEmail } from 'models/User';
 async function validateUniqueness(email?: string, username?: string) {
   if (email) {
     const user = await User.findOne({ email });
-    if (user) throw Error('User with such email already exists');
+    if (user) throw Error('User with this email already exists');
   }
 
   if (username) {

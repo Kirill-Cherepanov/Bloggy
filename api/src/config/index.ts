@@ -34,7 +34,7 @@ export const PROFILE_PICS_LOCATION = path.join(
 
 export const ACCESS_TOKEN_EXPIRATION_TIME = '10m';
 
-export const DEFAULT_PROFILE_PICTURE = 'default.jpg';
+export const DEFAULT_PROFILE_PICTURE = '';
 
 export const ALLOWED_ORIGINS = [
   'https://bloggy-kirill-cherepanov.netlify.app',

@@ -17,7 +17,12 @@ export const registerController: RequestHandler = async (req, res, next) => {
       return res.status(400).json('Incorrect confirmation message');
     }
 
-    const user = await makeUser(req.body);
+    let user: any;
+    try {
+      user = await makeUser(req.body);
+    } catch (err: any) {
+      res.status(400).json({ message: err.message });
+    }
 
     if (shouldSendAgain || !message) {
       await deleteConfirmations(user.email);
