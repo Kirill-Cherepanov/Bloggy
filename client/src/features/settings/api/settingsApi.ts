@@ -52,7 +52,7 @@ export const settingsApi = rootApi.injectEndpoints({
         // That's a bit lazy
         // But otherwise I'd need to retrieve all of the posts of the user from cache,
         // which is too much of a bother
-        result?.success ? ['Post', 'User'] : [],
+        result?.success ? ['Post', 'User', 'Category'] : [],
       query: (values) => ({
         url: `/settings/`,
         method: 'DELETE',

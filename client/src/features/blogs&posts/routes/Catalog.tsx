@@ -40,8 +40,8 @@ export function Catalog() {
         </div>
       )}
 
-      {!data?.values.length && (
-        <div className="w-full h-48 flex items-center justify-center sm:text-2xl md:text-3xl lg:text-4xl">
+      {!isError && !data?.values.length && (
+        <div className="w-full h-48 flex items-center justify-center text-center sm:text-2xl md:text-3xl lg:text-4xl">
           It looks like your query did not match anything
         </div>
       )}

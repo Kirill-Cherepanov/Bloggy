@@ -37,10 +37,12 @@ const UserSchema = new mongoose.Schema<User>(
     username: {
       type: String,
       required: true,
-      unique: true,
       minLength: [3, 'Username must be at least 3 characters long'],
       maxLength: [20, 'Username must be at most 20 characters long'],
-      index: 'text',
+
+      // typescript doesn't recognize this
+      // even though it's the only way to add multiple indexes within a mongoose schema
+      index: { text: true, unique: true } as any,
     },
     email: {
       type: String,

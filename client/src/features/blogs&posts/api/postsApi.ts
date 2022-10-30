@@ -163,23 +163,35 @@ export const {
 
 function invalidateCreatePostTags(
   result?: CreatePostReturnType
-): TagDescription<'Post' | 'User'>[] {
+): TagDescription<'Post' | 'User' | 'Category'>[] {
   if (!result?.success) return [];
+
+  const categoryTags = result.post.categories.map((category) => ({
+    type: 'Category' as const,
+    id: category,
+  }));
 
   return [
     { type: 'Post', id: 'PARTIAL-LIST' },
     { type: 'User', id: result.post.authorName },
+    ...categoryTags,
   ];
 }
 
 function invalidateEditPostTags(
   result?: CreatePostReturnType
-): TagDescription<'Post' | 'User'>[] {
+): TagDescription<'Post' | 'User' | 'Category'>[] {
   if (!result?.success) return [];
+
+  const categoryTags = result.post.categories.map((category) => ({
+    type: 'Category' as const,
+    id: category,
+  }));
 
   return [
     { type: 'Post', id: 'PARTIAL-LIST' },
     { type: 'Post', id: result.post._id },
+    ...categoryTags,
   ];
 }
 
@@ -187,12 +199,13 @@ function invalidateDeletePostTags(
   result?: { success: boolean },
   error?: unknown,
   id?: string
-): TagDescription<'Post' | 'User'>[] {
+): TagDescription<'Post' | 'User' | 'Category'>[] {
   if (!result?.success) return [];
 
   return [
     { type: 'Post', id },
     { type: 'Post', id: 'PARTIAL-LIST' },
+    'Category',
   ];
 }
 
