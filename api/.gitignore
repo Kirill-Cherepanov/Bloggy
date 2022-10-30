@@ -2,6 +2,7 @@
 /dist
 /images
 
+/src/email-messages.ts
 .env
 
 fly.toml

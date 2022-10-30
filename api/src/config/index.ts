@@ -1,5 +1,7 @@
 import path from 'path';
 
+export { MESSAGES } from 'email-messages';
+
 export const IS_DEPLOY = process.env.NODE_ENV === 'production';
 
 if (!process.env.ACCESS_TOKEN_SECRET || !process.env.REFRESH_TOKEN_SECRET) {
