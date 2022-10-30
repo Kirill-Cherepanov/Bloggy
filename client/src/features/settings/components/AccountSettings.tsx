@@ -79,20 +79,14 @@ export function AccountSettings({ changeTab }: AccountSettingsProps) {
         >
           Logout
         </SettingsButton>
-        <SettingsButton
-          variant="danger"
-          onClick={() => {
-            deleteAccount();
-            deleteAccountDisclosure.open();
-          }}
-        >
+        <SettingsButton variant="danger" onClick={deleteAccountDisclosure.open}>
           Delete account
         </SettingsButton>
       </div>
       {deleteAccountDisclosure.isOpen && (
         <ConfirmPasswordForm
           closeMenu={deleteAccountDisclosure.close}
-          onSuccess={async (values) => {
+          onSubmit={async (values) => {
             const response = await deleteAccount(values);
 
             if ('error' in response) return notifyError(response.error);

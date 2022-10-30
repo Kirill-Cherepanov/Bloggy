@@ -70,7 +70,7 @@ export function UpdateUserForm({
       {isOpen && (
         <ConfirmPasswordForm
           closeMenu={close}
-          onSuccess={async (values) => {
+          onSubmit={async (values) => {
             const response = await updateUser({ ...changedValues, ...values });
 
             if ('error' in response) return notifyError(response.error);

@@ -1,12 +1,13 @@
 import { PublicData, ProtectedData, PrivateData, PostData } from 'types';
 import { random } from 'utility';
 import { AddNotificationType } from 'features/notifications';
+import { DEFAULT_PROFILE_PICTURE } from 'config';
 
 type Overrides = Record<string, any>;
 
 export const generatePublicData = (overrides?: Overrides): PublicData => ({
   username: random.string(random.int(20, 5)),
-  profilePic: 'default.jpg',
+  profilePic: DEFAULT_PROFILE_PICTURE,
   blog: {
     likes: random.int(1000),
     categories: random.array(10, () => random.string(20)),

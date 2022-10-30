@@ -24,8 +24,6 @@ export const registrationController: RequestHandler = async (
     const user = await makeUser(req.body);
     if ('error' in user) return res.status(user.status).json(user.error);
 
-    console.log(user);
-
     if (shouldSendAgain || !message) {
       await deleteConfirmations(user.email);
       await sendConfirmation(user.email);

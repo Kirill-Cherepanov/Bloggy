@@ -1,5 +1,4 @@
 import { Notification } from '.';
-
 import { useAppSelector, useAppDispatch } from 'stores/rootStore';
 import { dismissNotification } from '../stores/notificationSlice';
 
@@ -9,8 +8,6 @@ export const Notifications = () => {
   );
   const dispatch = useAppDispatch();
 
-  console.log(notifications);
-
   return (
     <div
       aria-live="assertive"
@@ -18,7 +15,7 @@ export const Notifications = () => {
       z-30  fixed inset-0 px-4 py-6 sm:p-6 pointer-events-none
       flex flex-col justify-end items-end gap-4"
     >
-      {notifications.slice(-3).map((notification) => (
+      {[...notifications].slice(-3).map((notification) => (
         <Notification
           key={notification.id}
           notification={notification}

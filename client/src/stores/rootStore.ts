@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import { authSlice } from 'features/auth';
 import { notificationSlice } from 'features/notifications';
 import { rootApi } from 'lib/rootApi';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export const rootReducer = combineReducers({
   [rootApi.reducerPath]: rootApi.reducer,

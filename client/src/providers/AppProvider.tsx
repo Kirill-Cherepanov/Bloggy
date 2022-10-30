@@ -37,14 +37,17 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   return (
     <StrictMode>
-      <Suspense fallback={SuspenseFallback}>
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <ReduxProvider store={store}>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ReduxProvider store={store}>
+          {/* When you put ReduxProvider inside the Suspense */}
+          {/* ALL HELL BREAKS LOOSE */}
+          {/* https://www.reddit.com/r/reactjs/comments/yhiu25/comment/iuelrpd/?utm_source=share&utm_medium=web2x&context=3 */}
+          <Suspense fallback={SuspenseFallback}>
             <Notifications />
             <Router>{children}</Router>
-          </ReduxProvider>
-        </ErrorBoundary>
-      </Suspense>
+          </Suspense>
+        </ReduxProvider>
+      </ErrorBoundary>
     </StrictMode>
   );
 };

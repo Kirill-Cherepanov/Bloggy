@@ -8,7 +8,7 @@ type ConfirmPasswordFormValues = Exclude<ConfirmPasswordValues, void>;
 
 type ConfirmPasswordProps = {
   closeMenu: () => unknown;
-  onSuccess: (values: ConfirmPasswordFormValues) => unknown;
+  onSubmit: (values: ConfirmPasswordFormValues) => unknown;
 };
 
 const schema = z.object({
@@ -20,11 +20,11 @@ const schema = z.object({
 
 export function ConfirmPasswordForm({
   closeMenu,
-  onSuccess,
+  onSubmit,
 }: ConfirmPasswordProps) {
   return (
     <Drawer id="authentification" closeMenu={closeMenu} className="pt-8 pb-5">
-      <Form<ConfirmPasswordFormValues, typeof schema> onSubmit={onSuccess}>
+      <Form<ConfirmPasswordFormValues, typeof schema> onSubmit={onSubmit}>
         {({ register, formState }) => (
           <>
             <InputField

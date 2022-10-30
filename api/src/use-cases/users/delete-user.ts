@@ -41,7 +41,7 @@ const deleteUserPosts = async (authorName: string) => {
   const posts = await Post.find({ authorName });
 
   posts.forEach((post) => {
-    deletePostImage(post.image);
+    if (post.image) deletePostImage(post.image);
     deleteCategories(post.categories);
   });
 
