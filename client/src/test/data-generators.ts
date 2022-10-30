@@ -1,5 +1,6 @@
 import { PublicData, ProtectedData, PrivateData, PostData } from 'types';
 import { random } from 'utility';
+import { AddNotificationType } from 'features/notifications';
 
 type Overrides = Record<string, any>;
 
@@ -52,3 +53,17 @@ export const generatePosts = (
   Array(amount)
     .fill(0)
     .map((_, index) => generatePost({ ...overrides, _id: `${index}` }));
+
+export const generateNotification = (
+  overrides?: Overrides
+): AddNotificationType => ({
+  type: random.fromArray([
+    'error' as const,
+    'warning' as const,
+    'info' as const,
+    'success' as const,
+  ]),
+  title: random.text(50),
+  message: random.boolean() ? random.text(100) : undefined,
+  ...overrides,
+});

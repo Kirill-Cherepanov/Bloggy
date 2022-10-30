@@ -5,12 +5,14 @@ import User, { validateEmail } from 'models/User';
 async function validateUniqueness(email?: string, username?: string) {
   if (email) {
     const user = await User.findOne({ email });
-    if (user) throw Error('User with this email already exists');
+    if (user) {
+      return { error: 'User with this email already exists', status: 400 };
+    }
   }
 
   if (username) {
     const user = await User.findOne({ username });
-    if (user) throw Error('This username is already taken');
+    if (user) return { error: 'This username is already taken', status: 400 };
   }
 
   return true;
@@ -48,9 +50,13 @@ export const makeUser = async (
 ) => {
   const user = createUserSchema.parse(data);
 
-  if (!validateEmail(user.email)) throw Error('Incorrect email');
+  if (!validateEmail(user.email)) {
+    return { error: 'Incorrect email', status: 400 };
+  }
+
   if (shouldValidateUniqueness) {
-    await validateUniqueness(user.email, user.username);
+    const result = await validateUniqueness(user.email, user.username);
+    if (result !== true) return result;
   }
 
   return user;
@@ -59,7 +65,9 @@ export const makeUser = async (
 export const makePartialUser = (data: unknown) => {
   const user = createUserSchema.deepPartial().parse(data);
 
-  if (user.email && !validateEmail(user.email)) throw Error('Incorrect email');
+  if (user.email && !validateEmail(user.email)) {
+    return { error: 'Incorrect email', status: 400 };
+  }
 
   return user;
 };

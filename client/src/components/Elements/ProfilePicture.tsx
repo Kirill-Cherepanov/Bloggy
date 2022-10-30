@@ -10,15 +10,13 @@ type ProfilePictureProps = {
 };
 
 export function ProfilePicture({ src, className = '' }: ProfilePictureProps) {
-  const currentProfilePic =
-    useAppSelector((state) => state.authSlice.user?.profilePic) ||
-    DEFAULT_PROFILE_PICTURE;
+  const userProfilePicture = useAppSelector(
+    (state) => state.authSlice.user?.profilePic
+  );
 
-  let source: string;
-  if (src) source = src;
-  else if (currentProfilePic === DEFAULT_PROFILE_PICTURE) {
-    source = defaultProfilePicture;
-  } else source = PROFILE_PICS_LOCATION + currentProfilePic;
+  let source = src ?? userProfilePicture ?? DEFAULT_PROFILE_PICTURE;
+  if (source === DEFAULT_PROFILE_PICTURE) source = defaultProfilePicture;
+  else source = PROFILE_PICS_LOCATION + source;
 
   return (
     <img

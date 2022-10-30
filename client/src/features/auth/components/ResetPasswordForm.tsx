@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Form, InputField } from 'components/Form';
 import { Button, Drawer } from 'components/Elements';
 import { useResetPasswordMutation } from 'features/auth';
+import { useNotifyError } from 'features/notifications';
 
 // Decided to put all three components here to decrease the amount of files
 // Especially considering that I'm not planning to use them anywhere else
@@ -20,6 +21,7 @@ export function ResetPasswordForm({
   const [email, setEmail] = useState<string>();
   const [resetPassword] = useResetPasswordMutation();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
+  const notifyError = useNotifyError();
 
   return (
     <Drawer id="authentification" closeMenu={closeMenu} className="py-10 px-10">
@@ -34,7 +36,7 @@ export function ResetPasswordForm({
 
             setHasOngoingRequest(false);
 
-            if ('error' in response) throw response.error;
+            if ('error' in response) return notifyError(response.error);
 
             closeMenu();
             if (onSuccess) onSuccess();
@@ -51,7 +53,7 @@ export function ResetPasswordForm({
 
             setHasOngoingRequest(false);
 
-            if ('error' in response) throw response.error;
+            if ('error' in response) return notifyError(response.error);
 
             setEmail(values.email);
           }}
@@ -131,6 +133,7 @@ const ConfirmResetPasswordForm = ({
             label="Confirmation message"
             error={formState.errors.confirmationMessage}
             registration={register('confirmationMessage')}
+            autoComplete="off"
           />
           <InputField
             type="password"

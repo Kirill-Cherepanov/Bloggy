@@ -17,7 +17,7 @@ export const updateProfilePicController: RequestHandler = async (
     const profilePic = saveProfilePic({ 'profile-picture': [req.file] })!;
 
     const user = await updateUser({ profilePic }, req.user.data.id);
-    if ('err' in user) return res.status(user.status).json(user.err);
+    if ('error' in user) return res.status(user.status).json(user.error);
 
     res.status(200).json({ user, status: 'success' });
   } catch (err) {

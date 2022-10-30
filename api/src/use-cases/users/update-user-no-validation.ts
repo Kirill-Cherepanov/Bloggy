@@ -12,9 +12,11 @@ export const updateUserNoValidation = async (
   shouldDeleteBlog: boolean = false
 ) => {
   const user = await User.findOne(deleteUndefined(findUserData));
-  if (user === null) return { err: 'User was not found', status: 500 };
+  if (user === null) return { error: 'User was not found', status: 500 };
 
   const userData = makePartialUser(data);
+
+  if ('error' in userData) return userData;
 
   if (userData.password) {
     const salt = await bcrypt.genSalt(10);

@@ -5,6 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 
 import { store } from 'stores/rootStore';
 import { Button, Spinner } from 'components/Elements';
+import { Notifications } from 'features/notifications';
 
 const SuspenseFallback = (
   <div className="flex items-center justify-center w-screen h-screen">
@@ -39,6 +40,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       <Suspense fallback={SuspenseFallback}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <ReduxProvider store={store}>
+            <Notifications />
             <Router>{children}</Router>
           </ReduxProvider>
         </ErrorBoundary>

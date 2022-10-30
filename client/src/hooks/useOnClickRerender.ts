@@ -2,18 +2,20 @@ import { useEffect, useState } from 'react';
 
 // Used for debugging to see which components are being unnecessarily rerendered
 
-export const useOnClickRerender = () => {
+export const useOnClickRerender = (callback?: (clicks?: number) => unknown) => {
   const [numberOfClicks, setNumberOfClicks] = useState(0);
 
   useEffect(() => {
-    const increaseClicks = () => setNumberOfClicks((num) => num + 1);
+    if (callback) callback(numberOfClicks);
+  }, [numberOfClicks, callback]);
 
-    document.addEventListener('click', increaseClicks);
+  useEffect(() => {
+    const onClick = () => setNumberOfClicks((num) => num + 1);
 
-    return () => document.removeEventListener('click', increaseClicks);
+    document.addEventListener('click', onClick);
+
+    return () => document.removeEventListener('click', onClick);
   }, []);
-
-  console.log('Click ' + numberOfClicks);
 
   return numberOfClicks;
 };

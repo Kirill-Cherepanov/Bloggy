@@ -13,19 +13,23 @@ export const updateUser = async (
   verifyPassword: boolean = true
 ) => {
   const user = await User.findById(id);
-  if (user === null) return { err: 'User was not found', status: 500 };
+  if (user === null) return { error: 'User was not found', status: 500 };
 
   const userData = makePartialUser(data);
+
+  if ('error' in userData) return userData;
 
   if (
     (userData.password || userData.email || userData.username) &&
     verifyPassword
   ) {
-    if (!oldPassword) return { err: 'Old password was not sent', status: 400 };
+    if (!oldPassword) {
+      return { error: 'Old password was not sent', status: 400 };
+    }
 
     const validationResult = await bcrypt.compare(oldPassword, user.password);
     if (!validationResult) {
-      return { err: 'Incorrect previous password', status: 400 };
+      return { error: 'Incorrect previous password', status: 400 };
     }
   }
 

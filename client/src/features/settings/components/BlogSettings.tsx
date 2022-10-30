@@ -6,6 +6,7 @@ import { Picker, Tooltip } from 'components/Elements';
 import { useUpdateUserMutation } from '../api/settingsApi';
 import { SettingsButton } from '.';
 import { useAppSelector } from 'stores/rootStore';
+import { useNotifyError } from 'features/notifications';
 
 const schema = z.object({
   description: z
@@ -27,6 +28,7 @@ export function BlogSettings({ changeTab }: BlogSettingsProps) {
     blog?.categories || []
   );
   const [updateUser] = useUpdateUserMutation();
+  const notifyError = useNotifyError();
 
   return (
     <div className="w-full">
@@ -42,7 +44,7 @@ export function BlogSettings({ changeTab }: BlogSettingsProps) {
           };
           const response = await updateUser(blogData);
 
-          if ('error' in response) throw response.error;
+          if ('error' in response) return notifyError(response.error);
         }}
       >
         {({ register, formState }) => (
@@ -79,7 +81,7 @@ export function BlogSettings({ changeTab }: BlogSettingsProps) {
                     blog: { shouldDelete: true },
                   });
 
-                  if ('error' in response) throw response.error;
+                  if ('error' in response) return notifyError(response.error);
                   changeTab();
                 }}
               >

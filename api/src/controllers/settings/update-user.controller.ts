@@ -18,9 +18,9 @@ export const updateUserController: RequestHandler = async (req, res, next) => {
       req.body?.oldPassword,
       req.body?.blog?.shouldDelete
     );
-    if ('err' in user) {
+    if ('error' in user) {
       if (profilePic) deleteProfilePic(profilePic);
-      return res.status(user.status).json(user.err);
+      return res.status(user.status).json(user.error);
     }
 
     setRefreshToken(res, { ...user, id: user._id });

@@ -5,3 +5,4 @@ export * from './hooks';
 export * from './api/postsApi';
 export * from './api/usersApi';
 export * from './api/searchApi';
+export * from './utility';

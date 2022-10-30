@@ -14,6 +14,7 @@ export type InputFieldProps = FieldWrapperPassThroughProps & {
   registration: Partial<UseFormRegisterReturn>;
   defaultValue?: string;
   variant?: keyof typeof variants;
+  autoComplete?: string;
 };
 
 export const InputField = (props: InputFieldProps) => {
@@ -25,6 +26,7 @@ export const InputField = (props: InputFieldProps) => {
     error,
     defaultValue,
     variant = 'normal',
+    autoComplete,
   } = props;
 
   return (
@@ -34,6 +36,7 @@ export const InputField = (props: InputFieldProps) => {
         type={type}
         placeholder={label}
         className={clsx(variants[variant], className)}
+        autoComplete={autoComplete}
         {...registration}
       />
     </FieldWrapper>

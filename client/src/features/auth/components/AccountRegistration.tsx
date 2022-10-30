@@ -6,6 +6,7 @@ import { Button } from 'components/Elements';
 import { RegistrationValues } from '../types';
 import { useRegisterMutation } from '../api/authApi';
 import { useAppSelector } from 'stores/rootStore';
+import { useNotifyError } from 'features/notifications';
 
 const schema = z.object({
   email: z.string().email(),
@@ -38,6 +39,7 @@ export function AccountRegistration({
   const [register] = useRegisterMutation();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
   const [shouldSendAgain, setShouldSendAgain] = useState(false);
+  const notifyError = useNotifyError();
 
   return (
     <>
@@ -56,7 +58,8 @@ export function AccountRegistration({
           setShouldSendAgain(false);
           setHasOngoingRequest(false);
 
-          if ('error' in response) throw response.error;
+          if ('error' in response) return notifyError(response.error);
+
           if (response.data.status === 'success') return onSuccess();
           if (response.data.status === 'message sent') setWasMessageSent(true);
         }}
@@ -90,6 +93,7 @@ export function AccountRegistration({
                   label="Confirmation email message"
                   error={formState.errors['confirmationMessage']}
                   registration={register('confirmationMessage')}
+                  autoComplete="off"
                 />
 
                 <button

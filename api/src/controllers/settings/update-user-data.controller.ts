@@ -19,7 +19,7 @@ export const updateUserDataController: RequestHandler = async (
       req.body?.oldPassword,
       req.body?.blog?.shouldDelete
     );
-    if ('err' in user) return res.status(user.status).json(user.err);
+    if ('error' in user) return res.status(user.status).json(user.error);
 
     setRefreshToken(res, { ...user, id: user._id });
     setAccessToken(res, { ...user, id: user._id });

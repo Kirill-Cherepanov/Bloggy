@@ -60,8 +60,8 @@ export const resetPasswordController: RequestHandler = async (
       { email }
     );
 
-    if ('err' in updatedUser) {
-      return res.status(updatedUser.status).json(updatedUser.err);
+    if ('error' in updatedUser) {
+      return res.status(updatedUser.status).json(updatedUser.error);
     }
 
     setRefreshToken(res, { ...updatedUser, id: user._id.toString() });

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PostData } from 'types';
 
-import { getRelativeCursorPos } from 'utility';
+import { getRelativeCursorPos } from '../../utility';
 
 type CurtainsProps = {
   postsData: PostData[];

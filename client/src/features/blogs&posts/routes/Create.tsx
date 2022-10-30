@@ -5,6 +5,7 @@ import { PostEditor } from '../components';
 import { CreatePostValues, PostValues } from '../types';
 import { useCreatePostMutation } from '../api/postsApi';
 import { useAppSelector } from 'stores/rootStore';
+import { useNotifyError } from 'features/notifications';
 
 const initialPostValues: PostValues = {
   categories: [],
@@ -24,6 +25,7 @@ export function Create() {
   const [createPostMutation] = useCreatePostMutation();
   const user = useAppSelector((state) => state.authSlice.user);
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
+  const notifyError = useNotifyError();
 
   if (!user?.blog) return <Navigate to="/settings" />;
 
@@ -42,7 +44,7 @@ export function Create() {
 
     setHasOngoingRequest(false);
 
-    if ('error' in response) throw response.error;
+    if ('error' in response) return notifyError(response.error);
     if (response.data.success) {
       navigate(`/blog/${user.username}`);
     }

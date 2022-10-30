@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router';
+
 import { useAppSelector } from 'stores/rootStore';
 import { useDisclosure } from 'hooks';
 import { ResetPasswordForm, useLogoutMutation } from 'features/auth';
@@ -11,7 +13,7 @@ import {
   UpdateProfilePictureForm,
   ConfirmPasswordForm,
 } from '.';
-import { useNavigate } from 'react-router';
+import { useNotifyError } from 'features/notifications';
 
 type AccountSettingsProps = {
   changeTab: () => unknown;
@@ -24,6 +26,7 @@ export function AccountSettings({ changeTab }: AccountSettingsProps) {
   const [logout] = useLogoutMutation();
   const [updateUser] = useUpdateUserMutation();
   const [deleteAccount] = useDeleteUserMutation();
+  const notifyError = useNotifyError();
 
   const resetPasswordDisclosure = useDisclosure();
   const deleteAccountDisclosure = useDisclosure();
@@ -59,7 +62,7 @@ export function AccountSettings({ changeTab }: AccountSettingsProps) {
             onClick={async () => {
               const response = await updateUser({ blog: {} });
 
-              if ('error' in response) throw response.error;
+              if ('error' in response) return notifyError(response.error);
 
               changeTab();
             }}
@@ -92,7 +95,7 @@ export function AccountSettings({ changeTab }: AccountSettingsProps) {
           onSuccess={async (values) => {
             const response = await deleteAccount(values);
 
-            if ('error' in response) throw response.error;
+            if ('error' in response) return notifyError(response.error);
             deleteAccountDisclosure.close();
           }}
         />

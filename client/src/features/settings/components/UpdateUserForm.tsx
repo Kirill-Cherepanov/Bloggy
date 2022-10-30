@@ -8,6 +8,7 @@ import { Form, ButtonInputField } from 'components/Form';
 import { capitalize } from 'utility/functionsOnStrings';
 import { ConfirmPasswordForm } from '.';
 import { useUpdateUserMutation } from '../api/settingsApi';
+import { useNotifyError } from 'features/notifications';
 
 type UpdateUserFormProps = {
   updateSelector: keyof Omit<PrivateData, 'blog' | 'profilePic' | 'createdAt'>;
@@ -36,6 +37,7 @@ export function UpdateUserForm({
     [value in typeof updateSelector]?: string;
   }>({});
   const [updateUser] = useUpdateUserMutation();
+  const notifyError = useNotifyError();
 
   if (user === null) throw Error('User data is null!');
 
@@ -71,7 +73,7 @@ export function UpdateUserForm({
           onSuccess={async (values) => {
             const response = await updateUser({ ...changedValues, ...values });
 
-            if ('error' in response) throw response.error;
+            if ('error' in response) return notifyError(response.error);
             close();
           }}
         />

@@ -9,7 +9,11 @@ import {
 } from 'use-cases/confirmations';
 import { addUser } from 'use-cases/users';
 
-export const registerController: RequestHandler = async (req, res, next) => {
+export const registrationController: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
   try {
     const shouldSendAgain: unknown = req.body.shouldSendAgain;
     const message: unknown = req.body.confirmationMessage;
@@ -17,12 +21,10 @@ export const registerController: RequestHandler = async (req, res, next) => {
       return res.status(400).json('Incorrect confirmation message');
     }
 
-    let user: any;
-    try {
-      user = await makeUser(req.body);
-    } catch (err: any) {
-      res.status(400).json({ message: err.message });
-    }
+    const user = await makeUser(req.body);
+    if ('error' in user) return res.status(user.status).json(user.error);
+
+    console.log(user);
 
     if (shouldSendAgain || !message) {
       await deleteConfirmations(user.email);
@@ -46,6 +48,10 @@ export const registerController: RequestHandler = async (req, res, next) => {
     }
 
     const newUser = await addUser(user);
+
+    if ('error' in newUser) {
+      return res.status(newUser.status).json(newUser.error);
+    }
 
     setRefreshToken(res, { ...user, id: newUser._id });
     setAccessToken(res, { ...user, id: newUser._id });

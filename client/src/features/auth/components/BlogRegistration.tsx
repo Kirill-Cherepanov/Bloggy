@@ -4,6 +4,7 @@ import * as z from 'zod';
 import { Form, TextAreaField } from 'components/Form';
 import { Button, Picker, Tooltip } from 'components/Elements';
 import { useUpdateUserMutation } from 'features/settings';
+import { useNotifyError } from 'features/notifications';
 
 const schema = z.object({
   description: z
@@ -23,6 +24,7 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
   const [categories, setCategories] = useState<string[]>([]);
   const [updateUser] = useUpdateUserMutation();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
+  const notifyError = useNotifyError();
 
   return (
     <>
@@ -32,21 +34,20 @@ export function BlogRegistration({ onSuccess }: BlogRegistrationProps) {
       <Form<BlogValues, typeof schema>
         className="mx-auto w-full"
         onSubmit={async (values) => {
+          if (hasOngoingRequest) return;
+          setHasOngoingRequest(true);
+
           const blogData = {
             blog: {
               ...values,
               categories,
             },
           };
-
-          if (hasOngoingRequest) return;
-          setHasOngoingRequest(true);
-
           const response = await updateUser(blogData);
 
           setHasOngoingRequest(false);
 
-          if ('error' in response) throw response.error;
+          if ('error' in response) return notifyError(response.error);
 
           if (response.data.status === 'success') onSuccess();
         }}

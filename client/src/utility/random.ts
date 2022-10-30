@@ -42,4 +42,6 @@ export const random = Object.freeze({
     const end = typeof max === 'object' ? max.getTime() : max;
     return new Date(start + Math.random() * (end - start));
   },
+
+  fromArray: <T>(arr: T[]) => arr[random.int(arr.length)],
 });

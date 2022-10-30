@@ -7,6 +7,7 @@ import { Button } from 'components/Elements';
 import { LoginValues } from '../types';
 import { useLoginMutation } from '../api/authApi';
 import { ResetPasswordForm } from '.';
+import { useNotifyError } from 'features/notifications';
 
 const schema = z.object({
   email: z.string().email(),
@@ -25,6 +26,7 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
   const [login] = useLoginMutation();
   const resetPasswordDisclosure = useDisclosure();
   const [hasOngoingRequest, setHasOngoingRequest] = useState(false);
+  const notifyError = useNotifyError();
 
   return (
     <>
@@ -38,7 +40,7 @@ export function LoginForm({ onSuccess, swapForm }: LoginFormProps) {
 
           setHasOngoingRequest(false);
 
-          if ('error' in response) throw response.error;
+          if ('error' in response) return notifyError(response.error);
 
           onSuccess();
         }}

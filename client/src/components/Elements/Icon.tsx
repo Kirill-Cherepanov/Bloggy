@@ -2,17 +2,113 @@ import React from 'react';
 
 export type IconType = keyof typeof ICONS;
 
-type IconProps = {
+interface IconProps extends React.SVGProps<SVGSVGElement> {
   type: IconType;
-  className?: string;
-  style?: React.CSSProperties | undefined;
+}
+
+const defaultProps = {
+  className: 'h-5 inline',
+  'aria-hidden': 'true',
 };
 
-export function Icon({ type, className = 'h-5 inline', style }: IconProps) {
-  return React.cloneElement(ICONS[type], { className, style });
+export function Icon({ type, ...svgProps }: IconProps) {
+  return React.cloneElement(ICONS[type], { ...defaultProps, ...svgProps });
 }
 
 const ICONS = {
+  checkmark: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path
+        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit="10"
+        strokeWidth="32"
+      />
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="32"
+        d="M352 176L217.6 336 160 272"
+      />
+    </svg>
+  ),
+  warning: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path
+        d="M85.57 446.25h340.86a32 32 0 0028.17-47.17L284.18 82.58c-12.09-22.44-44.27-22.44-56.36 0L57.4 399.08a32 32 0 0028.17 47.17z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="32"
+      />
+      <path
+        d="M250.26 195.39l5.74 122 5.73-121.95a5.74 5.74 0 00-5.79-6h0a5.74 5.74 0 00-5.68 5.95z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="32"
+      />
+      <path
+        fill="currentColor"
+        d="M256 397.25a20 20 0 1120-20 20 20 0 01-20 20z"
+      />
+    </svg>
+  ),
+  error: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path
+        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z"
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit="10"
+        strokeWidth="32"
+      />
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="32"
+        d="M320 320L192 192M192 320l128-128"
+      />
+    </svg>
+  ),
+  info: (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <path
+        d="M248 64C146.39 64 64 146.39 64 248s82.39 184 184 184 184-82.39 184-184S349.61 64 248 64z"
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit="10"
+        strokeWidth="32"
+      />
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="32"
+        d="M220 220h32v116"
+      />
+      <path
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="32"
+        d="M208 340h88"
+      />
+      <path
+        fill="currentColor"
+        d="M248 130a26 26 0 1026 26 26 26 0 00-26-26z"
+      />
+    </svg>
+  ),
   close: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
       <path
@@ -118,7 +214,6 @@ const ICONS = {
       />
     </svg>
   ),
-
   search: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
       <path
@@ -177,7 +272,6 @@ const ICONS = {
       <path d="M332.64 64.58C313.18 43.57 286 32 256 32c-30.16 0-57.43 11.5-76.8 32.38-19.58 21.11-29.12 49.8-26.88 80.78C156.76 206.28 203.27 256 256 256s99.16-49.71 103.67-110.82c2.27-30.7-7.33-59.33-27.03-80.6zM432 480H80a31 31 0 01-24.2-11.13c-6.5-7.77-9.12-18.38-7.18-29.11C57.06 392.94 83.4 353.61 124.8 326c36.78-24.51 83.37-38 131.2-38s94.42 13.5 131.2 38c41.4 27.6 67.74 66.93 76.18 113.75 1.94 10.73-.68 21.34-7.18 29.11A31 31 0 01432 480z" />
     </svg>
   ),
-
   basketball: (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 474 474">
       <path
