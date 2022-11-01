@@ -43,7 +43,7 @@ export function Footer() {
               <input
                 ref={emailInput}
                 type="text"
-                placeholder="Enter your email adress here"
+                placeholder="Enter your email address here"
                 className="p-2 h-full w-full lg:w-[calc(100%-128px)] max-w-md transition-colors outline-none focus:text-main hover:text-main hover:bg-secondary-700 focus:bg-secondary-700"
               />
               <button

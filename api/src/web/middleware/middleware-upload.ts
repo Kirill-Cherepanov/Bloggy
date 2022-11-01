@@ -8,7 +8,11 @@ export const upload = multer({
       ext !== '.png' &&
       ext !== '.jpg' &&
       ext !== '.jpeg' &&
+      ext !== '.avif' &&
       ext !== '.json' &&
+      ext !== '.git' &&
+      ext !== '.tiff' &&
+      ext !== '.tif' &&
       file.mimetype !== 'application/json'
     ) {
       console.error(file);

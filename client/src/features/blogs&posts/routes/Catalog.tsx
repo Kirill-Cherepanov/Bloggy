@@ -16,7 +16,7 @@ export function Catalog() {
   const goToPage = (page: number) => {
     const newQuery = new URLSearchParams(query.toString());
     newQuery.set('page', `${page}`);
-    navigate(`/catalog${newQuery}`);
+    navigate(`/catalog?${newQuery}`);
   };
 
   const page = (query.get('page') && Number(query.get('page'))) || 1;

@@ -13,7 +13,10 @@ export function formatDate(date_: Date | string) {
   const weeksPassed = Math.floor((Date.now() - date.getTime()) / WEEK);
   const daysPassed = Math.floor((Date.now() - date.getTime()) / DAY);
   const hoursPassed = Math.floor((Date.now() - date.getTime()) / HOUR);
-  const minutesPassed = Math.floor((Date.now() - date.getTime()) / MINUTE);
+  const minutesPassed = Math.max(
+    0,
+    Math.floor((Date.now() - date.getTime()) / MINUTE)
+  );
 
   if (yearsPassed >= 2) {
     return `${yearsPassed} year${hoursPassed % 10 <= 1 ? '' : 's'} ago`;

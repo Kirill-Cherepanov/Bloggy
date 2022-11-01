@@ -45,8 +45,8 @@ export function Landing() {
       </QuerySection>
 
       <QuerySection
-        query=""
-        bgTransitionType="our-posts"
+        query="sort=popular"
+        bgTransitionType="popular-posts"
         className="xs:pb-4 sm:pb-8 bg-accent-500"
         minLength={5}
       >
@@ -54,7 +54,7 @@ export function Landing() {
           <>
             <div className="lg:px-20 max-w-7xl mx-auto">
               <h2 className="font-display font-bold text-3xl text-center mb-8">
-                Our posts
+                Popular posts
               </h2>
               <PostSwiper postsData={posts.slice(0, 5)} className="lg:hidden" />
               <ParallelogramCurtains
@@ -122,7 +122,10 @@ export function Landing() {
               </h2>
               <BlogSwiper
                 bloggers={blogs}
-                sliderClassName={{ wrapper: 'shadow-lg' }}
+                sliderClassName={{
+                  wrapper: 'shadow-lg bg-main',
+                  categories: 'border-secondary-300',
+                }}
               />
             </div>
           </>

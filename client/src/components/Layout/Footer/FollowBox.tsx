@@ -16,10 +16,15 @@ export function FollowBox() {
     return <></>;
   }
 
+  // .sort mutates an array and data should be immutable
+  const categories =
+    data?.categories &&
+    [...data.categories].sort((curr, prev) => prev.amount - curr.amount);
+
   return (
     <ul className="max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20 pt-5 lg:pt-8 hidden sm:flex justify-center gap-3 relative flex-wrap">
-      {data &&
-        data.categories.map((category) => (
+      {categories &&
+        categories.map((category) => (
           <li
             key={category.name}
             onMouseOver={(e) => {

@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { POST_IMGS_LOCATION } from 'config';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { PostData } from 'types';
@@ -15,7 +16,7 @@ export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
   return (
     <ul
       className={clsx(
-        'flex justify-between w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear pointer-events-none ',
+        'flex justify-between w-full gap-[90px] hover:gap-[60px] pr-[120px] transition-[gap] duration-200 ease-linear pointer-events-none',
         className
       )}
     >
@@ -40,7 +41,7 @@ export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
             >
               <div className="ml-[-10%] w-[120%] h-full">
                 <img
-                  src={postData.image}
+                  src={POST_IMGS_LOCATION + postData.image}
                   alt="Post"
                   onMouseMove={(e) => setZoomedXPos(getRelativeCursorPos(e).x)}
                   className="object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"

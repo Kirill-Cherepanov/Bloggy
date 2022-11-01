@@ -82,7 +82,7 @@ const BG_TRANSITIONS = {
       />
     </div>
   ),
-  'our-posts': (
+  'popular-posts': (
     <Wave type="layered" className="w-full h-48 pointer-events-none" />
   ),
   'popular-blogs': (
