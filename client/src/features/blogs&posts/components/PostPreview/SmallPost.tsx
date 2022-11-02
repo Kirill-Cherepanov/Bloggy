@@ -89,7 +89,7 @@ export function SmallPost({
               </Link>
             </>
           ) : (
-            <span className="font-extralight group-hover:hidden text-[0.8rem] xs:text-base">
+            <span className="font-extralight text-[0.8rem] xs:text-base">
               {formatDate(postData.createdAt)}
             </span>
           )}

@@ -44,7 +44,7 @@ export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
                   src={POST_IMGS_LOCATION + postData.image}
                   alt="Post"
                   onMouseMove={(e) => setZoomedXPos(getRelativeCursorPos(e).x)}
-                  className="object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"
+                  className="mx-auto object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"
                   style={{
                     transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
                   }}
@@ -62,7 +62,7 @@ export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
                 </div>
                 <div className="absolute top-0 left-1/2 -translate-y-1/2 -translate-x-1/2 flex justify-center items-center text-main font-display uppercase text-sm font-bold bg-gradient-to-t from-secondary-800 to-secondary-700">
                   <Link
-                    to="/"
+                    to={`/catalog?q=${postData.categories[0]}&search=categories`}
                     className="block p-1 h-full w-full bg-secondary-800 hover:bg-transparent transition-colors"
                   >
                     {postData.categories[0]}

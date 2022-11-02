@@ -157,7 +157,7 @@ export function LargePost({
               </Link>
             </>
           ) : (
-            <div className="mt-auto text-text-600 flex flex-col group-hover:hidden">
+            <div className="mt-auto text-text-600 flex flex-col">
               <div>
                 <span className="hidden xs:inline">By </span>
                 <Link
