@@ -8,7 +8,9 @@ import { AppLayout } from 'components/Layout';
 import { Spinner } from 'components/Elements';
 import { useGetAccessTokenQuery } from 'features/auth';
 
-const { PageNotFound, Landing } = lazily(() => import('features/misc'));
+const { PageNotFound, Landing, Contacts, About } = lazily(
+  () => import('features/misc')
+);
 const { Catalog, Post, Blog } = lazily(() => import('features/blogs&posts'));
 
 export const AppRoutes = () => {
@@ -19,6 +21,8 @@ export const AppRoutes = () => {
         { path: '/blog/:name', element: <Blog /> },
         { path: '/catalog', element: <Catalog /> },
         { path: '/post/:id', element: <Post /> },
+        { path: '/contacts', element: <Contacts /> },
+        { path: '/about', element: <About /> },
         { path: '/', element: <Landing /> },
         { path: '*', element: <PageNotFound /> },
       ],

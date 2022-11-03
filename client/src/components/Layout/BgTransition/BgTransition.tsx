@@ -38,7 +38,7 @@ const BG_TRANSITIONS = {
       <div className="w-full max-w-7xl mx-auto px-4 xs:px-8 sm:px-12 md:px-20">
         <Icon
           type="musical-key"
-          className="absolute z-20 top-0 h-28 fill-secondary-800"
+          className="absolute z-10 top-0 h-28 fill-secondary-800"
         />
       </div>
       {NOTES_POSITIONS.map((position, i) => (

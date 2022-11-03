@@ -23,7 +23,7 @@ export function NormalPost({ postData, isPreview }: NormalPostType) {
   const wrapper = isPreview ? <div /> : <li />;
 
   return (
-    <wrapper.type className="lg:bg-accent-50 py-5 px-8 group">
+    <wrapper.type className="lg:bg-accent-50 px-4 py-3 sm:py-5 sm:px-8 group">
       <div className="w-full flex justify-between">
         {/* Main category */}
         <Link

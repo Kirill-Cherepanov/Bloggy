@@ -146,7 +146,7 @@ export function PostEditor({
                 />
                 <Icon
                   type="image"
-                  className="h-full absolute opacity-0 group-hover:opacity-40"
+                  className="h-full max-w-full absolute opacity-0 group-hover:opacity-40"
                 />
               </>
             ) : (

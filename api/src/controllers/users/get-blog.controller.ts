@@ -11,8 +11,12 @@ export const getBlogController: RequestHandler = async (req, res, next) => {
     const { email, ...publicData } = user;
 
     const userId = req.user.isLoggedIn ? req.user.data.id : undefined;
-    const posts = (await searchPosts({ author: req.params.username }, userId))
-      .values;
+    const posts = (
+      await searchPosts(
+        { author: req.params.username },
+        { userId, getAll: true }
+      )
+    ).values;
 
     res.status(200).json({ user: publicData, posts });
   } catch (err) {

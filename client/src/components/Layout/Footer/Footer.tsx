@@ -59,8 +59,8 @@ export function Footer() {
 
       <FollowBox />
 
-      <div className="max-w-7xl mx-auto py-5 lg:py-8 flex flex-col">
-        <ul className="px-4 xs:px-8 sm:px-12 md:px-20 py-5 border-main border-opacity-10 border-y flex flex-wrap gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">
+      <div className="max-w-7xl mx-auto pb-5 lg:pb-8 flex flex-col">
+        <ul className="px-4 xs:px-8 sm:px-12 md:px-20 py-5 border-main border-opacity-10 border-b flex flex-wrap gap-3 justify-center text-sm sm:text-base sm:gap-4 font-light">
           <li className="hover:text-accent-400">
             <Link className="link" to="/">
               Home

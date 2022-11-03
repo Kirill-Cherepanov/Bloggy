@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Icon } from 'components/Elements';
 import { POST_IMGS_LOCATION } from 'config';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -40,15 +41,30 @@ export function ParallelogramCurtains({ postsData, className }: CurtainsProps) {
               )}
             >
               <div className="ml-[-10%] w-[120%] h-full">
-                <img
-                  src={POST_IMGS_LOCATION + postData.image}
-                  alt="Post"
-                  onMouseMove={(e) => setZoomedXPos(getRelativeCursorPos(e).x)}
-                  className="mx-auto object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"
-                  style={{
-                    transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
-                  }}
-                />
+                {postData.image ? (
+                  <img
+                    src={POST_IMGS_LOCATION + postData.image}
+                    alt="Post"
+                    onMouseMove={(e) =>
+                      setZoomedXPos(getRelativeCursorPos(e).x)
+                    }
+                    className="mx-auto object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"
+                    style={{
+                      transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
+                    }}
+                  />
+                ) : (
+                  <Icon
+                    type="image"
+                    onMouseMove={(e) =>
+                      setZoomedXPos(getRelativeCursorPos(e).x)
+                    }
+                    className="bg-accent-100 mx-auto object-cover object-center h-full lg:transition-transform lg:duration-200 lg:ease-out lg:group-hover:scale-110"
+                    style={{
+                      transformOrigin: zoomedXPos && `${zoomedXPos}px center`,
+                    }}
+                  />
+                )}
               </div>
             </div>
             <h3

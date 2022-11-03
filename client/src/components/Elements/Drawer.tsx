@@ -13,7 +13,7 @@ type DrawerProps = {
 
 const sizes = {
   md: {
-    container: 'min-w-[20rem] w-[480px] max-w-xl p-4',
+    container: 'min-w-[20rem] w-[480px] max-w-[min(480px,100vw)] p-4',
     button: 'right-4 top-4',
   },
 };
@@ -30,11 +30,11 @@ export function Drawer({
         if (e.currentTarget !== e.target) return true;
         closeMenu();
       }}
-      className="flex bg-opacity-60 bg-secondary-900 justify-center items-center fixed top-0 w-full h-full z-20"
+      className="flex bg-opacity-60 bg-secondary-900 fixed top-0 bottom-0 overflow-y-auto w-screen min-h-screen z-20"
     >
       <div
         className={clsx(
-          'text-secondary-800 bg-main shadow-lg rounded-[32px] relative',
+          'text-secondary-800 bg-main shadow-lg rounded-[32px] m-auto relative',
           sizes[size].container,
           className
         )}

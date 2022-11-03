@@ -24,7 +24,7 @@ export function CatalogPosts({ posts }: CatalogPostsProps) {
 
   return (
     <ul className="my-12">
-      <div className="mb-10 grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-8">
+      <div className="lg:mb-10 grid gap-4 grid-flow-row lg:grid-rows-3 lg:grid-cols-2 lg:gap-8">
         <LargePost
           postData={posts[0]}
           className="shadow-lg hover:scale-103 row-start-1 lg:row-end-4 lg:h-auto"
@@ -39,20 +39,20 @@ export function CatalogPosts({ posts }: CatalogPostsProps) {
         ))}
       </div>
 
-      <div className="flex relative gap-10 mb-10">
+      <div className="flex relative gap-10 lg:mb-10">
         <div className="flex flex-col gap-6">
-          {posts.slice(4, 7).map((post) => (
+          <LargePost
+            postData={posts[4]}
+            className="shadow-lg hover:scale-103"
+            shouldAnimate={true}
+          />
+          {posts.slice(5, 8).map((post) => (
             <SmallPost
               key={post._id}
               postData={post}
               className="shadow-lg hover:scale-103"
             />
           ))}
-          <LargePost
-            postData={posts[7]}
-            className="shadow-lg hover:scale-103"
-            shouldAnimate={true}
-          />
         </div>
         <Aside className="hidden lg:flex" />
       </div>

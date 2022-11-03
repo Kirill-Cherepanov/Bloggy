@@ -35,8 +35,7 @@ export const Notification = ({
             : type === 'error'
             ? 'bg-red-400 border-red-800'
             : '',
-          `transition-all hover:scale-103
-          border-2 rounded-lg w-80 px-5 py-3 relative pointer-events-auto`
+          `transition-all hover:scale-103 border-2 rounded-lg w-80 max-w-full px-5 py-3 relative pointer-events-auto`
         )}
       >
         <button

@@ -64,13 +64,21 @@ export function Picker({
               setIsAdding(false);
             }}
             onKeyDown={(e) => {
+              // codes are the same only for Escape, Enter, and Backspace
+              const code =
+                e.code ||
+                (e.key.toLowerCase() === 'unidentified' ? undefined : e.key) ||
+                e.currentTarget.value.charAt(e.currentTarget.value.length - 1);
+
               const value = transform(e.currentTarget.value);
-              switch (e.code) {
+
+              switch (code) {
                 case 'Escape':
                   return setIsAdding(false);
                 case 'Enter':
                   if (filter(value)) addValue(value);
                   return setIsAdding(false);
+                case ' ':
                 case 'Space':
                   if (filter(value)) {
                     addValue(value);

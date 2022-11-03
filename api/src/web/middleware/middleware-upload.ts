@@ -13,6 +13,8 @@ export const upload = multer({
       ext !== '.git' &&
       ext !== '.tiff' &&
       ext !== '.tif' &&
+      ext !== '.webp' &&
+      ext !== '.svg' &&
       file.mimetype !== 'application/json'
     ) {
       console.error(file);

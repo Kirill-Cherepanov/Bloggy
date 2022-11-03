@@ -7,4 +7,5 @@ export const protectedRoutes = [
   { path: '/edit/:id', element: <Edit /> },
   { path: '/create', element: <Create /> },
   { path: '/settings', element: <Settings /> },
+  { path: '/settings/:tab', element: <Settings /> },
 ];

@@ -8,7 +8,7 @@ export type SearchParams = {
   search: 'categories' | 'title' | 'both';
   sort: 'popular' | 'new';
   time: 'week' | 'month' | 'year' | 'all';
-  page: number;
+  page: number | null;
   author?: string;
 };
 
@@ -124,13 +124,19 @@ export class SearchPosts extends SearchDb {
   }
 
   public async getPosts() {
-    if (this.params.page <= 0) throw Error('Incorrect page');
+    if (this.params.page !== null && this.params.page <= 0) {
+      throw Error('Incorrect page');
+    }
 
     const query: SearchQuery = this.getQuery();
 
     const allPosts = await Post.find(query).sort(
       this.getSortQuery(this.params.sort)
     );
+
+    if (this.params.page === null) {
+      return { posts: allPosts, total: allPosts.length };
+    }
 
     const posts = allPosts.slice(
       (this.params.page - 1) * this.POSTS_PER_PAGE,
@@ -150,13 +156,19 @@ export class SearchBlogs extends SearchDb {
   }
 
   public async getBlogs() {
-    if (this.params.page <= 0) throw Error('Incorrect page');
+    if (this.params.page !== null && this.params.page <= 0) {
+      throw Error('Incorrect page');
+    }
 
     const query: SearchQuery = this.getQuery();
 
     const allBlogs = await User.find(query).sort(
       this.getSortQuery(this.params.sort)
     );
+
+    if (this.params.page === null) {
+      return { blogs: allBlogs, total: allBlogs.length };
+    }
 
     const blogs = allBlogs.slice(
       (this.params.page - 1) * this.BLOGS_PER_PAGE,

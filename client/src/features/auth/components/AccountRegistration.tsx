@@ -53,7 +53,11 @@ export function AccountRegistration({
           if (hasOngoingRequest) return;
           setHasOngoingRequest(true);
 
-          const response = await register({ ...values, shouldSendAgain });
+          const response = await register({
+            ...values,
+            shouldSendAgain,
+            blog: shouldCreateBlog ? {} : undefined,
+          });
 
           setShouldSendAgain(false);
           setHasOngoingRequest(false);

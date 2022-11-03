@@ -29,7 +29,11 @@ export function PostDisplaysPreview({
   if (!user) throw Error('User is undefined');
 
   return (
-    <Drawer id="post-displays-preview" closeMenu={close} className="pt-16">
+    <Drawer
+      id="post-displays-preview"
+      closeMenu={close}
+      className="pt-16 rounded-none xs:rounded-[32px]"
+    >
       <h3 className="absolute left-1/2 -translate-x-1/2 top-5 font-semibold text-2xl">
         Post preview
       </h3>

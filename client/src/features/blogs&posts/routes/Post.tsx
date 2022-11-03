@@ -4,7 +4,7 @@ import Markdown from 'marked-react';
 import { formatDate } from 'utility';
 import { Icon, ProfilePicture, Spinner } from 'components/Elements';
 import { Aside } from 'components/Layout';
-import { ParallelogramCurtains } from '../components';
+import { ParallelogramCurtains, PostSwiper } from '../components';
 import { useGetPostQuery } from '../api/postsApi';
 import { PageNotFound } from 'features/misc';
 import { PostData, PublicData } from 'types';
@@ -104,9 +104,9 @@ export function Post({ initialData }: PostProps) {
         <img src={imageSrc} alt="post" className="mx-auto max-w-full mb-10" />
       )}
 
-      <div className="lg:hidden">
+      <div className="lg:hidden mb-10 space-y-3">
         {post.categories.length > 0 && (
-          <div className="mb-3 border-b border-black border-opacity-20 pb-3">
+          <div className="border-b border-black border-opacity-20 pb-3">
             <h3 className="text-2xl font-medium mb-2">Categories</h3>
             <div className="flex flex-wrap gap-y-2 gap-x-3 justify-between after:flex-auto">
               {post.categories.map((category) => (
@@ -122,8 +122,9 @@ export function Post({ initialData }: PostProps) {
             </div>
           </div>
         )}
+
         {post.description && (
-          <div className="mb-10">
+          <div>
             <h3 className="text-2xl font-medium mb-2">Description</h3>
             <p>{post.description || "This post doesn't have a description"}</p>
           </div>
@@ -131,17 +132,15 @@ export function Post({ initialData }: PostProps) {
       </div>
 
       <div className="flex flex-col lg:flex-row relative gap-20">
-        <div className="h-min w-full">
-          <div className="text-lg custom-markdown">
-            {post.text ? (
+        <div className="h-min w-full space-y-10">
+          {post.text && (
+            <div className="text-lg custom-markdown">
               <Markdown breaks={true}>{post.text}</Markdown>
-            ) : (
-              'This post has no text'
-            )}
-          </div>
+            </div>
+          )}
 
           {author?.blog && (
-            <div className="flex flex-col xs:flex-row mt-10 w-full gap-3 xs:gap-8 bg-secondary-800 p-4 xs:py-8 xs:px-5 rounded-lg">
+            <div className="flex flex-col xs:flex-row w-full gap-3 xs:gap-8 bg-secondary-800 p-4 xs:py-8 xs:px-5 rounded-lg">
               <Link
                 to={'/blog/' + author.username}
                 onClick={(e) => initialData && e.preventDefault()}
@@ -201,11 +200,15 @@ export function Post({ initialData }: PostProps) {
       </div>
 
       {!initialData && data?.otherPosts && data.otherPosts.length >= 4 && (
-        <div className="mt-24 bg-accent-50 py-6">
+        <div className="mt-24 bg-accent-50 py-6 hidden xs:block">
           <h3 className="text-2xl font-display font-bold text-center mb-4">
             More on this blog
           </h3>
-          <ParallelogramCurtains postsData={data.otherPosts} />
+          <ParallelogramCurtains
+            postsData={data.otherPosts}
+            className="hidden sm:flex"
+          />
+          <PostSwiper postsData={data.otherPosts} className="sm:hidden" />
         </div>
       )}
     </wrapper.type>

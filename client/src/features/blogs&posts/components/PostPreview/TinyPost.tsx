@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { PostData } from 'types';
 import { POST_IMGS_LOCATION } from 'config';
+import { Icon } from 'components/Elements';
 
 type TinyPostProps = {
   postData: PostData;
@@ -18,16 +19,32 @@ export function TinyPost({ postData, className }: TinyPostProps) {
       )}
     >
       <Link to={'/post/' + postData._id} className="flex h-full relative">
-        <img
-          src={POST_IMGS_LOCATION + postData.image}
-          alt="Post"
-          className="z-20 absolute top-1/2 left-20 w-0 h-0 object-cover opacity-20 transition-all duration-300 group-hover:opacity-100 group-hover:top-0 group-hover:left-0 group-hover:w-full group-hover:h-full"
-        />
-        <img
-          src={POST_IMGS_LOCATION + postData.image}
-          alt="Post"
-          className="object-cover h-full aspect-square my-auto"
-        />
+        {postData.image ? (
+          <>
+            <img
+              src={POST_IMGS_LOCATION + postData.image}
+              alt="Post"
+              className="z-20 absolute top-1/2 left-20 w-0 h-0 object-cover opacity-20 transition-all duration-300 group-hover:opacity-100 group-hover:top-0 group-hover:left-0 group-hover:w-full group-hover:h-full"
+            />
+            <img
+              src={POST_IMGS_LOCATION + postData.image}
+              alt="Post"
+              className="object-cover h-full aspect-square my-auto group-hover:opacity-0 transition-opacity duration-300"
+            />
+          </>
+        ) : (
+          <>
+            <Icon
+              type="image"
+              className="z-20 absolute top-1/2 left-20 w-0 h-0 object-cover opacity-20 transition-all duration-300 group-hover:opacity-100 group-hover:top-0 group-hover:left-0 group-hover:w-full group-hover:h-full"
+            />
+            <Icon
+              type="image"
+              className="object-cover h-full aspect-square my-auto group-hover:opacity-0 transition-opacity duration-300"
+            />
+          </>
+        )}
+
         <div className="text-main px-4 flex flex-col transition-all duration-300 group-hover:scale-150 group-hover:translate-y-5 group-hover:opacity-0">
           <div className="text-accent-400 uppercase text-sm font-semi mb-0.5">
             {postData.categories[0]}

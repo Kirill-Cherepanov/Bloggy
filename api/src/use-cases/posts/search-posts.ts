@@ -1,13 +1,21 @@
 import { formatPost, SearchParams, SearchPosts } from 'use-cases/lib';
 
+type SearchPostsParams = {
+  userId?: string;
+  getAll?: boolean;
+};
+
 export const searchPosts = async (
   query: Partial<SearchParams>,
-  userId?: string
+  params?: SearchPostsParams
 ) => {
-  const searchPosts = new SearchPosts(query);
+  const finalQuery = params?.getAll ? { ...query, page: null } : query;
+  const searchPosts = new SearchPosts(finalQuery);
   const searchResult = await searchPosts.getPosts();
 
-  const values = searchResult.posts.map((post) => formatPost(post, userId));
+  const values = searchResult.posts.map((post) =>
+    formatPost(post, params?.userId)
+  );
 
   return { values, total: searchResult.total };
 };
