@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import clsx from 'clsx';
 
 import { ProfilePicture } from 'components/Elements';
 import { useAppSelector } from 'stores/rootStore';
 import { inputFiles } from 'utility/inputFiles';
 import { useUpdateProfilePicMutation } from '../api/settingsApi';
 import { SettingsButton } from './SettingsButton';
-import clsx from 'clsx';
+import { useNotifyError } from 'features/notifications';
 
 export function UpdateProfilePictureForm() {
   const user = useAppSelector((state) => state.authSlice.user);
   const [updateProfilePic] = useUpdateProfilePicMutation();
+  const notifyError = useNotifyError();
   const [newProfilePic, setNewProfilePic] = useState<{
     src: string;
     file: File;
@@ -45,12 +47,15 @@ export function UpdateProfilePictureForm() {
           </SettingsButton>
           <SettingsButton
             variant="simple"
-            onClick={() => {
+            onClick={async () => {
               if (!newProfilePic) return;
 
               const data = new FormData();
               data.append('profile-picture', newProfilePic.file);
-              updateProfilePic(data);
+
+              const response = await updateProfilePic(data);
+
+              if ('error' in response) return notifyError(response.error);
             }}
           >
             Change

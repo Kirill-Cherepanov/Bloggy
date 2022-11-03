@@ -50,3 +50,20 @@ export const ALLOWED_ORIGINS = [
 ];
 
 export const PORT = process.env.PORT || 8080;
+
+// in kylobytes
+export const MAX_FILE_SIZE = 512;
+
+export const ALLOWED_FILE_TYPES = [
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.avif',
+  '.json',
+  '.git',
+  '.tiff',
+  '.tif',
+  '.webp',
+  '.svg',
+  '.gif',
+];

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { upload, updloadSettingsFields } from 'web/middleware';
+import { uploadSingle, updloadSettingsFields } from 'web/middleware';
 
 import { deleteUserController } from './delete-user.controller';
 import { updateProfilePicController } from './update-profile-pic.controller';
@@ -13,7 +13,7 @@ settingsRouter.patch('/', updloadSettingsFields, updateUserController);
 settingsRouter.patch('/data', updateUserDataController);
 settingsRouter.put(
   '/profile-picture',
-  upload.single('profile-picture'),
+  uploadSingle('profile-picture'),
   updateProfilePicController
 );
 settingsRouter.delete('/', deleteUserController);
