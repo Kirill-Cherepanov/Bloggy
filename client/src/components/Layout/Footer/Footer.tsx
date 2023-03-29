@@ -33,9 +33,7 @@ export function Footer() {
               className="flex flex-col basis-2/5 items-center gap-2 md:flex-row md:gap-0 md:justify-center lg:h-14 lg:justify-start"
               onSubmit={(e) => {
                 if (emailInput.current?.value) {
-                  dispatch(
-                    setPreRegistrationData({ email: emailInput.current.value })
-                  );
+                  dispatch(setPreRegistrationData({ email: emailInput.current.value }));
                 }
                 navigate('/registration');
               }}
@@ -114,7 +112,7 @@ export function Footer() {
           <ul className="flex justify-center basis-1/2 shrink-0 grow sm:basis-48 sm:shrink-1 mt-5 sm:justify-end sm:mt-0">
             {[
               ['vk', 'https://vk.com/kcherepanov1/'],
-              ['github', 'https://github.com/kissMyUSSR/'],
+              ['github', 'https://github.com/Kirill-Cherepanov/'],
               ['discord', 'https://discordapp.com/users/292300959265062922'],
             ].map((v, i) => (
               <li key={i}>
@@ -129,9 +127,7 @@ export function Footer() {
           </ul>
         </div>
       </div>
-      {authDisclosure.isOpen && (
-        <AuthDrawer closeMenu={authDisclosure.close} authType="login" />
-      )}
+      {authDisclosure.isOpen && <AuthDrawer closeMenu={authDisclosure.close} authType="login" />}
     </footer>
   );
 }

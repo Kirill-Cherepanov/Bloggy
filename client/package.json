@@ -12,7 +12,7 @@
     "expressjs",
     "nodejs"
   ],
-  "author": "KissMyUSSR",
+  "author": "Kirill-Cherepanov",
   "dependencies": {
     "@hookform/resolvers": "^2.9.7",
     "@reduxjs/toolkit": "^1.8.5",

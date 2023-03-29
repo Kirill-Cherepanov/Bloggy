@@ -6,7 +6,7 @@
 
 **Deploy:** https://bloggy-kirill-cherepanov.netlify.appyarn
 
-**Repository:** https://github.com/KissMyUSSR/bloggy
+**Repository:** https://github.com/Kirill-Cherepanov/bloggy
 
 ## What I've built and have learned
 

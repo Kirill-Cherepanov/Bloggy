@@ -16,7 +16,7 @@
     "docker:build": "docker build -t bloggy_api .",
     "docker:run": "docker run -p 8080:8080 --name bloggy_api_c bloggy_api"
   },
-  "author": "KissMyUSSR",
+  "author": "Kirill-Cherepanov",
   "license": "ISC",
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
