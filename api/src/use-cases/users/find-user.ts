@@ -1,9 +1,11 @@
+import { ObjectId } from 'mongoose';
+
 import User from 'models/User';
 import { formatUserProtected, deleteUndefined } from 'use-cases/lib';
 
 export type FindUserProps = {
   username?: string;
-  id?: string;
+  _id?: ObjectId;
   email?: string;
 };
 

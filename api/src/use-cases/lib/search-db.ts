@@ -76,9 +76,7 @@ class SearchDb {
       year: DAY * 365,
     };
     const getTime = () => {
-      return new Date(
-        Date.now() - TIMINGS[time as keyof typeof TIMINGS]
-      ).toISOString();
+      return new Date(Date.now() - TIMINGS[time as keyof typeof TIMINGS]).toISOString();
     };
 
     if (time in TIMINGS) {
@@ -130,9 +128,7 @@ export class SearchPosts extends SearchDb {
 
     const query: SearchQuery = this.getQuery();
 
-    const allPosts = await Post.find(query).sort(
-      this.getSortQuery(this.params.sort)
-    );
+    const allPosts = await Post.find(query).sort(this.getSortQuery(this.params.sort));
 
     if (this.params.page === null) {
       return { posts: allPosts, total: allPosts.length };
@@ -162,9 +158,7 @@ export class SearchBlogs extends SearchDb {
 
     const query: SearchQuery = this.getQuery();
 
-    const allBlogs = await User.find(query).sort(
-      this.getSortQuery(this.params.sort)
-    );
+    const allBlogs = await User.find(query).sort(this.getSortQuery(this.params.sort));
 
     if (this.params.page === null) {
       return { blogs: allBlogs, total: allBlogs.length };
@@ -188,23 +182,10 @@ export class SearchBlogs extends SearchDb {
 
   protected getTimeQuery(time: string) {
     const timeQuery = super.getTimeQuery(time);
-    return Object.keys(timeQuery).length
-      ? { 'blog.createdAt': timeQuery.createdAt }
-      : {};
+    return Object.keys(timeQuery).length ? { 'blog.createdAt': timeQuery.createdAt } : {};
   }
 
   protected getCategoriesQuery(query: string) {
     return { 'blog.categories': super.getCategoriesQuery(query).categories };
   }
-}
-
-export async function searchBlogPosts(username: string, page: number) {
-  // Currently since I don't have many posts, I won't need pagination
-  // And I'm a bit reluctant to be implementing infinite scroll on the client right now
-
-  // const POSTS_PER_PAGE = 10;
-
-  return Post.find({ authorName: username }).sort({ createdAt: -1 });
-  // .skip((page - 1) * POSTS_PER_PAGE)
-  // .limit(page * POSTS_PER_PAGE);
 }

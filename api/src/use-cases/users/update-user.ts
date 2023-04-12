@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import User from 'models/User';
+import Post from 'models/Post';
 import { makePartialUser } from 'entity-validators';
 import { formatUserProtected, deepmerge } from 'use-cases/lib';
 import { deleteProfilePic } from 'web/file-manipulation';
@@ -19,10 +20,7 @@ export const updateUser = async (
 
   if ('error' in userData) return userData;
 
-  if (
-    (userData.password || userData.email || userData.username) &&
-    verifyPassword
-  ) {
+  if ((userData.password || userData.email || userData.username) && verifyPassword) {
     if (!oldPassword) {
       return { error: 'Old password was not sent', status: 400 };
     }
@@ -45,9 +43,15 @@ export const updateUser = async (
     delete userData.blog;
   }
 
+  if (userData.username) updatePostsAuthor(user.username, userData.username);
+
   deepmerge(user, userData);
 
   const updatedUser = await user.save();
 
   return formatUserProtected(updatedUser);
 };
+
+async function updatePostsAuthor(prevName: string, nextName: string) {
+  await Post.updateMany({ authorName: prevName }, { $set: { authorName: nextName } });
+}

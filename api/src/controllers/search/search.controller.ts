@@ -7,7 +7,7 @@ export const searchController: RequestHandler = async (req, res) => {
   const userId = req.user.isLoggedIn ? req.user.data.id : undefined;
 
   if (req.query.type === 'posts' || !req.query.type) {
-    const searchResult = await searchPosts(req.query, userId);
+    const searchResult = await searchPosts(req.query, { userId });
     return res.status(200).json({ ...searchResult, type: 'posts' });
   }
   if (req.query.type === 'blogs') {
