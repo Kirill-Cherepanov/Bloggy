@@ -4,7 +4,7 @@
 
 **Technologies used:** React, Typescript, Node.js, Express, MongoDB + Mongoose, Tailwind, Redux, RTK Query, Cypress, JWT, Docker
 
-**Deploy:** https://bloggy-kirill-cherepanov.netlify.appyarn
+**Deploy:** https://bloggy-kirill-cherepanov.netlify.app
 
 **Repository:** https://github.com/Kirill-Cherepanov/bloggy
 
